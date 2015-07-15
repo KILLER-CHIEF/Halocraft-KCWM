@@ -1,0 +1,10 @@
+{
+	"Default.DefaultShoot":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"Default/DefaultShoot"
+		]
+    }
+}

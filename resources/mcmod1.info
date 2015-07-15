@@ -1,0 +1,16 @@
+[
+{
+  "modid": "kcweaponmod",
+  "name": "KC's Weapon Mod v0.1.1",
+  "description": "KC's Weapon Mod v0.1.1 for Minecraft 1.7.10. Weapons v1.0. This mod allows users and other mod makers to easily create any kind of projectile launching weapon they can dream of (and design themselves by using this extremely complex and simplistic mod). This Version is NOT user ready yet and is Limited to a Maximum of 21 different rendered projectiles.",
+  "version": "MC 1.7.10",
+  "mcversion": "v0.1.1",
+  "url": "http://killerchief.net/",
+  "updateUrl": "",
+  "authorList": ["Killer Chief"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

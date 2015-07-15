@@ -1,0 +1,600 @@
+{
+	"records.MissionToForget":
+    {
+        "category": "record",
+        "sounds": [{"name":"records/MissionToForget", "stream": true}]
+    },
+	"records.TheHalo3WarthogRun":
+    {
+        "category": "record",
+        "sounds": [{"name":"records/TheHalo3WarthogRun", "stream": true}]
+    },
+	"armour.ShieldLowBeep":
+    {
+        "category": "player",
+        "sounds":
+        [
+            "armour/ShieldLowBeep1",
+            "armour/ShieldLowBeep2",
+            "armour/ShieldLowBeep3",
+            "armour/ShieldLowBeep4",
+            "armour/ShieldLowBeep5",
+            "armour/ShieldLowBeep6"
+        ]
+    },
+	"armour.ShieldRecharge":
+    {
+        "category": "player",
+        "sounds": ["armour/ShieldRecharge"]
+    },
+    "damage.hurtflesh":
+    {
+        "category": "player",
+        "sounds":
+        [
+            "damage/hurtflesh1",
+            "damage/hurtflesh2",
+            "damage/hurtflesh3"
+        ]
+    },
+	"entities.ghost.GhostEnter":
+    {
+        "category": "player",
+        "sounds": ["entities/ghost/GhostEnter"]
+    },
+    "entities.ghost.GhostExit":
+    {
+        "category": "player",
+        "sounds": ["entities/ghost/GhostExit"]
+    },
+	"entities.ghost.GhostLoopIdle":
+    {
+        "category": "player",
+        "sounds": ["entities/ghost/GhostLoopIdle"]
+    },
+	"entities.ghost.GhostLoopRun":
+    {
+        "category": "player",
+        "sounds": ["entities/ghost/GhostLoopRun"]
+    },
+	"entities.ghost.GhostShoot":
+    {
+        "category": "player",
+        "sounds": ["entities/ghost/GhostShoot"]
+    },
+	"entities.mongoose.MongooseEngineHigh":
+    {
+        "category": "player",
+        "sounds": ["entities/mongoose/MongooseEngineHigh"]
+    },
+    "entities.mongoose.MongooseEngineIdle":
+    {
+        "category": "player",
+        "sounds": ["entities/mongoose/MongooseEngineIdle"]
+    },
+	"entities.mongoose.MongooseEnter":
+    {
+        "category": "player",
+        "sounds": ["entities/mongoose/MongooseEnter"]
+    },
+	"entities.mongoose.MongooseExit":
+    {
+        "category": "player",
+        "sounds": ["entities/mongoose/MongooseExit"]
+    },
+    "entities.mongoose.MongooseExplode":
+    {
+        "category": "player",
+        "sounds":
+        [
+            "entities/mongoose/MongooseExplode1",
+            "entities/mongoose/MongooseExplode2",
+            "entities/mongoose/MongooseExplode3",
+            "entities/mongoose/MongooseExplode4"
+        ]
+    },
+	"entities.mongoose.MongooseHit":
+    {
+        "category": "player",
+        "sounds":
+        [
+            "entities/mongoose/MongooseHit1",
+            "entities/mongoose/MongooseHit2"
+        ]
+    },
+	"items.PickupHealth":
+    {
+        "category": "player",
+        "sounds": ["items/PickupHealth"]
+    },
+	"items.WrenchFix":
+    {
+        "category": "player",
+        "sounds":
+        [
+            "items/WrenchFix1",
+            "items/WrenchFix2",
+            "items/WrenchFix3",
+            "items/WrenchFix4",
+            "items/WrenchFix5",
+            "items/WrenchFix6",
+            "items/WrenchFix7",
+            "items/WrenchFix8",
+            "items/WrenchFix9",
+            "items/WrenchFix10",
+            "items/WrenchFix11",
+            "items/WrenchFix12"
+        ]
+    },
+	"mob.elite.EliteDeath":
+    {
+        "category": "hostile",
+        "sounds":
+        [
+            "mob/elite/EliteDeath1",
+            "mob/elite/EliteDeath2",
+            "mob/elite/EliteDeath3",
+            "mob/elite/EliteDeath4",
+            "mob/elite/EliteDeath5",
+            "mob/elite/EliteDeath6",
+            "mob/elite/EliteDeath7",
+            "mob/elite/EliteDeath8",
+            "mob/elite/EliteDeath9",
+            "mob/elite/EliteDeath10",
+            "mob/elite/EliteDeath11",
+            "mob/elite/EliteDeath12",
+            "mob/elite/EliteDeath13",
+            "mob/elite/EliteDeath14",
+            "mob/elite/EliteDeath15",
+            "mob/elite/EliteDeath16",
+            "mob/elite/EliteDeath17",
+            "mob/elite/EliteDeath18",
+            "mob/elite/EliteDeath19",
+            "mob/elite/EliteDeath20",
+            "mob/elite/EliteDeath21"
+        ]
+    },
+	"mob.elite.EliteHurt":
+    {
+        "category": "hostile",
+        "sounds":
+        [
+            "mob/elite/EliteHurt1",
+			"mob/elite/EliteHurt2",
+			"mob/elite/EliteHurt3",
+			"mob/elite/EliteHurt4",
+			"mob/elite/EliteHurt5",
+			"mob/elite/EliteHurt6",
+			"mob/elite/EliteHurt7",
+			"mob/elite/EliteHurt8",
+			"mob/elite/EliteHurt9",
+			"mob/elite/EliteHurt10",
+			"mob/elite/EliteHurt11",
+			"mob/elite/EliteHurt12"
+        ]
+    },
+	"mob.elite.EliteLiving":
+    {
+        "category": "hostile",
+        "sounds":
+        [
+            "mob/elite/EliteLiving1",
+            "mob/elite/EliteLiving2",
+            "mob/elite/EliteLiving3",
+            "mob/elite/EliteLiving4",
+            "mob/elite/EliteLiving5",
+            "mob/elite/EliteLiving6",
+            "mob/elite/EliteLiving7",
+            "mob/elite/EliteLiving8",
+            "mob/elite/EliteLiving9"
+        ]
+    },
+	"mob.grunt.GruntDeath":
+    {
+        "category": "hostile",
+        "sounds":
+        [
+            "mob/grunt/GruntDeath1",
+            "mob/grunt/GruntDeath2",
+            "mob/grunt/GruntDeath3",
+            "mob/grunt/GruntDeath4",
+            "mob/grunt/GruntDeath5",
+            "mob/grunt/GruntDeath6",
+            "mob/grunt/GruntDeath7",
+            "mob/grunt/GruntDeath8",
+            "mob/grunt/GruntDeath9",
+            "mob/grunt/GruntDeath10",
+            "mob/grunt/GruntDeath11",
+            "mob/grunt/GruntDeath12",
+            "mob/grunt/GruntDeath13",
+            "mob/grunt/GruntDeath14",
+            "mob/grunt/GruntDeath15",
+            "mob/grunt/GruntDeath16",
+            "mob/grunt/GruntDeath17",
+            "mob/grunt/GruntDeath18"
+        ]
+    },
+	"mob.grunt.GruntHurt":
+    {
+        "category": "hostile",
+        "sounds":
+        [
+            "mob/grunt/GruntHurt1",
+			"mob/grunt/GruntHurt2",
+			"mob/grunt/GruntHurt3",
+			"mob/grunt/GruntHurt4",
+			"mob/grunt/GruntHurt5",
+			"mob/grunt/GruntHurt6",
+			"mob/grunt/GruntHurt7",
+			"mob/grunt/GruntHurt8",
+			"mob/grunt/GruntHurt9",
+			"mob/grunt/GruntHurt10",
+			"mob/grunt/GruntHurt11",
+			"mob/grunt/GruntHurt12",
+			"mob/grunt/GruntHurt13",
+			"mob/grunt/GruntHurt14",
+			"mob/grunt/GruntHurt15",
+			"mob/grunt/GruntHurt16",
+			"mob/grunt/GruntHurt17",
+			"mob/grunt/GruntHurt18",
+			"mob/grunt/GruntHurt19",
+			"mob/grunt/GruntHurt20"
+        ]
+    },
+	"mob.grunt.GruntLiving":
+    {
+        "category": "hostile",
+        "sounds":
+        [
+            "mob/grunt/GruntLiving1",
+            "mob/grunt/GruntLiving2",
+            "mob/grunt/GruntLiving3",
+            "mob/grunt/GruntLiving4",
+            "mob/grunt/GruntLiving5",
+            "mob/grunt/GruntLiving6",
+            "mob/grunt/GruntLiving7",
+            "mob/grunt/GruntLiving8",
+            "mob/grunt/GruntLiving9",
+            "mob/grunt/GruntLiving10",
+            "mob/grunt/GruntLiving11",
+            "mob/grunt/GruntLiving12",
+            "mob/grunt/GruntLiving13",
+            "mob/grunt/GruntLiving14",
+            "mob/grunt/GruntLiving15",
+            "mob/grunt/GruntLiving16",
+            "mob/grunt/GruntLiving17"
+        ]
+    },
+	"weapons.EnergySwordEquip":
+    {
+        "category": "player",
+        "sounds": ["weapons/EnergySwordEquip1"]
+    },
+	"weapons.FirebombExplode":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/FirebombExplode1",
+			"weapons/FirebombExplode2",
+			"weapons/FirebombExplode3",
+			"weapons/FirebombExplode4"
+		]
+    },
+	"weapons.FirebombThrow":
+    {
+        "category": "player",
+        "sounds": ["weapons/FirebombThrow1"]
+    },
+	"weapons.FragBounceStone":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/FragBounceStone1",
+			"weapons/FragBounceStone2",
+			"weapons/FragBounceStone3"
+		]
+    },
+	"weapons.FragThrow":
+    {
+        "category": "player",
+        "sounds": ["weapons/FragThrow1"]
+    },
+	"weapons.PlasmaGrenadeStick":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/PlasmaGrenadeStick1",
+			"weapons/PlasmaGrenadeStick2",
+			"weapons/PlasmaGrenadeStick3"
+		]
+    },
+	"weapons.PlasmaGrenadeThrow":
+    {
+        "category": "player",
+        "sounds": ["weapons/PlasmaGrenadeThrow1"]
+    },
+	"weapons.SpikeGrenadeThrow":
+    {
+        "category": "player",
+        "sounds": ["weapons/SpikeGrenadeThrow1"]
+    },
+	"weapons.shoot.AssaultRifleShoot":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/shoot/AssaultRifleShoot1",
+			"weapons/shoot/AssaultRifleShoot2",
+			"weapons/shoot/AssaultRifleShoot3"
+		]
+    },
+	"weapons.shoot.BattleRifleShoot":
+    {
+        "category": "player",
+        "sounds": ["weapons/shoot/BattleRifleShoot1"]
+    },
+	"weapons.shoot.BeamRifleShoot":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/shoot/BeamRifleShoot1",
+			"weapons/shoot/BeamRifleShoot2"
+		]
+    },
+	"weapons.shoot.CarbineShoot":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/shoot/CarbineShoot1",
+			"weapons/shoot/CarbineShoot2",
+			"weapons/shoot/CarbineShoot3"
+		]
+    },
+	"weapons.shoot.DMRShoot":
+    {
+        "category": "player",
+        "sounds": ["weapons/shoot/DMRShoot1"]
+    },
+	"weapons.shoot.FlamethrowerShoot":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/shoot/FlamethrowerShoot1",
+			"weapons/shoot/FlamethrowerShoot2",
+			"weapons/shoot/FlamethrowerShoot3",
+			"weapons/shoot/FlamethrowerShoot4"
+		]
+    },
+	"weapons.shoot.MagnumShoot":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/shoot/MagnumShoot1",
+			"weapons/shoot/MagnumShoot2",
+			"weapons/shoot/MagnumShoot3",
+			"weapons/shoot/MagnumShoot4"
+		]
+    },
+	"weapons.shoot.MaulerShoot":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/shoot/MaulerShoot1",
+			"weapons/shoot/MaulerShoot2",
+			"weapons/shoot/MaulerShoot3"
+		]
+    },
+	"weapons.shoot.NeedlerShoot":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/shoot/NeedlerShoot1",
+			"weapons/shoot/NeedlerShoot2",
+			"weapons/shoot/NeedlerShoot3"
+		]
+    },
+	"weapons.shoot.PlasmaPistolShoot":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/shoot/PlasmaPistolShoot1",
+			"weapons/shoot/PlasmaPistolShoot2",
+			"weapons/shoot/PlasmaPistolShoot3",
+			"weapons/shoot/PlasmaPistolShoot4",
+			"weapons/shoot/PlasmaPistolShoot5"
+		]
+    },
+	"weapons.shoot.PlasmaPistolShootBurst":
+    {
+        "category": "player",
+        "sounds": ["weapons/shoot/PlasmaPistolShootBurst1"]
+    },
+	"weapons.shoot.PlasmaRifleShoot":
+    {
+        "category": "player",
+        "sounds": ["weapons/shoot/PlasmaRifleShoot1"]
+    },
+	"weapons.shoot.RocketLauncherShoot":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/shoot/RocketLauncherShoot1",
+			"weapons/shoot/RocketLauncherShoot2",
+			"weapons/shoot/RocketLauncherShoot3",
+			"weapons/shoot/RocketLauncherShoot4"
+		]
+    },
+	"weapons.shoot.ShotgunShoot":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/shoot/ShotgunShoot1",
+			"weapons/shoot/ShotgunShoot2",
+			"weapons/shoot/ShotgunShoot3"
+		]
+    },
+	"weapons.shoot.SMGShoot":
+    {
+        "category": "player",
+        "sounds": ["weapons/shoot/SMGShoot1"]
+    },
+	"weapons.shoot.SniperRifleShoot":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/shoot/SniperRifleShoot1",
+			"weapons/shoot/SniperRifleShoot2",
+			"weapons/shoot/SniperRifleShoot3",
+			"weapons/shoot/SniperRifleShoot4"
+		]
+    },
+	"weapons.shoot.SpikeRifleShoot":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/shoot/SpikeRifleShoot1",
+			"weapons/shoot/SpikeRifleShoot2",
+			"weapons/shoot/SpikeRifleShoot3",
+			"weapons/shoot/SpikeRifleShoot4",
+			"weapons/shoot/SpikeRifleShoot5",
+			"weapons/shoot/SpikeRifleShoot6"
+		]
+    },
+	"weapons.reload.AssaultRifleReload":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/reload/AssaultRifleReload1",
+			"weapons/reload/AssaultRifleReload2",
+			"weapons/reload/AssaultRifleReload3"
+		]
+    },
+	"weapons.reload.BattleRifleReload":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/reload/BattleRifleReload1",
+			"weapons/reload/BattleRifleReload2",
+			"weapons/reload/BattleRifleReload3"
+		]
+    },
+	"weapons.reload.CarbineReload":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/reload/CarbineReload1",
+			"weapons/reload/CarbineReload2",
+			"weapons/reload/CarbineReload3"
+		]
+    },
+	"weapons.reload.DMRReload":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/reload/DMRReload1",
+			"weapons/reload/DMRReload2",
+			"weapons/reload/DMRReload3"
+		]
+    },
+	"weapons.reload.MagnumReload":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/reload/MagnumReload1",
+			"weapons/reload/MagnumReload2",
+			"weapons/reload/MagnumReload3"
+		]
+    },
+	"weapons.reload.MaulerReload":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/reload/MaulerReload1",
+			"weapons/reload/MaulerReload2",
+			"weapons/reload/MaulerReload3",
+			"weapons/reload/MaulerReload4",
+			"weapons/reload/MaulerReload5",
+			"weapons/reload/MaulerReload6"
+		]
+    },
+	"weapons.reload.NeedlerReload":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/reload/NeedlerReload1",
+			"weapons/reload/NeedlerReload2",
+			"weapons/reload/NeedlerReload3"
+		]
+    },
+	"weapons.reload.RocketLauncherReload":
+    {
+        "category": "player",
+        "sounds": ["weapons/reload/RocketLauncherReload1"]
+    },
+	"weapons.reload.ShotgunReloadEnter":
+    {
+        "category": "player",
+        "sounds": ["weapons/reload/ShotgunReloadEnter1"]
+    },
+	"weapons.reload.ShotgunReloadExit":
+    {
+        "category": "player",
+        "sounds": ["weapons/reload/ShotgunReloadExit1"]
+    },
+	"weapons.reload.ShotgunReloadLoop":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/reload/ShotgunReloadLoop1",
+			"weapons/reload/ShotgunReloadLoop2",
+			"weapons/reload/ShotgunReloadLoop3",
+			"weapons/reload/ShotgunReloadLoop4",
+			"weapons/reload/ShotgunReloadLoop5",
+			"weapons/reload/ShotgunReloadLoop6",
+			"weapons/reload/ShotgunReloadLoop7",
+			"weapons/reload/ShotgunReloadLoop8"
+		]
+    },
+	"weapons.reload.SMGReload":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/reload/SMGReload1",
+			"weapons/reload/SMGReload2",
+			"weapons/reload/SMGReload3"
+		]
+    },
+	"weapons.reload.SniperRifleReload":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/reload/SniperRifleReload1",
+			"weapons/reload/SniperRifleReload2",
+			"weapons/reload/SniperRifleReload3"
+		]
+    }
+}
