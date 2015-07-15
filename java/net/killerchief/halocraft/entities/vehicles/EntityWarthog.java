@@ -81,7 +81,7 @@ public class EntityWarthog extends EntityVehicle
 		return Halocraft.MODID+":entities.mongoose.MongooseExit";
 	}
 	
-	private int[][] PassengerSeatAttributes = new int[][]{new int[]{0}};
+	private int[][] PassengerSeatAttributes = new int[][]{new int[]{0}, new int[]{0}};
 	
 	@Override
 	protected int[][] getPassengerSeatAttributes()
@@ -100,7 +100,7 @@ public class EntityWarthog extends EntityVehicle
 	@Override
 	public double getMountedYOffset()
 	{
-		return (double)this.height - 0.7D;
+		return (double)this.height - 0.65D;
 	}
 
 	/** Gets whether the entity is moving left.*/
@@ -194,7 +194,12 @@ public class EntityWarthog extends EntityVehicle
 			{
 				par1EntityPlayer.rotationYaw = this.rotationYaw;
 				par1EntityPlayer.rotationPitch = 10F;
-				par1EntityPlayer.mountEntity(this);
+				if (this.passengerSeats.length >= 2 && this.passengerSeats[1] != null && this.passengerSeats[1].riddenByEntity == null)
+				{
+					par1EntityPlayer.mountEntity(this.passengerSeats[1]);
+				}
+				else
+					par1EntityPlayer.mountEntity(this);
 			}
 			return true;
 		}
@@ -218,7 +223,7 @@ public class EntityWarthog extends EntityVehicle
 	{
 		if (this.riddenByEntity != null)
 		{
-			this.riddenByEntity.setPosition(this.posX, this.posY + this.getMountedYOffset() + this.riddenByEntity.getYOffset(), this.posZ);
+			this.riddenByEntity.setPosition(this.posX + Math.cos(Math.toRadians(this.rotationYaw))*0.44D, this.posY + this.getMountedYOffset() + this.riddenByEntity.getYOffset(), this.posZ + Math.sin(Math.toRadians(this.rotationYaw))*0.44D);
 			
 			if (this.riddenByEntity instanceof EntityLivingBase)
 	        {

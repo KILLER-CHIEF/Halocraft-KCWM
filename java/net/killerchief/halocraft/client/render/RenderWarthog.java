@@ -19,7 +19,7 @@ public class RenderWarthog extends Render
 {
 	public static final Model3DBase WarthogModel = new ModelWarthog();
 	public static final ResourceLocation WarthogTexture = new ResourceLocation(Halocraft.MODID+":textures/entities/WarthogModel.png");
-	public static final Model3DBase MachineGunModel = new ModelWarthogMachineGunTurret();
+	public static final ModelWarthogMachineGunTurret MachineGunModel = new ModelWarthogMachineGunTurret();
 	public static final ResourceLocation MachineGunTexture = new ResourceLocation(Halocraft.MODID+":textures/entities/SkinMachineGunTurret.png");
 
 	public RenderWarthog()
@@ -46,10 +46,18 @@ public class RenderWarthog extends Render
 		this.bindTexture(WarthogTexture);
 		WarthogModel.render(entity, 0F, 0F, 0F, 0F, 0F, 0.0625F);
 		GL11.glDisable(GL11.GL_BLEND);
+		GL11.glDepthMask(true);
 		GL11.glRotatef(90F, 0F, 1F, 0F);
-		GL11.glTranslatef(0F, 2F, -2F);
+		GL11.glTranslatef(0F, 2F, -1.8F);
+		GL11.glRotatef(entity.passengerSeats.length >= 2 && entity.passengerSeats[1] != null && entity.passengerSeats[1].riddenByEntity != null ? entity.rotationYaw - entity.passengerSeats[1].riddenByEntity.rotationYaw : 0F, 0F, 1F, 0F);//entity.getWheelTurnAngle()*400
 		this.bindTexture(MachineGunTexture);
-		MachineGunModel.render(entity, 0F, 0F, 0F, 0F, 0F, 0.0625F);
+		//MachineGunModel.render(entity, 0F, 0F, 0F, 0F, 0F, 0.0625F);
+		GL11.glTranslatef(0F, 0F, -0.2F);
+		MachineGunModel.renderSomeParts(false, 0.0625F);
+		GL11.glTranslatef(0F, 0.5F, 0.85F);
+		GL11.glRotatef(entity.passengerSeats.length >= 2 && entity.passengerSeats[1] != null && entity.passengerSeats[1].riddenByEntity != null ?entity.passengerSeats[1].riddenByEntity.rotationPitch : 0F, 1F, 0F, 0F);//entity.getWheelTurnAngle()*150
+		GL11.glTranslatef(0F, -0.45F, -0.85F);
+		MachineGunModel.renderSomeParts(true, 0.0625F);
 		GL11.glPopMatrix();
 	}
 

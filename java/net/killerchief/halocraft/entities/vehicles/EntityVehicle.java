@@ -55,7 +55,7 @@ public abstract class EntityVehicle extends Entity
 	public double vehiclePitch;
 
 	/** An Array of all Passenger Seats for this Vehicle */
-	EntityPassengerSeat[] passengerSeats;
+	public EntityPassengerSeat[] passengerSeats;
 
 	protected abstract int getSoundLoopDelay();
 	public int enterSoundDelay = this.getSoundLoopDelay();
@@ -526,16 +526,41 @@ public abstract class EntityVehicle extends Entity
 		{
 			if (this.passengerSeats != null)
 			{
-				for (EntityPassengerSeat seat : this.passengerSeats)
-				{
-					if (seat != null)
+				for (int i = 0; i < passengerSeats.length; i++) {
+					EntityPassengerSeat seat = passengerSeats[i];
+					if (this instanceof EntityMongoose && i == 0)
 					{
 						double xOffset = -Math.sin(Math.toRadians(this.rotationYaw)) * 0.9;
 						double zOffset = Math.cos(Math.toRadians(this.rotationYaw)) * 0.9;
 						seat.setLocationAndAngles(this.posX - xOffset, this.posY + 1.1D, this.posZ - zOffset, 0.0F, 0.0F);
 						//this.passengerseat.moveEntity(this.velocityX, this.velocityY, this.velocityZ);
 					}
+					else if (this instanceof EntityWarthog)
+					{
+						if (i == 0)
+						{
+							seat.setLocationAndAngles(this.posX - Math.cos(Math.toRadians(this.rotationYaw))*0.44D, this.posY, this.posZ - Math.sin(Math.toRadians(this.rotationYaw))*0.44D, 0.0F, 0.0F);
+						}
+						else if (i == 1)
+						{
+							seat.setLocationAndAngles(this.posX + Math.sin(Math.toRadians(this.rotationYaw))*1.4D, this.posY + 1.8D, this.posZ - Math.cos(Math.toRadians(this.rotationYaw))*1.4D, 0.0F, 0.0F);
+						}
+						else
+							seat.setLocationAndAngles(this.posX, this.posY, this.posZ, 0.0F, 0.0F);
+					}
+					else
+						seat.setLocationAndAngles(this.posX, this.posY, this.posZ, 0.0F, 0.0F);
 				}
+//				for (EntityPassengerSeat seat : this.passengerSeats)
+//				{
+//					if (seat != null)
+//					{
+//						double xOffset = -Math.sin(Math.toRadians(this.rotationYaw)) * 0.9;
+//						double zOffset = Math.cos(Math.toRadians(this.rotationYaw)) * 0.9;
+//						seat.setLocationAndAngles(this.posX - xOffset, this.posY + 1.1D, this.posZ - zOffset, 0.0F, 0.0F);
+//						//this.passengerseat.moveEntity(this.velocityX, this.velocityY, this.velocityZ);
+//					}
+//				}
 			}
 			else
 			{

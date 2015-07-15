@@ -4,8 +4,13 @@
 
 package net.killerchief.halocraft.client.models.vehicles;
 
+import org.lwjgl.opengl.GL11;
+
 import net.killerchief.halocraft.client.models.Model3DBase;
+import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
 import net.killerchief.turbomodelthingy.ModelRendererTurbo;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.Entity;
 
 public class ModelWarthog extends Model3DBase
 {
@@ -916,5 +921,99 @@ public class ModelWarthog extends Model3DBase
 		this.flip(this.frontWheelModel);
 		this.flip(this.backWheelModel);
 		this.flip(this.leftTrackModel);
+	}
+	
+	@Override
+	protected void renderAllParts(Entity entity, float par7)
+	{
+		if (this.frontWheelModel != null)
+		{
+			for (ModelRendererTurbo part : this.frontWheelModel)
+			{
+				if (part != null)
+				{
+					part.rotateAngleZ = -((EntityWarthog)entity).getRotateWheelSpeed();
+				}
+			}
+		}
+		if (this.backWheelModel != null)
+		{
+			for (ModelRendererTurbo part : this.backWheelModel)
+			{
+				if (part != null)
+				{
+					part.rotateAngleZ = -((EntityWarthog)entity).getRotateWheelSpeed();
+				}
+			}
+		}
+		
+		if (this.bodyModel != null)
+		{
+			for (ModelRendererTurbo part : this.bodyModel)
+			{
+				if (part != null)
+				{
+					part.render(par7);
+				}
+			}
+		}
+		if (this.frontWheelModel != null)
+		{
+			for (ModelRendererTurbo part : this.frontWheelModel)
+			{
+				if (part != null)
+				{
+					part.render(par7);
+				}
+			}
+		}
+		if (this.backWheelModel != null)
+		{
+			for (ModelRendererTurbo part : this.backWheelModel)
+			{
+				if (part != null)
+				{
+					part.render(par7);
+				}
+			}
+		}
+		if (this.techneModel != null)
+		{
+			for (ModelRenderer part : this.techneModel)
+			{
+				if (part != null)
+				{
+					part.render(par7);
+				}
+			}
+		}
+		if (this.bodyDoorOpenModel != null || this.leftTrackModel != null)
+		{
+			GL11.glEnable(GL11.GL_BLEND);
+			GL11.glDepthMask(false);
+			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_SRC_ALPHA);
+		}
+		if (this.bodyDoorOpenModel != null)
+		{
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.4F);
+			for (ModelRendererTurbo part : this.bodyDoorOpenModel)
+			{
+				if (part != null)
+				{
+					part.render(par7);
+				}
+			}
+		}
+		if (this.leftTrackModel != null)
+		{
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1F);
+			for (ModelRendererTurbo part : this.leftTrackModel)
+			{
+				if (part != null)
+				{
+					part.render(par7);
+				}
+			}
+		}
 	}
 }

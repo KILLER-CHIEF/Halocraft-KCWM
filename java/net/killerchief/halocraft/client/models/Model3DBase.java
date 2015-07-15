@@ -1,8 +1,5 @@
 package net.killerchief.halocraft.client.models;
 
-import org.lwjgl.opengl.GL11;
-
-import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
 import net.killerchief.turbomodelthingy.ModelRendererTurbo;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
@@ -16,7 +13,7 @@ public abstract class Model3DBase extends ModelBase {
 	protected ModelRendererTurbo[] backWheelModel;
 	protected ModelRendererTurbo[] bodyDoorOpenModel;
 	protected ModelRendererTurbo[] leftTrackModel;
-	
+
 	protected ModelRenderer[] techneModel;
 
 	/**
@@ -25,41 +22,28 @@ public abstract class Model3DBase extends ModelBase {
 	@Override
 	public void render(Entity entity, float par2, float par3, float par4, float par5, float par6, float par7)
 	{
-		if (entity instanceof EntityWarthog)
-		{
-			if (this.frontWheelModel != null)
-			{
-				for (ModelRendererTurbo part : this.frontWheelModel)
-				{
-					if (part != null)
-					{
-						part.rotateAngleZ = -((EntityWarthog)entity).getRotateWheelSpeed();
-					}
-				}
-			}
-			if (this.backWheelModel != null)
-			{
-				for (ModelRendererTurbo part : this.backWheelModel)
-				{
-					if (part != null)
-					{
-						part.rotateAngleZ = -((EntityWarthog)entity).getRotateWheelSpeed();
-					}
-				}
-			}
-		}
+		this.renderAllParts(entity, par7);
+	}
+
+	protected void renderAllParts(Entity entity, float par7)
+	{
 		this.renderAllParts(par7);
 	}
-	
+
 	/**
 	 * Sets the models various rotation angles then renders the model.
 	 */
 	public void render(TileEntity tileentity, float par2, float par3, float par4, float par5, float par6, float par7)
 	{
+		this.renderAllParts(tileentity, par7);
+	}
+
+	protected void renderAllParts(TileEntity entity, float par7)
+	{
 		this.renderAllParts(par7);
 	}
-	
-	private void renderAllParts(float par7)
+
+	protected void renderAllParts(float par7)
 	{
 		if (this.bodyModel != null)
 		{
@@ -101,15 +85,8 @@ public abstract class Model3DBase extends ModelBase {
 				}
 			}
 		}
-		if (this.bodyDoorOpenModel != null || this.leftTrackModel != null)
-		{
-			GL11.glEnable(GL11.GL_BLEND);
-			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_SRC_ALPHA);//.GL_ONE_MINUS_SRC_ALPHA
-			//GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.4F);
-		}
 		if (this.bodyDoorOpenModel != null)
 		{
-			GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.4F);
 			for (ModelRendererTurbo part : this.bodyDoorOpenModel)
 			{
 				if (part != null)
@@ -120,7 +97,6 @@ public abstract class Model3DBase extends ModelBase {
 		}
 		if (this.leftTrackModel != null)
 		{
-			GL11.glColor4f(1.0F, 1.0F, 1.0F, 10F);
 			for (ModelRendererTurbo part : this.leftTrackModel)
 			{
 				if (part != null)

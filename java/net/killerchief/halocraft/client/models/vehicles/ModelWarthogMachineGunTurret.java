@@ -4,8 +4,13 @@
 
 package net.killerchief.halocraft.client.models.vehicles;
 
+import org.lwjgl.opengl.GL11;
+
 import net.killerchief.halocraft.client.models.Model3DBase;
+import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
 import net.killerchief.turbomodelthingy.ModelRendererTurbo;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.Entity;
 
 public class ModelWarthogMachineGunTurret extends Model3DBase
 {
@@ -191,5 +196,61 @@ public class ModelWarthogMachineGunTurret extends Model3DBase
 
 		//translateAll(0F, 0F, 0F);
 		//flipAll();
+	}
+	
+	@Override
+	protected void renderAllParts(Entity entity, float par7)
+	{
+		/*if (this.bodyModel != null)
+		{
+			for (ModelRendererTurbo part : this.bodyModel)
+			{
+				if (part != null)
+				{
+					part.rotateAngleY = ((EntityWarthog)entity).getWheelTurnAngle();
+				}
+			}
+		}
+		if (this.bodyDoorOpenModel != null)
+		{
+			for (ModelRendererTurbo part : this.bodyDoorOpenModel)
+			{
+				if (part != null)
+				{
+					part.rotateAngleY = ((EntityWarthog)entity).getWheelTurnAngle();
+				}
+			}
+		}*/
+		//this.renderAllParts(par7);
+	}
+	
+	public void renderSomeParts(boolean isturret, float par7)
+	{
+		if (isturret)
+		{
+			if (this.bodyModel != null)
+			{
+				for (ModelRendererTurbo part : this.bodyModel)
+				{
+					if (part != null)
+					{
+						part.render(par7);
+					}
+				}
+			}
+		}
+		else
+		{
+			if (this.bodyDoorOpenModel != null)
+			{
+				for (ModelRendererTurbo part : this.bodyDoorOpenModel)
+				{
+					if (part != null)
+					{
+						part.render(par7);
+					}
+				}
+			}
+		}
 	}
 }
