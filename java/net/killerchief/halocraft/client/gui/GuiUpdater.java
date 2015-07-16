@@ -9,7 +9,10 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -589,15 +592,44 @@ public class GuiUpdater extends GuiScreen {
 					}
 				}
 				
+				ZipFile zip = new ZipFile(currHc.getAbsolutePath());
+				File installclass = new File(TempLoc+"/KCInstallMods.class");
+				InputStream streaminstallclass = zip.getInputStream(zip.getEntry("KCInstallMods.class"));
+
+				FileOutputStream fos = new FileOutputStream(installclass.getAbsolutePath());
+
+				// Read bytes from URL to the local file
+				byte[] buffer = new byte[4096];
+				int bytesRead = 0;
+
+				System.out.print("Extracting installer...");
+				while ((bytesRead = streaminstallclass.read(buffer)) != -1) {
+					System.out.print(".");	// Progress bar :)
+					fos.write(buffer,0,bytesRead);
+				}
+				System.out.println("done!");
+
+				// Close destination stream
+				fos.close();
+				streaminstallclass.close();
+				zip.close();
+				
+				if (!installclass.exists())
+				{
+					System.err.println("Failed to extract installer.");
+					return;
+				}
 				if (HcUpdate != null)
 				{
-					String cmdHc = (new StringBuilder()).append("java -classpath \""+currHc.getAbsolutePath()+"\" net.killerchief.halocraft.client.gui.InstallMods \""+currHc.getAbsolutePath()+"\" \""+newHc.getAbsolutePath()+"\"").toString();
+					Files.copy(newHc, new File(currHc.getParentFile()+"/"+newHc.getName()));
+					String cmdHc = (new StringBuilder()).append("java -classpath \""+installclass.getParentFile()+"\" KCInstallMods \""+currHc.getAbsolutePath()+"\" \""+newHc.getAbsolutePath()+"\"").toString();
 					System.out.println(cmdHc);
 	                Runtime.getRuntime().exec(cmdHc);
 				}
 				if (KCWMUpdate != null)
 				{
-					String cmdKc = (new StringBuilder()).append("java -classpath \""+currHc.getAbsolutePath()+"\" net.killerchief.halocraft.client.gui.InstallMods \""+currKc.getAbsolutePath()+"\" \""+newKc.getAbsolutePath()+"\"").toString();
+					Files.copy(newKc, new File(currKc.getParentFile()+"/"+newKc.getName()));
+					String cmdKc = (new StringBuilder()).append("java -classpath \""+installclass.getParentFile()+"\" KCInstallMods \""+currKc.getAbsolutePath()+"\" \""+newKc.getAbsolutePath()+"\"").toString();
 	                System.out.println(cmdKc);
 	                Runtime.getRuntime().exec(cmdKc);
 				}

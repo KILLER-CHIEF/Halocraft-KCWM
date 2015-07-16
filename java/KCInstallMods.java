@@ -1,11 +1,6 @@
-package net.killerchief.halocraft.client.gui;
-
 import java.io.File;
-import java.io.IOException;
 
-import com.google.common.io.Files;
-
-public class InstallMods {
+public class KCInstallMods {
 
 	public static void main(String[] args) {
 		if (args.length > 1)
@@ -24,12 +19,13 @@ public class InstallMods {
 				{
 					if (currMod.delete())
 					{
-						try {
-							Files.copy(newMod, new File(currMod.getAbsolutePath()+newMod.getName()));
-						} catch (IOException e) {
-							System.err.println("Failed to copy mod into install directory!");
-							e.printStackTrace();
-						}
+						System.out.println("Successfully Deleted Old Mod! Update Success!");
+//						try {
+//							Files.copy(newMod, new File(currMod.getAbsolutePath()+newMod.getName()));
+//						} catch (IOException e) {
+//							System.err.println("Failed to copy mod into install directory!");
+//							e.printStackTrace();
+//						}
 						break;
 					}
 					if (success > 10)
