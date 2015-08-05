@@ -2,7 +2,7 @@ package net.killerchief.halocraft.client.render;
 
 import net.killerchief.halocraft.Halocraft;
 import net.killerchief.halocraft.client.models.mobs.ModelGrunt;
-import net.killerchief.halocraft.entities.mobs.EntityGruntPlasmaPistol;
+import net.killerchief.halocraft.entities.mobs.EntityGruntBase;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.entity.RenderLiving;
@@ -41,7 +41,7 @@ public class RenderGruntPlasmaPistol extends RenderLiving
 	/**
 	 * sets the scale for the slime based on getSlimeSize in EntitySlime
 	 */
-	protected void scaleEntity(EntityGruntPlasmaPistol par1EntitySlime, float par2)
+	protected void scaleEntity(EntityGruntBase par1EntitySlime, float par2)
 	{
 		GL11.glScalef(scale, scale, scale);
 	}
@@ -200,7 +200,7 @@ public class RenderGruntPlasmaPistol extends RenderLiving
 	@Override
 	protected void preRenderCallback(EntityLivingBase par1EntityLivingBase, float par2)
 	{
-		this.scaleEntity((EntityGruntPlasmaPistol)par1EntityLivingBase, par2);
+		this.scaleEntity((EntityGruntBase)par1EntityLivingBase, par2);
 	}
 
 	@Override

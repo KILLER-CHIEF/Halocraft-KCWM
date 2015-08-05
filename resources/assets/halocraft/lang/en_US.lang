@@ -194,6 +194,7 @@ entity.halocraft.EliteSword.name=an Elite wielding an Energy Sword
 entity.halocraft.EliteCarbine.name=an Elite wielding a Carbine
 entity.halocraft.ElitePlasmaRifle.name=an Elite wielding a Plasma Rifle
 entity.halocraft.GruntPlasmaPistol.name=a Grunt wielding a Plasma Pistol
+entity.halocraft.GruntFlee.name=a Grunt
 
 entity.halocraft.MongooseDefault.name=a Black Mongoose
 entity.halocraft.MongooseGreen.name=a Green Mongoose

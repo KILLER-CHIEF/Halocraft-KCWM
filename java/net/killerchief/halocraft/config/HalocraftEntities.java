@@ -5,6 +5,7 @@ import net.killerchief.halocraft.entities.EntityDeployableGravityLift;
 import net.killerchief.halocraft.entities.mobs.EntityEliteCarbine;
 import net.killerchief.halocraft.entities.mobs.EntityElitePlasmaRifle;
 import net.killerchief.halocraft.entities.mobs.EntityEliteSword;
+import net.killerchief.halocraft.entities.mobs.EntityGruntFlee;
 import net.killerchief.halocraft.entities.mobs.EntityGruntPlasmaPistol;
 import net.killerchief.halocraft.entities.vehicles.EntityGhost;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseBlue;
@@ -26,6 +27,7 @@ public class HalocraftEntities {
 		EntityRegistry.registerModEntity(EntityEliteCarbine.class, "EliteCarbine", 2, Halocraft.instance, 80, 2, true);
 		EntityRegistry.registerModEntity(EntityElitePlasmaRifle.class, "ElitePlasmaRifle", 3, Halocraft.instance, 80, 2, true);
 		EntityRegistry.registerModEntity(EntityGruntPlasmaPistol.class, "GruntPlasmaPistol", 4, Halocraft.instance, 80, 2, true);
+		EntityRegistry.registerModEntity(EntityGruntFlee.class, "GruntFlee", 5, Halocraft.instance, 80, 2, true);
 		EntityRegistry.registerModEntity(EntityPassengerSeat.class, "PassengerSeat", 140, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityMongooseDefault.class, "MongooseDefault", 141, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityMongooseGreen.class, "MongooseGreen", 142, Halocraft.instance, 100, 1, true);
@@ -43,6 +45,7 @@ public class HalocraftEntities {
 		registerEntityEgg(EntityEliteCarbine.class, 0xE8D1FF, 0x75DDFF);
 		registerEntityEgg(EntityElitePlasmaRifle.class, 0xE8D1FF, 0x75DDFF);
 		registerEntityEgg(EntityGruntPlasmaPistol.class, 0xE8D1FF, 0x75DDFF);
+		registerEntityEgg(EntityGruntFlee.class, 0xE8D1FF, 0x75DDFF);
 	}
 
 	private static void registerEntityEgg(Class <? extends Entity> entity, int primaryColor, int secondaryColor)

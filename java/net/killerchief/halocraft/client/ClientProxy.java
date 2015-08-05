@@ -42,6 +42,7 @@ import net.killerchief.halocraft.entities.EntityGravityLiftFX;
 import net.killerchief.halocraft.entities.mobs.EntityEliteCarbine;
 import net.killerchief.halocraft.entities.mobs.EntityElitePlasmaRifle;
 import net.killerchief.halocraft.entities.mobs.EntityEliteSword;
+import net.killerchief.halocraft.entities.mobs.EntityGruntFlee;
 import net.killerchief.halocraft.entities.mobs.EntityGruntPlasmaPistol;
 import net.killerchief.halocraft.entities.vehicles.EntityGhost;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseBlue;
@@ -81,6 +82,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityEliteCarbine.class, new RenderEliteGun(new ModelElite(), 0.0F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityElitePlasmaRifle.class, new RenderEliteGun(new ModelElite(), 0.0F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityGruntPlasmaPistol.class, new RenderGruntPlasmaPistol(new ModelGrunt(), 0.0F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityGruntFlee.class, new RenderGruntPlasmaPistol(new ModelGrunt(), 0.0F));
 			
 		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.SniperRifle, (IItemRenderer)new RenderGun(new ModelSniperRifle(), Halocraft.MODID+":textures/guns/SkinSniperRifle.png", false));
 		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.DMR, (IItemRenderer)new RenderGun(new ModelDMR(), Halocraft.MODID+":textures/guns/SkinDMR.png", false));
