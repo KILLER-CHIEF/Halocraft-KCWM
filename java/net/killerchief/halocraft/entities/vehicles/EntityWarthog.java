@@ -31,7 +31,7 @@ public class EntityWarthog extends EntityVehicle
 	public EntityWarthog(World par1World)
 	{
 		super(par1World);
-		this.setSize(1.3F, 0.85F);
+		this.setSize(1.8F, 1.3F);
 		this.stepHeight = 1.0F;
 		this.yOffset = height / 2.0F;
 	}
@@ -100,7 +100,7 @@ public class EntityWarthog extends EntityVehicle
 	@Override
 	public double getMountedYOffset()
 	{
-		return (double)this.height - 0.65D;
+		return (double)this.height - 1.34D;
 	}
 
 	/** Gets whether the entity is moving left.*/
@@ -228,7 +228,7 @@ public class EntityWarthog extends EntityVehicle
 			if (this.riddenByEntity instanceof EntityLivingBase)
 	        {
 	            ((EntityLivingBase)this.riddenByEntity).renderYawOffset = this.rotationYaw;
-	            //((EntityLivingBase)this.riddenByEntity).cameraPitch = -10F;
+	            ((EntityLivingBase)this.riddenByEntity).cameraPitch = -5F;
 	        }
 		}
 	}
