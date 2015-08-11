@@ -72,6 +72,8 @@ public class GuiUpdater extends GuiScreen {
 		String DL = "";
 		public KCWMUpdateInfo() { }
 	}
+	
+	private static boolean NotZIP = false;
 
 	private int selected = -1;
 	private HcUpdateInfo selectedMod = null;
@@ -141,7 +143,26 @@ public class GuiUpdater extends GuiScreen {
 
 		this.versionList.registerScrollButtons(this.buttonList, 7, 8);
 
-		if (HalocraftVersions == null || KCWMVersions == null)
+		File currHc = null;
+		
+		for (ModContainer mod : Loader.instance().getActiveModList())
+		{
+			if (mod.getModId().equalsIgnoreCase(Halocraft.MODID))
+			{
+				currHc = mod.getSource();
+				break;
+			}
+		}
+		
+		if (currHc == null || !currHc.toString().endsWith(".zip"))
+		{
+			NotZIP = true;
+			this.btnChk4Update.enabled = false;
+			this.btnKCWMVers.enabled = false;
+			this.btnDownload.enabled = false;
+		}
+
+		if (!NotZIP && (HalocraftVersions == null || KCWMVersions == null))
 		{
 			this.StartCheckForUpdate();
 		}
@@ -160,6 +181,8 @@ public class GuiUpdater extends GuiScreen {
 		String title = LanguageRegistry.instance().getStringLocalization("gui.halocraft.autoupdater.title");
 		if (title.equalsIgnoreCase(""))
 			title = "Halocraft Auto-Updater";
+		if (NotZIP)
+			title = "Halocraft is NOT in a ZIP! Auto-Updater Disabled!";
 		this.drawCenteredString(this.fontRendererObj, title, this.width / 2, 10, 16777215);
 		
 		this.drawCenteredString(this.fontRendererObj, "Halocraft v"+Halocraft.VERSION, (this.width/2) + 85, 115, 16777215);
