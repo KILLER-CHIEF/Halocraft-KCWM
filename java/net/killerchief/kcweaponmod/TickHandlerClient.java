@@ -271,57 +271,64 @@ public class TickHandlerClient {
 	}
 	
 	//Render Code is Similar to Pumpkin Overlay in GuiIngame / GuiIngameForge
-	public static void RenderHelmetVisor(float transparency, ResourceLocation overlay)//FIXME: These are Old Ones
+	public static void RenderHelmetVisor(float transparency, ResourceLocation overlay)
 	{
-		ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-		int i = scaledresolution.getScaledWidth();
-		int j = scaledresolution.getScaledHeight();
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glDisable(GL11.GL_DEPTH_TEST);
-		GL11.glDepthMask(false);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, transparency);
-		GL11.glDisable(GL11.GL_ALPHA_TEST);
-		//GL11.glBindTexture(GL11.GL_TEXTURE_2D, mc.renderEngine.func_110577_a(field_110927_h));
-		mc.getTextureManager().bindTexture(overlay);//mc.renderEngine.bindTexture(overlay);
-		Tessellator tessellator = Tessellator.instance;
-		tessellator.startDrawingQuads();
-		tessellator.addVertexWithUV(0.0D, j, -90D, 0.0D, 1.0D);
-		tessellator.addVertexWithUV(i, j, -90D, 1.0D, 1.0D);
-		tessellator.addVertexWithUV(i, 0.0D, -90D, 1.0D, 0.0D);
-		tessellator.addVertexWithUV(0.0D, 0.0D, -90D, 0.0D, 0.0D);
-		tessellator.draw();
-		GL11.glDepthMask(true);
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		GL11.glEnable(GL11.GL_ALPHA_TEST);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, transparency);
+		if (!mc.gameSettings.hideGUI)
+		{
+			ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+			int i = scaledresolution.getScaledWidth();
+			int j = scaledresolution.getScaledHeight();
+			GL11.glEnable(GL11.GL_BLEND);
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
+			GL11.glDepthMask(false);
+			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, transparency);
+			GL11.glDisable(GL11.GL_ALPHA_TEST);
+			GL11.glDisable(GL11.GL_LIGHTING);
+			mc.getTextureManager().bindTexture(overlay);
+			Tessellator tessellator = Tessellator.instance;
+			tessellator.startDrawingQuads();
+			tessellator.addVertexWithUV(0.0D, j, -90D, 0.0D, 1.0D);
+			tessellator.addVertexWithUV(i, j, -90D, 1.0D, 1.0D);
+			tessellator.addVertexWithUV(i, 0.0D, -90D, 1.0D, 0.0D);
+			tessellator.addVertexWithUV(0.0D, 0.0D, -90D, 0.0D, 0.0D);
+			tessellator.draw();
+			GL11.glDepthMask(true);
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
+			GL11.glEnable(GL11.GL_ALPHA_TEST);
+			//GL11.glEnable(GL11.GL_LIGHTING);
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		}
 	}
 
 	public static void GunScope(float transparency, ResourceLocation overlay)
 	{
-		Minecraft mc = Minecraft.getMinecraft();
-		ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-		int i = scaledresolution.getScaledWidth();
-		int k = scaledresolution.getScaledHeight();
-		GL11.glEnable(3042 /*GL_BLEND*/);
-		GL11.glDisable(2929 /*GL_DEPTH_TEST*/);
-		GL11.glDepthMask(false);
-		GL11.glBlendFunc(770, 771);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, transparency);
-		GL11.glDisable(3008 /*GL_ALPHA_TEST*/);
-		//GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, mc.renderEngine.getTexture(overlay));
-		mc.getTextureManager().bindTexture(overlay);//mc.renderEngine.bindTexture(overlay);
-		Tessellator tessellator = Tessellator.instance;
-		tessellator.startDrawingQuads();
-		tessellator.addVertexWithUV(i / 2 - 2 * k, k, -90D, 0.0D, 1.0D);
-		tessellator.addVertexWithUV(i / 2 + 2 * k, k, -90D, 1.0D, 1.0D);
-		tessellator.addVertexWithUV(i / 2 + 2 * k, 0.0D, -90D, 1.0D, 0.0D);
-		tessellator.addVertexWithUV(i / 2 - 2 * k, 0.0D, -90D, 0.0D, 0.0D);
-		tessellator.draw();
-		GL11.glDepthMask(true);
-		GL11.glEnable(2929 /*GL_DEPTH_TEST*/);
-		GL11.glEnable(3008 /*GL_ALPHA_TEST*/);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, transparency);
+		if (!mc.gameSettings.hideGUI)
+		{
+			Minecraft mc = Minecraft.getMinecraft();
+			ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+			int i = scaledresolution.getScaledWidth();
+			int k = scaledresolution.getScaledHeight();
+			GL11.glEnable(GL11.GL_BLEND);
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
+			GL11.glDepthMask(false);
+			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, transparency);
+			GL11.glDisable(GL11.GL_ALPHA_TEST);
+			GL11.glDisable(GL11.GL_LIGHTING);
+			mc.getTextureManager().bindTexture(overlay);//mc.renderEngine.bindTexture(overlay);
+			Tessellator tessellator = Tessellator.instance;
+			tessellator.startDrawingQuads();
+			tessellator.addVertexWithUV(i / 2 - 2 * k, k, -90D, 0.0D, 1.0D);
+			tessellator.addVertexWithUV(i / 2 + 2 * k, k, -90D, 1.0D, 1.0D);
+			tessellator.addVertexWithUV(i / 2 + 2 * k, 0.0D, -90D, 1.0D, 0.0D);
+			tessellator.addVertexWithUV(i / 2 - 2 * k, 0.0D, -90D, 0.0D, 0.0D);
+			tessellator.draw();
+			GL11.glDepthMask(true);
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
+			GL11.glEnable(GL11.GL_ALPHA_TEST);
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, transparency);
+		}
 	}
 
 	private static boolean IsZooming = false;
