@@ -1,16 +1,18 @@
 package net.killerchief.halocraft.config;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.killerchief.halocraft.Halocraft;
+import net.killerchief.halocraft.inventory.RecipeShapelessDamagedConvert;
 import net.killerchief.halocraft.items.HalocraftItem;
 import net.killerchief.halocraft.items.ItemArmor;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.oredict.OreDictionary;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class HalocraftItemsArmor {
 	
@@ -158,58 +160,23 @@ public class HalocraftItemsArmor {
 		GameRegistry.addRecipe(new ItemStack(MarkVBootsBlack, 1), new Object[] {
 			"X X", "XUX", Character.valueOf('X'), HalocraftItems.MultiLayeredAlloy, Character.valueOf('U'), HalocraftItemsArmor.BootsUnderArmor
 		});
-
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVHelmetBlack, 1), new Object[] {HalocraftItemsArmor.MarkVHelmetGreen, new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVHelmetBlack, 1), new Object[] {HalocraftItemsArmor.MarkVHelmetBlue, new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVHelmetBlack, 1), new Object[] {HalocraftItemsArmor.MarkVHelmetRed, new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBodyBlack, 1), new Object[] {HalocraftItemsArmor.MarkVBodyGreen, new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBodyBlack, 1), new Object[] {HalocraftItemsArmor.MarkVBodyBlue, new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBodyBlack, 1), new Object[] {HalocraftItemsArmor.MarkVBodyRed, new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVLegsBlack, 1), new Object[] {HalocraftItemsArmor.MarkVLegsGreen, new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVLegsBlack, 1), new Object[] {HalocraftItemsArmor.MarkVLegsBlue, new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVLegsBlack, 1), new Object[] {HalocraftItemsArmor.MarkVLegsRed, new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBootsBlack, 1), new Object[] {HalocraftItemsArmor.MarkVBootsGreen, new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBootsBlack, 1), new Object[] {HalocraftItemsArmor.MarkVBootsBlue, new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBootsBlack, 1), new Object[] {HalocraftItemsArmor.MarkVBootsRed, new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0), new ItemStack(Items.dye, 1, 0)});
-
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVHelmetGreen, 1), new Object[] {HalocraftItemsArmor.MarkVHelmetBlack, new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVHelmetGreen, 1), new Object[] {HalocraftItemsArmor.MarkVHelmetBlue, new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVHelmetGreen, 1), new Object[] {HalocraftItemsArmor.MarkVHelmetRed, new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBodyGreen, 1), new Object[] {HalocraftItemsArmor.MarkVBodyBlack, new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBodyGreen, 1), new Object[] {HalocraftItemsArmor.MarkVBodyBlue, new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBodyGreen, 1), new Object[] {HalocraftItemsArmor.MarkVBodyRed, new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVLegsGreen, 1), new Object[] {HalocraftItemsArmor.MarkVLegsBlack, new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVLegsGreen, 1), new Object[] {HalocraftItemsArmor.MarkVLegsBlue, new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVLegsGreen, 1), new Object[] {HalocraftItemsArmor.MarkVLegsRed, new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBootsGreen, 1), new Object[] {HalocraftItemsArmor.MarkVBootsBlack, new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBootsGreen, 1), new Object[] {HalocraftItemsArmor.MarkVBootsBlue, new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBootsGreen, 1), new Object[] {HalocraftItemsArmor.MarkVBootsRed, new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2), new ItemStack(Items.dye, 1, 2)});
-
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVHelmetBlue, 1), new Object[] {HalocraftItemsArmor.MarkVHelmetBlack, new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVHelmetBlue, 1), new Object[] {HalocraftItemsArmor.MarkVHelmetGreen, new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVHelmetBlue, 1), new Object[] {HalocraftItemsArmor.MarkVHelmetRed, new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBodyBlue, 1), new Object[] {HalocraftItemsArmor.MarkVBodyBlack, new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBodyBlue, 1), new Object[] {HalocraftItemsArmor.MarkVBodyGreen, new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBodyBlue, 1), new Object[] {HalocraftItemsArmor.MarkVBodyRed, new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVLegsBlue, 1), new Object[] {HalocraftItemsArmor.MarkVLegsBlack, new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVLegsBlue, 1), new Object[] {HalocraftItemsArmor.MarkVLegsGreen, new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVLegsBlue, 1), new Object[] {HalocraftItemsArmor.MarkVLegsRed, new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBootsBlue, 1), new Object[] {HalocraftItemsArmor.MarkVBootsBlack, new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBootsBlue, 1), new Object[] {HalocraftItemsArmor.MarkVBootsGreen, new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBootsBlue, 1), new Object[] {HalocraftItemsArmor.MarkVBootsRed, new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4), new ItemStack(Items.dye, 1, 4)});
-
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVHelmetRed, 1), new Object[] {HalocraftItemsArmor.MarkVHelmetBlack, new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVHelmetRed, 1), new Object[] {HalocraftItemsArmor.MarkVHelmetGreen, new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVHelmetRed, 1), new Object[] {HalocraftItemsArmor.MarkVHelmetBlue, new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBodyRed, 1), new Object[] {HalocraftItemsArmor.MarkVBodyBlack, new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBodyRed, 1), new Object[] {HalocraftItemsArmor.MarkVBodyGreen, new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBodyRed, 1), new Object[] {HalocraftItemsArmor.MarkVBodyBlue, new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVLegsRed, 1), new Object[] {HalocraftItemsArmor.MarkVLegsBlack, new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVLegsRed, 1), new Object[] {HalocraftItemsArmor.MarkVLegsGreen, new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVLegsRed, 1), new Object[] {HalocraftItemsArmor.MarkVLegsBlue, new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBootsRed, 1), new Object[] {HalocraftItemsArmor.MarkVBootsBlack, new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBootsRed, 1), new Object[] {HalocraftItemsArmor.MarkVBootsGreen, new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1)});
-		GameRegistry.addShapelessRecipe(new ItemStack(MarkVBootsRed, 1), new Object[] {HalocraftItemsArmor.MarkVBootsBlue, new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1), new ItemStack(Items.dye, 1, 1)});
+		
+		Item[] ArmourMarkV = {MarkVHelmetBlack, MarkVBodyBlack, MarkVLegsBlack, MarkVBootsBlack, 
+				MarkVHelmetGreen, MarkVBodyGreen, MarkVLegsGreen, MarkVBootsGreen, 
+				MarkVHelmetBlue, MarkVBodyBlue, MarkVLegsBlue, MarkVBootsBlue, 
+				MarkVHelmetRed, MarkVBodyRed, MarkVLegsRed, MarkVBootsRed};
+		
+		for (int i = 0; i < ArmourMarkV.length/4; i++) {
+			for (int j = 0; j < ArmourMarkV.length; j++) {
+				if (j == i*4) {
+					j += 4;
+					if (j >= ArmourMarkV.length)
+						break;
+				}
+				int[] dye = {0,2,4,1};
+				GameRegistry.addRecipe(new RecipeShapelessDamagedConvert(new ItemStack(ArmourMarkV[(i*4)+(j%4)], 1), new ItemStack(ArmourMarkV[j], 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Items.dye, 1, dye[i]), new ItemStack(Items.dye, 1, dye[i]), new ItemStack(Items.dye, 1, dye[i]), new ItemStack(Items.dye, 1, dye[i])));
+			}
+		}
 
 		GameRegistry.addRecipe(new ItemStack(MarineHelmet, 1), new Object[] {
 			"ITI", "TMT", Character.valueOf('I'), Items.iron_ingot, Character.valueOf('T'), HalocraftItems.TitaniumIngot, Character.valueOf('M'), HalocraftItems.Microchip

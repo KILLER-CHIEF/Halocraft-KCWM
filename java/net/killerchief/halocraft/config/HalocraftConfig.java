@@ -1,12 +1,15 @@
 package net.killerchief.halocraft.config;
 
+import static net.minecraftforge.oredict.RecipeSorter.Category.SHAPELESS;
 import net.killerchief.halocraft.entities.mobs.EntityEliteCarbine;
 import net.killerchief.halocraft.entities.mobs.EntityElitePlasmaRifle;
 import net.killerchief.halocraft.entities.mobs.EntityEliteSword;
 import net.killerchief.halocraft.entities.mobs.EntityGruntPlasmaPistol;
+import net.killerchief.halocraft.inventory.RecipeShapelessDamagedConvert;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.oredict.RecipeSorter;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
 public class HalocraftConfig {
@@ -76,6 +79,7 @@ public class HalocraftConfig {
 		HalocraftEntities.registerEntities();
 		HalocraftBiomes.registerBiomes();
 		
+		RecipeSorter.register("halocraft:recipeshapelessdamagedconvert", RecipeShapelessDamagedConvert.class, SHAPELESS, "after:minecraft:shapeless");
 		HalocraftBlocks.addRecipes();
 		HalocraftItems.addRecipes();
 		HalocraftItemsArmor.addRecipes();
