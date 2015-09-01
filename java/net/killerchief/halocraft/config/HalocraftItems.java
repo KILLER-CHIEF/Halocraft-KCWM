@@ -84,7 +84,7 @@ public class HalocraftItems {
 		Hypodermic = (new HalocraftItem("Hypodermic", "Hypodermic")).setMaxStackSize(16);
 		Stimpack = (new ItemStimpack("Stimpack", "Stimpack")).setMaxStackSize(8);
 		ItemHealthPack = (new ItemHealthPack("ItemHealthPack", "ItemHealthPack")).setMaxStackSize(4);
-		EnhancedFibre = (new HalocraftItem("EnhancedFiber", "EnhancedFiber")).setMaxStackSize(16);
+		EnhancedFibre = (new HalocraftItem("EnhancedFibre", "EnhancedFibre")).setMaxStackSize(16);
 		UNSCPowerGenerator = (new HalocraftItem("UNSCPowerGenerator", "UNSCPowerGenerator")).setMaxStackSize(1);
 		PlasmaPowerCore = (new HalocraftItem("PlasmaPowerCore", "PlasmaPowerCore")).setMaxDamage(400).setMaxStackSize(1);
 		ShieldProjector = (new HalocraftItem("ShieldProjector", "ShieldProjector")).setMaxStackSize(1);
