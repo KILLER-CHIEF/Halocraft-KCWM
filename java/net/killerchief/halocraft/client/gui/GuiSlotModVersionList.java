@@ -15,7 +15,7 @@ public class GuiSlotModVersionList extends GuiScrollingList
 
 	public GuiSlotModVersionList(GuiUpdater parent, HcUpdateInfo[] versions, int listWidth)
 	{
-		super(parent.mc, 180, parent.height, 30, parent.height - 20, (parent.width/2) - 190, 45);
+		super(parent.mc, 180, parent.height, 40, parent.height - 20, (parent.width/2) - 190, 45);
 		this.parent=parent;
 		this.HcVersions=versions;
 	}

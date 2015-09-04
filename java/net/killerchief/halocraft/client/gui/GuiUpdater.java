@@ -74,6 +74,11 @@ public class GuiUpdater extends GuiScreen {
 	}
 	
 	private static boolean NotZIP = false;
+	private static final String InstallerClassName = "KCInstallModsV1";
+	private static final String TempLoc = System.getProperty("java.io.tmpdir")+"HalocraftUpdater\\";
+	private static final File installclass = new File(TempLoc+"/"+InstallerClassName+".class");
+	private static File currHcInstallPath = null;
+	private static File currKcInstallPath = null;
 
 	private int selected = -1;
 	private HcUpdateInfo selectedMod = null;
@@ -154,7 +159,13 @@ public class GuiUpdater extends GuiScreen {
 			}
 		}
 		
-		if (currHc == null || !currHc.toString().endsWith(".zip"))
+		if (!installclass.exists())
+		{
+			GetModInstallPath();
+			ExtractInstaller();
+		}
+		
+		if (currHc == null || !currHc.toString().endsWith(".zip") || !installclass.exists())
 		{
 			NotZIP = true;
 			this.btnChk4Update.enabled = false;
@@ -182,7 +193,11 @@ public class GuiUpdater extends GuiScreen {
 		if (title.equalsIgnoreCase(""))
 			title = "Halocraft Auto-Updater";
 		if (NotZIP)
-			title = "Halocraft is NOT in a ZIP! Auto-Updater Disabled!";
+		{
+			title = "Halocraft is NOT in a ZIP  or  Installer FAILED to Extract!";
+			this.drawCenteredString(this.fontRendererObj, "Auto-Updater Disabled! (Check Console)", this.width / 2, 22, 16777215);
+		}
+		
 		this.drawCenteredString(this.fontRendererObj, title, this.width / 2, 10, 16777215);
 		
 		this.drawCenteredString(this.fontRendererObj, "Halocraft v"+Halocraft.VERSION, (this.width/2) + 85, 115, 16777215);
@@ -363,7 +378,7 @@ public class GuiUpdater extends GuiScreen {
 			Document doc = null;
 
 			try {
-				doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new URL("http://halocraft.killerchief.net/update.xml").openStream());
+				doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new URL("http://halocraft.killerchief.net/updater-v1").openStream());
 				System.out.println("Successfully found, parsed and opened update XML doc");
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
@@ -527,6 +542,61 @@ public class GuiUpdater extends GuiScreen {
 			(new DownloadThread(this, hc, kc)).start();
 		}
 	}
+	
+	private void GetModInstallPath()
+	{
+		for (ModContainer mod : Loader.instance().getActiveModList())
+		{
+			if (mod.getModId().equalsIgnoreCase(Halocraft.MODID))
+			{
+				currHcInstallPath = mod.getSource();
+				System.out.println(currHcInstallPath.getPath());//getCanonicalPath
+			}
+			else if (mod.getModId().equalsIgnoreCase(KCWeaponMod.MODID))
+			{
+				currKcInstallPath = mod.getSource();
+				System.out.println(currKcInstallPath.getPath());//getCanonicalPath
+			}
+		}
+	}
+	
+	private boolean ExtractInstaller()
+	{
+		if (installclass.exists())
+			return true;
+		if (currHcInstallPath != null)
+		{
+			try {
+				new File(TempLoc).mkdirs();
+				
+				ZipFile zip = new ZipFile(currHcInstallPath.getAbsolutePath());
+				InputStream streaminstallclass = zip.getInputStream(zip.getEntry(InstallerClassName+".class"));
+				FileOutputStream fos = new FileOutputStream(installclass.getAbsolutePath());
+
+				// Read bytes from URL to the local file
+				byte[] buffer = new byte[4096];
+				int bytesRead = 0;
+
+				System.out.print("Extracting installer...");
+				while ((bytesRead = streaminstallclass.read(buffer)) != -1) {
+					System.out.print(".");	// Progress bar :)
+					fos.write(buffer,0,bytesRead);
+				}
+				System.out.println("done!");
+
+				// Close destination stream
+				fos.close();
+				streaminstallclass.close();
+				zip.close();
+				return true;
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("Failed to Extract Installer!");
+		return false;
+	}
 
 	public final class DownloadThread extends Thread {
 
@@ -548,7 +618,7 @@ public class GuiUpdater extends GuiScreen {
 			isDownloadThreadRunning = true;
 
 			try {
-				String TempLoc = System.getProperty("java.io.tmpdir")+"HalocraftUpdater\\";
+				//String TempLoc = System.getProperty("java.io.tmpdir")+"HalocraftUpdater\\";
 				new File(TempLoc).mkdirs();
 				System.out.println(TempLoc+HcUpdate.DL.substring(HcUpdate.DL.lastIndexOf("/")+1));
 				File newHc = null;
@@ -573,21 +643,12 @@ public class GuiUpdater extends GuiScreen {
 					}
 					newKc = new File(TempLoc+KcName);
 				}
-				File currHc = null;
-				File currKc = null;
-				for (ModContainer mod : Loader.instance().getActiveModList())
+
+				if (currHcInstallPath == null || currKcInstallPath == null)
 				{
-					if (mod.getModId().equalsIgnoreCase(Halocraft.MODID))
-					{
-						currHc = mod.getSource();
-						System.out.println(currHc.getCanonicalPath());
-					}
-					else if (mod.getModId().equalsIgnoreCase(KCWeaponMod.MODID))
-					{
-						currKc = mod.getSource();
-						System.out.println(currKc.getCanonicalPath());
-					}
+					GetModInstallPath();
 				}
+				
 				if (HcUpdate != null)
 				{
 					if (!newHc.exists())
@@ -615,27 +676,10 @@ public class GuiUpdater extends GuiScreen {
 					}
 				}
 				
-				ZipFile zip = new ZipFile(currHc.getAbsolutePath());
-				File installclass = new File(TempLoc+"/KCInstallMods.class");
-				InputStream streaminstallclass = zip.getInputStream(zip.getEntry("KCInstallMods.class"));
-
-				FileOutputStream fos = new FileOutputStream(installclass.getAbsolutePath());
-
-				// Read bytes from URL to the local file
-				byte[] buffer = new byte[4096];
-				int bytesRead = 0;
-
-				System.out.print("Extracting installer...");
-				while ((bytesRead = streaminstallclass.read(buffer)) != -1) {
-					System.out.print(".");	// Progress bar :)
-					fos.write(buffer,0,bytesRead);
+				if (!installclass.exists())
+				{
+					ExtractInstaller();
 				}
-				System.out.println("done!");
-
-				// Close destination stream
-				fos.close();
-				streaminstallclass.close();
-				zip.close();
 				
 				if (!installclass.exists())
 				{
@@ -644,15 +688,15 @@ public class GuiUpdater extends GuiScreen {
 				}
 				if (HcUpdate != null)
 				{
-					Files.copy(newHc, new File(currHc.getParentFile()+"/"+newHc.getName()));
-					String cmdHc = (new StringBuilder()).append("java -classpath \""+installclass.getParentFile()+"\" KCInstallMods \""+currHc.getAbsolutePath()+"\" \""+newHc.getAbsolutePath()+"\"").toString();
+					Files.copy(newHc, new File(currHcInstallPath.getParentFile()+"/"+newHc.getName()));
+					String cmdHc = (new StringBuilder()).append("java -classpath \""+installclass.getParentFile()+"\" "+InstallerClassName+" \""+currHcInstallPath.getAbsolutePath()+"\" \""+newHc.getAbsolutePath()+"\"").toString();
 					System.out.println(cmdHc);
 	                Runtime.getRuntime().exec(cmdHc);
 				}
 				if (KCWMUpdate != null)
 				{
-					Files.copy(newKc, new File(currKc.getParentFile()+"/"+newKc.getName()));
-					String cmdKc = (new StringBuilder()).append("java -classpath \""+installclass.getParentFile()+"\" KCInstallMods \""+currKc.getAbsolutePath()+"\" \""+newKc.getAbsolutePath()+"\"").toString();
+					Files.copy(newKc, new File(currKcInstallPath.getParentFile()+"/"+newKc.getName()));
+					String cmdKc = (new StringBuilder()).append("java -classpath \""+installclass.getParentFile()+"\" "+InstallerClassName+" \""+currKcInstallPath.getAbsolutePath()+"\" \""+newKc.getAbsolutePath()+"\"").toString();
 	                System.out.println(cmdKc);
 	                Runtime.getRuntime().exec(cmdKc);
 				}
@@ -682,7 +726,7 @@ public class GuiUpdater extends GuiScreen {
 			mainThread.btnDownload.enabled = false;
 			mainThread.btnDownload.displayString = "Downloaded!";
 		}
-
+		
 		private void pingDL(String pageURL) throws IOException
 		{
 			// Open a connection to the page.

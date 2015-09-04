@@ -1,6 +1,6 @@
 import java.io.File;
 
-public class KCInstallMods {
+public class KCInstallModsV1 {
 
 	public static void main(String[] args) {
 		if (args.length > 1)
