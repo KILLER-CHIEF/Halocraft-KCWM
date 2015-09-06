@@ -43,7 +43,9 @@ public class KCWeaponMod {
 
 	public static final String MODID = "kcweaponmod";
 	public static final String NAME = "KC's Weapon Mod";
-	public static final String VERSION = "0.1.1";
+	public static final String VERSION = "0.1.2";
+	
+	public static String getVersion() { return VERSION; }
 	
 	public static final String WeaponFileVersion = "1.0";
 
@@ -72,7 +74,7 @@ public class KCWeaponMod {
 		config.load();
 		DoSettingsConfiguration(config);
 		
-		weaponModDirectory = event.getModConfigurationDirectory().toString() + "\\KCWeaponMod Weapons\\";
+		weaponModDirectory = event.getModConfigurationDirectory().toString() + "/KCWeaponMod-Weapons/";
 		//System.out.println(this.modDirectory);//C:\Users\KILLER CHIEF\Desktop\MCForge-1.7.10-10.13.2.1230\eclipse\config
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(KCWeaponMod.MODID);
 		PacketRegistry.registerPackets();

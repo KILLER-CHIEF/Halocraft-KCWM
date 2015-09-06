@@ -17,6 +17,25 @@ command.halocraft.fillgunholder.unknownitemstack=Could not find the Block/Item S
 # GUI
 gui.halocraft.autoupdater.title=Halocraft Auto-Updater
 gui.halocraft.autoupdater.title.tooltip=Tool to check for updates, download and install them automatically.
+gui.halocraft.autoupdater.title.fail.installer=Installer FAILED to Extract! (It was likely removed purposefully, e.g. a modpack)
+gui.halocraft.autoupdater.title.disabled=Auto-Updater Disabled! (Check Console)
+gui.halocraft.autoupdater.updkcwmto=Update KCWM to: 
+gui.halocraft.autoupdater.viewhc=View Halocraft Website
+gui.halocraft.autoupdater.viewhclog=View Update Log
+gui.halocraft.autoupdater.update.check=Check for Updates
+gui.halocraft.autoupdater.update.checking=Checking for Updates...
+gui.halocraft.autoupdater.version.current=Current
+gui.halocraft.autoupdater.download=Download
+gui.halocraft.autoupdater.download.success=Downloaded!
+gui.halocraft.autoupdater.download.installing=Installing & Closing!
+gui.halocraft.autoupdater.download.cancel=Downloading... Cancel?
+gui.halocraft.autoupdater.download.fail.installer=Failed to Extract Installer!
+gui.halocraft.autoupdater.download.fail.hc=Hc DL Failed!
+gui.halocraft.autoupdater.download.fail.kcwm=KCWM DL Failed!
+gui.halocraft.autoupdater.download.fail.md5=Bad DL'd Mod MD5!
+gui.halocraft.autoupdater.download.error.kcwmnotfound=KCWM Version Not Found!
+gui.halocraft.autoupdater.download.cancelling=Canceling...
+gui.halocraft.autoupdater.back=Back
 gui.halocraft.configscreen.title=Halocraft Mod Configuration
 gui.halocraft.generalconfigscreen.cfgfile=Halocraft General Config
 gui.halocraft.generalconfigscreen.cfgfile.tooltip=All General Mod Settings.
@@ -144,6 +163,7 @@ item.halocraft.MongooseGreen.name=Mongoose Green
 item.halocraft.MongooseBlue.name=Mongoose Blue
 item.halocraft.MongooseRed.name=Mongoose Red
 item.halocraft.Ghost.name=Ghost
+item.halocraft.Warthog.name=Warthog
 
 # ------------Blocks------------
 tile.halocraft.TitaniumOre.name=Titanium Ore
@@ -188,6 +208,8 @@ tile.halocraft.RechargeStation.name=Recharge Station
 tile.halocraft.Landmine.name=Landmine
 #tile.halocraft.HaloPortal.name=Halo Portal
 tile.halocraft.GunHolder.name=Gun Holder
+tile.halocraft.CovSupplyCaseBase.name=Covenant Supply Case
+tile.halocraft.CovSupplyCaseTop.name=Cov Supply Case Top
 
 # Entities
 entity.halocraft.EliteSword.name=an Elite wielding an Energy Sword

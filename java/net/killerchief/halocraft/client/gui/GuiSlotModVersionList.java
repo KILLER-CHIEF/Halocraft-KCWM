@@ -55,10 +55,10 @@ public class GuiSlotModVersionList extends GuiScrollingList
 	{
 		HcUpdateInfo info = this.HcVersions[listIndex];
 		
-		this.parent.mc.fontRenderer.drawString(this.parent.mc.fontRenderer.trimStringToWidth("Halocraft v"+info.Version+(Halocraft.VERSION.equalsIgnoreCase(info.Version) ? " (Current)" : ""), listWidth - 10), this.left + 3 , var3 + 2, Halocraft.VERSION.equalsIgnoreCase(info.Version) ? 0xFF2222 : 0xFFFFFF);
+		this.parent.mc.fontRenderer.drawString(this.parent.mc.fontRenderer.trimStringToWidth("Halocraft v"+info.Version+(Halocraft.VERSION.equalsIgnoreCase(info.Version) ? " (Current)" : "")+(info.Version.equalsIgnoreCase("0.7.2") ? " (No Updater!)" : ""), listWidth - 10), this.left + 3 , var3 + 2, Halocraft.VERSION.equalsIgnoreCase(info.Version) ? 0xFF2222 : 0xFFFFFF);
 		this.parent.mc.fontRenderer.drawString(this.parent.mc.fontRenderer.trimStringToWidth("Forge: "+info.ForgeVersion, listWidth - 10), this.left + 3 , var3 + 12, info.ForgeVersion.equalsIgnoreCase(ForgeVersion.getVersion()) ? 0x22FF22 : (info.ForgeVersion.equalsIgnoreCase(GuiUpdater.VersionCompat) ? 0xFF6A00 : 0xFF2222));
 		//this.parent.mc.fontRenderer.drawString(this.parent.mc.fontRenderer.trimStringToWidth("Requires KCWM v"+info.KCWMVersion+(info.KCWMVersion.contains(KCWeaponMod.VERSION) ? " (Compatible)" : ""), listWidth - 10), this.left + 3 , var3 + 22, info.KCWMVersion.contains(KCWeaponMod.VERSION) ? 0x22FF22 : 0xFF6A00);
-		this.parent.mc.fontRenderer.drawSplitString("Requires KCWM v"+info.KCWMVersion+(info.KCWMVersion.contains(KCWeaponMod.VERSION) ? " (Compatible)" : ""), this.left + 3 , var3 + 22, 170, info.KCWMVersion.contains(KCWeaponMod.VERSION) ? 0x22FF22 : 0xFF6A00);
+		this.parent.mc.fontRenderer.drawSplitString("Requires KCWM v"+info.KCWMVersion+(info.KCWMVersion.contains(KCWeaponMod.getVersion()) ? " (Compatible)" : ""), this.left + 3 , var3 + 22, 170, info.KCWMVersion.contains(KCWeaponMod.getVersion()) ? 0x22FF22 : 0xFF6A00);
 		
 		/*if (info.KCWMVersion == null)
 		{

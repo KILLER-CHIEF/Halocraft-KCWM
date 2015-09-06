@@ -27,6 +27,8 @@ public class EntityWarthog extends EntityVehicle
 	private float rotatePassengerFrame = 0F;
 	private float entityRiderYawDelta = 0F;
 	private double entityRiderPitchDelta = 0D;
+	
+	private EntityWarthogBack entityback = null;
 
 	public EntityWarthog(World par1World)
 	{
@@ -194,18 +196,18 @@ public class EntityWarthog extends EntityVehicle
 			{
 				par1EntityPlayer.rotationYaw = this.rotationYaw;
 				par1EntityPlayer.rotationPitch = 10F;
-				if (this.passengerSeats.length >= 2 && this.passengerSeats[1] != null && this.passengerSeats[1].riddenByEntity == null)
-				{
-					par1EntityPlayer.mountEntity(this.passengerSeats[1]);
-				}
-				else
-					par1EntityPlayer.mountEntity(this);
+				par1EntityPlayer.mountEntity(this);
+//				if (this.passengerSeats != null && this.passengerSeats.length >= 2 && this.passengerSeats[1] != null && this.passengerSeats[1].riddenByEntity == null)
+//				{
+//					par1EntityPlayer.mountEntity(this.passengerSeats[1]);
+//				}
+//				else
 			}
 			return true;
 		}
 		else
 		{
-			if (this.riddenByEntity != par1EntityPlayer && this.passengerSeats != null && this.passengerSeats[0] != null && this.passengerSeats[0].riddenByEntity == null)
+			if (this.riddenByEntity != par1EntityPlayer && this.passengerSeats != null && this.passengerSeats.length >= 2 && this.passengerSeats[0] != null && this.passengerSeats[0].riddenByEntity == null)
 			{
 				if (!this.worldObj.isRemote)
 				{
@@ -232,6 +234,17 @@ public class EntityWarthog extends EntityVehicle
 	        }
 		}
 	}
+	
+	/**
+	 * Will get destroyed next tick.
+	 */
+	@Override
+	public void setDead()
+	{
+		super.setDead();
+		if (this.entityback != null)
+			this.entityback.setDead();
+	}
 
 	/**
 	 * Called to update the entity's position/logic.
@@ -252,6 +265,34 @@ public class EntityWarthog extends EntityVehicle
 		}
 
 		this.setFwdVelocity(this.fwdVelocity);
+		
+		if (this.entityback != null)
+		{
+//			double xOffset = -Math.sin(Math.toRadians(this.rotationYaw)) * 2.2;
+//			double zOffset = Math.cos(Math.toRadians(this.rotationYaw)) * 2.2;
+//			this.entityback.posX = this.posX - xOffset;
+//			this.entityback.posY = this.posY - 0.4D;
+//			this.entityback.posZ = this.posZ - zOffset;
+			
+			//this.entityback.setLocationAndAngles(this.posX - xOffset, this.posY - 0.4D, this.posZ - zOffset, 0.0F, 0.0F);
+			//System.out.println(this.entityback);
+			if (this.worldObj.isRemote)
+			{
+				//this.entityback = (EntityWarthogBack)this.worldObj.getEntityByID(209907);
+			}
+		}
+		else
+		{
+			this.entityback = new EntityWarthogBack(this.worldObj, this, this.posX, this.posY, this.posZ);
+			if (!this.worldObj.isRemote)
+			{
+				this.worldObj.spawnEntityInWorld(this.entityback);
+			}
+			else
+			{
+				//this.entityback = (EntityWarthogBack)this.worldObj.getEntityByID(338494);
+			}
+		}
 	}
 
 	@Override

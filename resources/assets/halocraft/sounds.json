@@ -596,5 +596,15 @@
 			"weapons/reload/SniperRifleReload2",
 			"weapons/reload/SniperRifleReload3"
 		]
+    },
+	"weapons.reload.SpikeRifleReload":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/reload/SpikeRifleReload1",
+			"weapons/reload/SpikeRifleReload2",
+			"weapons/reload/SpikeRifleReload3"
+		]
     }
 }

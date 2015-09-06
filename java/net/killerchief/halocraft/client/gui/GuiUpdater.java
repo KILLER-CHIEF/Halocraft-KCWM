@@ -3,14 +3,14 @@ package net.killerchief.halocraft.client.gui;
 import java.awt.Desktop;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
+import java.net.URLConnection;
+import java.security.MessageDigest;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -61,6 +61,7 @@ public class GuiUpdater extends GuiScreen {
 		String KCWMVersion = "";
 		String Ping = "";
 		String DL = "";
+		String MD5 = "";
 		public HcUpdateInfo() { }
 	}
 
@@ -70,10 +71,11 @@ public class GuiUpdater extends GuiScreen {
 		String ForgeVersion = "";
 		String Ping = "";
 		String DL = "";
+		String MD5 = "";
 		public KCWMUpdateInfo() { }
 	}
 	
-	private static boolean NotZIP = false;
+	private static boolean NoInstaller = false;
 	private static final String InstallerClassName = "KCInstallModsV1";
 	private static final String TempLoc = System.getProperty("java.io.tmpdir")+"HalocraftUpdater\\";
 	private static final File installclass = new File(TempLoc+"/"+InstallerClassName+".class");
@@ -94,8 +96,8 @@ public class GuiUpdater extends GuiScreen {
 			this.selectedMod=HalocraftVersions[selected];
 			this.kcwmbtnversions = this.selectedMod.KCWMVersion.replace(" ", "").trim().split(",");
 			this.btnKCWMVers.displayString = this.kcwmbtnversions.length != 0 ? this.kcwmbtnversions[0] : "Bugged";
-			if (this.btnKCWMVers.displayString.equalsIgnoreCase(KCWeaponMod.VERSION))
-				this.btnKCWMVers.displayString = "Current";
+			if (this.btnKCWMVers.displayString.equalsIgnoreCase(KCWeaponMod.getVersion()))
+				this.btnKCWMVers.displayString = strLoc("version.current");
 		} else {
 			this.selectedMod=null;
 		}
@@ -119,17 +121,17 @@ public class GuiUpdater extends GuiScreen {
 	{
 		super.initGui();
 		this.buttonList.clear();
-		this.btnViewHcWeb = new GuiButton(1, (width/2) + 5, 40, 160, 20, "View Halocraft Website");
-		this.btnViewUpdateLog = new GuiButton(2, (width/2) + 5, 60, 160, 20, "View Update Log");
-		this.btnChk4Update = new GuiButton(3, (width/2) + 10, 90, 150, 20, "Check for Updates");
-		this.btnKCWMVers = new GuiButton(4, (width/2) + 95, 154, 60, 20, "Current");
+		this.btnViewHcWeb = new GuiButton(1, (width/2) + 5, 40, 160, 20, strLoc("viewhc"));
+		this.btnViewUpdateLog = new GuiButton(2, (width/2) + 5, 60, 160, 20, strLoc("viewhclog"));
+		this.btnChk4Update = new GuiButton(3, (width/2) + 10, 90, 150, 20, strLoc("update.check"));
+		this.btnKCWMVers = new GuiButton(4, (width/2) + 95, 154, 60, 20, strLoc("version.current"));
 		this.btnKCWMVers.displayString = this.kcwmbtnversions.length != 0 && this.kcwmversindex < this.kcwmbtnversions.length ? this.kcwmbtnversions[this.kcwmversindex] : "Bugged";
-		if (this.btnKCWMVers.displayString.equalsIgnoreCase(KCWeaponMod.VERSION))
-			this.btnKCWMVers.displayString = "Current";
+		if (this.btnKCWMVers.displayString.equalsIgnoreCase(KCWeaponMod.getVersion()))
+			this.btnKCWMVers.displayString = strLoc("version.current");
 		this.btnKCWMVers.enabled = false;
-		this.btnDownload = new GuiButton(5, (width/2) + 20, 180, 130, 20, "Download");
+		this.btnDownload = new GuiButton(5, (width/2) + 10, 180, 150, 20, strLoc("download"));
 		this.btnDownload.enabled = false;
-		this.btnExit = new GuiButton(6, width - 110, height - 30, 80, 20, "Back");
+		this.btnExit = new GuiButton(6, width - 110, height - 30, 80, 20, strLoc("back"));
 		this.buttonList.add(this.btnViewHcWeb);
 		this.buttonList.add(this.btnViewUpdateLog);
 		this.buttonList.add(this.btnChk4Update);
@@ -148,35 +150,33 @@ public class GuiUpdater extends GuiScreen {
 
 		this.versionList.registerScrollButtons(this.buttonList, 7, 8);
 
-		File currHc = null;
-		
-		for (ModContainer mod : Loader.instance().getActiveModList())
-		{
-			if (mod.getModId().equalsIgnoreCase(Halocraft.MODID))
-			{
-				currHc = mod.getSource();
-				break;
-			}
-		}
+		GetModInstallPath();
+		ExtractInstaller(true);
 		
 		if (!installclass.exists())
 		{
-			GetModInstallPath();
-			ExtractInstaller();
-		}
-		
-		if (currHc == null || !currHc.toString().endsWith(".zip") || !installclass.exists())
-		{
-			NotZIP = true;
+			NoInstaller = true;
 			this.btnChk4Update.enabled = false;
 			this.btnKCWMVers.enabled = false;
 			this.btnDownload.enabled = false;
 		}
 
-		if (!NotZIP && (HalocraftVersions == null || KCWMVersions == null))
+		if (!NoInstaller && (HalocraftVersions == null || KCWMVersions == null))
 		{
 			this.StartCheckForUpdate();
 		}
+		
+		if (isDownloadThreadRunning)
+		{
+			this.btnDownload.displayString = strLoc("download.cancel");
+			this.btnDownload.enabled = true;
+		}
+	}
+	
+	private String strLoc(String tag)
+	{
+		String str = LanguageRegistry.instance().getStringLocalization("gui."+Halocraft.MODID+".autoupdater."+tag);
+		return str.equalsIgnoreCase("") ? "autoupdater."+tag : str;
 	}
 
 	/**
@@ -189,22 +189,20 @@ public class GuiUpdater extends GuiScreen {
 
 		this.versionList.drawScreen(mouseX, mouseY, partialTicks);
 
-		String title = LanguageRegistry.instance().getStringLocalization("gui.halocraft.autoupdater.title");
-		if (title.equalsIgnoreCase(""))
-			title = "Halocraft Auto-Updater";
-		if (NotZIP)
+		String title = strLoc("title");
+		if (NoInstaller)
 		{
-			title = "Halocraft is NOT in a ZIP  or  Installer FAILED to Extract!";
-			this.drawCenteredString(this.fontRendererObj, "Auto-Updater Disabled! (Check Console)", this.width / 2, 22, 16777215);
+			title = strLoc("title.fail.installer");
+			this.drawCenteredString(this.fontRendererObj, strLoc("title.disabled"), this.width / 2, 22, 16777215);
 		}
 		
 		this.drawCenteredString(this.fontRendererObj, title, this.width / 2, 10, 16777215);
 		
 		this.drawCenteredString(this.fontRendererObj, "Halocraft v"+Halocraft.VERSION, (this.width/2) + 85, 115, 16777215);
 		this.drawCenteredString(this.fontRendererObj, "Forge: "+ForgeVersion.getVersion(), (this.width/2) + 85, 127, 16777215);
-		this.drawCenteredString(this.fontRendererObj, "KC's Weapon Mod v"+KCWeaponMod.VERSION, (this.width/2) + 85, 139, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "KC's Weapon Mod v"+KCWeaponMod.getVersion(), (this.width/2) + 85, 139, 16777215);
 		
-		this.drawCenteredString(this.fontRendererObj, "Update KCWM to: ", (this.width/2) + 55, 160, 16777215);
+		this.drawCenteredString(this.fontRendererObj, strLoc("updkcwmto"), (this.width/2) + 55, 160, 16777215);
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
@@ -216,7 +214,7 @@ public class GuiUpdater extends GuiScreen {
 	public void updateScreen()
 	{
 		super.updateScreen();
-		if (this.selectedMod != null && (!Halocraft.VERSION.equalsIgnoreCase(this.selectedMod.Version) || !this.btnKCWMVers.displayString.equalsIgnoreCase("Current")))
+		if (this.selectedMod != null && (!Halocraft.VERSION.equalsIgnoreCase(this.selectedMod.Version) || !this.btnKCWMVers.displayString.equalsIgnoreCase(strLoc("version.current"))))
 			this.btnDownload.enabled = true;
 		else
 			this.btnDownload.enabled = false;
@@ -225,12 +223,12 @@ public class GuiUpdater extends GuiScreen {
 		{
 			this.kcwmbtnversions = this.selectedMod.KCWMVersion.replace(" ", "").trim().split(",");
 			
-			if (kcwmbtnversions.length <= 1 && this.selectedMod.KCWMVersion.contains(KCWeaponMod.VERSION))
+			if (kcwmbtnversions.length <= 1 && this.selectedMod.KCWMVersion.contains(KCWeaponMod.getVersion()))
 			{
 				this.btnKCWMVers.enabled = false;
-				this.btnKCWMVers.displayString = "Current";
+				this.btnKCWMVers.displayString = strLoc("version.current");
 			}
-			else if (kcwmbtnversions.length <= 1 && !this.selectedMod.KCWMVersion.contains(KCWeaponMod.VERSION))
+			else if (kcwmbtnversions.length <= 1 && !this.selectedMod.KCWMVersion.contains(KCWeaponMod.getVersion()))
 			{
 				this.btnKCWMVers.enabled = false;
 				this.btnKCWMVers.displayString = this.selectedMod.KCWMVersion;
@@ -238,7 +236,7 @@ public class GuiUpdater extends GuiScreen {
 			else if (kcwmbtnversions.length > 1)
 			{
 				this.btnKCWMVers.enabled = true;
-				if (!this.selectedMod.KCWMVersion.contains(this.btnKCWMVers.displayString) && !this.btnKCWMVers.displayString.equalsIgnoreCase("Current"))
+				if (!this.selectedMod.KCWMVersion.contains(this.btnKCWMVers.displayString) && !this.btnKCWMVers.displayString.equalsIgnoreCase(strLoc("version.current")))
 				{
 					this.btnKCWMVers.displayString = kcwmbtnversions[0];
 				}
@@ -278,15 +276,15 @@ public class GuiUpdater extends GuiScreen {
 				if (++this.kcwmversindex >= this.kcwmbtnversions.length)
 					this.kcwmversindex = 0;
 				this.btnKCWMVers.displayString = this.kcwmbtnversions[this.kcwmversindex];
-				if (this.btnKCWMVers.displayString.equalsIgnoreCase(KCWeaponMod.VERSION))
-					this.btnKCWMVers.displayString = "Current";
+				if (this.btnKCWMVers.displayString.equalsIgnoreCase(KCWeaponMod.getVersion()))
+					this.btnKCWMVers.displayString = strLoc("version.current");
 			}
 		}
 		else if (guibutton.id == this.btnDownload.id)
 		{
 			for (KCWMUpdateInfo kcwm : KCWMVersions)
 			{
-				if (!this.btnKCWMVers.displayString.equalsIgnoreCase("Current") && kcwm.Version.equalsIgnoreCase(this.btnKCWMVers.displayString) && !this.btnKCWMVers.displayString.equalsIgnoreCase(KCWeaponMod.VERSION))
+				if (!this.btnKCWMVers.displayString.equalsIgnoreCase(strLoc("version.current")) && kcwm.Version.equalsIgnoreCase(this.btnKCWMVers.displayString) && !this.btnKCWMVers.displayString.equalsIgnoreCase(KCWeaponMod.getVersion()))
 				{
 					DownloadUpdate(this.selectedMod.Version.equalsIgnoreCase(Halocraft.VERSION) ? null : this.selectedMod, kcwm);
 					return;
@@ -297,7 +295,7 @@ public class GuiUpdater extends GuiScreen {
 				DownloadUpdate(this.selectedMod, null);
 				return;
 			}
-			this.btnDownload.displayString = "KCWM Version Not Found!";
+			this.btnDownload.displayString = strLoc("download.error.kcwmnotfound");
 		}
 		else if (guibutton.id == this.btnChk4Update.id)
 		{
@@ -353,7 +351,7 @@ public class GuiUpdater extends GuiScreen {
 		if (!isUpdateCheckThreadRunning)
 		{
 			this.btnChk4Update.enabled = false;
-			this.btnChk4Update.displayString = "Checking for Updates...";
+			this.btnChk4Update.displayString = strLoc("update.checking");
 			(new UpdateCheckThread(this)).start();
 		}
 	}
@@ -378,7 +376,12 @@ public class GuiUpdater extends GuiScreen {
 			Document doc = null;
 
 			try {
-				doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new URL("http://halocraft.killerchief.net/updater-v1").openStream());
+				URL url = new URL("http://halocraft.killerchief.net/updater-v1");
+				URLConnection con = url.openConnection();
+			    con.setUseCaches(false);
+			    InputStream is = con.getInputStream();
+				doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is);
+				is.close();
 				System.out.println("Successfully found, parsed and opened update XML doc");
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
@@ -430,17 +433,20 @@ public class GuiUpdater extends GuiScreen {
 													Element modversion = (Element) modversions.item(k);
 
 													HcUpdateInfo info = new HcUpdateInfo();
-													
-													if (Halocraft.VERSION.equalsIgnoreCase(info.Version))
-													{
-														VersionCompat = info.ForgeVersion;
-													}
 
 													info.Version = modversion.getAttribute("version");
 													info.ForgeVersion = modversion.getAttribute("forge");
 													info.KCWMVersion = modversion.getAttribute("kcwm");
 													info.Ping = modversion.getAttribute("ping");
 													info.DL = modversion.getAttribute("dl");
+													info.MD5 = modversion.getAttribute("md5");
+													
+													//System.out.println(Halocraft.VERSION+info.Version);
+													if (Halocraft.VERSION.equalsIgnoreCase(info.Version))
+													{
+														VersionCompat = info.ForgeVersion;
+														System.out.println("Compatible Forge Version: "+VersionCompat);
+													}
 
 													HalocraftVersions[k] = info;
 													System.out.println("Added Halocraft v"+info.Version+" to list");
@@ -479,6 +485,7 @@ public class GuiUpdater extends GuiScreen {
 													info.ForgeVersion = modversion.getAttribute("forge");
 													info.Ping = modversion.getAttribute("ping");
 													info.DL = modversion.getAttribute("dl");
+													info.MD5 = modversion.getAttribute("md5");
 
 													KCWMVersions[k] = info;
 													System.out.println("Added KCWM v"+info.Version+" to list");
@@ -507,39 +514,27 @@ public class GuiUpdater extends GuiScreen {
 				this.mainThread.versionList.registerScrollButtons(this.mainThread.buttonList, 7, 8);
 			}
 
-			//try {
-			/*} catch (IOException e) {
-				if (e.getMessage() != null && e.getMessage().contains("Server returned HTTP response code: "))
-				{
-					System.err.println(e.getMessage());
-					int error = Integer.parseInt(e.getMessage().substring(36, 39));
-					if (error >= 400 && error <= 407)
-					{
-						System.err.println("Requested URL does NOT exist, has been disallowed, or is invalid.");
-					}
-					else if (error == 408)
-					{
-						System.err.println("Request Timeout: The server is likely overloaded at the moment, please try again later!");
-					}
-				}
-				else
-					e.printStackTrace();
-			}*/
-
 			isUpdateCheckThreadRunning = false;
 
 			mainThread.btnChk4Update.enabled = true;
-			mainThread.btnChk4Update.displayString = "Check for Updates";
+			mainThread.btnChk4Update.displayString = strLoc("update.check");
 		}
 	}
+	
+	private static boolean cancelUpdate = false;
 
 	private void DownloadUpdate(HcUpdateInfo hc, KCWMUpdateInfo kc)
 	{
 		if (!isDownloadThreadRunning)
 		{
 			this.btnDownload.enabled = false;
-			this.btnDownload.displayString = "Downloading...";
+			this.btnDownload.displayString = strLoc("download.cancel");
 			(new DownloadThread(this, hc, kc)).start();
+		}
+		else
+		{
+			this.btnDownload.displayString = strLoc("download.cancelling");
+			cancelUpdate = true;
 		}
 	}
 	
@@ -560,29 +555,36 @@ public class GuiUpdater extends GuiScreen {
 		}
 	}
 	
-	private boolean ExtractInstaller()
+	private boolean ExtractInstaller(boolean override)
 	{
-		if (installclass.exists())
+		if (!override && installclass.exists())
 			return true;
+		if (override && installclass.exists())
+			installclass.delete();
 		if (currHcInstallPath != null)
 		{
 			try {
 				new File(TempLoc).mkdirs();
 				
 				ZipFile zip = new ZipFile(currHcInstallPath.getAbsolutePath());
-				InputStream streaminstallclass = zip.getInputStream(zip.getEntry(InstallerClassName+".class"));
+				ZipEntry zpdInstaller = zip.getEntry(InstallerClassName+".class");
+				if (zpdInstaller == null) {
+					zip.close();
+					return false;
+				}
+				InputStream streaminstallclass = zip.getInputStream(zpdInstaller);
 				FileOutputStream fos = new FileOutputStream(installclass.getAbsolutePath());
 
 				// Read bytes from URL to the local file
 				byte[] buffer = new byte[4096];
 				int bytesRead = 0;
 
-				System.out.print("Extracting installer...");
+				System.out.println("Extracting installer...");
 				while ((bytesRead = streaminstallclass.read(buffer)) != -1) {
-					System.out.print(".");	// Progress bar :)
+					//System.out.print("."); //Progress bar :)
 					fos.write(buffer,0,bytesRead);
 				}
-				System.out.println("done!");
+				System.out.println("Done!");
 
 				// Close destination stream
 				fos.close();
@@ -597,7 +599,37 @@ public class GuiUpdater extends GuiScreen {
 		System.out.println("Failed to Extract Installer!");
 		return false;
 	}
+	
+	public static byte[] createChecksum(String filename) throws Exception {
+		InputStream fis =  new FileInputStream(filename);
 
+		byte[] buffer = new byte[1024];
+		MessageDigest complete = MessageDigest.getInstance("MD5");
+		int numRead;
+
+		do {
+			numRead = fis.read(buffer);
+			if (numRead > 0) {
+				complete.update(buffer, 0, numRead);
+			}
+		} while (numRead != -1);
+
+		fis.close();
+		return complete.digest();
+	}
+
+	// see this How-to for a faster way to convert
+	// a byte array to a HEX string
+	public static String getMD5Checksum(String filename) throws Exception {
+		byte[] b = createChecksum(filename);
+		String result = "";
+
+		for (int i=0; i < b.length; i++) {
+			result += Integer.toString( ( b[i] & 0xff ) + 0x100, 16).substring( 1 );
+		}
+		return result;
+	}
+	
 	public final class DownloadThread extends Thread {
 
 		final GuiUpdater mainThread;
@@ -620,41 +652,31 @@ public class GuiUpdater extends GuiScreen {
 			try {
 				//String TempLoc = System.getProperty("java.io.tmpdir")+"HalocraftUpdater\\";
 				new File(TempLoc).mkdirs();
-				System.out.println(TempLoc+HcUpdate.DL.substring(HcUpdate.DL.lastIndexOf("/")+1));
 				File newHc = null;
 				File newKc = null;
 				if (HcUpdate != null)
 				{
-					String HcName = HcUpdate.DL.substring(HcUpdate.DL.lastIndexOf("/")+1).replace("%20", " ").replace("%27", "\\'");
+					String HcName = HcUpdate.DL.substring(HcUpdate.DL.lastIndexOf("/")+1).replace("%20", " ").replace("%27", "\'");
+					System.out.println(TempLoc+HcName);
 					if (!new File(TempLoc+HcName).exists())
 					{
 						this.pingDL(HcUpdate.Ping);
-						this.download(HcUpdate.DL, TempLoc, HcName);
+						this.download(HcUpdate.DL, TempLoc, HcName, HcUpdate.MD5);
+					}
+					else
+					{
+						this.doMD5Check(HcUpdate.DL, TempLoc, HcName, HcUpdate.MD5);
 					}
 					newHc = new File(TempLoc+HcName);
 				}
-				if (KCWMUpdate != null && !new File(TempLoc+KCWMUpdate.DL.substring(KCWMUpdate.DL.lastIndexOf("/")+1)).exists())
-				{
-					String KcName = KCWMUpdate.DL.substring(KCWMUpdate.DL.lastIndexOf("/")+1).replace("%20", " ").replace("%27", "\\'");
-					if (!new File(TempLoc+KcName).exists())
-					{
-						this.pingDL(KCWMUpdate.Ping);
-						this.download(KCWMUpdate.DL, TempLoc, KcName);
-					}
-					newKc = new File(TempLoc+KcName);
-				}
-
-				if (currHcInstallPath == null || currKcInstallPath == null)
-				{
-					GetModInstallPath();
-				}
-				
 				if (HcUpdate != null)
 				{
 					if (!newHc.exists())
 					{
 						mainThread.btnDownload.enabled = true;
-						mainThread.btnDownload.displayString = "Hc DL Failed!";
+						mainThread.btnDownload.displayString = strLoc("download.fail.hc");
+						System.err.println("Hc DL Failed!");
+						isDownloadThreadRunning = false;
 						return;
 					}
 					else
@@ -662,12 +684,30 @@ public class GuiUpdater extends GuiScreen {
 						System.out.println("Hc Success!");
 					}
 				}
+				
+				if (KCWMUpdate != null && !new File(TempLoc+KCWMUpdate.DL.substring(KCWMUpdate.DL.lastIndexOf("/")+1)).exists())
+				{
+					String KcName = KCWMUpdate.DL.substring(KCWMUpdate.DL.lastIndexOf("/")+1).replace("%20", " ").replace("%27", "\'");
+					System.out.println(TempLoc+KcName);
+					if (!new File(TempLoc+KcName).exists())
+					{
+						this.pingDL(KCWMUpdate.Ping);
+						this.download(KCWMUpdate.DL, TempLoc, KcName, KCWMUpdate.MD5);
+					}
+					else
+					{
+						this.doMD5Check(KCWMUpdate.DL, TempLoc, KcName, KCWMUpdate.MD5);
+					}
+					newKc = new File(TempLoc+KcName);
+				}
 				if (KCWMUpdate != null)
 				{
 					if (!newKc.exists())
 					{
 						mainThread.btnDownload.enabled = true;
-						mainThread.btnDownload.displayString = "KCWM DL Failed!";
+						mainThread.btnDownload.displayString = strLoc("download.fail.kcwm");
+						System.err.println("KCWM DL Failed!");
+						isDownloadThreadRunning = false;
 						return;
 					}
 					else
@@ -676,27 +716,32 @@ public class GuiUpdater extends GuiScreen {
 					}
 				}
 				
-				if (!installclass.exists())
+				if (currHcInstallPath == null || currKcInstallPath == null)
 				{
-					ExtractInstaller();
+					GetModInstallPath();
 				}
+				
+				ExtractInstaller(false);
 				
 				if (!installclass.exists())
 				{
 					System.err.println("Failed to extract installer.");
+					btnDownload.displayString = strLoc("download.fail.installer");
+					isDownloadThreadRunning = false;
 					return;
 				}
+				btnDownload.displayString = strLoc("download.installing");
 				if (HcUpdate != null)
 				{
 					Files.copy(newHc, new File(currHcInstallPath.getParentFile()+"/"+newHc.getName()));
-					String cmdHc = (new StringBuilder()).append("java -classpath \""+installclass.getParentFile()+"\" "+InstallerClassName+" \""+currHcInstallPath.getAbsolutePath()+"\" \""+newHc.getAbsolutePath()+"\"").toString();
+					String cmdHc = (new StringBuilder()).append("java -classpath \""+installclass.getParentFile()+"\" "+InstallerClassName+" \""+currHcInstallPath.getAbsolutePath()+"\" \""+currHcInstallPath.getParentFile()+"/"+newHc.getName()+"\"").toString();
 					System.out.println(cmdHc);
 	                Runtime.getRuntime().exec(cmdHc);
 				}
 				if (KCWMUpdate != null)
 				{
 					Files.copy(newKc, new File(currKcInstallPath.getParentFile()+"/"+newKc.getName()));
-					String cmdKc = (new StringBuilder()).append("java -classpath \""+installclass.getParentFile()+"\" "+InstallerClassName+" \""+currKcInstallPath.getAbsolutePath()+"\" \""+newKc.getAbsolutePath()+"\"").toString();
+					String cmdKc = (new StringBuilder()).append("java -classpath \""+installclass.getParentFile()+"\" "+InstallerClassName+" \""+currKcInstallPath.getAbsolutePath()+"\" \""+currKcInstallPath.getParentFile()+"/"+newKc.getName()+"\"").toString();
 	                System.out.println(cmdKc);
 	                Runtime.getRuntime().exec(cmdKc);
 				}
@@ -724,16 +769,42 @@ public class GuiUpdater extends GuiScreen {
 			isDownloadThreadRunning = false;
 
 			mainThread.btnDownload.enabled = false;
-			mainThread.btnDownload.displayString = "Downloaded!";
+			mainThread.btnDownload.displayString = strLoc("download.success");
 		}
 		
-		private void pingDL(String pageURL) throws IOException
+		private void pingDL(String pageURL)
 		{
-			// Open a connection to the page.
-			URL url = new URL(pageURL);
-			InputStream is = url.openStream();
-			// Close the connection.
-			is.close();
+			try {
+				URL url = new URL(pageURL);
+				URLConnection con = url.openConnection();
+			    con.setUseCaches(false);
+			    InputStream is = con.getInputStream();
+				try {
+					Thread.sleep(100L);
+				} catch (InterruptedException e) {
+					System.err.println("Failed to Briefly Sleep");
+					e.printStackTrace();
+				}
+				is.close();
+			}
+			catch (IOException e) {
+				System.err.println("Failed to Ping URL: "+pageURL);
+				if (e.getMessage() != null && e.getMessage().contains("Server returned HTTP response code: "))
+				{
+					System.err.println(e.getMessage());
+					int error = Integer.parseInt(e.getMessage().substring(36, 39));
+					if (error >= 400 && error <= 407)
+					{
+						System.err.println("Requested URL does NOT exist, has been disallowed, or is invalid.");
+					}
+					else if (error == 408)
+					{
+						System.err.println("Request Timeout: The server is likely overloaded at the moment, please try again later!");
+					}
+				}
+				else
+					e.printStackTrace();
+			}
 		}
 
 		/**
@@ -742,32 +813,90 @@ public class GuiUpdater extends GuiScreen {
 		 * @param destinationDirectory	- directory to download file to
 		 * @throws IOException
 		 */
-		private void download(String fileURL, String destinationDirectory, String newName) throws IOException {
+		private void download(String fileURL, String destinationDirectory, String newName, String md5) {
 			// File name that is being downloaded
 			//String downloadedFileName = fileURL.substring(fileURL.lastIndexOf("/")+1).replace("%20", " ").replace("%27", "\\'");
 			//downloadedFileName = downloadedFileName.replace("%20", " ").replace("%27", "\\'");
 
-			// Open connection to the file
-			URL url = new URL(fileURL);
-			InputStream is = url.openStream();
-			// Stream to the destionation file
-			FileOutputStream fos = new FileOutputStream(destinationDirectory + "/" + newName);
+			try {
+				URL url = new URL(fileURL);
+				URLConnection con = url.openConnection();
+			    con.setUseCaches(false);
+			    InputStream is = con.getInputStream();
+				
+				FileOutputStream fos = new FileOutputStream(destinationDirectory + "/" + newName);
 
-			// Read bytes from URL to the local file
-			byte[] buffer = new byte[4096];
-			int bytesRead = 0;
+				// Read bytes from URL to the local file
+				byte[] buffer = new byte[4096];//4096 8192
+				int bytesRead = 0;
+				int skipdot = 0;
 
-			System.out.print("Downloading " + newName);
-			while ((bytesRead = is.read(buffer)) != -1) {
-				System.out.print(".");	// Progress bar :)
-				fos.write(buffer,0,bytesRead);
+				System.out.println("Downloading: \"" + newName + "\"");
+				while ((bytesRead = is.read(buffer)) >= 0) {
+					if (cancelUpdate)
+					{
+						System.out.println("Cancelled Download");
+						break;
+					}
+					if (skipdot-- <= 0)
+					{
+						System.out.print(".");
+						skipdot = 30;
+					}
+					fos.write(buffer,0,bytesRead);
+				}
+				System.out.println("\nDone!");
+
+				// Close destination stream
+				fos.close();
+				// Close URL stream
+				is.close();
+				if (cancelUpdate)
+				{
+					cancelUpdate = false;
+					new File(destinationDirectory + "/" + newName).delete();
+				}
+				else
+				{
+					this.doMD5Check(fileURL, destinationDirectory, newName, md5);
+				}
 			}
-			System.out.println("done!");
-
-			// Close destination stream
-			fos.close();
-			// Close URL stream
-			is.close();
+			catch (IOException e) {
+				System.err.println("Failed to Download File: "+fileURL);
+				if (e.getMessage() != null && e.getMessage().contains("Server returned HTTP response code: "))
+				{
+					System.err.println(e.getMessage());
+					int error = Integer.parseInt(e.getMessage().substring(36, 39));
+					if (error >= 400 && error <= 407)
+					{
+						System.err.println("Requested URL does NOT exist, has been disallowed, or is invalid.");
+					}
+					else if (error == 408)
+					{
+						System.err.println("Request Timeout: The server is likely overloaded at the moment, please try again later!");
+					}
+				}
+				else
+					e.printStackTrace();
+			}
+		}
+		
+		private void doMD5Check(String fileURL, String destinationDirectory, String newName, String md5)
+		{
+			try {
+				if (!getMD5Checksum(destinationDirectory + "/" + newName).equalsIgnoreCase(md5))
+				{
+					System.err.println("Mod file MD5 did NOT match! Deleting bad file...");//Deleting and Retrying!
+					//btnDownload.displayString = "Bad MD5! ReDL'ing... Cancel?";
+					btnDownload.displayString = strLoc("download.fail.md5");
+					new File(destinationDirectory + "/" + newName).delete();
+					Thread.sleep(100L);
+					//this.download(fileURL, destinationDirectory, newName, md5);
+				}
+			} catch (Exception e) {
+				System.err.println("Failed to generate File MD5");
+				e.printStackTrace();
+			}
 		}
 	}
 }

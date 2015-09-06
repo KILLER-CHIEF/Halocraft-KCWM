@@ -14,6 +14,7 @@ import net.killerchief.halocraft.entities.vehicles.EntityMongooseGreen;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseRed;
 import net.killerchief.halocraft.entities.vehicles.EntityPassengerSeat;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
+import net.killerchief.halocraft.entities.vehicles.EntityWarthogBack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import cpw.mods.fml.common.registry.EntityRegistry;
@@ -34,7 +35,9 @@ public class HalocraftEntities {
 		EntityRegistry.registerModEntity(EntityMongooseBlue.class, "MongooseBlue", 143, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityMongooseRed.class, "MongooseRed", 144, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityGhost.class, "Ghost", 145, Halocraft.instance, 100, 1, true);
-		EntityRegistry.registerModEntity(EntityWarthog.class, "Warthog", 146, Halocraft.instance, 100, 1, true);
+		//TODO: STRIPED - Warthog
+		//EntityRegistry.registerModEntity(EntityWarthog.class, "Warthog", 146, Halocraft.instance, 100, 1, true);
+		//EntityRegistry.registerModEntity(EntityWarthogBack.class, "WarthogBack", 147, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityDeployableGravityLift.class, "DeployableGravityLift", 160, Halocraft.instance, 100, 1, true);
 
 		registerEggEntities();

@@ -24,6 +24,7 @@ import net.killerchief.halocraft.client.models.guns.ModelSniperRifle;
 import net.killerchief.halocraft.client.models.guns.ModelSpiker;
 import net.killerchief.halocraft.client.models.mobs.ModelElite;
 import net.killerchief.halocraft.client.models.mobs.ModelGrunt;
+import net.killerchief.halocraft.client.render.RenderCovSupplyCase;
 import net.killerchief.halocraft.client.render.RenderEliteGun;
 import net.killerchief.halocraft.client.render.RenderEliteSword;
 import net.killerchief.halocraft.client.render.RenderGhost;
@@ -35,6 +36,7 @@ import net.killerchief.halocraft.client.render.RenderMongoose;
 import net.killerchief.halocraft.client.render.RenderProjectile;
 import net.killerchief.halocraft.client.render.RenderProjectile.EnumType;
 import net.killerchief.halocraft.client.render.RenderWarthog;
+import net.killerchief.halocraft.client.render.RenderWarthogBack;
 import net.killerchief.halocraft.config.HalocraftItems;
 import net.killerchief.halocraft.config.HalocraftItemsWeapons;
 import net.killerchief.halocraft.entities.EntityDeployableGravityLift;
@@ -51,7 +53,9 @@ import net.killerchief.halocraft.entities.vehicles.EntityMongooseGreen;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseRed;
 import net.killerchief.halocraft.entities.vehicles.EntityVehicle;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
+import net.killerchief.halocraft.entities.vehicles.EntityWarthogBack;
 import net.killerchief.halocraft.entities.vehicles.MovingVehicleSoundLoop;
+import net.killerchief.halocraft.tileEntities.TileEntityCovSupplyCase;
 import net.killerchief.halocraft.tileEntities.TileEntityGunHolder;
 import net.killerchief.halocraft.tileEntities.TileEntityHealthPack;
 import net.killerchief.kcweaponmod.KCWeaponMod;
@@ -110,8 +114,8 @@ public class ClientProxy extends CommonProxy {
 		//MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Magnum, (IItemRenderer)new RenderGun(new ModelSentinelBeam(), Halocraft.MODID+":textures/guns/SkinSentinelBeam.png", false));
 		MinecraftForgeClient.registerItemRenderer(KCWeaponMod.weapons[HalocraftItemsWeapons.ModMapOffset+19], (IItemRenderer)new RenderGun(new ModelSentinelBeam(), Halocraft.MODID+":textures/guns/SkinSentinelBeamMajor.png", false));
 		//MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.SniperRifle, (IItemRenderer)new RenderGun(new ModelSpartanLaser(), Halocraft.MODID+":textures/guns/SkinSpartanLaser.png", false));
-		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Carbine, (IItemRenderer)new RenderGun(new ModelPlasmaRifleOpen(), Halocraft.MODID+":textures/guns/SkinPlasmaRifle_Open.png", false));
-		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Magnum, (IItemRenderer)new RenderGun(new ModelPlasmaPistolOpen(), Halocraft.MODID+":textures/guns/SkinPlasmaPistol_Open.png", false));
+		//MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Carbine, (IItemRenderer)new RenderGun(new ModelPlasmaRifleOpen(), Halocraft.MODID+":textures/guns/SkinPlasmaRifle_Open.png", false));
+		//MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Magnum, (IItemRenderer)new RenderGun(new ModelPlasmaPistolOpen(), Halocraft.MODID+":textures/guns/SkinPlasmaPistol_Open.png", false));
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityMongooseDefault.class, new RenderMongoose());
 		RenderingRegistry.registerEntityRenderingHandler(EntityMongooseGreen.class, new RenderMongoose());
@@ -120,11 +124,15 @@ public class ClientProxy extends CommonProxy {
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityGhost.class, new RenderGhost());
 		
-		RenderingRegistry.registerEntityRenderingHandler(EntityWarthog.class, new RenderWarthog());
+		//TODO: STRIPED - Warthog
+		//RenderingRegistry.registerEntityRenderingHandler(EntityWarthog.class, new RenderWarthog());
+		//RenderingRegistry.registerEntityRenderingHandler(EntityWarthogBack.class, new RenderWarthogBack());
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityDeployableGravityLift.class, new RenderProjectile(EnumType.DeployableGravityLift61));
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHealthPack.class, new RenderHealthPack());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGunHolder.class, new RenderGunHolder());
+		//TODO: STRIPED - CovSupplyCase
+		//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCovSupplyCase.class, new RenderCovSupplyCase());
 	}
 
 	@Override

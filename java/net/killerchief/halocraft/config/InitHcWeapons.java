@@ -394,7 +394,7 @@ public class InitHcWeapons {
 		Carbine.PerformOnly1ShootSound = true;
 		Carbine.ShootSound = Halocraft.MODID+":weapons.shoot.CarbineShoot";
 		//Carbine.
-		Carbine.ReloadTime = 44;
+		Carbine.ReloadTime = 46;
 		Carbine.ReloadSound = Halocraft.MODID+":weapons.reload.CarbineReload";
 		Carbine.ReloadMaxAmmoFlow = 0;
 		Carbine.ReloadTimeLoop = 0;
@@ -532,7 +532,7 @@ public class InitHcWeapons {
 		Needler.PerformOnly1ShootSound = true;
 		Needler.ShootSound = Halocraft.MODID+":weapons.shoot.NeedlerShoot";
 		//Needler.
-		Needler.ReloadTime = 44;
+		Needler.ReloadTime = 36;
 		Needler.ReloadSound = Halocraft.MODID+":weapons.reload.NeedlerReload";
 		Needler.ReloadMaxAmmoFlow = 0;
 		Needler.ReloadTimeLoop = 0;
@@ -671,7 +671,7 @@ public class InitHcWeapons {
 		Spiker.ShootSound = Halocraft.MODID+":weapons.shoot.SpikeRifleShoot";
 		//Spiker.
 		Spiker.ReloadTime = 44;
-		Spiker.ReloadSound = Halocraft.MODID+":weapons.reload.SpikerReload";
+		Spiker.ReloadSound = Halocraft.MODID+":weapons.reload.SpikeRifleReload";
 		Spiker.ReloadMaxAmmoFlow = 0;
 		Spiker.ReloadTimeLoop = 0;
 		Spiker.ReloadSoundLoop = "";

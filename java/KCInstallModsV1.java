@@ -14,26 +14,29 @@ public class KCInstallModsV1 {
 				System.out.println(currMod.getAbsolutePath());
 				System.out.println(newMod.getAbsolutePath());
 
-				int success = 0;
-				while (success >= 0)
+				int attempts = 0;
+				while (attempts >= 0)
 				{
-					if (currMod.delete())
+					if (currMod.isFile())
+						if (currMod.delete())
+						{
+							System.out.println("Successfully Deleted Old Mod! Update Success!");
+							break;
+						}
+					else
+						attempts = 11;
+					if (attempts > 10)
 					{
-						System.out.println("Successfully Deleted Old Mod! Update Success!");
-//						try {
-//							Files.copy(newMod, new File(currMod.getAbsolutePath()+newMod.getName()));
-//						} catch (IOException e) {
-//							System.err.println("Failed to copy mod into install directory!");
-//							e.printStackTrace();
-//						}
-						break;
-					}
-					if (success > 10)
-					{
-						System.err.println("Update Failed! Unable to delete Old Halocraft Mod!");
+						System.err.println("Update Failed! Unable to Delete Old/Current Mod!");
+						System.err.println("Reverting changes and removing proposed replacement mod from install directory.");
+						if (newMod.isFile() && !newMod.delete()) {
+							Thread.sleep(4000L);
+							if (!newMod.delete())
+								System.err.println("WARNING! Failed to revert changes! Manual deletion/check may be required.");
+						}
 						return;
 					}
-					success++;
+					attempts++;
 					Thread.sleep(4000L);
 				}
 			} catch (InterruptedException e1) {
@@ -41,5 +44,4 @@ public class KCInstallModsV1 {
 			}
 		}
 	}
-
 }
