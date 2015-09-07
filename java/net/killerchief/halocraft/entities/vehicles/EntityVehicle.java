@@ -294,9 +294,10 @@ public abstract class EntityVehicle extends Entity
 	public void setDead()
 	{
 		super.setDead();
-		for (EntityPassengerSeat seat : this.passengerSeats)
-			if (seat != null)
-				seat.setDead();
+		if (this.passengerSeats != null)
+			for (EntityPassengerSeat seat : this.passengerSeats)
+				if (seat != null)
+					seat.setDead();
 	}
 
 	/**
