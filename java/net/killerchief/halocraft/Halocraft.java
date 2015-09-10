@@ -35,7 +35,7 @@ public class Halocraft {
 
 	public static final String MODID = "halocraft";
 	public static final String NAME = "Halocraft";
-	public static final String VERSION = "0.7.3";
+	public static final String VERSION = "0.7.4";
 
 	/** The instance of this mod that Forge uses.*/
 	@Instance(Halocraft.MODID)
@@ -66,20 +66,6 @@ public class Halocraft {
 		HalocraftConfig.loadConfig(config); //handles registry
 
 		InitHcWeapons.DefineAndSendWeapons();
-
-		//TODO: Remove. Need a custom updater. (not using M.U.D anymore)
-		/*if (event.getSide().isClient())
-		{
-			try {
-				Class.forName("mods.mud.ModUpdateDetector").getDeclaredMethod("registerMod", ModContainer.class, URL.class, URL.class).invoke(null,
-						FMLCommonHandler.instance().findContainerFor(this),
-						new URL("http://halocraft.killerchief.net/HalocraftUpdates.xml"),
-						new URL("http://halocraft.killerchief.net/Changelog.md")
-						);
-			} catch (Throwable e) {
-				e.printStackTrace();
-			}
-		}*/
 	}
 
 	@SubscribeEvent
