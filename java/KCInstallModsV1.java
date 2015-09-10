@@ -10,21 +10,22 @@ public class KCInstallModsV1 {
 
 				File currMod = new File(args[0]);
 				File newMod = new File(args[1]);
-				
+
 				System.out.println(currMod.getAbsolutePath());
 				System.out.println(newMod.getAbsolutePath());
 
 				int attempts = 0;
 				while (attempts >= 0)
 				{
-					if (currMod.isFile())
+					if (currMod.isFile()) {
 						if (currMod.delete())
 						{
 							System.out.println("Successfully Deleted Old Mod! Update Success!");
 							break;
 						}
-					else
+					} else {
 						attempts = 11;
+					}
 					if (attempts > 10)
 					{
 						System.err.println("Update Failed! Unable to Delete Old/Current Mod!");

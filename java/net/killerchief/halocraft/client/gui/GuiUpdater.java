@@ -76,7 +76,7 @@ public class GuiUpdater extends GuiScreen {
 	}
 	
 	private static boolean NoInstaller = false;
-	private static final String InstallerClassName = "KCInstallModsV1";
+	private static final String InstallerClassName = "KCInstallModsV2";
 	private static final String TempLoc = System.getProperty("java.io.tmpdir")+"HalocraftUpdater\\";
 	private static final File installclass = new File(TempLoc+"/"+InstallerClassName+".class");
 	private static File currHcInstallPath = null;
