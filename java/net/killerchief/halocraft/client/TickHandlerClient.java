@@ -849,6 +849,11 @@ public class TickHandlerClient {
 					GuiIngameForge.renderCrosshairs = false;
 				}
 			}
+			if (GuiIngameForge.renderCrosshairs && minecraft.thePlayer.ridingEntity instanceof EntityMongoose)
+			{
+				GuiIngameForge.renderCrosshairs = false;
+				GunReticle(1.0F, RLReticle, 125, 91, 23, 10, 11, 2);
+			}
 			
 			if (!net.killerchief.kcweaponmod.TickHandlerClient.IsZooming() && minecraft.thePlayer.inventory.armorInventory != null && minecraft.thePlayer.inventory.armorInventory[3] != null)
 			{
