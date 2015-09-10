@@ -124,9 +124,8 @@ public class ClientProxy extends CommonProxy {
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityGhost.class, new RenderGhost());
 		
-		//TODO: STRIPED - Warthog
-		//RenderingRegistry.registerEntityRenderingHandler(EntityWarthog.class, new RenderWarthog());
-		//RenderingRegistry.registerEntityRenderingHandler(EntityWarthogBack.class, new RenderWarthogBack());
+		RenderingRegistry.registerEntityRenderingHandler(EntityWarthog.class, new RenderWarthog());
+		RenderingRegistry.registerEntityRenderingHandler(EntityWarthogBack.class, new RenderWarthogBack());
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityDeployableGravityLift.class, new RenderProjectile(EnumType.DeployableGravityLift61));
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHealthPack.class, new RenderHealthPack());

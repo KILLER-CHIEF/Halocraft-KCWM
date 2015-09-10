@@ -13,6 +13,7 @@ import net.killerchief.halocraft.entities.vehicles.EntityMongooseDefault;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseGreen;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseRed;
 import net.killerchief.halocraft.entities.vehicles.EntityPassengerSeat;
+import net.killerchief.halocraft.entities.vehicles.EntityTurretSeat;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogBack;
 import net.minecraft.entity.Entity;
@@ -30,14 +31,15 @@ public class HalocraftEntities {
 		EntityRegistry.registerModEntity(EntityGruntPlasmaPistol.class, "GruntPlasmaPistol", 4, Halocraft.instance, 80, 2, true);
 		EntityRegistry.registerModEntity(EntityGruntFlee.class, "GruntFlee", 5, Halocraft.instance, 80, 2, true);
 		EntityRegistry.registerModEntity(EntityPassengerSeat.class, "PassengerSeat", 140, Halocraft.instance, 100, 1, true);
+		EntityRegistry.registerModEntity(EntityTurretSeat.class, "PassengerTurret", 148, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityMongooseDefault.class, "MongooseDefault", 141, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityMongooseGreen.class, "MongooseGreen", 142, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityMongooseBlue.class, "MongooseBlue", 143, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityMongooseRed.class, "MongooseRed", 144, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityGhost.class, "Ghost", 145, Halocraft.instance, 100, 1, true);
-		//TODO: STRIPED - Warthog
-		//EntityRegistry.registerModEntity(EntityWarthog.class, "Warthog", 146, Halocraft.instance, 100, 1, true);
-		//EntityRegistry.registerModEntity(EntityWarthogBack.class, "WarthogBack", 147, Halocraft.instance, 100, 1, true);
+		//TODO: STRIPED - Warthog Entities
+		EntityRegistry.registerModEntity(EntityWarthog.class, "Warthog", 146, Halocraft.instance, 100, 1, true);
+		EntityRegistry.registerModEntity(EntityWarthogBack.class, "WarthogBack", 147, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityDeployableGravityLift.class, "DeployableGravityLift", 160, Halocraft.instance, 100, 1, true);
 
 		registerEggEntities();

@@ -5,6 +5,7 @@ import net.killerchief.halocraft.config.HalocraftItems;
 import net.killerchief.halocraft.config.HalocraftItemsArmor;
 import net.killerchief.halocraft.config.HalocraftItemsWeapons;
 import net.killerchief.halocraft.entities.vehicles.EntityGhost;
+import net.killerchief.halocraft.entities.vehicles.EntityTurretSeat;
 import net.killerchief.halocraft.items.ItemEnergySword;
 import net.killerchief.kcweaponmod.ItemWeapon;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,7 +39,7 @@ public class EventHandler {
 	{
 		if (event.entityPlayer != null)
 		{
-			if (event.entityPlayer.ridingEntity instanceof EntityGhost)// && event.action == PlayerInteractEvent.Action.LEFT_CLICK_BLOCK)//(event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR || event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK))
+			if (event.entityPlayer.ridingEntity instanceof EntityGhost || event.entityPlayer.ridingEntity instanceof EntityTurretSeat)// && event.action == PlayerInteractEvent.Action.LEFT_CLICK_BLOCK)//(event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR || event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK))
 			{
 				event.setCanceled(true);
 			}

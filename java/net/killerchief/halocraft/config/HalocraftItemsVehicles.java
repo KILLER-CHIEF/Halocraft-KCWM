@@ -14,16 +14,15 @@ public class HalocraftItemsVehicles {
 	public static Item ItemMongooseBlue;
 	public static Item ItemMongooseRed;
 	public static Item ItemGhost;
-	//TODO: STRIPED - Warthog
-	//public static Item ItemWarthog;
+	public static Item ItemWarthog;
 	
 	public static void load(Configuration config) {
-		ItemMongooseDefault = (new ItemVehicle("MongooseDefault", "ItemMongooseDefault", 0));
-		ItemMongooseGreen = (new ItemVehicle("MongooseGreen", "ItemMongooseGreen", 1));
-		ItemMongooseBlue = (new ItemVehicle("MongooseBlue", "ItemMongooseBlue", 2));
-		ItemMongooseRed = (new ItemVehicle("MongooseRed", "ItemMongooseRed", 3));
-		ItemGhost = (new ItemVehicle("Ghost", "ItemGhost", 4));
-		//ItemWarthog = (new ItemVehicle("Warthog", "ItemWarthog", 5));
+		ItemMongooseDefault = (new ItemVehicle("MongooseDefault", "MongooseDefaultItem", 0));
+		ItemMongooseGreen = (new ItemVehicle("MongooseGreen", "MongooseGreenItem", 1));
+		ItemMongooseBlue = (new ItemVehicle("MongooseBlue", "MongooseBlueItem", 2));
+		ItemMongooseRed = (new ItemVehicle("MongooseRed", "MongooseRedItem", 3));
+		ItemGhost = (new ItemVehicle("Ghost", "GhostItem", 4));
+		ItemWarthog = (new ItemVehicle("Warthog", "WarthogItem", 5));
 	}
 	
 	public static void registerItems() {
@@ -32,7 +31,7 @@ public class HalocraftItemsVehicles {
 		GameRegistry.registerItem(ItemMongooseBlue, ItemMongooseBlue.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(ItemMongooseRed, ItemMongooseRed.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(ItemGhost, ItemGhost.getUnlocalizedName().substring(5));
-		//GameRegistry.registerItem(ItemWarthog, ItemWarthog.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(ItemWarthog, ItemWarthog.getUnlocalizedName().substring(5));
 	}
 	
 	public static void addRecipes() {

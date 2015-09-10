@@ -15,6 +15,7 @@ public class EntityCustomProjectileHelper {
 	public static ItemWeaponProperties ProjPropElitePlasmaRifle;
 	public static ItemWeaponProperties ProjPropGruntPlasmaPistol;
 	public static ItemWeaponProperties ProjPropGhostPlasmaBolts;
+	public static ItemWeaponProperties ProjPropWarthogTurret;
 
 	public static void initProjectiles()
 	{
@@ -69,12 +70,27 @@ public class EntityCustomProjectileHelper {
 		ProjPropGhostPlasmaBolts.ProjectileRenderProperties = Halocraft.MODID+":textures/entities/BluePlasmaRender.png";
 		ProjPropGhostPlasmaBolts.ProjectileGlows = true;
 		ProjPropGhostPlasmaBolts.ProjectileSpeed = 4F;
-		ProjPropGhostPlasmaBolts.Accuracy = 3F;
+		ProjPropGhostPlasmaBolts.Accuracy = 4F;
 		ProjPropGhostPlasmaBolts.Gravity = 0.004F;
 		ProjPropGhostPlasmaBolts.MaxEffectiveTicksAlive = 80;
 		//ProjPropGhostPlasmaBolts.ProjectileImpactProperties = "*ImpactBlock(tallgrass+vine, glass+leaves+glass_pane+yellow_flower+red_flower+brown_mushroom+red_mushroom+reeds+deadbush+waterlily+flower_pot+cocoa+double_plant+stained_glass+stained_glass_pane, Die), ImpactEntity(4, 0, Die)";
 		ProjPropGhostPlasmaBolts.ProjImpactActArgs = new Object[]{ImpactBlockObject, new Object[]{"ImpactEntity", new String[]{"6", "0", "Die"}}};
 		ProjPropGhostPlasmaBolts.ProjectileDragInAir = 0.99F;
 		ProjPropGhostPlasmaBolts.ProjectileDragInWater = 0.5F;
+		
+		
+		//Warthog Turret
+		ProjPropWarthogTurret = new ItemWeaponProperties();
+		ProjPropWarthogTurret.ProjectileID = HalocraftItemsWeapons.SMG.Properties.ProjectileID;
+		ProjPropWarthogTurret.ProjectileRenderProperties = Halocraft.MODID+":textures/entities/BulletRender.png";
+		ProjPropWarthogTurret.ProjectileGlows = false;
+		ProjPropWarthogTurret.ProjectileSpeed = 7F;
+		ProjPropWarthogTurret.Accuracy = 5F;
+		ProjPropWarthogTurret.Gravity = 0.004F;
+		ProjPropWarthogTurret.MaxEffectiveTicksAlive = 80;
+		//ProjPropWarthogTurret.ProjectileImpactProperties = "*ImpactBlock(tallgrass+vine, glass+leaves+glass_pane+yellow_flower+red_flower+brown_mushroom+red_mushroom+reeds+deadbush+waterlily+flower_pot+cocoa+double_plant+stained_glass+stained_glass_pane, Die), ImpactEntity(4, 0, Die)";
+		ProjPropWarthogTurret.ProjImpactActArgs = new Object[]{ImpactBlockObject, new Object[]{"ImpactEntity", new String[]{"2", "0", "Die"}}};
+		ProjPropWarthogTurret.ProjectileDragInAir = 0.99F;
+		ProjPropWarthogTurret.ProjectileDragInWater = 0.5F;
 	}
 }

@@ -39,9 +39,10 @@ public class RenderMongoose extends Render
 		//GL11.glRotatef(MathHelper.wrapAngleTo180_float(par1HCEntityMongoose.getRotateWheelSpeed()*100F), 1.0F, 0.0F, 0.0F);
 		float f4 = 0.75F;
 		GL11.glScalef(f4, f4, f4);
-		GL11.glScalef(0.6F / f4, 0.6F / f4, 0.6F / f4);
+		GL11.glScalef(0.7F / f4, 0.7F / f4, 0.7F / f4);
 		this.bindEntityTexture(par1HCEntityMongoose);
 		GL11.glScalef(-1.0F, -1.0F, 1.0F);
+		GL11.glTranslated(0D, 0.05D, 0D);
 		this.modelMongoose.render(par1HCEntityMongoose, 0.0625F);
 		GL11.glPopMatrix();
 	}

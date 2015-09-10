@@ -1,6 +1,7 @@
 package net.killerchief.halocraft.entities.vehicles;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
@@ -10,7 +11,10 @@ import net.minecraft.world.World;
 public class EntityPassengerSeat extends Entity {
 
 	/** The Vehicle Entity this is Attached To */
-	private EntityVehicle parentBody;
+	public EntityVehicle parentBody;
+
+	public boolean shouldRiderSit = true;
+	public boolean forceRotation = true;
 
 	public EntityPassengerSeat(World par1World)
 	{
@@ -22,11 +26,14 @@ public class EntityPassengerSeat extends Entity {
 	{
 		this(par1World);
 		this.setPosition(par2, par4 , par6);
-		parentBody = vehicle;
+		this.parentBody = vehicle;
 	}
 
 	@Override
-	protected void entityInit(){}
+	protected void entityInit()
+	{
+		this.dataWatcher.addObject(25, new Integer(0));
+	}
 
 	/**
 	 * Called when the entity is attacked.
@@ -43,7 +50,7 @@ public class EntityPassengerSeat extends Entity {
 	@Override
 	public double getMountedYOffset()
 	{
-		return (double)this.height - 0.7D;
+		return (double)this.height;
 	}
 
 	@Override
@@ -51,7 +58,22 @@ public class EntityPassengerSeat extends Entity {
 	{
 		if (this.riddenByEntity != null)
 		{
-			this.riddenByEntity.setPosition(this.posX, this.posY + this.getMountedYOffset() + this.riddenByEntity.getYOffset(), this.posZ);
+			this.riddenByEntity.setPosition(this.posX, this.posY + this.riddenByEntity.getYOffset(), this.posZ);
+
+			if (this.forceRotation && this.riddenByEntity instanceof EntityLivingBase)
+			{
+				EntityLivingBase entity = ((EntityLivingBase)this.riddenByEntity);
+				entity.renderYawOffset = this.rotationYaw;
+				if (this.parentBody != null && this.parentBody instanceof EntityWarthog)
+				{
+					if (entity.rotationYaw > this.parentBody.rotationYaw + 100F) {
+						entity.rotationYaw = this.parentBody.rotationYaw + 100F;
+					} else if (entity.rotationYaw < this.parentBody.rotationYaw + -80F) {
+						entity.rotationYaw = this.parentBody.rotationYaw + -80F;
+					}
+				}
+				//((EntityLivingBase)this.riddenByEntity).cameraPitch = -5F;
+			}
 		}
 	}
 
@@ -129,7 +151,7 @@ public class EntityPassengerSeat extends Entity {
 	@Override
 	public boolean shouldRiderSit()
 	{
-		return false;
+		return this.shouldRiderSit;
 	}
 
 	/**
@@ -139,12 +161,30 @@ public class EntityPassengerSeat extends Entity {
 	public void onUpdate()
 	{
 		super.onUpdate();
+		
+		if (!this.worldObj.isRemote)
+		{
+			if (this.parentBody != null && this.dataWatcher.getWatchableObjectInt(25) <= 0)
+			{
+				this.dataWatcher.updateObject(25, this.parentBody.getEntityId());
+			}
+		}
+		else
+		{
+			if (this.parentBody == null)
+			{
+				int id = this.dataWatcher.getWatchableObjectInt(25);
+				if (id > 0)
+					this.parentBody = (EntityVehicle)this.worldObj.getEntityByID(id);
+			}
+		}
+		
 		//worldObj.spawnParticle("flame", posX, posY, posZ, 0D, 0D, 0D);
 		if (!this.worldObj.isRemote)
 		{
-			if(riddenByEntity != null && riddenByEntity.isDead)
+			if(this.riddenByEntity != null && this.riddenByEntity.isDead)
 			{
-				riddenByEntity = null;
+				this.riddenByEntity = null;
 			}
 			if (this.parentBody == null || this.parentBody.isDead)
 			{

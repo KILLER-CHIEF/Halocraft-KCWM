@@ -1,18 +1,14 @@
 package net.killerchief.halocraft.entities.vehicles;
 
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import net.killerchief.halocraft.Halocraft;
-import net.killerchief.halocraft.TickHandler;
 import net.killerchief.halocraft.config.HalocraftItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
@@ -26,17 +22,15 @@ public abstract class EntityVehicle extends Entity
 {
 	/** Returns the texture's file path as a String. (used in the render class) */
 	public abstract String getEntityTexture();
-	
+
 	/** Do All Vehicle Control & Movement Stuff Here */
 	abstract void updateMotionAndRotation();
-	
+
 	protected abstract String getSoundLoopRun();
 	protected abstract String getSoundLoopIdle();
 	protected abstract String getSoundEnter();
 	protected abstract String getSoundExit();
-	
-	protected abstract int[][] getPassengerSeatAttributes();
-	
+
 	public static final int maxHurtResistantTime = 10;
 	public double speed = 0D;
 	public int waterTimer = 0;
@@ -45,7 +39,7 @@ public abstract class EntityVehicle extends Entity
 	 * Actually appears to be a client render update ticker.
 	 * Not "appears to be the progress of the turn"
 	 */
-	
+
 	//These are used to smooth out the vehicles movement & rotation to make it look nice.
 	public int vehiclePosRotUpdate;
 	public double vehicleX;
@@ -53,9 +47,6 @@ public abstract class EntityVehicle extends Entity
 	public double vehicleZ;
 	public double vehicleYaw;
 	public double vehiclePitch;
-
-	/** An Array of all Passenger Seats for this Vehicle */
-	public EntityPassengerSeat[] passengerSeats;
 
 	protected abstract int getSoundLoopDelay();
 	public int enterSoundDelay = this.getSoundLoopDelay();
@@ -88,7 +79,6 @@ public abstract class EntityVehicle extends Entity
 	protected void entityInit()
 	{
 		this.dataWatcher.addObject(22, new Float(100.0F));//health
-		this.dataWatcher.addObject(23, new String(""));
 	}
 
 	/**
@@ -126,7 +116,7 @@ public abstract class EntityVehicle extends Entity
 	@Override
 	public boolean canBePushed()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -164,28 +154,6 @@ public abstract class EntityVehicle extends Entity
 	public void setHealth(float health)
 	{
 		this.dataWatcher.updateObject(22, Float.valueOf(health));
-	}
-
-	public EntityPassengerSeat[] getPassengerSeats()
-	{
-		String[] s = this.dataWatcher.getWatchableObjectString(23).split(":");
-		EntityPassengerSeat[] seats = new EntityPassengerSeat[s.length-1];
-		for (int i = 1; i < s.length; i++) {
-			if (s[i] != null && this.worldObj.getEntityByID(Integer.parseInt(s[i])) instanceof EntityPassengerSeat)
-			seats[i-1] = (EntityPassengerSeat)this.worldObj.getEntityByID(Integer.parseInt(s[i]));
-		}
-		return seats;
-	}
-
-	/** Sets the entity's health.*/
-	public void setPassengerSeats(EntityPassengerSeat[] seats)
-	{
-		String out = "";
-		for(EntityPassengerSeat seat : seats)
-		{
-			out = out + ":" + seat.getEntityId();
-		}
-		this.dataWatcher.updateObject(23, out);
 	}
 
 	/**
@@ -243,7 +211,7 @@ public abstract class EntityVehicle extends Entity
 			}
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -253,11 +221,11 @@ public abstract class EntityVehicle extends Entity
 		if (this.riddenByEntity != null)
 		{
 			this.riddenByEntity.setPosition(this.posX, this.posY + this.getMountedYOffset() + this.riddenByEntity.getYOffset(), this.posZ);
-			
+
 			if (this.riddenByEntity instanceof EntityLivingBase)
-	        {
-	            ((EntityLivingBase)this.riddenByEntity).renderYawOffset = this.rotationYaw;
-	        }
+			{
+				((EntityLivingBase)this.riddenByEntity).renderYawOffset = this.rotationYaw;
+			}
 		}
 	}
 
@@ -267,7 +235,7 @@ public abstract class EntityVehicle extends Entity
 		if (!this.isDead)
 		{
 			this.setHealth(this.getHealth() - damage);
-			
+
 			if (this.getHealth() <= 0) {
 				this.setHealth(0);
 				this.setDead();
@@ -294,10 +262,6 @@ public abstract class EntityVehicle extends Entity
 	public void setDead()
 	{
 		super.setDead();
-		if (this.passengerSeats != null)
-			for (EntityPassengerSeat seat : this.passengerSeats)
-				if (seat != null)
-					seat.setDead();
 	}
 
 	/**
@@ -355,10 +319,10 @@ public abstract class EntityVehicle extends Entity
 	public void onUpdate()
 	{
 		super.onUpdate();
-		
+
 		if (this.worldObj.isRemote)
 		{
-			this.passengerSeats = this.getPassengerSeats();
+			//this.passengerSeats = this.getPassengerSeats();
 			if (this.vehiclePosRotUpdate != 0)
 			{
 				double var46 = this.posX + (this.vehicleX - this.posX);
@@ -375,7 +339,7 @@ public abstract class EntityVehicle extends Entity
 				this.setPosition(this.posX, this.posY, this.posZ);
 				this.setRotation(this.rotationYaw, this.rotationPitch);
 			}
-			
+
 			this.handleLoopingSoundEffects();
 		}
 		else
@@ -383,26 +347,24 @@ public abstract class EntityVehicle extends Entity
 			this.prevPosX = this.posX;
 			this.prevPosY = this.posY;
 			this.prevPosZ = this.posZ;
-			
+
 			this.handleSoundEffects();
 			this.handleEntityCollisions();
 			this.damageHandling();
 			this.updateMotionAndRotation();
 		}
-		
+
 		this.speed = Math.sqrt((this.motionX * this.motionX) + (this.motionZ * this.motionZ)) * 25D;
 		if (this.speed < 0.01 && this.speed > -0.01) {
 			this.speed = 0;
 		}
-		
+
 		if (this.hurtResistantTime > 0)
-        {
-            --this.hurtResistantTime;
-        }
-		
-		this.handlePassengerSeats();
+		{
+			--this.hurtResistantTime;
+		}
 	}
-	
+
 	public void handleSoundEffects()
 	{
 		if (this.riddenByEntity != null && this.prevRiddenByEntity == null)
@@ -456,7 +418,7 @@ public abstract class EntityVehicle extends Entity
 			this.enterSoundDelay = this.getSoundLoopDelay();
 		}
 	}
-	
+
 	public void handleEntityCollisions()
 	{
 		if (!this.worldObj.isRemote)
@@ -498,7 +460,7 @@ public abstract class EntityVehicle extends Entity
 			}
 		}
 	}
-	
+
 	public void damageHandling()
 	{
 		if (isInWater()) {
@@ -523,81 +485,22 @@ public abstract class EntityVehicle extends Entity
 			this.setHealth(this.getHealth());
 		}
 	}
-	
-	public void handlePassengerSeats()
+
+	public void setRiderLocation(EntityPassengerSeat seat, double yOffset, double forwardOffset, double leftOffset, boolean shouldSit)
 	{
-		if (this.getPassengerSeatAttributes() != null)
+		if (seat != null)
 		{
-			if (this.passengerSeats != null)
-			{
-				for (int i = 0; i < passengerSeats.length; i++) {
-					EntityPassengerSeat seat = passengerSeats[i];
-					if (this instanceof EntityMongoose && i == 0 && seat != null)
-					{
-						double xOffset = -Math.sin(Math.toRadians(this.rotationYaw)) * 0.9;
-						double zOffset = Math.cos(Math.toRadians(this.rotationYaw)) * 0.9;
-						seat.setLocationAndAngles(this.posX - xOffset, this.posY + 1.1D, this.posZ - zOffset, 0.0F, 0.0F);
-						//this.passengerseat.moveEntity(this.velocityX, this.velocityY, this.velocityZ);
-					}
-					else if (this instanceof EntityWarthog)
-					{
-						if (i == 0 && seat != null)
-						{
-							seat.setLocationAndAngles(this.posX - Math.cos(Math.toRadians(this.rotationYaw))*0.44D, this.posY, this.posZ - Math.sin(Math.toRadians(this.rotationYaw))*0.44D, 0.0F, 0.0F);
-						}
-						else if (i == 1 && seat != null)
-						{
-							seat.setLocationAndAngles(this.posX + Math.sin(Math.toRadians(this.rotationYaw))*1.4D, this.posY + 1.48D, this.posZ - Math.cos(Math.toRadians(this.rotationYaw))*1.4D, 0.0F, 0.0F);
-						}
-						else if (seat != null)
-							seat.setLocationAndAngles(this.posX, this.posY, this.posZ, 0.0F, 0.0F);
-					}
-					else if (seat != null)
-						seat.setLocationAndAngles(this.posX, this.posY, this.posZ, 0.0F, 0.0F);
-				}
-//				for (EntityPassengerSeat seat : this.passengerSeats)
-//				{
-//					if (seat != null)
-//					{
-//						double xOffset = -Math.sin(Math.toRadians(this.rotationYaw)) * 0.9;
-//						double zOffset = Math.cos(Math.toRadians(this.rotationYaw)) * 0.9;
-//						seat.setLocationAndAngles(this.posX - xOffset, this.posY + 1.1D, this.posZ - zOffset, 0.0F, 0.0F);
-//						//this.passengerseat.moveEntity(this.velocityX, this.velocityY, this.velocityZ);
-//					}
-//				}
-			}
-			else
-			{
-				if (!this.worldObj.isRemote)
-				{
-					this.passengerSeats = new EntityPassengerSeat[this.getPassengerSeatAttributes().length];
-					int i = 0;
-					for (int[] seatAttributes : this.getPassengerSeatAttributes())
-					{
-						if (this.passengerSeats.length > i)
-						{
-							//TODO: perform seat attributes
-							this.passengerSeats[i] = new EntityPassengerSeat(this.worldObj, this, this.posX, this.posY, this.posZ);
-						}
-						else
-						{
-							System.err.println("Passenger seat list is not big enough, something went terribly wrong!\nDefining Seat Array: "+this.getPassengerSeatAttributes()+"\nPassenger Seat Array: "+this.passengerSeats+"\nContinuing, however bug should be ammended asap!");
-						}
-						++i;
-					}
-					if (this.passengerSeats.length != i)
-					{
-						this.passengerSeats = Arrays.copyOf(this.passengerSeats, i);
-						System.err.println("The following vehicle entity has a number of undefined passenger seat elements: "+this+"\nContinuing, however the defining array should be ammended.");
-					}
-					for (EntityPassengerSeat seat : this.passengerSeats)
-					{
-						this.worldObj.spawnEntityInWorld(seat);
-					}
-					this.setPassengerSeats(this.passengerSeats);
-				}
-			}
+			seat.forceRotation = false;
+			this.setRiderLocation(seat, yOffset, forwardOffset, leftOffset, shouldSit, this.rotationYaw);
 		}
 	}
 
+	public void setRiderLocation(EntityPassengerSeat seat, double yOffset, double forwardOffset, double leftOffset, boolean shouldSit, float rotate)
+	{
+		if (seat != null)
+		{
+			seat.setLocationAndAngles(this.posX + Math.cos(Math.toRadians(this.rotationYaw))*leftOffset - Math.sin(Math.toRadians(this.rotationYaw))*forwardOffset, this.posY + this.getMountedYOffset() + yOffset, this.posZ + Math.sin(Math.toRadians(this.rotationYaw))*leftOffset + Math.cos(Math.toRadians(this.rotationYaw))*forwardOffset, rotate, 0.0F);
+			seat.shouldRiderSit = shouldSit;
+		}
+	}
 }

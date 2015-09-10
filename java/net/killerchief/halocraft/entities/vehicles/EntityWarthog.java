@@ -1,18 +1,13 @@
 package net.killerchief.halocraft.entities.vehicles;
 
-import java.util.List;
-
 import net.killerchief.halocraft.Halocraft;
 import net.killerchief.halocraft.TickHandler;
 import net.killerchief.halocraft.config.HalocraftItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class EntityWarthog extends EntityVehicle
@@ -27,8 +22,6 @@ public class EntityWarthog extends EntityVehicle
 	private float rotatePassengerFrame = 0F;
 	private float entityRiderYawDelta = 0F;
 	private double entityRiderPitchDelta = 0D;
-	
-	private EntityWarthogBack entityback = null;
 
 	public EntityWarthog(World par1World)
 	{
@@ -57,52 +50,39 @@ public class EntityWarthog extends EntityVehicle
 		this.dataWatcher.addObject(25, new Integer(0));//MovingLeft
 		this.dataWatcher.addObject(26, new Integer(0));//MovingRight
 		this.dataWatcher.addObject(27, new Float(0));//fwdVelocity
+
+		this.dataWatcher.addObject(28, new Integer(0));//backEntity
+		this.dataWatcher.addObject(29, new Integer(0));//seatShotgun
+		this.dataWatcher.addObject(30, new Integer(0));//seatGunner
 	}
-	
+
 	@Override
 	protected String getSoundLoopIdle()
 	{
 		return Halocraft.MODID+":entities.mongoose.MongooseEngineIdle";
 	}
-	
+
 	@Override
 	protected String getSoundLoopRun()
 	{
 		return Halocraft.MODID+":entities.mongoose.MongooseEngineHigh";
 	}
-	
+
 	@Override
 	protected String getSoundEnter()
 	{
 		return Halocraft.MODID+":entities.mongoose.MongooseEnter";
 	}
-	
+
 	@Override
 	protected String getSoundExit()
 	{
 		return Halocraft.MODID+":entities.mongoose.MongooseExit";
 	}
-	
-	private int[][] PassengerSeatAttributes = new int[][]{new int[]{0}, new int[]{0}};
-	
-	@Override
-	protected int[][] getPassengerSeatAttributes()
-	{
-		return this.PassengerSeatAttributes;
-	}
-	
+
 	@Override
 	protected int getSoundLoopDelay() {
 		return 10;
-	}
-
-	/**
-	 * Returns the Y offset from the entity's position for any entity riding this one.
-	 */
-	@Override
-	public double getMountedYOffset()
-	{
-		return (double)this.height - 1.34D;
 	}
 
 	/** Gets whether the entity is moving left.*/
@@ -150,12 +130,12 @@ public class EntityWarthog extends EntityVehicle
 			this.dataWatcher.updateObject(26, Integer.valueOf(0));
 		}
 	}
-	
+
 	private void setFwdVelocity(double vel)
 	{
 		this.dataWatcher.updateObject(27, (float)vel);
 	}
-	
+
 	private double getFwdVelocity()
 	{
 		return (float)this.dataWatcher.getWatchableObjectFloat(27);
@@ -190,34 +170,53 @@ public class EntityWarthog extends EntityVehicle
 			}*/
 		}
 		
-		if (this.riddenByEntity == null)
+		if (this.riddenByEntity == null && (this.seatShotgun != null && this.entityonecloser(par1EntityPlayer, this, this.seatShotgun)))
 		{
 			if (!this.worldObj.isRemote)
 			{
 				par1EntityPlayer.rotationYaw = this.rotationYaw;
 				par1EntityPlayer.rotationPitch = 10F;
 				par1EntityPlayer.mountEntity(this);
-//				if (this.passengerSeats != null && this.passengerSeats.length >= 2 && this.passengerSeats[1] != null && this.passengerSeats[1].riddenByEntity == null)
-//				{
-//					par1EntityPlayer.mountEntity(this.passengerSeats[1]);
-//				}
-//				else
 			}
 			return true;
 		}
 		else
 		{
-			if (this.riddenByEntity != par1EntityPlayer && this.passengerSeats != null && this.passengerSeats.length >= 2 && this.passengerSeats[0] != null && this.passengerSeats[0].riddenByEntity == null)
+			if (this.riddenByEntity != par1EntityPlayer && this.seatShotgun != null && this.seatShotgun.riddenByEntity == null)
 			{
+				//par1EntityPlayer.rotationYaw = this.rotationYaw;
 				if (!this.worldObj.isRemote)
 				{
-					par1EntityPlayer.mountEntity(this.passengerSeats[0]);
+					par1EntityPlayer.mountEntity(this.seatShotgun);
 				}
 				return true;
 			}
 		}
-		
+
 		return false;
+	}
+
+	public boolean entityonecloser(Entity main, Entity one, Entity two)
+	{
+		if (main != null && one != null && two != null) {
+			double a = main.posX - one.posX;
+			double b = main.posY - one.posY;
+			double c = main.posZ - one.posZ;
+			double d = main.posX - two.posX;
+			double e = main.posY - two.posY;
+			double f = main.posZ - two.posZ;
+			return Math.sqrt(a*a + b*b + c*c) < Math.sqrt(d*d + e*e + f*f);
+		} else
+			return false;
+	}
+
+	/**
+	 * Returns the Y offset from the entity's position for any entity riding this one.
+	 */
+	@Override
+	public double getMountedYOffset()
+	{
+		return (double)this.height - 1.22D;
 	}
 
 	@Override
@@ -225,16 +224,18 @@ public class EntityWarthog extends EntityVehicle
 	{
 		if (this.riddenByEntity != null)
 		{
-			this.riddenByEntity.setPosition(this.posX + Math.cos(Math.toRadians(this.rotationYaw))*0.44D, this.posY + this.getMountedYOffset() + this.riddenByEntity.getYOffset(), this.posZ + Math.sin(Math.toRadians(this.rotationYaw))*0.44D);
-			
+			double offsetLeft = 0.44D;
+			double offsetForward = -0.1D;
+			this.riddenByEntity.setPosition(this.posX + Math.cos(Math.toRadians(this.rotationYaw))*offsetLeft - Math.sin(Math.toRadians(this.rotationYaw))*offsetForward, this.posY + this.getMountedYOffset() + this.riddenByEntity.getYOffset(), this.posZ + Math.sin(Math.toRadians(this.rotationYaw))*offsetLeft + Math.cos(Math.toRadians(this.rotationYaw))*offsetForward);
+
 			if (this.riddenByEntity instanceof EntityLivingBase)
-	        {
-	            ((EntityLivingBase)this.riddenByEntity).renderYawOffset = this.rotationYaw;
-	            ((EntityLivingBase)this.riddenByEntity).cameraPitch = -5F;
-	        }
+			{
+				((EntityLivingBase)this.riddenByEntity).renderYawOffset = this.rotationYaw;
+				((EntityLivingBase)this.riddenByEntity).cameraPitch = -5F;
+			}
 		}
 	}
-	
+
 	/**
 	 * Will get destroyed next tick.
 	 */
@@ -244,7 +245,15 @@ public class EntityWarthog extends EntityVehicle
 		super.setDead();
 		if (this.entityback != null)
 			this.entityback.setDead();
+		if (this.seatShotgun != null)
+			this.seatShotgun.setDead();
+		if (this.seatGunner != null)
+			this.seatGunner.setDead();
 	}
+
+	public EntityWarthogBack entityback = null;
+	public EntityPassengerSeat seatShotgun = null;
+	public EntityTurretSeat seatGunner = null;
 
 	/**
 	 * Called to update the entity's position/logic.
@@ -257,7 +266,7 @@ public class EntityWarthog extends EntityVehicle
 		if (this.worldObj.isRemote)
 		{
 			this.handleDyingEffects();
-			
+
 			if (Halocraft.proxy.isSideClient())
 			{
 				this.updateModel();
@@ -265,32 +274,89 @@ public class EntityWarthog extends EntityVehicle
 		}
 
 		this.setFwdVelocity(this.fwdVelocity);
-		
+
+		this.handleAttachedEntities();
+	}
+
+	/**
+	 * Returns true if this entity should push and be pushed by other entities when colliding.
+	 */
+	@Override
+	public boolean canBePushed()
+	{
+		if ((this.seatShotgun != null && this.seatShotgun.riddenByEntity != null) || (this.seatGunner != null && this.seatGunner.riddenByEntity != null))
+			return false;
+		return true;
+	}
+
+	private void handleAttachedEntities()
+	{
 		if (this.entityback != null)
 		{
-//			double xOffset = -Math.sin(Math.toRadians(this.rotationYaw)) * 2.2;
-//			double zOffset = Math.cos(Math.toRadians(this.rotationYaw)) * 2.2;
-//			this.entityback.posX = this.posX - xOffset;
-//			this.entityback.posY = this.posY - 0.4D;
-//			this.entityback.posZ = this.posZ - zOffset;
-			
-			//this.entityback.setLocationAndAngles(this.posX - xOffset, this.posY - 0.4D, this.posZ - zOffset, 0.0F, 0.0F);
-			//System.out.println(this.entityback);
-			if (this.worldObj.isRemote)
-			{
-				//this.entityback = (EntityWarthogBack)this.worldObj.getEntityByID(209907);
-			}
+			//this.setRiderLocation(this.seatShotgun, 0.95D, -1.56D, 0D, false);
+			//this.setRiderLocation(this.seatShotgun, 0.22D, -0.2D, -0.44D, true, this.rotationYaw+20F);
 		}
 		else
 		{
-			this.entityback = new EntityWarthogBack(this.worldObj, this, this.posX, this.posY, this.posZ);
 			if (!this.worldObj.isRemote)
 			{
+				this.entityback = new EntityWarthogBack(this.worldObj, this, this.posX, this.posY, this.posZ);
+				double xOffset = -Math.sin(Math.toRadians(this.rotationYaw)) * 2.2;
+				double zOffset = Math.cos(Math.toRadians(this.rotationYaw)) * 2.2;
+				this.entityback.setPositionAndRotation(this.posX - xOffset, this.posY - 0.4, this.posZ - zOffset, 0F, 0F);
+				//this.setRiderLocation(this.seatShotgun, 0.22D, -0.2D, -0.44D, true, this.rotationYaw+20F);
 				this.worldObj.spawnEntityInWorld(this.entityback);
+				this.dataWatcher.updateObject(28, this.entityback.getEntityId());
 			}
 			else
 			{
-				//this.entityback = (EntityWarthogBack)this.worldObj.getEntityByID(338494);
+				int id = this.dataWatcher.getWatchableObjectInt(28);
+				if (id > 0)
+					this.entityback = (EntityWarthogBack)this.worldObj.getEntityByID(id);//Code for case of invalid id (on update detect for) maybe?
+			}
+		}
+
+		if (this.seatShotgun != null)
+		{
+			//this.setRiderLocation(this.seatShotgun, 0.95D, -1.56D, 0D, false);
+			this.setRiderLocation(this.seatShotgun, 0.22D, -0.2D, -0.44D, true, this.rotationYaw+20F);
+		}
+		else
+		{
+			if (!this.worldObj.isRemote)
+			{
+				this.seatShotgun = new EntityPassengerSeat(this.worldObj, this, this.posX, this.posY, this.posZ);
+				this.setRiderLocation(this.seatShotgun, 0.22D, -0.2D, -0.44D, true, this.rotationYaw+20F);
+				this.worldObj.spawnEntityInWorld(this.seatShotgun);
+				this.dataWatcher.updateObject(29, this.seatShotgun.getEntityId());
+			}
+			else
+			{
+				int id = this.dataWatcher.getWatchableObjectInt(29);
+				if (id > 0)
+					this.seatShotgun = (EntityPassengerSeat)this.worldObj.getEntityByID(id);//Code for case of invalid id (on update detect for) maybe?
+			}
+		}
+
+		if (this.seatGunner != null)
+		{
+			//this.setRiderLocation(this.seatGunner, 0.22D, -0.2D, -0.44D, true, this.rotationYaw+20F);
+			this.setRiderLocation(this.seatGunner, 0.95D, -1.56D, 0D, false);
+		}
+		else
+		{
+			if (!this.worldObj.isRemote)
+			{
+				this.seatGunner = new EntityTurretSeat(this.worldObj, this, this.posX, this.posY, this.posZ);
+				this.setRiderLocation(this.seatGunner, 0.95D, -1.56D, 0D, false);
+				this.worldObj.spawnEntityInWorld(this.seatGunner);
+				this.dataWatcher.updateObject(30, this.seatGunner.getEntityId());
+			}
+			else
+			{
+				int id = this.dataWatcher.getWatchableObjectInt(30);
+				if (id > 0)
+					this.seatGunner = (EntityTurretSeat)this.worldObj.getEntityByID(id);
 			}
 		}
 	}
@@ -345,20 +411,20 @@ public class EntityWarthog extends EntityVehicle
 			float j = this.rotationYaw > i ? i - this.rotationYaw : i - (this.rotationYaw + 360F);
 			this.yawPointer = (float) (Math.abs(j) > 180F ? 360F + j : j);
 			//System.out.println("P: "+this.yawPointer+"\n");
-			
+
 			if (TickHandler.ForwardMap.containsKey(this.riddenByEntity) && TickHandler.BackwardMap.containsKey(this.riddenByEntity) && TickHandler.LeftMap.containsKey(this.riddenByEntity) && TickHandler.RightMap.containsKey(this.riddenByEntity))
 			{
 				if (TickHandler.ForwardMap.get(this.riddenByEntity) && this.onGround)
 				{
 					this.fwdVelocity+=0.02;
 				}
-				
+
 				if (TickHandler.BackwardMap.get(this.riddenByEntity) && this.onGround)
 				{
 					this.fwdVelocity-=0.02;
 					this.fwdVelocity*=0.94;
 				}
-				
+
 				if (TickHandler.LeftMap.get(this.riddenByEntity) && this.onGround)
 				{
 					//this.rotationYaw-=this.pseudoHandling*this.fwdVelocity;
@@ -368,7 +434,7 @@ public class EntityWarthog extends EntityVehicle
 				{
 					this.setMovingLeft(false);
 				}
-				
+
 				if (TickHandler.RightMap.get(this.riddenByEntity) && this.onGround)
 				{
 					//this.rotationYaw+=this.pseudoHandling*this.fwdVelocity;
@@ -378,20 +444,20 @@ public class EntityWarthog extends EntityVehicle
 				{
 					this.setMovingRight(false);
 				}
-				
+
 				if (!TickHandler.ForwardMap.get(this.riddenByEntity) && !TickHandler.BackwardMap.get(this.riddenByEntity))
 				{
 					this.fwdVelocity *= 0.96D;
 				}
 			}
 		}
-		
+
 		this.rotationYaw += (this.onGround ? this.yawPointer * this.pseudoHandling : this.yawPointer * this.pseudoHandling * 0.3D) * this.speed/6;
 
 		this.motionX += -Math.sin(Math.toRadians(this.rotationYaw))*this.fwdVelocity;
 		this.motionZ += Math.cos(Math.toRadians(this.rotationYaw))*this.fwdVelocity;
 		this.fwdVelocity *= this.onGround?this.frictionFactor:0.99F;
-		
+
 		if (this.fwdVelocity<0.01 && this.fwdVelocity>-0.01) {
 			this.fwdVelocity = 0;
 		}
@@ -407,8 +473,8 @@ public class EntityWarthog extends EntityVehicle
 	private void smoothHandling()
 	{
 		this.pseudoHandling = -0.03D * this.speed/10 + 0.08F;
-		
-		
+
+
 		/*if (this.speed < 0.1D)
 		{
 			this.pseudoHandling = 18D;
@@ -446,22 +512,22 @@ public class EntityWarthog extends EntityVehicle
 			}
 		}
 	}
-	
+
 	public float getWheelTurnAngle()
 	{
 		return this.wheelTurnAngle;
 	}
-	
+
 	public float getSteeringTurnAngle()
 	{
 		return this.steeringTurnAngle;
 	}
-	
+
 	public float getRotateWheelSpeed()
 	{
 		return this.rotateWheelSpeed;
 	}
-	
+
 	public float getRotatePassengerFrame()
 	{
 		return (float)Math.toRadians(-this.rotatePassengerFrame);
@@ -475,17 +541,8 @@ public class EntityWarthog extends EntityVehicle
 			rotateWheelSpeed = rotateWheelSpeed>=360?rotateWheelSpeed-360:rotateWheelSpeed;
 			rotateWheelSpeed = rotateWheelSpeed<0?rotateWheelSpeed+360:rotateWheelSpeed;
 
-			//this.passengerSeats[0] = (EntityPassengerSeat)this.worldObj.getEntityByID(115955);
-			if (this.passengerSeats != null && this.passengerSeats.length > 0 && this.passengerSeats[0] != null && this.passengerSeats[0].riddenByEntity != null) {
-				if (this.rotatePassengerFrame < 90F)
-					this.rotatePassengerFrame += 9F;
-			} else {
-				if (this.rotatePassengerFrame > 0F)
-					this.rotatePassengerFrame -= 9F;
-			}
-			
 			float turnSpeed = 0.08F;
-			
+
 			if (this.isMovingLeft() && this.isMovingRight()) {
 				this.wheelTurnAngle *= turnSpeed*6;
 				this.steeringTurnAngle *= turnSpeed*6;

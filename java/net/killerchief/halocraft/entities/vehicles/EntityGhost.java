@@ -25,13 +25,13 @@ public class EntityGhost extends EntityVehicle
 	private float yawPointer = 0F;
 	private double fwdVelocity = 0D;
 	private double strafe = 0D;
-	
+
 	private float raiseModel = 0F;//0.36F;
 
 	public EntityGhost(World par1World)
 	{
 		super(par1World);
-		this.setSize(1.3F, 0.85F);
+		this.setSize(1.8F, 1.4F);
 		this.stepHeight = 1.0F;
 		this.yOffset = height / 2.0F;
 	}
@@ -61,7 +61,7 @@ public class EntityGhost extends EntityVehicle
 	{
 		return null;
 	}
-	
+
 	@Override
 	protected String getSoundLoopRun() {
 		return Halocraft.MODID+":entities.ghost.GhostLoopRun";
@@ -82,11 +82,6 @@ public class EntityGhost extends EntityVehicle
 		return Halocraft.MODID+":entities.ghost.GhostExit";
 	}
 
-	@Override
-	protected int[][] getPassengerSeatAttributes() {
-		return null;
-	}
-	
 	@Override
 	protected int getSoundLoopDelay() {
 		return 10;
@@ -137,7 +132,7 @@ public class EntityGhost extends EntityVehicle
 			this.dataWatcher.updateObject(26, Integer.valueOf(0));
 		}
 	}
-	
+
 	/**
 	 * First layer of player interaction
 	 */
@@ -177,7 +172,7 @@ public class EntityGhost extends EntityVehicle
 			}
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -186,7 +181,7 @@ public class EntityGhost extends EntityVehicle
 	{
 		if (this.riddenByEntity != null)
 		{
-			this.riddenByEntity.setPosition(this.posX + (Math.sin(Math.toRadians(this.rotationYaw))*0.7D), this.posY + this.getMountedYOffset() + this.riddenByEntity.getYOffset() + this.raiseModel - 0.36F, this.posZ + (-Math.cos(Math.toRadians(this.rotationYaw))*0.7D));
+			this.riddenByEntity.setPosition(this.posX + (Math.sin(Math.toRadians(this.rotationYaw))*0.85D), this.posY + this.getMountedYOffset() + this.riddenByEntity.getYOffset() + this.raiseModel - 1.06F, this.posZ + (-Math.cos(Math.toRadians(this.rotationYaw))*0.85D));
 
 			if (this.riddenByEntity instanceof EntityLivingBase)
 			{
@@ -203,7 +198,7 @@ public class EntityGhost extends EntityVehicle
 	public void onUpdate()
 	{
 		super.onUpdate();
-		
+
 		if (this.worldObj.isRemote)
 		{
 			this.handleEffects();
@@ -353,29 +348,29 @@ public class EntityGhost extends EntityVehicle
 			}
 		}
 	}
-	
+
 	private void handleEffects()
 	{
 		if ((int)(this.raiseModel*10) > 0)
 		{
-			for (int i = 0; i < (int)(this.raiseModel*10)*3; i++) {
-				double random1 = this.rand.nextDouble()/3;
+			for (int i = 0; i < (int)(this.raiseModel*12)*3; i++) {//Front Wings
+				double random1 = this.rand.nextDouble()/1.5;
 				double random2 = this.rand.nextDouble();
-				double xOffset = (-Math.sin(Math.toRadians(this.rotationYaw+53))*(1.56D-random1))+(Math.cos(Math.toRadians(this.rotationYaw))*(2.18D*random2));
-				double zOffset = (Math.cos(Math.toRadians(this.rotationYaw+53))*(1.56D-random1))+(Math.sin(Math.toRadians(this.rotationYaw))*(2.18D*random2));
+				double xOffset = (-Math.sin(Math.toRadians(this.rotationYaw+53))*(2.1D-random1))+(Math.cos(Math.toRadians(this.rotationYaw))*(2.7D*random2));
+				double zOffset = (Math.cos(Math.toRadians(this.rotationYaw+53))*(2.1D-random1))+(Math.sin(Math.toRadians(this.rotationYaw))*(2.7D*random2));
 				//this.worldObj.spawnParticle("flame", this.posX+xOffset, this.posY + 0.2D + this.raiseModel - 0.36F, this.posZ+zOffset, this.motionX, this.motionY-0.3D, this.motionZ);
-				Halocraft.proxy.ParticleFX(1, this.worldObj, this.prevPosX+xOffset, this.prevPosY + 0.2D + this.raiseModel - 0.36F, this.prevPosZ+zOffset, this.motionX, this.motionY-0.3D, this.motionZ);
+				Halocraft.proxy.ParticleFX(1, this.worldObj, this.prevPosX+xOffset, this.prevPosY + 0.2D + this.raiseModel - 0.6F, this.prevPosZ+zOffset, this.motionX, this.motionY-0.3D, this.motionZ);
 			}
-			for (int i = 0; i < (int)(this.raiseModel*10)*3; i++) {
+			for (int i = 0; i < (int)(this.raiseModel*8)*3; i++) {//Center Body
 				double random1 = this.rand.nextDouble();
 				double random2 = this.rand.nextDouble();
-				double xOffset = (-Math.sin(Math.toRadians(this.rotationYaw+14))*(1.1D))+(Math.cos(Math.toRadians(this.rotationYaw))*(0.53D*random1))+(Math.sin(Math.toRadians(this.rotationYaw))*(2.2D*random2));
-				double zOffset = (Math.cos(Math.toRadians(this.rotationYaw+14))*(1.1D))+(Math.sin(Math.toRadians(this.rotationYaw))*(0.53D*random1))-(Math.cos(Math.toRadians(this.rotationYaw))*(2.2D*random2));
+				double xOffset = (-Math.sin(Math.toRadians(this.rotationYaw+14))*(0.8D))+(Math.cos(Math.toRadians(this.rotationYaw))*(0.53D*random1))+(Math.sin(Math.toRadians(this.rotationYaw))*(2.2D*random2));
+				double zOffset = (Math.cos(Math.toRadians(this.rotationYaw+14))*(0.8D))+(Math.sin(Math.toRadians(this.rotationYaw))*(0.53D*random1))-(Math.cos(Math.toRadians(this.rotationYaw))*(2.2D*random2));
 				//this.worldObj.spawnParticle("flame", this.posX+xOffset, this.posY + 0.2D + this.raiseModel - 0.36F, this.posZ+zOffset, this.motionX, this.motionY-0.3D, this.motionZ);
-				Halocraft.proxy.ParticleFX(1, this.worldObj, this.prevPosX+xOffset, this.prevPosY + 0.2D + this.raiseModel - 0.36F, this.prevPosZ+zOffset, this.motionX, this.motionY-0.3D, this.motionZ);
+				Halocraft.proxy.ParticleFX(1, this.worldObj, this.prevPosX+xOffset, this.prevPosY + 0.2D + this.raiseModel - 0.7F, this.prevPosZ+zOffset, this.motionX, this.motionY-0.3D, this.motionZ);
 			}
 		}
-		
+
 		/*if(this.getHealth()<=30 && !isInWater())
 		{
 			worldObj.spawnParticle("smoke", posX+xOffset, posY+0.16, posZ+zOffset, this.motionX/2, this.motionY/2, this.motionZ/2);
@@ -390,12 +385,12 @@ public class EntityGhost extends EntityVehicle
 			}
 		}*/
 	}
-	
+
 	public float getRaiseModel()
 	{
 		return this.raiseModel;
 	}
-	
+
 	public static final Model3DBase Damage0Model = new ModelGhost();
 	public static final ResourceLocation Damage0TextureOn = new ResourceLocation(Halocraft.MODID+":textures/entities/SkinGhost.png");
 	public static final ResourceLocation Damage0TextureOff = new ResourceLocation(Halocraft.MODID+":textures/entities/SkinGhostOff.png");
@@ -411,20 +406,20 @@ public class EntityGhost extends EntityVehicle
 	//public static final Model3DBase Damage4Model = new ModelGhost();
 	//public static final ResourceLocation Damage4TextureOn = new ResourceLocation(Halocraft.MODID+":textures/entities/SkinGhost.png");
 	//public static final ResourceLocation Damage4TextureOff = new ResourceLocation(Halocraft.MODID+":textures/entities/SkinGhostOFF.png");
-	
+
 	private Model3DBase model = this.Damage0Model;
 	private ResourceLocation texture = this.Damage0TextureOff;
-	
+
 	public Model3DBase getModel()
 	{
 		return this.model;
 	}
-	
+
 	public ResourceLocation getTexture()
 	{
 		return this.texture;
 	}
-	
+
 	private void updateModel()
 	{
 		if (Minecraft.getMinecraft().inGameHasFocus)
@@ -433,11 +428,11 @@ public class EntityGhost extends EntityVehicle
 				if (this.raiseModel > 0F)
 					this.raiseModel -= 0.03F;
 			} else {
-				if (this.raiseModel < 0.36F)
+				if (this.raiseModel < 0.48F)
 					this.raiseModel += 0.03F;
 			}
 		}
-		
+
 		if (this.getHealth() <= 15)
 		{
 			this.model = this.Damage3Model;

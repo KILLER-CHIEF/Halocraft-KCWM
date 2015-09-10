@@ -30,6 +30,8 @@ import net.killerchief.halocraft.config.HalocraftItemsArmor;
 import net.killerchief.halocraft.config.HalocraftItemsWeapons;
 import net.killerchief.halocraft.entities.vehicles.EntityGhost;
 import net.killerchief.halocraft.entities.vehicles.EntityMongoose;
+import net.killerchief.halocraft.entities.vehicles.EntityPassengerSeat;
+import net.killerchief.halocraft.entities.vehicles.EntityTurretSeat;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
 import net.killerchief.kcweaponmod.InterfaceZoomReticle;
 import net.killerchief.kcweaponmod.ItemWeapon;
@@ -667,10 +669,24 @@ public class TickHandlerClient {
 			}
 			else
 			{
-				if (this.mc.thePlayer.ridingEntity != null && this.mc.thePlayer.ridingEntity instanceof EntityGhost)
+				if (this.mc.thePlayer.ridingEntity != null)
 				{
-					Halocraft.network.sendToServer(new PacketVehicleShoot());
-					this.VehicleShootDelay = 6;
+					if (this.mc.thePlayer.ridingEntity instanceof EntityGhost)
+					{
+						Halocraft.network.sendToServer(new PacketVehicleShoot());
+						this.VehicleShootDelay = 5;
+					}
+					else if (this.mc.thePlayer.ridingEntity instanceof EntityTurretSeat)
+					{
+						EntityPassengerSeat turret = (EntityPassengerSeat)this.mc.thePlayer.ridingEntity;
+						if (turret.parentBody != null && turret.parentBody instanceof EntityWarthog)
+						{
+							//System.out.println("TurretShootSend");
+							Halocraft.network.sendToServer(new PacketVehicleShoot());
+							this.VehicleShootDelay = 2;
+							this.Recoil += 4F;
+						}
+					}
 				}
 			}
 		}
@@ -731,9 +747,20 @@ public class TickHandlerClient {
 
 		GuiIngameForge.renderCrosshairs = true;
 		
+		
 		if(minecraft.inGameHasFocus && minecraft.gameSettings.thirdPersonView == 0)
 		{
-			if (minecraft.thePlayer.inventory.getCurrentItem() != null && minecraft.thePlayer.inventory.getCurrentItem().getItem() instanceof InterfaceZoomReticle)
+			if (minecraft.thePlayer.ridingEntity instanceof EntityTurretSeat)
+			{
+				GuiIngameForge.renderCrosshairs = false;
+				GunReticle(1.0F, RLReticle, 132, 117, 45, 45, 22, 22);
+			}
+			else if (minecraft.thePlayer.ridingEntity instanceof EntityGhost)
+			{
+				GuiIngameForge.renderCrosshairs = false;
+				GunReticle(1.0F, RLReticle, 39, 163, 49, 29, 24, 19);
+			}
+			else if (minecraft.thePlayer.inventory.getCurrentItem() != null && minecraft.thePlayer.inventory.getCurrentItem().getItem() instanceof InterfaceZoomReticle)
 			{
 				InterfaceZoomReticle currentItem = (InterfaceZoomReticle)minecraft.thePlayer.inventory.getCurrentItem().getItem();
 				if (!net.killerchief.kcweaponmod.TickHandlerClient.IsZooming() || (!currentItem.IsZoomable() && !net.killerchief.kcweaponmod.TickHandlerClient.IsZooming()))

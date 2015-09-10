@@ -102,6 +102,16 @@
             "entities/mongoose/MongooseHit2"
         ]
     },
+	"entities.warthog.ChainGunFire":
+    {
+        "category": "player",
+        "sounds":
+        [
+            "entities/warthog/ChainGunFire1",
+			"entities/warthog/ChainGunFire2",
+            "entities/warthog/ChainGunFire3"
+        ]
+    },
 	"items.PickupHealth":
     {
         "category": "player",

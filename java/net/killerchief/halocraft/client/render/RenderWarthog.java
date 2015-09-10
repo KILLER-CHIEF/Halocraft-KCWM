@@ -37,37 +37,27 @@ public class RenderWarthog extends Render
 		GL11.glRotatef(180.0F - par8, 0.0F, 1.0F, 0.0F);
 		float f4 = 0.75F;
 		GL11.glScalef(f4, f4, f4);
-		GL11.glScalef(0.8F / f4, 0.8F / f4, 0.8F / f4);
+		GL11.glScalef(0.86F / f4, 0.86F / f4, 0.86F / f4);
 		this.bindEntityTexture(entity);
 		GL11.glScalef(-1.0F, -1.0F, 1.0F);
 		GL11.glRotatef(180F, 1F, 0F, 0F);
 		GL11.glRotatef(-90F, 0F, 1F, 0F);
-		GL11.glTranslatef(0F, -0.8F, 0F);
+		GL11.glTranslatef(0F, -0.75F, 0F);
 		this.bindTexture(WarthogTexture);
 		WarthogModel.render(entity, 0F, 0F, 0F, 0F, 0F, 0.0625F);
 		GL11.glDisable(GL11.GL_BLEND);
 		GL11.glDepthMask(true);
 		GL11.glRotatef(90F, 0F, 1F, 0F);
 		GL11.glTranslatef(0F, 2F, -1.8F);
-		try {
-			if (entity.passengerSeats.length >= 2 && entity.passengerSeats[1] != null && entity.passengerSeats[1].riddenByEntity != null)
-				GL11.glRotatef(entity.rotationYaw - entity.passengerSeats[1].riddenByEntity.rotationYaw, 0F, 1F, 0F);//entity.getWheelTurnAngle()*400
-		} catch (NullPointerException npe) {
-			System.err.println(npe.getStackTrace());
-			entity.passengerSeats = entity.getPassengerSeats();
-		}
+		if (entity.seatGunner != null && entity.seatGunner.riddenByEntity != null)
+			GL11.glRotatef(entity.rotationYaw - entity.seatGunner.riddenByEntity.rotationYaw, 0F, 1F, 0F);//entity.getWheelTurnAngle()*400
 		this.bindTexture(MachineGunTexture);
 		//MachineGunModel.render(entity, 0F, 0F, 0F, 0F, 0F, 0.0625F);
 		GL11.glTranslatef(0F, 0F, -0.2F);
 		MachineGunModel.renderSomeParts(false, 0.0625F);
 		GL11.glTranslatef(0F, 0.5F, 0.85F);
-		try {
-			if (entity.passengerSeats.length >= 2 && entity.passengerSeats[1] != null && entity.passengerSeats[1].riddenByEntity != null)
-				GL11.glRotatef(entity.passengerSeats[1].riddenByEntity.rotationPitch, 1F, 0F, 0F);//entity.getWheelTurnAngle()*150
-		} catch (NullPointerException npe) {
-			System.err.println(npe.getStackTrace());
-			entity.passengerSeats = entity.getPassengerSeats();
-		}
+		if (entity.seatGunner != null && entity.seatGunner.riddenByEntity != null)
+			GL11.glRotatef(entity.seatGunner.riddenByEntity.rotationPitch, 1F, 0F, 0F);//entity.getWheelTurnAngle()*150
 		GL11.glTranslatef(0F, -0.45F, -0.85F);
 		MachineGunModel.renderSomeParts(true, 0.0625F);
 		GL11.glPopMatrix();

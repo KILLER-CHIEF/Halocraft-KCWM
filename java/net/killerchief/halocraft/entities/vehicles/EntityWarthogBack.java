@@ -10,20 +10,20 @@ import net.minecraft.world.World;
 public class EntityWarthogBack extends Entity {
 
 	/** The Vehicle Entity this is Attached To */
-	private EntityVehicle parentBody;
+	private EntityWarthog parentBody;
 
 	public EntityWarthogBack(World par1World)
 	{
 		super(par1World);
-		this.setSize(1.8F, 1.3F);
+		this.setSize(1.0F, 1.1F);
 		this.noClip = true;
 	}
 
-	public EntityWarthogBack(World par1World, EntityVehicle vehicle, double par2, double par4, double par6)
+	public EntityWarthogBack(World par1World, EntityWarthog vehicle, double par2, double par4, double par6)
 	{
 		this(par1World);
 		this.setPosition(par2, par4 , par6);
-		parentBody = vehicle;
+		this.parentBody = vehicle;
 	}
 
 	@Override
@@ -35,6 +35,8 @@ public class EntityWarthogBack extends Entity {
 	@Override
 	public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
 	{
+		if (this.parentBody != null && this.hurtResistantTime +1 < this.parentBody.hurtResistantTime)
+			this.parentBody.hurtResistantTime = this.hurtResistantTime;
 		return this.isEntityInvulnerable() ? false : (this.parentBody == null ? false : this.parentBody.attackEntityFrom(par1DamageSource, par2));
 	}
 
@@ -53,7 +55,7 @@ public class EntityWarthogBack extends Entity {
 	@Override
 	public boolean interactFirst(EntityPlayer par1EntityPlayer)
 	{
-		System.out.println("Fuckl");
+		//System.out.println("BackInteract");
 		/*if (this.riddenByEntity != null && this.riddenByEntity instanceof EntityPlayer && this.riddenByEntity != par1EntityPlayer)
 		{
 			return true;
@@ -66,15 +68,26 @@ public class EntityWarthogBack extends Entity {
 			}
 			return true;
 		}*/
-		if (!this.worldObj.isRemote)
+		//System.out.println(this.parentBody);//FIXME: Warthog Back: null for client (need data watchers)
+		/*if (this.parentBody != null && this.parentBody.passengerSeats != null && this.parentBody.passengerSeats.length >= 2 && this.parentBody.passengerSeats[1] != null && this.parentBody.passengerSeats[1].riddenByEntity == null)
 		{
-			if (this.parentBody != null && this.parentBody.passengerSeats != null && this.parentBody.passengerSeats.length >= 2 && this.parentBody.passengerSeats[1] != null && this.parentBody.passengerSeats[1].riddenByEntity == null)
+			if (!this.worldObj.isRemote)
 			{
 				par1EntityPlayer.mountEntity(this.parentBody.passengerSeats[1]);
-				return true;
 			}
+			return true;
+		}*/
+		if (this.parentBody != null && this.parentBody.seatGunner != null && this.parentBody.seatGunner.riddenByEntity == null)
+		{
+			if (!this.worldObj.isRemote)
+			{
+				par1EntityPlayer.rotationYaw = this.parentBody.rotationYaw;
+				par1EntityPlayer.rotationPitch = 0F;
+				par1EntityPlayer.mountEntity(this.parentBody.seatGunner);
+			}
+			return true;
 		}
-		return false;
+		return true;//Prevents accidental shooting for the moment
 	}
 
 	/**
@@ -141,15 +154,20 @@ public class EntityWarthogBack extends Entity {
 	public void onUpdate()
 	{
 		super.onUpdate();
-		worldObj.spawnParticle("flame", posX, posY, posZ, 0D, 0D, 0D);
-		//System.out.println(this.getEntityId());
+		//worldObj.spawnParticle("flame", posX, posY, posZ, 0D, 0D, 0D);
+		//System.out.println(this.parentBody !=null?this.parentBody.getHealth():0);//this.worldObj.isRemote + " : " + this.getEntityId() + " : "+
 		if (this.parentBody != null)
 		{
+			if (this.hurtResistantTime +1 < this.parentBody.hurtResistantTime)
+				this.parentBody.hurtResistantTime = this.hurtResistantTime;
+			this.hurtResistantTime = this.parentBody.hurtResistantTime;
+			
 			double xOffset = -Math.sin(Math.toRadians(this.parentBody.rotationYaw)) * 2.2;
 			double zOffset = Math.cos(Math.toRadians(this.parentBody.rotationYaw)) * 2.2;
-			this.posX = this.parentBody.posX - xOffset;
-			this.posY = this.parentBody.posY - 0.4D;
-			this.posZ = this.parentBody.posZ - zOffset;
+			//this.prevPosX = this.posX = this.parentBody.posX - xOffset;
+			//this.prevPosY = this.posY = this.parentBody.posY - 0.4D;
+			//this.prevPosZ = this.posZ = this.parentBody.posZ - zOffset;
+			this.setPositionAndRotation(this.parentBody.posX - xOffset, this.parentBody.posY - 0.4, this.parentBody.posZ - zOffset, 0F, 0F);
 		}
 		if (!this.worldObj.isRemote)
 		{

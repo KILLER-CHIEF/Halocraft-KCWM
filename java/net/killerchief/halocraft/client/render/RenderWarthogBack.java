@@ -24,7 +24,7 @@ public class RenderWarthogBack extends Render
 
 	public RenderWarthogBack()
 	{
-		this.shadowSize = 1.5F;
+		this.shadowSize = 0.8F;
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class RenderWarthogBack extends Render
 		GL11.glDepthMask(true);
 		GL11.glRotatef(90F, 0F, 1F, 0F);
 		GL11.glTranslatef(0F, 2F, -1.8F);
-		try {
+		/*try {
 			if (entity.passengerSeats.length >= 2 && entity.passengerSeats[1] != null && entity.passengerSeats[1].riddenByEntity != null)
 				GL11.glRotatef(entity.rotationYaw - entity.passengerSeats[1].riddenByEntity.rotationYaw, 0F, 1F, 0F);//entity.getWheelTurnAngle()*400
 		} catch (NullPointerException npe) {
@@ -69,7 +69,7 @@ public class RenderWarthogBack extends Render
 			entity.passengerSeats = entity.getPassengerSeats();
 		}
 		GL11.glTranslatef(0F, -0.45F, -0.85F);
-		MachineGunModel.renderSomeParts(true, 0.0625F);
+		MachineGunModel.renderSomeParts(true, 0.0625F);*/
 		GL11.glPopMatrix();
 	}
 

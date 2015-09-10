@@ -8,6 +8,7 @@ import net.killerchief.halocraft.entities.vehicles.EntityMongooseDefault;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseGreen;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseRed;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -24,6 +25,12 @@ public class ItemVehicle extends HalocraftItem {
 
 	public ItemVehicle(String name, String texture, int type) {
 		super(name, texture);
+		this.maxStackSize = 1;
+		this.Type = type;
+	}
+	
+	public ItemVehicle(String name, String texture, int type, CreativeTabs tab) {
+		super(name, texture, tab);
 		this.maxStackSize = 1;
 		this.Type = type;
 	}

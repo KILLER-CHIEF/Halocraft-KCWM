@@ -27,10 +27,10 @@ public class RenderGhost extends Render
 		GL11.glTranslatef((float)par2, (float)par4, (float)par6);
 		GL11.glRotatef(180.0F - par8, 0.0F, 1.0F, 0.0F);
 		GL11.glRotatef(180F, 0F, 0F, 1F);
-		GL11.glTranslatef(0.5F, 0.05F - entity.getRaiseModel(), 0.0F);
+		GL11.glTranslatef(0.63F, 0.22F - entity.getRaiseModel(), 0.0F);
 		float f4 = 0.75F;
 		GL11.glScalef(f4, f4, f4);
-		GL11.glScalef(0.8F / f4, 0.8F / f4, 0.8F / f4);
+		GL11.glScalef(1F / f4, 1F / f4, 1F / f4);
 		this.bindEntityTexture(entity);
 		GL11.glScalef(-1.0F, -1.0F, 1.0F);
 		entity.getModel().render(entity, 0F, 0F, 0F, 0F, 0F, 0.0625F);
