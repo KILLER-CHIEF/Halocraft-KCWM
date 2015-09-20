@@ -31,4 +31,20 @@ public class EntityTurretSeat extends EntityPassengerSeat {
 			}
 		}
 	}
+	
+	public int shootDelay = 0;
+	
+	/**
+	 * Called to update the entity's position/logic.
+	 */
+	@Override
+	public void onUpdate()
+	{
+		super.onUpdate();
+		
+		if (this.shootDelay > 0)
+		{
+			this.shootDelay--;
+		}
+	}
 }

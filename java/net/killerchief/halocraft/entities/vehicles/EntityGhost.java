@@ -27,6 +27,8 @@ public class EntityGhost extends EntityVehicle
 	private double strafe = 0D;
 
 	private float raiseModel = 0F;//0.36F;
+	
+	public int shootDelay = 0;
 
 	public EntityGhost(World par1World)
 	{
@@ -198,6 +200,11 @@ public class EntityGhost extends EntityVehicle
 	public void onUpdate()
 	{
 		super.onUpdate();
+		
+		if (this.shootDelay > 0)
+		{
+			this.shootDelay--;
+		}
 
 		if (this.worldObj.isRemote)
 		{

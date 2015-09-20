@@ -346,8 +346,8 @@ public class TickHandlerClient {
 	}
 	
 	//onTickInGame
-	public static float Recoil = 0.0F;
-	public static float AntiRecoil = 0.0F;
+	//public static float Recoil = 0.0F;
+	//public static float AntiRecoil = 0.0F;
 
 	private int RefreshDelayAmount = 40;
 	private int DelayForward = 0;
@@ -368,14 +368,14 @@ public class TickHandlerClient {
 	{
 		//System.out.println("onTickInGame");
 
-		if(this.Recoil > 0.0F)
+		/*if(this.Recoil > 0.0F)
 		{
 			this.Recoil *= 0.8F;
 		}
 		minecraft.thePlayer.rotationPitch -= this.Recoil;
 		this.AntiRecoil += this.Recoil;
 		minecraft.thePlayer.rotationPitch += AntiRecoil * 0.2F;
-		this.AntiRecoil *= 0.78F;
+		this.AntiRecoil *= 0.78F;*/
 
 		if (minecraft.thePlayer.ridingEntity instanceof EntityMongoose || minecraft.thePlayer.ridingEntity instanceof EntityGhost || minecraft.thePlayer.ridingEntity instanceof EntityWarthog)
 		{
@@ -674,7 +674,7 @@ public class TickHandlerClient {
 					if (this.mc.thePlayer.ridingEntity instanceof EntityGhost)
 					{
 						Halocraft.network.sendToServer(new PacketVehicleShoot());
-						this.VehicleShootDelay = 5;
+						this.VehicleShootDelay = 2;
 					}
 					else if (this.mc.thePlayer.ridingEntity instanceof EntityTurretSeat)
 					{
@@ -684,7 +684,6 @@ public class TickHandlerClient {
 							//System.out.println("TurretShootSend");
 							Halocraft.network.sendToServer(new PacketVehicleShoot());
 							this.VehicleShootDelay = 2;
-							this.Recoil += 4F;
 						}
 					}
 				}
@@ -759,6 +758,11 @@ public class TickHandlerClient {
 			{
 				GuiIngameForge.renderCrosshairs = false;
 				GunReticle(1.0F, RLReticle, 39, 163, 49, 29, 24, 19);
+			}
+			else if (minecraft.thePlayer.ridingEntity instanceof EntityWarthog)
+			{
+				GuiIngameForge.renderCrosshairs = false;
+				GunReticle(1.0F, RLReticle, 125, 91, 23, 10, 11, 2);
 			}
 			else if (minecraft.thePlayer.inventory.getCurrentItem() != null && minecraft.thePlayer.inventory.getCurrentItem().getItem() instanceof InterfaceZoomReticle)
 			{

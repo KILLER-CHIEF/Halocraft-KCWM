@@ -75,14 +75,14 @@ public class TickHandlerClient {
 		}
 	}
 
-	//onTickInGame
-	public static float Recoil = 0.0F;
-	public static float AntiRecoil = 0.0F;
-
 	public void onTickInGUI(Minecraft minecraft, GuiScreen guiscreen)
 	{
 		//System.out.println("onTickInGUI");
 	}
+	
+	//onTickInGame
+	public static float Recoil = 0.0F;
+	public static float AntiRecoil = 0.0F;
 
 	private void onTickInGame(Minecraft minecraft)
 	{

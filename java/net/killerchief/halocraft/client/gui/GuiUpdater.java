@@ -845,7 +845,8 @@ public class GuiUpdater extends GuiScreen {
 					}
 					fos.write(buffer,0,bytesRead);
 				}
-				System.out.println("\nDone!");
+				System.out.print("\n");
+				System.out.println("Done!");
 
 				// Close destination stream
 				fos.close();

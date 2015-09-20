@@ -25,6 +25,7 @@ public class PacketRegistry {
 		Halocraft.network.registerMessage(PacketGravityLift.Handler.class, PacketGravityLift.class, id++, Side.SERVER);
 		Halocraft.network.registerMessage(PacketLandmine.Handler.class, PacketLandmine.class, id++, Side.SERVER);
 		Halocraft.network.registerMessage(PacketVehicleShoot.Handler.class, PacketVehicleShoot.class, id++, Side.SERVER);
+		Halocraft.network.registerMessage(PacketVehicleShoot.Handler.class, PacketVehicleShoot.class, id++, Side.CLIENT);
 		Halocraft.network.registerMessage(PacketGunHolder.Handler.class, PacketGunHolder.class, id++, Side.SERVER);
 	}
 }
