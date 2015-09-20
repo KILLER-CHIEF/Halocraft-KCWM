@@ -40,7 +40,7 @@ public class KCUtils {
 				{
 					input = (Object[])input[0];
 				}
-				
+
 				String[] name = ((Object[])arg)[0].toString().split("\\.");
 				String className;
 				String methodName;
@@ -60,7 +60,7 @@ public class KCUtils {
 					className = ProjectileProperties.class.getName();
 					methodName = ((Object[])arg)[0].toString();
 				}
-				
+
 				try {
 					//System.out.println("Calling method of name that has args: "+((Object[])arg)[0].toString());
 					Class c = Class.forName(className);
@@ -311,19 +311,19 @@ public class KCUtils {
 			}
 		}
 	}
-	
+
 	public static int PlayerHasItemOrBlockAmount(EntityPlayer player, Object ammoType)//TODO: didn't use. delete
 	{
 		//KCUtils.PlayerHasItemOrBlockAmount(minecraft.thePlayer, weapon.Properties.AmmoType2) > 0
-		
-//		for (int i = 0; i < this.mainInventory.length; ++i)
-//        {
-//            if (this.mainInventory[i] != null && this.mainInventory[i].getItem() == p_146029_1_)
-//            {
-//                return i;
-//            }
-//        }
-		
+
+		//		for (int i = 0; i < this.mainInventory.length; ++i)
+		//        {
+		//            if (this.mainInventory[i] != null && this.mainInventory[i].getItem() == p_146029_1_)
+		//            {
+		//                return i;
+		//            }
+		//        }
+
 		int ammoAvailable = 0;
 		for (int i = 0; i < player.inventory.mainInventory.length; ++i) {
 			if (player.inventory.mainInventory[i] != null) {

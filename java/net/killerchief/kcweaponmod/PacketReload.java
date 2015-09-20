@@ -8,7 +8,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketReload implements IMessage {
-	
+
 	/** 0 = not reloading, 1 = reloading, 2 = single ammo loading */
 	private int IsReloadingState;
 	private int LoadedItemsCount;

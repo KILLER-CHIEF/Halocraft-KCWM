@@ -34,9 +34,7 @@ import net.killerchief.halocraft.entities.vehicles.EntityPassengerSeat;
 import net.killerchief.halocraft.entities.vehicles.EntityTurretSeat;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
 import net.killerchief.kcweaponmod.InterfaceZoomReticle;
-import net.killerchief.kcweaponmod.ItemWeapon;
 import net.killerchief.kcweaponmod.KCWeaponMod;
-import net.killerchief.kcweaponmod.KeyBindings;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -44,9 +42,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.multiplayer.ServerAddress;
 import net.minecraft.client.multiplayer.ServerData;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -67,20 +63,17 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 
 public class TickHandlerClient {
-	
+
 	static Minecraft mc = Minecraft.getMinecraft();
 	//Minecraft minecraft = FMLClientHandler.instance().getClient();
-	
+
 	private static int slowRecharge = 0;
-	
+
 	@SubscribeEvent
 	public void ClientTickEvent(TickEvent.ClientTickEvent event)
 	{
-		if (event.phase == event.phase.START)
-		{
-			
-		}
-		if (event.phase == event.phase.END)
+		if (event.phase == event.phase.START){}
+		else if (event.phase == event.phase.END)
 		{
 			GuiScreen guiscreen = mc.currentScreen;
 
@@ -90,9 +83,9 @@ public class TickHandlerClient {
 				this.onTickInGUI(mc, guiscreen);
 			} else {
 				this.onTickInGame(mc);
-				
+
 				TickHandler.CommonTickEnd();
-				
+
 				if (this.IsRecharging && this.ShieldHealth < TickHandler.ShieldMaxHealth)
 				{
 					if (this.slowRecharge++ > 2)
@@ -108,15 +101,12 @@ public class TickHandlerClient {
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void RenderTickEvent(TickEvent.RenderTickEvent event)
 	{
-		if (event.phase == event.phase.START)
-		{
-			
-		}
-		if (event.phase == event.phase.END)
+		if (event.phase == event.phase.START){}
+		else if (event.phase == event.phase.END)
 		{
 			if (mc.currentScreen != null)
 			{
@@ -133,13 +123,13 @@ public class TickHandlerClient {
 			}
 		}
 	}
-	
+
 	private static GuiScreen lastScreen;
 	private static boolean succeded = false;
 	private static int nexttryin = 100;
 	private static int retriesleft = 3;
 	private static ServerData sd = new ServerData("MOTD?", "hcserver.killerchief.net:25565");
-	
+
 	private void MainMenuTickHandler(Minecraft minecraft)
 	{
 		//Minecraft.getMinecraft().currentScreen != lastScreen
@@ -172,13 +162,13 @@ public class TickHandlerClient {
 									//System.out.println("2");
 									//sd = new ServerData("MOTD?", "hcserver.killerchief.net:25565");
 									//try {
-										this.func_147225_b(sd);
-										//func_74017_b(sd);
-										//OldServerPinger.func_147224_a(sd);
+									this.func_147225_b(sd);
+									//func_74017_b(sd);
+									//OldServerPinger.func_147224_a(sd);
 									//} catch (IOException e) {
-										//e.printStackTrace();
+									//e.printStackTrace();
 									//}
-										//System.out.println("Ping Halocraft Server");
+									//System.out.println("Ping Halocraft Server");
 									nexttryin = 200;
 									retriesleft-=1;
 								}
@@ -224,127 +214,127 @@ public class TickHandlerClient {
 			retriesleft = 3;
 		}
 	}
-	
+
 	private static final Splitter field_147230_a = Splitter.on('\u0000').limit(6);
-	
+
 	private void func_147225_b(final ServerData p_147225_1_) //net.minecraft.client.network.OldServerPinger
-    {
-        final ServerAddress serveraddress = ServerAddress.func_78860_a(p_147225_1_.serverIP);
-        ((Bootstrap)((Bootstrap)((Bootstrap)(new Bootstrap()).group(NetworkManager.eventLoops)).handler(new ChannelInitializer()
-        {
-            protected void initChannel(Channel p_initChannel_1_)
-            {
-                try
-                {
-                    p_initChannel_1_.config().setOption(ChannelOption.IP_TOS, Integer.valueOf(24));
-                }
-                catch (ChannelException channelexception1)
-                {
-                    ;
-                }
+	{
+		final ServerAddress serveraddress = ServerAddress.func_78860_a(p_147225_1_.serverIP);
+		((Bootstrap)((Bootstrap)((Bootstrap)(new Bootstrap()).group(NetworkManager.eventLoops)).handler(new ChannelInitializer()
+		{
+			protected void initChannel(Channel p_initChannel_1_)
+			{
+				try
+				{
+					p_initChannel_1_.config().setOption(ChannelOption.IP_TOS, Integer.valueOf(24));
+				}
+				catch (ChannelException channelexception1)
+				{
+					;
+				}
 
-                try
-                {
-                    p_initChannel_1_.config().setOption(ChannelOption.TCP_NODELAY, Boolean.valueOf(false));
-                }
-                catch (ChannelException channelexception)
-                {
-                    ;
-                }
+				try
+				{
+					p_initChannel_1_.config().setOption(ChannelOption.TCP_NODELAY, Boolean.valueOf(false));
+				}
+				catch (ChannelException channelexception)
+				{
+					;
+				}
 
-                p_initChannel_1_.pipeline().addLast(new ChannelHandler[] {new SimpleChannelInboundHandler()
-                {
-                    private static final String __OBFID = "CL_00000895";
-                    public void channelActive(ChannelHandlerContext p_channelActive_1_) throws Exception
-                    {
-                        super.channelActive(p_channelActive_1_);
-                        ByteBuf bytebuf = Unpooled.buffer();
+				p_initChannel_1_.pipeline().addLast(new ChannelHandler[] {new SimpleChannelInboundHandler()
+				{
+					private static final String __OBFID = "CL_00000895";
+					public void channelActive(ChannelHandlerContext p_channelActive_1_) throws Exception
+					{
+						super.channelActive(p_channelActive_1_);
+						ByteBuf bytebuf = Unpooled.buffer();
 
-                        try
-                        {
-                            bytebuf.writeByte(254);
-                            bytebuf.writeByte(1);
-                            bytebuf.writeByte(250);
-                            char[] achar = "MC|PingHost".toCharArray();
-                            bytebuf.writeShort(achar.length);
-                            char[] achar1 = achar;
-                            int i = achar.length;
-                            int j;
-                            char c0;
+						try
+						{
+							bytebuf.writeByte(254);
+							bytebuf.writeByte(1);
+							bytebuf.writeByte(250);
+							char[] achar = "MC|PingHost".toCharArray();
+							bytebuf.writeShort(achar.length);
+							char[] achar1 = achar;
+							int i = achar.length;
+							int j;
+							char c0;
 
-                            for (j = 0; j < i; ++j)
-                            {
-                                c0 = achar1[j];
-                                bytebuf.writeChar(c0);
-                            }
+							for (j = 0; j < i; ++j)
+							{
+								c0 = achar1[j];
+								bytebuf.writeChar(c0);
+							}
 
-                            bytebuf.writeShort(7 + 2 * serveraddress.getIP().length());
-                            bytebuf.writeByte(127);
-                            achar = serveraddress.getIP().toCharArray();
-                            bytebuf.writeShort(achar.length);
-                            achar1 = achar;
-                            i = achar.length;
+							bytebuf.writeShort(7 + 2 * serveraddress.getIP().length());
+							bytebuf.writeByte(127);
+							achar = serveraddress.getIP().toCharArray();
+							bytebuf.writeShort(achar.length);
+							achar1 = achar;
+							i = achar.length;
 
-                            for (j = 0; j < i; ++j)
-                            {
-                                c0 = achar1[j];
-                                bytebuf.writeChar(c0);
-                            }
+							for (j = 0; j < i; ++j)
+							{
+								c0 = achar1[j];
+								bytebuf.writeChar(c0);
+							}
 
-                            bytebuf.writeInt(serveraddress.getPort());
-                            p_channelActive_1_.channel().writeAndFlush(bytebuf).addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
-                        }
-                        finally
-                        {
-                            bytebuf.release();
-                        }
-                    }
-                    protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, ByteBuf p_channelRead0_2_)
-                    {
-                        short short1 = p_channelRead0_2_.readUnsignedByte();
+							bytebuf.writeInt(serveraddress.getPort());
+							p_channelActive_1_.channel().writeAndFlush(bytebuf).addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
+						}
+						finally
+						{
+							bytebuf.release();
+						}
+					}
+					protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, ByteBuf p_channelRead0_2_)
+					{
+						short short1 = p_channelRead0_2_.readUnsignedByte();
 
-                        if (short1 == 255)
-                        {
-                            String s = new String(p_channelRead0_2_.readBytes(p_channelRead0_2_.readShort() * 2).array(), Charsets.UTF_16BE);
-                            String[] astring = (String[])Iterables.toArray(field_147230_a.split(s), String.class);
+						if (short1 == 255)
+						{
+							String s = new String(p_channelRead0_2_.readBytes(p_channelRead0_2_.readShort() * 2).array(), Charsets.UTF_16BE);
+							String[] astring = (String[])Iterables.toArray(field_147230_a.split(s), String.class);
 
-                            if ("\u00a71".equals(astring[0]))
-                            {
-                                int i = MathHelper.parseIntWithDefault(astring[1], 0);
-                                String s1 = astring[2];
-                                String s2 = astring[3];
-                                int j = MathHelper.parseIntWithDefault(astring[4], -1);
-                                int k = MathHelper.parseIntWithDefault(astring[5], -1);
-                                p_147225_1_.field_82821_f = -1;
-                                p_147225_1_.gameVersion = s1;
-                                p_147225_1_.serverMOTD = s2;
-                                p_147225_1_.populationInfo = EnumChatFormatting.GRAY + "" + j + "" + EnumChatFormatting.DARK_GRAY + "/" + EnumChatFormatting.GRAY + k;
-                            }
-                        }
+							if ("\u00a71".equals(astring[0]))
+							{
+								int i = MathHelper.parseIntWithDefault(astring[1], 0);
+								String s1 = astring[2];
+								String s2 = astring[3];
+								int j = MathHelper.parseIntWithDefault(astring[4], -1);
+								int k = MathHelper.parseIntWithDefault(astring[5], -1);
+								p_147225_1_.field_82821_f = -1;
+								p_147225_1_.gameVersion = s1;
+								p_147225_1_.serverMOTD = s2;
+								p_147225_1_.populationInfo = EnumChatFormatting.GRAY + "" + j + "" + EnumChatFormatting.DARK_GRAY + "/" + EnumChatFormatting.GRAY + k;
+							}
+						}
 
-                        p_channelRead0_1_.close();
-                    }
-                    public void exceptionCaught(ChannelHandlerContext p_exceptionCaught_1_, Throwable p_exceptionCaught_2_)
-                    {
-                        p_exceptionCaught_1_.close();
-                    }
-                    protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Object p_channelRead0_2_)
-                    {
-                        this.channelRead0(p_channelRead0_1_, (ByteBuf)p_channelRead0_2_);
-                    }
-                }
-                                                                         });
-            }
-        })).channel(NioSocketChannel.class)).connect(serveraddress.getIP(), serveraddress.getPort());
-    }
-	
-	
+						p_channelRead0_1_.close();
+					}
+					public void exceptionCaught(ChannelHandlerContext p_exceptionCaught_1_, Throwable p_exceptionCaught_2_)
+					{
+						p_exceptionCaught_1_.close();
+					}
+					protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Object p_channelRead0_2_)
+					{
+						this.channelRead0(p_channelRead0_1_, (ByteBuf)p_channelRead0_2_);
+					}
+				}
+				});
+			}
+		})).channel(NioSocketChannel.class)).connect(serveraddress.getIP(), serveraddress.getPort());
+	}
+
+
 	//Not the original (HalocraftUtils)
 	public static boolean isPlayerWearingArmor(EntityPlayer player, int armorType, boolean helmet, boolean body, boolean legs, boolean boots)
 	{
 		return false;
 	}
-	
+
 	//onTickInGame
 	//public static float Recoil = 0.0F;
 	//public static float AntiRecoil = 0.0F;
@@ -358,7 +348,7 @@ public class TickHandlerClient {
 	private boolean LeftKeyPressed = false;
 	private int DelayRight = 0;
 	private boolean RightKeyPressed = false;
-	
+
 	public void onTickInGUI(Minecraft minecraft, GuiScreen guiscreen)
 	{
 		//System.out.println("onTickInGUI");
@@ -380,7 +370,7 @@ public class TickHandlerClient {
 		if (minecraft.thePlayer.ridingEntity instanceof EntityMongoose || minecraft.thePlayer.ridingEntity instanceof EntityGhost || minecraft.thePlayer.ridingEntity instanceof EntityWarthog)
 		{
 			//Forward
-			
+
 			if (Keyboard.isKeyDown(minecraft.gameSettings.keyBindForward.getKeyCode()))
 			{
 				if (ForwardKeyPressed)
@@ -423,7 +413,7 @@ public class TickHandlerClient {
 			}
 
 			//Backward
-			
+
 			if (Keyboard.isKeyDown(minecraft.gameSettings.keyBindBack.getKeyCode()))
 			{
 				if (BackwardKeyPressed)
@@ -464,9 +454,9 @@ public class TickHandlerClient {
 			{
 				DelayBackward--;
 			}
-			
+
 			//Left
-			
+
 			if (Keyboard.isKeyDown(minecraft.gameSettings.keyBindLeft.getKeyCode()))
 			{
 				if (LeftKeyPressed)
@@ -507,9 +497,9 @@ public class TickHandlerClient {
 			{
 				DelayLeft--;
 			}
-			
+
 			//Right
-			
+
 			if (Keyboard.isKeyDown(minecraft.gameSettings.keyBindRight.getKeyCode()))
 			{
 				if (RightKeyPressed)
@@ -558,19 +548,19 @@ public class TickHandlerClient {
 				Halocraft.network.sendToServer(new PacketCtrlForward(false));
 				ForwardKeyPressed = false;
 			}
-			
+
 			if (BackwardKeyPressed)
 			{
 				Halocraft.network.sendToServer(new PacketCtrlBackward(false));
 				BackwardKeyPressed = false;
 			}
-			
+
 			if (LeftKeyPressed)
 			{
 				Halocraft.network.sendToServer(new PacketCtrlLeft(false));
 				LeftKeyPressed = false;
 			}
-			
+
 			if (RightKeyPressed)
 			{
 				Halocraft.network.sendToServer(new PacketCtrlRight(false));
@@ -578,7 +568,7 @@ public class TickHandlerClient {
 			}
 		}
 	}
-	
+
 	//HandleShootingReloading
 	public static boolean IsReloading = false;
 	//private int shootReloadCodeDelay = 0;
@@ -620,7 +610,7 @@ public class TickHandlerClient {
 
 	private static final ResourceLocation RLHud1 = new ResourceLocation(Halocraft.MODID+":textures/overlays/Hud1.png");
 	private static final ResourceLocation RLHud2 = new ResourceLocation(Halocraft.MODID+":textures/overlays/Hud2.png");
-	
+
 	private void onRenderTick(Minecraft minecraft)
 	{
 		//System.out.println("onRenderTick");
@@ -660,7 +650,7 @@ public class TickHandlerClient {
 		{
 			this.LeftClickPressed = false;
 		}
-		
+
 		if (minecraft.inGameHasFocus && this.LeftClickPressed)//this.RightClickPressed
 		{
 			if (this.VehicleShootDelay > 0)
@@ -689,7 +679,7 @@ public class TickHandlerClient {
 				}
 			}
 		}
-		
+
 		if (this.RightClickPressed == true && this.PrevRightClickPressed == false)
 		{
 			this.PrevRightClickPressed = true;
@@ -745,8 +735,8 @@ public class TickHandlerClient {
 		}
 
 		GuiIngameForge.renderCrosshairs = true;
-		
-		
+
+
 		if(minecraft.inGameHasFocus && minecraft.gameSettings.thirdPersonView == 0)
 		{
 			if (minecraft.thePlayer.ridingEntity instanceof EntityTurretSeat)
@@ -858,7 +848,7 @@ public class TickHandlerClient {
 				GuiIngameForge.renderCrosshairs = false;
 				GunReticle(1.0F, RLReticle, 125, 91, 23, 10, 11, 2);
 			}
-			
+
 			if (!net.killerchief.kcweaponmod.TickHandlerClient.IsZooming() && minecraft.thePlayer.inventory.armorInventory != null && minecraft.thePlayer.inventory.armorInventory[3] != null)
 			{
 				Item item = minecraft.thePlayer.inventory.armorInventory[3].getItem();
@@ -979,7 +969,7 @@ public class TickHandlerClient {
 			}
 		}
 	}
-	
+
 	private int HUDRenderPos(boolean isXAxis)
 	{
 		ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
@@ -1020,7 +1010,7 @@ public class TickHandlerClient {
 			}
 		}
 	}
-	
+
 	private void RenderShield(Minecraft minecraft)
 	{
 		//ScaledResolution scaledresolution = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
@@ -1195,7 +1185,7 @@ public class TickHandlerClient {
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		}
 	}
-	
+
 	//Render Code is Similar to Pumpkin Overlay in GuiIngame / GuiIngameForge
 	public static void RenderHelmetVisor(float transparency, ResourceLocation overlay)
 	{

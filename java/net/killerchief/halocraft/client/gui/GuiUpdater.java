@@ -48,7 +48,7 @@ public class GuiUpdater extends GuiScreen {
 	private GuiButton btnKCWMVers;
 	private GuiButton btnDownload;
 	private GuiButton btnExit;
-	
+
 	String[] kcwmbtnversions = {""};
 
 	public static boolean isUpdateCheckThreadRunning = false;
@@ -74,7 +74,7 @@ public class GuiUpdater extends GuiScreen {
 		String MD5 = "";
 		public KCWMUpdateInfo() { }
 	}
-	
+
 	private static boolean NoInstaller = false;
 	private static final String InstallerClassName = "KCInstallModsV2";
 	private static final String TempLoc = System.getProperty("java.io.tmpdir")+"HalocraftUpdater\\";
@@ -152,7 +152,7 @@ public class GuiUpdater extends GuiScreen {
 
 		GetModInstallPath();
 		ExtractInstaller(true);
-		
+
 		if (!installclass.exists())
 		{
 			NoInstaller = true;
@@ -165,14 +165,14 @@ public class GuiUpdater extends GuiScreen {
 		{
 			this.StartCheckForUpdate();
 		}
-		
+
 		if (isDownloadThreadRunning)
 		{
 			this.btnDownload.displayString = strLoc("download.cancel");
 			this.btnDownload.enabled = true;
 		}
 	}
-	
+
 	private String strLoc(String tag)
 	{
 		String str = LanguageRegistry.instance().getStringLocalization("gui."+Halocraft.MODID+".autoupdater."+tag);
@@ -195,13 +195,13 @@ public class GuiUpdater extends GuiScreen {
 			title = strLoc("title.fail.installer");
 			this.drawCenteredString(this.fontRendererObj, strLoc("title.disabled"), this.width / 2, 22, 16777215);
 		}
-		
+
 		this.drawCenteredString(this.fontRendererObj, title, this.width / 2, 10, 16777215);
-		
+
 		this.drawCenteredString(this.fontRendererObj, "Halocraft v"+Halocraft.VERSION, (this.width/2) + 85, 115, 16777215);
 		this.drawCenteredString(this.fontRendererObj, "Forge: "+ForgeVersion.getVersion(), (this.width/2) + 85, 127, 16777215);
 		this.drawCenteredString(this.fontRendererObj, "KC's Weapon Mod v"+KCWeaponMod.getVersion(), (this.width/2) + 85, 139, 16777215);
-		
+
 		this.drawCenteredString(this.fontRendererObj, strLoc("updkcwmto"), (this.width/2) + 55, 160, 16777215);
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
@@ -218,11 +218,11 @@ public class GuiUpdater extends GuiScreen {
 			this.btnDownload.enabled = true;
 		else
 			this.btnDownload.enabled = false;
-		
+
 		if (this.selectedMod != null)
 		{
 			this.kcwmbtnversions = this.selectedMod.KCWMVersion.replace(" ", "").trim().split(",");
-			
+
 			if (kcwmbtnversions.length <= 1 && this.selectedMod.KCWMVersion.contains(KCWeaponMod.getVersion()))
 			{
 				this.btnKCWMVers.enabled = false;
@@ -378,8 +378,8 @@ public class GuiUpdater extends GuiScreen {
 			try {
 				URL url = new URL("http://halocraft.killerchief.net/updater-v1");
 				URLConnection con = url.openConnection();
-			    con.setUseCaches(false);
-			    InputStream is = con.getInputStream();
+				con.setUseCaches(false);
+				InputStream is = con.getInputStream();
 				doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is);
 				is.close();
 				System.out.println("Successfully found, parsed and opened update XML doc");
@@ -440,7 +440,7 @@ public class GuiUpdater extends GuiScreen {
 													info.Ping = modversion.getAttribute("ping");
 													info.DL = modversion.getAttribute("dl");
 													info.MD5 = modversion.getAttribute("md5");
-													
+
 													//System.out.println(Halocraft.VERSION+info.Version);
 													if (Halocraft.VERSION.equalsIgnoreCase(info.Version))
 													{
@@ -520,7 +520,7 @@ public class GuiUpdater extends GuiScreen {
 			mainThread.btnChk4Update.displayString = strLoc("update.check");
 		}
 	}
-	
+
 	private static boolean cancelUpdate = false;
 
 	private void DownloadUpdate(HcUpdateInfo hc, KCWMUpdateInfo kc)
@@ -537,7 +537,7 @@ public class GuiUpdater extends GuiScreen {
 			cancelUpdate = true;
 		}
 	}
-	
+
 	private void GetModInstallPath()
 	{
 		for (ModContainer mod : Loader.instance().getActiveModList())
@@ -554,7 +554,7 @@ public class GuiUpdater extends GuiScreen {
 			}
 		}
 	}
-	
+
 	private boolean ExtractInstaller(boolean override)
 	{
 		if (!override && installclass.exists())
@@ -565,7 +565,7 @@ public class GuiUpdater extends GuiScreen {
 		{
 			try {
 				new File(TempLoc).mkdirs();
-				
+
 				ZipFile zip = new ZipFile(currHcInstallPath.getAbsolutePath());
 				ZipEntry zpdInstaller = zip.getEntry(InstallerClassName+".class");
 				if (zpdInstaller == null) {
@@ -599,7 +599,7 @@ public class GuiUpdater extends GuiScreen {
 		System.out.println("Failed to Extract Installer!");
 		return false;
 	}
-	
+
 	public static byte[] createChecksum(String filename) throws Exception {
 		InputStream fis =  new FileInputStream(filename);
 
@@ -629,7 +629,7 @@ public class GuiUpdater extends GuiScreen {
 		}
 		return result;
 	}
-	
+
 	public final class DownloadThread extends Thread {
 
 		final GuiUpdater mainThread;
@@ -684,7 +684,7 @@ public class GuiUpdater extends GuiScreen {
 						System.out.println("Hc Success!");
 					}
 				}
-				
+
 				if (KCWMUpdate != null && !new File(TempLoc+KCWMUpdate.DL.substring(KCWMUpdate.DL.lastIndexOf("/")+1)).exists())
 				{
 					String KcName = KCWMUpdate.DL.substring(KCWMUpdate.DL.lastIndexOf("/")+1).replace("%20", " ").replace("%27", "\'");
@@ -715,14 +715,14 @@ public class GuiUpdater extends GuiScreen {
 						System.out.println("KCWM Success!");
 					}
 				}
-				
+
 				if (currHcInstallPath == null || currKcInstallPath == null)
 				{
 					GetModInstallPath();
 				}
-				
+
 				ExtractInstaller(false);
-				
+
 				if (!installclass.exists())
 				{
 					System.err.println("Failed to extract installer.");
@@ -736,18 +736,18 @@ public class GuiUpdater extends GuiScreen {
 					Files.copy(newHc, new File(currHcInstallPath.getParentFile()+"/"+newHc.getName()));
 					String cmdHc = (new StringBuilder()).append("java -classpath \""+installclass.getParentFile()+"\" "+InstallerClassName+" \""+currHcInstallPath.getAbsolutePath()+"\" \""+currHcInstallPath.getParentFile()+"/"+newHc.getName()+"\"").toString();
 					System.out.println(cmdHc);
-	                Runtime.getRuntime().exec(cmdHc);
+					Runtime.getRuntime().exec(cmdHc);
 				}
 				if (KCWMUpdate != null)
 				{
 					Files.copy(newKc, new File(currKcInstallPath.getParentFile()+"/"+newKc.getName()));
 					String cmdKc = (new StringBuilder()).append("java -classpath \""+installclass.getParentFile()+"\" "+InstallerClassName+" \""+currKcInstallPath.getAbsolutePath()+"\" \""+currKcInstallPath.getParentFile()+"/"+newKc.getName()+"\"").toString();
-	                System.out.println(cmdKc);
-	                Runtime.getRuntime().exec(cmdKc);
+					System.out.println(cmdKc);
+					Runtime.getRuntime().exec(cmdKc);
 				}
-				
+
 				mainThread.mc.shutdown();
-				
+
 			} catch (IOException e) {
 				if (e.getMessage() != null && e.getMessage().contains("Server returned HTTP response code: "))
 				{
@@ -771,14 +771,14 @@ public class GuiUpdater extends GuiScreen {
 			mainThread.btnDownload.enabled = false;
 			mainThread.btnDownload.displayString = strLoc("download.success");
 		}
-		
+
 		private void pingDL(String pageURL)
 		{
 			try {
 				URL url = new URL(pageURL);
 				URLConnection con = url.openConnection();
-			    con.setUseCaches(false);
-			    InputStream is = con.getInputStream();
+				con.setUseCaches(false);
+				InputStream is = con.getInputStream();
 				try {
 					Thread.sleep(100L);
 				} catch (InterruptedException e) {
@@ -821,9 +821,9 @@ public class GuiUpdater extends GuiScreen {
 			try {
 				URL url = new URL(fileURL);
 				URLConnection con = url.openConnection();
-			    con.setUseCaches(false);
-			    InputStream is = con.getInputStream();
-				
+				con.setUseCaches(false);
+				InputStream is = con.getInputStream();
+
 				FileOutputStream fos = new FileOutputStream(destinationDirectory + "/" + newName);
 
 				// Read bytes from URL to the local file
@@ -881,7 +881,7 @@ public class GuiUpdater extends GuiScreen {
 					e.printStackTrace();
 			}
 		}
-		
+
 		private void doMD5Check(String fileURL, String destinationDirectory, String newName, String md5)
 		{
 			try {

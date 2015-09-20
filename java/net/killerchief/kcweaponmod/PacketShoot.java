@@ -87,7 +87,7 @@ public class PacketShoot implements IMessage {
 					}
 				}
 			}
-			
+
 			if(ctx.side.isClient())
 			{
 				TickHandlerClient.Recoil += message.GunRecoil;
@@ -100,7 +100,7 @@ public class PacketShoot implements IMessage {
 						Minecraft.getMinecraft().thePlayer.swingProgressInt = -1;
 						Minecraft.getMinecraft().thePlayer.isSwingInProgress = true;
 					}
-					
+
 					if (!message.ItemStackDecreaseOnUse)
 					{
 						if (!message.AmmoFeedsFromInventory)
@@ -138,7 +138,7 @@ public class PacketShoot implements IMessage {
 			}
 			return null; // no response in this case
 		}
-		
+
 		public static void shoot(Side side, EntityPlayer player, ItemWeapon weapon, ItemStack playerCurrentItemStack, boolean isFromPacketClass)
 		{
 			if (side.isServer() && (TickHandler.ReloadDelayMap.get(player) != null && TickHandler.ReloadDelayMap.get(player) != 0))
@@ -222,9 +222,9 @@ public class PacketShoot implements IMessage {
 								}
 							}
 							if (player.worldObj instanceof WorldServer)//Visible recoil on body to other players (if executed on target player they will swing their hand on screen which is bad for looks but doesn't actually do anything)
-					        {
-					            ((WorldServer)player.worldObj).getEntityTracker().func_151247_a((EntityLivingBase)player, new S0BPacketAnimation((EntityLivingBase)player, 0));
-					        }
+							{
+								((WorldServer)player.worldObj).getEntityTracker().func_151247_a((EntityLivingBase)player, new S0BPacketAnimation((EntityLivingBase)player, 0));
+							}
 						}
 					}
 				}

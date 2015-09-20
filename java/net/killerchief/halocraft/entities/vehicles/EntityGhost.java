@@ -17,8 +17,6 @@ import net.minecraft.world.World;
 
 public class EntityGhost extends EntityVehicle
 {
-	/*/* Returns the texture's file path as a String. (used in the render class) */
-	//public abstract String getEntityTexture();
 	public static final int maxHurtResistantTime = 10;
 	private static final double frictionFactor = 0.97D;
 	private double pseudoHandling = 2F;
@@ -27,7 +25,7 @@ public class EntityGhost extends EntityVehicle
 	private double strafe = 0D;
 
 	private float raiseModel = 0F;//0.36F;
-	
+
 	public int shootDelay = 0;
 
 	public EntityGhost(World par1World)
@@ -200,7 +198,7 @@ public class EntityGhost extends EntityVehicle
 	public void onUpdate()
 	{
 		super.onUpdate();
-		
+
 		if (this.shootDelay > 0)
 		{
 			this.shootDelay--;

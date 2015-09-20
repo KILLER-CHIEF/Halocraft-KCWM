@@ -26,11 +26,8 @@ public class TickHandlerClient {
 	@SubscribeEvent
 	public void ClientTickEvent(TickEvent.ClientTickEvent event)
 	{
-		if (event.phase == event.phase.START)
-		{
-
-		}
-		if (event.phase == event.phase.END)
+		if (event.phase == event.phase.START){}
+		else if (event.phase == event.phase.END)
 		{
 			GuiScreen guiscreen = mc.currentScreen;
 
@@ -40,7 +37,7 @@ public class TickHandlerClient {
 				this.onTickInGUI(mc, guiscreen);
 			} else {
 				this.onTickInGame(mc);
-				
+
 				if (this.shootReloadCodeDelay <= 0)
 				{
 					TickHandler.performShootAndReload();
@@ -59,11 +56,8 @@ public class TickHandlerClient {
 	@SubscribeEvent
 	public void RenderTickEvent(TickEvent.RenderTickEvent event)
 	{
-		if (event.phase == event.phase.START)
-		{
-
-		}
-		if (event.phase == event.phase.END)
+		if (event.phase == event.phase.START){}
+		else if (event.phase == event.phase.END)
 		{
 			if (mc.thePlayer != null)//This is Client Only, ingame
 			{
@@ -79,7 +73,7 @@ public class TickHandlerClient {
 	{
 		//System.out.println("onTickInGUI");
 	}
-	
+
 	//onTickInGame
 	public static float Recoil = 0.0F;
 	public static float AntiRecoil = 0.0F;
@@ -269,7 +263,7 @@ public class TickHandlerClient {
 			}
 		}
 	}
-	
+
 	//Render Code is Similar to Pumpkin Overlay in GuiIngame / GuiIngameForge
 	public static void RenderHelmetVisor(float transparency, ResourceLocation overlay)
 	{
@@ -336,7 +330,7 @@ public class TickHandlerClient {
 	private static int ZoomHeldTimer = 0;
 	private int ZoomLevel = -1;
 	private float OriginalSensitivity = mc.gameSettings.mouseSensitivity;
-	
+
 	public static boolean IsZooming()
 	{
 		return IsZooming || ZoomStayOn || ZoomHeldTimer > 0;
@@ -354,7 +348,7 @@ public class TickHandlerClient {
 				else
 					if (minecraft.thePlayer.inventory.armorInventory != null && minecraft.thePlayer.inventory.armorInventory[3] != null && minecraft.thePlayer.inventory.armorInventory[3].getItem() instanceof InterfaceZoomReticle)
 						item = (InterfaceZoomReticle)minecraft.thePlayer.inventory.armorInventory[3].getItem();
-				
+
 				if (item != null)
 				{
 					if (item.IsZoomable() && !KeyBindings.ZoomKey.getIsKeyPressed() && item.ZoomMultiplier().length == 1)

@@ -55,28 +55,7 @@ public class EntityWarthogBack extends Entity {
 	@Override
 	public boolean interactFirst(EntityPlayer par1EntityPlayer)
 	{
-		//System.out.println("BackInteract");
-		/*if (this.riddenByEntity != null && this.riddenByEntity instanceof EntityPlayer && this.riddenByEntity != par1EntityPlayer)
-		{
-			return true;
-		}
-		else
-		{
-			if (!this.worldObj.isRemote)
-			{
-				par1EntityPlayer.mountEntity(this);
-			}
-			return true;
-		}*/
 		//System.out.println(this.parentBody);//FIXME: Warthog Back: null for client (need data watchers)
-		/*if (this.parentBody != null && this.parentBody.passengerSeats != null && this.parentBody.passengerSeats.length >= 2 && this.parentBody.passengerSeats[1] != null && this.parentBody.passengerSeats[1].riddenByEntity == null)
-		{
-			if (!this.worldObj.isRemote)
-			{
-				par1EntityPlayer.mountEntity(this.parentBody.passengerSeats[1]);
-			}
-			return true;
-		}*/
 		if (this.parentBody != null && this.parentBody.seatGunner != null && this.parentBody.seatGunner.riddenByEntity == null)
 		{
 			if (!this.worldObj.isRemote)
@@ -161,7 +140,7 @@ public class EntityWarthogBack extends Entity {
 			if (this.hurtResistantTime +1 < this.parentBody.hurtResistantTime)
 				this.parentBody.hurtResistantTime = this.hurtResistantTime;
 			this.hurtResistantTime = this.parentBody.hurtResistantTime;
-			
+
 			double xOffset = -Math.sin(Math.toRadians(this.parentBody.rotationYaw)) * 2.2;
 			double zOffset = Math.cos(Math.toRadians(this.parentBody.rotationYaw)) * 2.2;
 			//this.prevPosX = this.posX = this.parentBody.posX - xOffset;

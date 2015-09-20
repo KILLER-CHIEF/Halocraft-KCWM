@@ -5,7 +5,6 @@ import net.killerchief.halocraft.client.models.vehicles.ModelMongoose;
 import net.killerchief.halocraft.entities.vehicles.EntityMongoose;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;

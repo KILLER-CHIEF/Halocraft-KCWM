@@ -161,7 +161,7 @@ public class EntityPassengerSeat extends Entity {
 	public void onUpdate()
 	{
 		super.onUpdate();
-		
+
 		if (!this.worldObj.isRemote)
 		{
 			if (this.parentBody != null && this.dataWatcher.getWatchableObjectInt(25) <= 0)
@@ -178,7 +178,7 @@ public class EntityPassengerSeat extends Entity {
 					this.parentBody = (EntityVehicle)this.worldObj.getEntityByID(id);
 			}
 		}
-		
+
 		//worldObj.spawnParticle("flame", posX, posY, posZ, 0D, 0D, 0D);
 		if (!this.worldObj.isRemote)
 		{

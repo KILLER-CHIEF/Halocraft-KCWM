@@ -15,11 +15,8 @@ public class TickHandler {
 	@SubscribeEvent
 	public void ServerTickEvent(TickEvent.ServerTickEvent event)
 	{
-		if (event.phase == event.phase.START)
-		{
-
-		}
-		if (event.phase == event.phase.END)
+		if (event.phase == event.phase.START){}
+		else if (event.phase == event.phase.END)
 		{
 			this.performShootAndReload();
 		}
@@ -28,27 +25,15 @@ public class TickHandler {
 	@SubscribeEvent
 	public void WorldTickEvent(TickEvent.WorldTickEvent event)
 	{
-		if (event.phase == event.phase.START)
-		{
-
-		}
-		if (event.phase == event.phase.END)
-		{
-
-		}
+		if (event.phase == event.phase.START){}
+		else if (event.phase == event.phase.END){}
 	}
 
 	@SubscribeEvent
 	public void PlayerTickEvent(TickEvent.PlayerTickEvent event)
 	{
-		if (event.phase == event.phase.START)
-		{
-
-		}
-		if (event.phase == event.phase.END)
-		{
-
-		}
+		if (event.phase == event.phase.START){}
+		else if (event.phase == event.phase.END){}
 	}
 
 	public static HashMap<EntityPlayer, Integer> ShootDelayMap = new HashMap();
@@ -132,9 +117,9 @@ public class TickHandler {
 									Used = weapon.Properties.ReloadMaxAmmoFlow;
 								}
 							}
-							
+
 							entry.getKey().inventory.getCurrentItem().setItemDamage(Needed - Used);
-							
+
 							if (weapon.Properties.ReloadMaxAmmoFlow <= 0)
 							{
 								KCWeaponMod.network.sendTo(new PacketReload(1, Used), (EntityPlayerMP)entry.getKey());
@@ -155,7 +140,7 @@ public class TickHandler {
 									//System.out.println("Reloaded Shotgun");
 								}
 							}
-							
+
 							if (weapon.Properties.AmmoType != null)
 							{
 								int t = 0;

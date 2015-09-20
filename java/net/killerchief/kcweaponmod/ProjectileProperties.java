@@ -6,10 +6,8 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ProjectileProperties {
@@ -35,7 +33,7 @@ public class ProjectileProperties {
 			System.err.println("KCWeaponMod - ERROR: Object Passed to callTags function is null!");
 		}
 	}
-	
+
 	public static void Die(EntityProjectile projectile, MovingObjectPosition collidedObject)
 	{
 		//System.out.println("Die");
@@ -45,7 +43,7 @@ public class ProjectileProperties {
 		}
 		projectile.tagLoopExitBreakout = true;
 	}
-	
+
 	public static void Explode(EntityProjectile projectile, MovingObjectPosition collidedObject, Object[] args)
 	{
 		if (args.length >= 2 && args[0] instanceof String)
@@ -102,7 +100,7 @@ public class ProjectileProperties {
 		}
 		return blocks.toArray(new Block[blocks.size()]);
 	}
-	
+
 	public static Item[] GetItemsFromString(String[] input)
 	{
 		List<Item> items = new ArrayList<Item>();
@@ -204,7 +202,7 @@ public class ProjectileProperties {
 			System.err.println("KCWeaponMod - ERROR: Object Passed to HurtStuck function is invalid!");
 		}
 	}
-	
+
 	public static void StickEntity(EntityProjectile projectile, MovingObjectPosition collidedObject, Object[] args)
 	{
 		if (collidedObject.entityHit != null)
@@ -213,7 +211,7 @@ public class ProjectileProperties {
 			KCUtils.CallPropertyParts(projectile, collidedObject, args);
 		}
 	}
-	
+
 	public static void HurtStuck(EntityProjectile projectile, MovingObjectPosition collidedObject, Object[] args)
 	{
 		if (args.length >= 3 && args[0] instanceof String && args[1] instanceof String)
@@ -233,7 +231,7 @@ public class ProjectileProperties {
 			System.err.println("KCWeaponMod - ERROR: Object Passed to HurtStuck function is invalid!");
 		}
 	}
-	
+
 	public static void PlaySound(EntityProjectile projectile, MovingObjectPosition collidedObject, Object[] args)
 	{
 		if (args.length >= 3 && args[0] instanceof String && args[1] instanceof String)
@@ -258,7 +256,7 @@ public class ProjectileProperties {
 			System.err.println("KCWeaponMod - ERROR: Object Passed to PlaySound function is invalid!");
 		}
 	}
-	
+
 	public static void Bounce(EntityProjectile projectile, MovingObjectPosition collidedObject, Object[] args)
 	{
 		if (collidedObject.typeOfHit == MovingObjectPosition.MovingObjectType.MISS)
@@ -269,11 +267,11 @@ public class ProjectileProperties {
 			{
 				double bounceFactor = Double.parseDouble(args[0].toString());
 				double ricochetFactor = Double.parseDouble(args[1].toString());
-				
+
 				projectile.motionX *= bounceFactor;
 				projectile.motionY *= bounceFactor;
 				projectile.motionZ *= bounceFactor;
-				
+
 				if (collidedObject.sideHit == 0 || collidedObject.sideHit == 1)
 				{
 					if (ricochetFactor < 0 || Math.abs(projectile.motionY) * ricochetFactor < Math.abs(projectile.motionX) + Math.abs(projectile.motionZ))
@@ -302,7 +300,7 @@ public class ProjectileProperties {
 					projectile.motionZ *= bounceFactor;
 				}
 				++projectile.EncounteredEntities;
-				
+
 				KCUtils.CallPropertyParts(projectile, collidedObject, args[2]);
 			}
 		}
@@ -311,7 +309,7 @@ public class ProjectileProperties {
 			System.err.println("KCWeaponMod - ERROR: Object Passed to Bounce function is invalid!");
 		}
 	}
-	
+
 	public static void ExceededMaxEncounteredEntities(EntityProjectile projectile, MovingObjectPosition collidedObject, Object[] args)
 	{//Increment for other collision types!
 		if (args.length >= 2 && args[0] instanceof String)
@@ -326,7 +324,7 @@ public class ProjectileProperties {
 			System.err.println("KCWeaponMod - ERROR: Object Passed to ExcededEncounteredEntities function is invalid!");
 		}
 	}
-	
+
 	public static void StartFuse(EntityProjectile projectile, MovingObjectPosition collidedObject, Object[] args)
 	{
 		if (args.length >= 2 && args[0] instanceof String)
@@ -342,7 +340,7 @@ public class ProjectileProperties {
 			System.err.println("KCWeaponMod - ERROR: Object Passed to StartFuse function is invalid!");
 		}
 	}
-	
+
 	public static void Fuse(EntityProjectile projectile, MovingObjectPosition collidedObject, Object[] args)
 	{
 		if (projectile.Fuse > 0)
@@ -355,7 +353,7 @@ public class ProjectileProperties {
 		}
 		//System.out.println("Fuse Continue");
 	}
-	
+
 	/** Takes [1]: Remaining time an entity will be "immune" to further damage after being hurt. */
 	public static void SetEntityHurtResistantTime(EntityProjectile projectile, MovingObjectPosition collidedObject, Object[] args)
 	{
@@ -372,7 +370,7 @@ public class ProjectileProperties {
 			}
 		}
 	}
-	
+
 	/** Takes [1]: Sets entity to burn for x amount of seconds. */
 	public static void SetEntityOnFire(EntityProjectile projectile, MovingObjectPosition collidedObject, Object[] args)
 	{
@@ -389,7 +387,7 @@ public class ProjectileProperties {
 			}
 		}
 	}
-	
+
 	public static void IsInLiquid(EntityProjectile projectile, MovingObjectPosition collidedObject, Object[] args)
 	{
 		if (projectile.isInWater())//TODO: Lava & other check

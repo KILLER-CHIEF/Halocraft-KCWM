@@ -87,7 +87,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityElitePlasmaRifle.class, new RenderEliteGun(new ModelElite(), 0.0F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityGruntPlasmaPistol.class, new RenderGruntPlasmaPistol(new ModelGrunt(), 0.0F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityGruntFlee.class, new RenderGruntPlasmaPistol(new ModelGrunt(), 0.0F));
-			
+
 		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.SniperRifle, (IItemRenderer)new RenderGun(new ModelSniperRifle(), Halocraft.MODID+":textures/guns/SkinSniperRifle.png", false));
 		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.DMR, (IItemRenderer)new RenderGun(new ModelDMR(), Halocraft.MODID+":textures/guns/SkinDMR.png", false));
 		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.PlasmaPistol, (IItemRenderer)new RenderGun(new ModelPlasmaPistol(), Halocraft.MODID+":textures/guns/SkinPlasmaPistol.png", false));
@@ -106,7 +106,7 @@ public class ClientProxy extends CommonProxy {
 		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Shotgun, (IItemRenderer)new RenderGun(new ModelShotgun(), Halocraft.MODID+":textures/guns/SkinShotgun.png", false));
 		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.BeamRifle, (IItemRenderer)new RenderGun(new ModelBeamRifle(), Halocraft.MODID+":textures/guns/SkinBeamRifle.png", false));
 		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Mauler, (IItemRenderer)new RenderGun(new ModelMauler(), Halocraft.MODID+":textures/guns/SkinMauler.png", false));
-		
+
 		//FIXME: Add New Gun Models
 		//MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.AssaultRifle, (IItemRenderer)new RenderGun(new ModelGravityHammer(), Halocraft.MODID+":textures/guns/SkinBruteHammer.png", false));
 		//MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Carbine, (IItemRenderer)new RenderGun(new ModelBruteShot(), Halocraft.MODID+":textures/guns/SkinBruteShot.png", false));
@@ -116,14 +116,14 @@ public class ClientProxy extends CommonProxy {
 		//MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.SniperRifle, (IItemRenderer)new RenderGun(new ModelSpartanLaser(), Halocraft.MODID+":textures/guns/SkinSpartanLaser.png", false));
 		//MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Carbine, (IItemRenderer)new RenderGun(new ModelPlasmaRifleOpen(), Halocraft.MODID+":textures/guns/SkinPlasmaRifle_Open.png", false));
 		//MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Magnum, (IItemRenderer)new RenderGun(new ModelPlasmaPistolOpen(), Halocraft.MODID+":textures/guns/SkinPlasmaPistol_Open.png", false));
-		
+
 		RenderingRegistry.registerEntityRenderingHandler(EntityMongooseDefault.class, new RenderMongoose());
 		RenderingRegistry.registerEntityRenderingHandler(EntityMongooseGreen.class, new RenderMongoose());
 		RenderingRegistry.registerEntityRenderingHandler(EntityMongooseBlue.class, new RenderMongoose());
 		RenderingRegistry.registerEntityRenderingHandler(EntityMongooseRed.class, new RenderMongoose());
-		
+
 		RenderingRegistry.registerEntityRenderingHandler(EntityGhost.class, new RenderGhost());
-		
+
 		RenderingRegistry.registerEntityRenderingHandler(EntityWarthog.class, new RenderWarthog());
 		RenderingRegistry.registerEntityRenderingHandler(EntityWarthogBack.class, new RenderWarthogBack());
 
@@ -149,7 +149,7 @@ public class ClientProxy extends CommonProxy {
 			effectR.addEffect(new EntityGravityLiftFX(worldObj, posX, posY, posZ, motionX, motionY, motionZ));
 		}
 	}
-	
+
 	@Override
 	public boolean initializeVehicleLoopingSounds(EntityVehicle vehicle, String soundIdle, String soundRun)
 	{

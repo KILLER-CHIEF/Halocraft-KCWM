@@ -57,6 +57,11 @@ public class EntityWarthog extends EntityVehicle
 	}
 
 	@Override
+	public String getEntityTexture() {
+		return null;
+	}
+
+	@Override
 	protected String getSoundLoopIdle()
 	{
 		return Halocraft.MODID+":entities.mongoose.MongooseEngineIdle";
@@ -580,10 +585,5 @@ public class EntityWarthog extends EntityVehicle
 				worldObj.spawnParticle("smoke", posX+xOffset, posY+0.16, posZ+zOffset, this.motionX/2, this.motionY/2, this.motionZ/2);
 			}
 		}
-	}
-
-	@Override
-	public String getEntityTexture() {
-		return null;
 	}
 }

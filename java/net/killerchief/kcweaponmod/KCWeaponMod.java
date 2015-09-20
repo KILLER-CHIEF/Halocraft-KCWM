@@ -44,9 +44,9 @@ public class KCWeaponMod {
 	public static final String MODID = "kcweaponmod";
 	public static final String NAME = "KC's Weapon Mod";
 	public static final String VERSION = "0.1.2";
-	
+
 	public static String getVersion() { return VERSION; }
-	
+
 	public static final String WeaponFileVersion = "1.0";
 
 	/** The instance of this mod that Forge uses.*/
@@ -59,10 +59,10 @@ public class KCWeaponMod {
 	public static CreativeTabs InventoryTab = new InventoryTab(MODID);
 
 	public static SimpleNetworkWrapper network;
-	
+
 	public static Configuration config;
 	public static String configPath;
-	
+
 	public static String weaponModDirectory;
 
 	@EventHandler
@@ -73,22 +73,22 @@ public class KCWeaponMod {
 		config = new Configuration(new File(configPath));
 		config.load();
 		DoSettingsConfiguration(config);
-		
+
 		weaponModDirectory = event.getModConfigurationDirectory().toString() + "/KCWeaponMod-Weapons/";
 		//System.out.println(this.modDirectory);//C:\Users\KILLER CHIEF\Desktop\MCForge-1.7.10-10.13.2.1230\eclipse\config
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(KCWeaponMod.MODID);
 		PacketRegistry.registerPackets();
 	}
-	
+
 	public static boolean ExplosionBlockDamage;
-	
+
 	public static void DoSettingsConfiguration(Configuration config)
 	{
 		ExplosionBlockDamage = config.get("general", "Enable Explosion Block Damage", true).getBoolean(true);
-		
+
 		config.save();
 	}
-	
+
 	@SubscribeEvent
 	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs)
 	{
@@ -100,11 +100,11 @@ public class KCWeaponMod {
 			}
 		}
 	}
-	
+
 	public static ItemWeapon[] weapons = new ItemWeapon[0];
 	public static Map<String, Integer> modMap = new HashMap<String, Integer>();
 	private static boolean allowModRegistration = true;
-	
+
 	public String getTagElementString(Element e, String tag)
 	{
 		NodeList n = e.getElementsByTagName(tag);
@@ -114,7 +114,7 @@ public class KCWeaponMod {
 		}
 		return "";
 	}
-	
+
 	public static boolean registerModItems(String modid, String weaponVerison, ItemWeapon[] modWeapons)
 	{
 		if (!allowModRegistration)
@@ -130,27 +130,27 @@ public class KCWeaponMod {
 		else
 		{
 			modMap.put(modid, weapons.length);
-			
+
 			ItemWeapon[] tempweapons = weapons;
 			weapons = new ItemWeapon[tempweapons.length+modWeapons.length];
 			System.arraycopy(tempweapons, 0, weapons, 0, tempweapons.length);
 			System.arraycopy(modWeapons, 0, weapons, tempweapons.length, modWeapons.length);
-			
+
 			return true;
 		}
 	}
-	
+
 	private void getXMLItems()
 	{
 		File path = new File(KCWeaponMod.weaponModDirectory);
 		if (!path.exists())
 			path.mkdir();
 		File[] files = path.listFiles(new FilenameFilter() {
-		    public boolean accept(File dir, String name) {
-		        return name.toLowerCase().endsWith(".xml");
-		    }
+			public boolean accept(File dir, String name) {
+				return name.toLowerCase().endsWith(".xml");
+			}
 		});
-		
+
 		if (files != null && files.length > 0)
 		{
 			for (File file : files)
@@ -165,7 +165,7 @@ public class KCWeaponMod {
 						Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
 
 						doc.getDocumentElement().normalize();
-						
+
 						if (doc.getDocumentElement().getNodeName() != "kcweaponmod")
 						{
 							System.err.println("The Weapon Properties File is incorrectly written: "+file.getAbsolutePath());
@@ -179,36 +179,36 @@ public class KCWeaponMod {
 							else
 							{
 								NodeList nList = doc.getElementsByTagName("weapon");
-								
+
 								ItemWeapon[] newItems = new ItemWeapon[nList.getLength()];
 								int newNum = 0;
-								
+
 								for (int index = 0; index < nList.getLength(); index++) {
 
 									Node nNode = nList.item(index);
-									
+
 									if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
 										Element eElement = (Element) nNode;
-										
+
 										ItemWeaponProperties properties = new ItemWeaponProperties();
-										
+
 										if (!eElement.getAttribute("name").equals(""))
 										{
 											properties.Name = eElement.getAttribute("name");
 											String a = getTagElementString(eElement, "texture");
 											properties.Texture = !a.equals("") ? a : properties.Texture;
 											//if (KCWeaponMod.proxy.isSideClient()) {
-												properties.InventoryTab = properties.InventoryTab;
-												String ca = getTagElementString(eElement, "inventorytab");
-												for (CreativeTabs i : InventoryTab.creativeTabArray) {
-													//System.out.println(i.getTabLabel());
-													if (i.getTabLabel().equalsIgnoreCase(ca)) {
-														//System.out.println("found it: "+i.getTabLabel());
-														properties.InventoryTab = i;
-														break;
-													}
+											properties.InventoryTab = properties.InventoryTab;
+											String ca = getTagElementString(eElement, "inventorytab");
+											for (CreativeTabs i : InventoryTab.creativeTabArray) {
+												//System.out.println(i.getTabLabel());
+												if (i.getTabLabel().equalsIgnoreCase(ca)) {
+													//System.out.println("found it: "+i.getTabLabel());
+													properties.InventoryTab = i;
+													break;
 												}
+											}
 											//} else {
 											//	properties.InventoryTab = properties.InventoryTab;
 											//}
@@ -230,7 +230,7 @@ public class KCWeaponMod {
 											properties.PerformOnly1ShootSound = !h.equals("") ? Boolean.parseBoolean(h) : properties.PerformOnly1ShootSound;
 											String i = getTagElementString(eElement, "shootsound");
 											properties.ShootSound = !i.equals("") ? i : properties.ShootSound;
-											
+
 											String j = getTagElementString(eElement, "reloadtime");
 											properties.ReloadTime = !j.equals("") ? Integer.parseInt(j) : properties.ReloadTime;
 											String k = getTagElementString(eElement, "reloadsound");
@@ -268,7 +268,7 @@ public class KCWeaponMod {
 											properties.BurstAccuracyDecrease = !w.equals("") ? Float.parseFloat(w) : properties.BurstAccuracyDecrease;
 											String x = getTagElementString(eElement, "singleshotprojectilecount");
 											properties.SingleShotProjectileCount = !x.equals("") ? Integer.parseInt(x) : properties.SingleShotProjectileCount;
-											
+
 											String y = getTagElementString(eElement, "projectilerenderproperties");
 											properties.ProjectileRenderProperties = !y.equals("") ? y : properties.ProjectileRenderProperties;
 											String z = getTagElementString(eElement, "projectilespeed");
@@ -290,7 +290,7 @@ public class KCWeaponMod {
 											properties.ProjectileGlows = !aj.equals("") ? Boolean.parseBoolean(aj) : properties.ProjectileGlows;
 											String ak = getTagElementString(eElement, "tracksensitivity");
 											properties.TrackSensitivity = !ak.equals("") ? Float.parseFloat(ak) : properties.TrackSensitivity;
-											
+
 											newItems[newNum] = new ItemWeapon(properties);
 											newNum++;
 										}
@@ -301,7 +301,7 @@ public class KCWeaponMod {
 									}
 								}
 								modMap.put(file.getName().substring(0, file.getName().length()-4), weapons.length);
-								
+
 								ItemWeapon[] tempweapons = weapons;
 								weapons = new ItemWeapon[tempweapons.length+newNum];
 								System.arraycopy(tempweapons, 0, weapons, 0, tempweapons.length);
@@ -316,27 +316,27 @@ public class KCWeaponMod {
 				}
 			}
 		}
-		
+
 		for (ItemWeapon weapon : weapons)
 		{
 			System.out.println("KCWeaponMod: Registered Weapons: "+weapon.Properties.Name);
 		}
-		
+
 		for (Entry<String, Integer> entry : modMap.entrySet())
 		{
 			System.out.println("KCWeaponMod: Mod Map: \""+entry.getKey()+"\" begins at index "+entry.getValue());
 		}
 	}
-	
+
 	public static String[] ProjIDRender;
 
 	@EventHandler
 	public void load(FMLInitializationEvent event)
 	{
 		this.allowModRegistration = false;
-		
+
 		FMLCommonHandler.instance().bus().register(instance);//For Config File
-		
+
 		this.getXMLItems();
 		this.ProjIDRender = new String[this.weapons.length];
 		for (ItemWeapon weapon : this.weapons)
@@ -398,9 +398,9 @@ public class KCWeaponMod {
 			}
 			i++;
 		}
-		
+
 		proxy.registerRenderers();
-		
+
 		proxy.registers();
 		MinecraftForge.EVENT_BUS.register(new net.killerchief.kcweaponmod.EventHandler());
 		FMLCommonHandler.instance().bus().register(new TickHandler());
@@ -410,9 +410,9 @@ public class KCWeaponMod {
 		}
 
 	}
-	
+
 	public static boolean ProcessingObjectTagsErrored = false;
-	
+
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{

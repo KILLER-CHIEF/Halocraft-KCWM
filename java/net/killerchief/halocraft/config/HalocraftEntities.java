@@ -22,8 +22,6 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 
 public class HalocraftEntities {
 
-	public static int startEntityId = 300;
-
 	public static void registerEntities() {
 		EntityRegistry.registerModEntity(EntityEliteSword.class, "EliteSword", 1, Halocraft.instance, 80, 2, true);
 		EntityRegistry.registerModEntity(EntityEliteCarbine.class, "EliteCarbine", 2, Halocraft.instance, 80, 2, true);
@@ -37,7 +35,6 @@ public class HalocraftEntities {
 		EntityRegistry.registerModEntity(EntityMongooseBlue.class, "MongooseBlue", 143, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityMongooseRed.class, "MongooseRed", 144, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityGhost.class, "Ghost", 145, Halocraft.instance, 100, 1, true);
-		//TODO: STRIPED - Warthog Entities
 		EntityRegistry.registerModEntity(EntityWarthog.class, "Warthog", 146, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityWarthogBack.class, "WarthogBack", 147, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityDeployableGravityLift.class, "DeployableGravityLift", 160, Halocraft.instance, 100, 1, true);
@@ -59,6 +56,8 @@ public class HalocraftEntities {
 		EntityList.IDtoClassMapping.put(id, entity);
 		EntityList.entityEggs.put(id, new EntityList.EntityEggInfo(id, primaryColor, secondaryColor));
 	}
+
+	public static int startEntityId = 300;
 
 	//returns empty id
 	private static int getUniqueEntityId()

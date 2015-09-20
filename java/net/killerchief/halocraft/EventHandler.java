@@ -2,7 +2,6 @@ package net.killerchief.halocraft;
 
 import net.killerchief.halocraft.comm.packetHandlers.PacketOvershield;
 import net.killerchief.halocraft.config.HalocraftItems;
-import net.killerchief.halocraft.config.HalocraftItemsArmor;
 import net.killerchief.halocraft.config.HalocraftItemsWeapons;
 import net.killerchief.halocraft.entities.vehicles.EntityGhost;
 import net.killerchief.halocraft.entities.vehicles.EntityTurretSeat;
@@ -18,23 +17,22 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class EventHandler {
-	
+
 	@SubscribeEvent
 	public void LivingDeathEvent(LivingDeathEvent event)
 	{
 		if (event.entity instanceof EntityPlayer)
 		{
 			EntityPlayer player = (EntityPlayer)event.entity;
-			
+
 			TickHandler.ShieldHealthMap.remove(player);
 			TickHandler.ShieldRechargeDelayMap.remove(player);
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void playerInteractEvent(PlayerInteractEvent event)
 	{
@@ -46,17 +44,17 @@ public class EventHandler {
 			}
 		}
 	}
-	
+
 	//@SideOnly(Side.CLIENT)
 	private int stopAimingCoolDown = 0;
-	
+
 	@SubscribeEvent
 	public void livingEventClient(LivingEvent event)//TODO: Add in Gun Mod
 	{
 		if (event.entityLiving instanceof EntityPlayer)
 		{
 			EntityPlayer entityplayer = (EntityPlayer) event.entityLiving;
-			
+
 			if (Halocraft.proxy.isSideClient())
 			{
 				if (entityplayer.getHeldItem() != null && ((entityplayer.getHeldItem().getItem() instanceof ItemWeapon && !((ItemWeapon)entityplayer.getHeldItem().getItem()).isEquipment()) || entityplayer.getHeldItem().getItem() instanceof ItemEnergySword))
@@ -85,14 +83,14 @@ public class EventHandler {
 			}
 		}
 	}
-	
+
 	//These cause an InstantiationException on mod load fyi
 	/*@SubscribeEvent
 	public void livingEventClient(RenderHandEvent event)
 	{
 		//event.setCanceled(true);
 	}
-	
+
 	@SubscribeEvent
 	public void livingEventClient(RenderPlayerEvent.Specials.Pre event)
 	{
@@ -102,14 +100,14 @@ public class EventHandler {
 		//event.renderer.modelBipedMain.bipedLeftArm.rotateAngleX = 20F;
 		//event.setCanceled(true);
 	}
-	
+
 	@SubscribeEvent
 	public void livingEventClient(RenderPlayerEvent.Specials event)
 	{
 		//event.setCanceled(true);
 		//event.renderer.modelBipedMain.isSneak = true;
 	}
-	
+
 	@SubscribeEvent
 	public void livingEventClient(RenderPlayerEvent.Specials.Post event)
 	{
@@ -119,7 +117,7 @@ public class EventHandler {
 		//event.renderer.modelBipedMain.bipedLeftArm.rotateAngleZ = 1.5F;
 		//event.renderer.modelBipedMain.isSneak = true;
 	}*/
-	
+
 	@SubscribeEvent
 	public void livingEvent(LivingEvent event)
 	{
@@ -170,7 +168,7 @@ public class EventHandler {
 		if (HalocraftUtils.isPlayerWearingArmor(entityplayermp, 0, false, true, true, true) || HalocraftUtils.isPlayerWearingArmor(entityplayermp, 1, false, true, true, true))
 			event.distance = 0F;
 	}
-	
+
 	@SubscribeEvent
 	public void EntityJoinWorldEvent(EntityJoinWorldEvent event)
 	{
@@ -178,7 +176,7 @@ public class EventHandler {
 		{
 			EntityPlayerMP entityplayermp = (EntityPlayerMP)event.entity;
 			//System.out.println("Adding Player!");
-			
+
 			TickHandler.ShieldHealthMap.put(entityplayermp, new Integer(0));
 			TickHandler.ShieldRechargeDelayMap.put(entityplayermp, new Integer(0));
 		}
@@ -330,7 +328,7 @@ public class EventHandler {
 		}
 		return notfail;
 	}*/
-	
+
 	/*@SubscribeEvent
     public void onConfigChanged(OnConfigChangedEvent event)
     {
