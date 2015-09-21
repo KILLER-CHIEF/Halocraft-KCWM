@@ -10,6 +10,8 @@ public class ItemWeaponProperties {
 	
 	/** NOT TO BE SET IN CONFIG! This is handled by the mod. */
 	public int ID = -1;
+	/** Whether an item of this property set will appear ingame (false for vehicles). */
+	public boolean RegisterItem = true;
 	/** The unlocalized name of the weapon. */
 	public String Name;
 	/** The Texture used for the weapons item. */
@@ -51,7 +53,7 @@ public class ItemWeaponProperties {
 	public String ReloadSoundExit = KCWeaponMod.MODID + ":Default.DefaultReloadExit";
 	/** If true, it only supports RequiredUsesPerShot of 1 however that variable isn't required to be set. */
 	public boolean AmmoFeedsFromInventory = false;
-	/** The ammo this weapon uses. (Only active if ItemStackDecreaseOnUse if false) */ //FIXME: Reload Sounds for all weapons w/ delays
+	/** The ammo this weapon uses. (Only active if ItemStackDecreaseOnUse if false) */
 	public ItemStack AmmoType = null;
 	/** The size of the weapons magazine. (Only active if AmmoFeedsFromInventory is false) */
 	public int MagazineSize = 0;
@@ -70,8 +72,8 @@ public class ItemWeaponProperties {
 	
 	/** The projectile entity's render properties. 0#ArrowRenderTexture, 1#2DRenderTexture, 2#ModelTexture#ModelClass, 3#LargeArrowRenderTexture */
 	public String ProjectileRenderProperties = "0#"+KCWeaponMod.MODID+":textures/entities/Default/DefaultProjectileRender.png";
-	/** NOT TO BE SET IN CONFIG! This is handled by the mod. */
-	public int ProjectileID = 0;
+	/** NOT TO BE SET IN CONFIG! This is handled, configured and processed by the mod for efficiency. */
+	public ProjRenderProp ProjRenderProp = new ProjRenderProp();
 	
 	/** The Speed at which the projectile is launched at. */
 	public float ProjectileSpeed = 0F;

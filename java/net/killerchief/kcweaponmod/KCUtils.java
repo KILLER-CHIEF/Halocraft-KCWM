@@ -3,10 +3,102 @@ package net.killerchief.kcweaponmod;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.World;
 
 public class KCUtils {
+	
+	public static boolean fireProjectile(World world, EntityLivingBase thrower, int propID)
+	{
+		world.spawnEntityInWorld(new EntityProjectile(world, thrower, propID));
+		return true;
+		
+		//FIXME: Dynamic: KCWM Projectile from another class reflection.
+		/*try {
+			world.spawnEntityInWorld(((Class<? extends Entity>) Class.forName("net.killerchief.kcweaponmod.EntityProjectile")).getConstructor(World.class, EntityLivingBase.class, int.class).newInstance(world, thrower, propID));
+			return true;
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return false;*/
+	}
+	
+	public static boolean fireProjectile(World world, double posx, double posy, double posz, EntityLivingBase thrower, int propID)
+	{
+		world.spawnEntityInWorld(new EntityProjectile(world, posx, posy, posz, thrower, propID));
+		return true;
+		
+		//FIXME: Dynamic: KCWM Projectile from another class reflection.
+		/*try {
+			world.spawnEntityInWorld(((Class<? extends Entity>) Class.forName("net.killerchief.kcweaponmod.EntityProjectile")).getConstructor(World.class, double.class, double.class, double.class, EntityLivingBase.class, int.class).newInstance(world, posx, posy, posz, thrower, propID));
+			return true;
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return false;*/
+	}
+	
+	public static boolean fireProjectile(World world, EntityLivingBase thrower, int propID, double varX, double varY, double varZ, float speed, float accuracy)
+	{
+		Entity projectile = new EntityProjectile(world, thrower, propID);
+		if (projectile instanceof IProjectile)
+			((IProjectile) projectile).setThrowableHeading(varX, varY, varZ, speed, accuracy);
+		world.spawnEntityInWorld(projectile);
+		return true;
+		
+		//FIXME: Dynamic: KCWM Projectile from another class reflection.
+		/*try {
+			Entity projectile = ((Class<? extends Entity>) Class.forName("net.killerchief.kcweaponmod.EntityProjectile")).getConstructor(World.class, EntityLivingBase.class, int.class).newInstance(world, thrower, propID);
+			if (projectile instanceof IProjectile)
+				((IProjectile) projectile).setThrowableHeading(varX, varY, varZ, speed, accuracy);
+			world.spawnEntityInWorld(projectile);
+			return true;
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return false;*/
+	}
 
 	public static void CallPropertyParts(EntityProjectile projectile, MovingObjectPosition collidedObject, Object arg)
 	{

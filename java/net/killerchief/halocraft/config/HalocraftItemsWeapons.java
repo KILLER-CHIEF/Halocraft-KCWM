@@ -37,11 +37,19 @@ public class HalocraftItemsWeapons {
 
 	public static Item SpikeGrenade = null;
 	
+	public static ItemWeapon GhostPlasmaBolt;
+	public static ItemWeapon ChainGunBullet;
+	
+	public static ItemWeapon EliteCarbine;
+	public static ItemWeapon ElitePlasmaRifle;
+	public static ItemWeapon GruntPlasmaPistol;
+	
 	public static int ModMapOffset = 0;
 
 	public static void initWeapons()
 	{
 		ModMapOffset = KCWeaponMod.modMap.get(Halocraft.MODID);
+		
 		BattleRifle = KCWeaponMod.weapons[ModMapOffset];
 		DMR = KCWeaponMod.weapons[ModMapOffset+1];
 		AssaultRifle = KCWeaponMod.weapons[ModMapOffset+2];
@@ -61,6 +69,13 @@ public class HalocraftItemsWeapons {
 		FragGrenade = KCWeaponMod.weapons[ModMapOffset+16];
 		PlasmaGrenade = KCWeaponMod.weapons[ModMapOffset+17];
 		FirebombGrenade = KCWeaponMod.weapons[ModMapOffset+18];
+		
+		GhostPlasmaBolt = KCWeaponMod.weapons[ModMapOffset+20];
+		ChainGunBullet = KCWeaponMod.weapons[ModMapOffset+21];
+		
+		EliteCarbine = KCWeaponMod.weapons[ModMapOffset+22];
+		ElitePlasmaRifle = KCWeaponMod.weapons[ModMapOffset+23];
+		GruntPlasmaPistol = KCWeaponMod.weapons[ModMapOffset+24];
 	}
 
 	//public static Item SilencedSMG = (new HCItemWeapons(22007)).setIconCoord(7, 0).setUnlocalizedName("SilencedSMG");

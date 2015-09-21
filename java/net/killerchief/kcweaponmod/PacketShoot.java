@@ -1,17 +1,12 @@
 package net.killerchief.kcweaponmod;
 
 import io.netty.buffer.ByteBuf;
-
-import java.lang.reflect.InvocationTargetException;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S0BPacketAnimation;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -202,24 +197,7 @@ public class PacketShoot implements IMessage {
 						if (!player.worldObj.isRemote)
 						{
 							for (int s = 0; s < weapon.Properties.SingleShotProjectileCount; s++) {
-								//FIXME: KCWM Projectile from another class reflection.
-								try {
-									player.worldObj.spawnEntityInWorld(((Class<? extends Entity>) Class.forName("net.killerchief.kcweaponmod.EntityRenderExtender").getClasses()[weapon.Properties.ProjectileID]).getConstructor(World.class, EntityLivingBase.class, int.class, String.class).newInstance(player.worldObj, player, weapon.Properties.ID, ""));
-								} catch (InstantiationException e) {
-									e.printStackTrace();
-								} catch (IllegalAccessException e) {
-									e.printStackTrace();
-								} catch (IllegalArgumentException e) {
-									e.printStackTrace();
-								} catch (InvocationTargetException e) {
-									e.printStackTrace();
-								} catch (NoSuchMethodException e) {
-									e.printStackTrace();
-								} catch (SecurityException e) {
-									e.printStackTrace();
-								} catch (ClassNotFoundException e) {
-									e.printStackTrace();
-								}
+								KCUtils.fireProjectile(player.worldObj, player, weapon.Properties.ID);
 							}
 							if (player.worldObj instanceof WorldServer)//Visible recoil on body to other players (if executed on target player they will swing their hand on screen which is bad for looks but doesn't actually do anything)
 							{

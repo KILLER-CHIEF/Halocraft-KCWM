@@ -43,11 +43,11 @@ public class KCWeaponMod {
 
 	public static final String MODID = "kcweaponmod";
 	public static final String NAME = "KC's Weapon Mod";
-	public static final String VERSION = "0.1.2";
+	public static final String VERSION = "0.1.3";
 
 	public static String getVersion() { return VERSION; }
 
-	public static final String WeaponFileVersion = "1.0";
+	public static final String WeaponFileVersion = "1.1";
 
 	/** The instance of this mod that Forge uses.*/
 	@Instance(KCWeaponMod.MODID)
@@ -328,8 +328,6 @@ public class KCWeaponMod {
 		}
 	}
 
-	public static String[] ProjIDRender;
-
 	@EventHandler
 	public void load(FMLInitializationEvent event)
 	{
@@ -338,67 +336,16 @@ public class KCWeaponMod {
 		FMLCommonHandler.instance().bus().register(instance);//For Config File
 
 		this.getXMLItems();
-		this.ProjIDRender = new String[this.weapons.length];
+		
 		for (ItemWeapon weapon : this.weapons)
 		{
-			GameRegistry.registerItem(weapon, weapon.getUnlocalizedName().substring(5));
-			boolean exists = false;
-			int i = 0;
-			while (i < this.ProjIDRender.length)
-			{
-				if (this.ProjIDRender[i] == null)
-				{
-					break;
-				}
-				if (this.ProjIDRender[i].equals(weapon.Properties.ProjectileRenderProperties))
-				{
-					weapon.Properties.ProjectileID = i;
-					exists = true;
-					break;
-				}
-				i++;
-			}
-			if (!exists)
-			{
-				if (i < this.ProjIDRender.length)
-				{
-					this.ProjIDRender[i] = weapon.Properties.ProjectileRenderProperties;
-					weapon.Properties.ProjectileID = i;
-				}
-				else
-				{
-					System.err.println("Fatal Error in Weapon Projectile Registration. Run out of Array Length! "+i+":"+this.ProjIDRender.length);
-				}
-			}
+			if (weapon.Properties.RegisterItem)
+				GameRegistry.registerItem(weapon, weapon.getUnlocalizedName().substring(5));
 		}
-		int i = this.ProjIDRender.length;
-		if (this.ProjIDRender.length > 0)
-		{
-			while (i > 0 && this.ProjIDRender[--i] == null);
-			this.ProjIDRender = Arrays.copyOf(this.ProjIDRender, i+1);
-		}
-		System.out.println("KCWeaponMod: "+KCWeaponMod.ProjIDRender.length+" Render ID's have been used out of "+EntityRenderExtender.class.getDeclaredClasses().length+" in total.");
-		i = 0;
-		while (i < this.ProjIDRender.length)
-		{
-			if (this.ProjIDRender[i] != null)
-			{
-				String name = this.ProjIDRender[i].replace("/", ".");
-				String entityname;
-				if (name.indexOf("#") < 0)
-					entityname = name;
-				else
-					entityname = name.substring(name.indexOf("#")+1, name.length());
-				try {
-					EntityRegistry.registerModEntity((Class<? extends Entity>) Class.forName("net.killerchief.kcweaponmod.EntityRenderExtender").getClasses()[i], entityname, i, KCWeaponMod.instance, 100, 10, true);
-				} catch (ClassNotFoundException e) {
-					System.err.println("Class not found exception: net.killerchief.kcweaponmod.EntityRenderExtender.Entity"+i);
-					e.printStackTrace();
-				}
-			}
-			i++;
-		}
-
+		
+		//FIXME: Dynamic Projectile Classes
+		EntityRegistry.registerModEntity(EntityProjectile.class, "KCWMProjectile", 1, KCWeaponMod.instance, 100, 10, true);
+		
 		proxy.registerRenderers();
 
 		proxy.registers();
@@ -420,16 +367,25 @@ public class KCWeaponMod {
 		for (ItemWeapon weapon : this.weapons)
 		{
 			weapon.Properties.ID = id;
-			weapon.Properties.ProjLivingActArgs = KCUtils.ProcessObjectTags(weapon.Properties.ProjectileLivingProperties);
+			if (!weapon.Properties.ProjectileLivingProperties.equalsIgnoreCase(""))
+				weapon.Properties.ProjLivingActArgs = KCUtils.ProcessObjectTags(weapon.Properties.ProjectileLivingProperties);
 			if (ProcessingObjectTagsErrored)
 			{
 				System.err.println("KCWeaponMod - ERROR: Projectile Living Properties contains an error: "+weapon.Properties.ProjectileLivingProperties);
 				ProcessingObjectTagsErrored = false;
 			}
-			weapon.Properties.ProjImpactActArgs = KCUtils.ProcessObjectTags(weapon.Properties.ProjectileImpactProperties);
+			if (!weapon.Properties.ProjectileImpactProperties.equalsIgnoreCase(""))
+				weapon.Properties.ProjImpactActArgs = KCUtils.ProcessObjectTags(weapon.Properties.ProjectileImpactProperties);
 			if (ProcessingObjectTagsErrored)
 			{
 				System.err.println("KCWeaponMod - ERROR: Projectile Impact Properties contains an error: "+weapon.Properties.ProjectileImpactProperties);
+				ProcessingObjectTagsErrored = false;
+			}
+			if (!weapon.Properties.ProjectilePrematureEndOfLifeProperties.equalsIgnoreCase(""))
+				weapon.Properties.ProjPrematureEndLifeActArgs = KCUtils.ProcessObjectTags(weapon.Properties.ProjectilePrematureEndOfLifeProperties);
+			if (ProcessingObjectTagsErrored)
+			{
+				System.err.println("KCWeaponMod - ERROR: Projectile Premature End Of Life Properties contains an error: "+weapon.Properties.ProjectilePrematureEndOfLifeProperties);
 				ProcessingObjectTagsErrored = false;
 			}
 			id++;

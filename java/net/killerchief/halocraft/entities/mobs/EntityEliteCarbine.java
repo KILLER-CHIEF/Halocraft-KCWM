@@ -1,14 +1,12 @@
 package net.killerchief.halocraft.entities.mobs;
 
-import java.lang.reflect.InvocationTargetException;
-
 import net.killerchief.halocraft.Halocraft;
 import net.killerchief.halocraft.config.HalocraftItemsWeapons;
-import net.killerchief.halocraft.entities.projectiles.EntityCustomProjectileHelper;
+import net.killerchief.halocraft.config.InitHcWeapons;
 import net.killerchief.kcweaponmod.ItemWeapon;
-import net.minecraft.entity.Entity;
+import net.killerchief.kcweaponmod.ItemWeaponProperties;
+import net.killerchief.kcweaponmod.KCUtils;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -46,34 +44,16 @@ public class EntityEliteCarbine extends EntityEliteBase implements IRangedAttack
 	@Override
 	public void attackEntityWithRangedAttack(EntityLivingBase target, float par2)
 	{
+		ItemWeaponProperties projProp = HalocraftItemsWeapons.EliteCarbine.Properties;
+
 		int BulletDamage = 4 + (int)(this.worldObj.difficultySetting.getDifficultyId() * 1.5);//Player's Gun Damage: 8
-		EntityCustomProjectileHelper.ProjPropEliteCarbine.ProjImpactActArgs = new Object[]{EntityCustomProjectileHelper.ImpactBlockObject, new Object[]{"ImpactEntity", new String[]{Integer.toString(BulletDamage), "0", "Die"}}};
+		projProp.ProjImpactActArgs = new Object[]{InitHcWeapons.ImpactBlockObject, new Object[]{"ImpactEntity", new String[]{Integer.toString(BulletDamage), "0", "Die"}}};
 		this.playSound(Halocraft.MODID+":weapons.shoot.CarbineShoot", 1.0F, 1.0F);
 
 		double varX = target.posX + target.motionX - this.posX;
 		double varY = target.posY + (double)target.getEyeHeight() - 1.100000023841858D - this.posY;
 		double varZ = target.posZ + target.motionZ - this.posZ;
-
-		try {
-			Entity projectile = ((Class<? extends Entity>) Class.forName("net.killerchief.kcweaponmod.EntityRenderExtender").getClasses()[EntityCustomProjectileHelper.ProjPropEliteCarbine.ProjectileID]).getConstructor(World.class, EntityLivingBase.class, int.class, String.class).newInstance(this.worldObj, this, -1, "net.killerchief.halocraft.entities.projectiles.EntityCustomProjectileHelper.ProjPropEliteCarbine");
-			if (projectile instanceof IProjectile)
-				((IProjectile) projectile).setThrowableHeading(varX, varY, varZ, EntityCustomProjectileHelper.ProjPropElitePlasmaRifle.ProjectileSpeed, EntityCustomProjectileHelper.ProjPropElitePlasmaRifle.Accuracy);
-			this.worldObj.spawnEntityInWorld(projectile);
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+		KCUtils.fireProjectile(this.worldObj, this, projProp.ID, varX, varY, varZ, projProp.ProjectileSpeed, projProp.Accuracy);
 	}
 
 	/**

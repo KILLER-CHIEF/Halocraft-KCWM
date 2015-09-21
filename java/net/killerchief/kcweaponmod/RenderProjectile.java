@@ -4,7 +4,6 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
@@ -17,32 +16,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderProjectile extends Render {
 
-	private int RenderType = 0;
-	private String BulletTex = KCWeaponMod.MODID+":textures/entities/Default/DefaultProjectileRender.png";
-	private String TwoDeeTex = "";
-	private String ModelTex = "";
-	private String ModelClass = "";
-
 	//ResourceLocation RL2DRenders = TextureMap.locationItemsTexture;//new ResourceLocation("textures/atlas/items.png");
-	ResourceLocation RLBullet = new ResourceLocation(KCWeaponMod.MODID+":textures/entities/BulletRender.png");
 
-	public RenderProjectile(int rendertype, String bullettex, String twodeetex, String modeltex, String modelclass)
+	public RenderProjectile()
 	{
-		this.RenderType = rendertype;
-		this.BulletTex = bullettex;
-		this.TwoDeeTex = twodeetex;
-		this.ModelTex = modeltex;
-		this.ModelClass = modelclass;
-
-		if(rendertype == 0 || rendertype == 1 || rendertype == 3)
-		{
-			this.shadowSize = 0.2F;
-		}
-		else if(rendertype == 2)
-		{
-			this.shadowSize = 0.4F;
-		}
-		else{}
+		this.shadowSize = 0.2F;
 	}
 
 	/**
@@ -54,75 +32,105 @@ public class RenderProjectile extends Render {
 	@Override
 	public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
 	{
-		GL11.glPushMatrix();
-		if (par1Entity instanceof EntityProjectile && ((EntityProjectile)par1Entity).Glows)
+		EntityProjectile proj = (EntityProjectile)par1Entity;
+		ProjRenderProp projProp = KCWeaponMod.weapons[proj.getPropertiesID()].Properties.ProjRenderProp;
+
+		if (projProp == null || projProp.RenderType < 0)
 		{
-			GL11.glDisable(GL11.GL_LIGHTING);
-			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
-		}
-		if(this.RenderType == 0)
-		{
-			this.renderBullet(par1Entity, par2, par4, par6, par8, par9);
-		}
-		else if(this.RenderType == 3)
-		{
-			this.renderLargeProjectile(par1Entity, par2, par4, par6, par8, par9);
-		}
-		else if(this.RenderType == 1)
-		{
-			this.render2DImageOverEntity(par1Entity, par2, par4, par6, par8, par9);
-		}
-		else if(this.RenderType == 2)
-		{
-			try {
-				this.renderEntityModel(((Class<? extends ModelBase>) Class.forName(this.ModelClass)).newInstance(), par1Entity, par2, par4, par6, par8, par9);
-			} catch (InstantiationException e) {
-				System.err.println("The 3D Model Class \""+this.ModelClass+"\" cannot be instantiated!");
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				System.err.println("The 3D Model Class \""+this.ModelClass+"\" cannot be accessed!");
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				System.err.println("The 3D Model Class \""+this.ModelClass+"\" does not exist!");
-				e.printStackTrace();
+			if (projProp == null) {
+				projProp = new ProjRenderProp();
+			}
+
+			String[] name = KCWeaponMod.weapons[proj.getPropertiesID()].Properties.ProjectileRenderProperties.split("#");
+
+			if (name.length <= 1)
+			{
+				projProp.RenderType = 0;
+				projProp.ResLocBullet = new ResourceLocation(name[0]);
+			}
+			else
+			{
+				projProp.RenderType = Integer.parseInt(name[0]);
+				if (projProp.RenderType == 0 || projProp.RenderType == 3)
+				{
+					projProp.ResLocBullet = new ResourceLocation(name[1]);
+				}
+				else if (projProp.RenderType == 1)
+				{
+					projProp.ResLocTwoDee = new ResourceLocation(name[1]);
+				}
+				else if (projProp.RenderType == 2 && name.length >= 3)
+				{
+					projProp.ResLocModel = new ResourceLocation(name[1]);
+					projProp.ModelClass = name[2];
+				}
+				else
+				{
+					System.err.println("KCWeaponMod - Error: Projectile Render Properties are invalid!");
+					projProp.RenderType = 0;
+				}
 			}
 		}
-		else
+		if (projProp != null && projProp.RenderType >= 0)
 		{
-			System.err.println("KCWeaponMod - WARNING: Projectile RenderType is not valid! "+this.RenderType);
+			GL11.glPushMatrix();
+			if (proj.Glows)
+			{
+				GL11.glDisable(GL11.GL_LIGHTING);
+				OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
+			}
+			if (projProp.RenderType == 0)
+			{
+				this.renderBullet(proj, projProp, par2, par4, par6, par8, par9);
+			}
+			else if (projProp.RenderType == 3)
+			{
+				this.renderLargeProjectile(proj, projProp, par2, par4, par6, par8, par9);
+			}
+			else if (projProp.RenderType == 1)
+			{
+				this.render2DImageOverEntity(proj, projProp, par2, par4, par6, par8, par9);
+			}
+			else if (projProp.RenderType == 2)
+			{
+				try {
+					this.renderEntityModel(((Class<? extends ModelBase>) Class.forName(projProp.ModelClass)).newInstance(), proj, projProp, par2, par4, par6, par8, par9);
+				} catch (InstantiationException e) {
+					System.err.println("The 3D Model Class \""+projProp.ModelClass+"\" cannot be instantiated!");
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					System.err.println("The 3D Model Class \""+projProp.ModelClass+"\" cannot be accessed!");
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					System.err.println("The 3D Model Class \""+projProp.ModelClass+"\" does not exist!");
+					e.printStackTrace();
+				}
+			}
+			else
+			{
+				System.err.println("KCWeaponMod - WARNING: Projectile RenderType is not valid! "+projProp.RenderType);
+			}
+			if (proj.Glows)
+			{
+				GL11.glEnable(GL11.GL_LIGHTING);
+			}
+			GL11.glPopMatrix();
 		}
-		if (par1Entity instanceof EntityProjectile && ((EntityProjectile)par1Entity).Glows)
-		{
-			GL11.glEnable(GL11.GL_LIGHTING);
-		}
-		GL11.glPopMatrix();
 	}
 
 	@Override
 	protected ResourceLocation getEntityTexture(Entity par1Entity)
 	{
-		if(this.RenderType == 0 || this.RenderType == 3)
-		{
-			return new ResourceLocation(this.BulletTex);
-		}
-		else if(this.RenderType == 1)
-		{
-			return new ResourceLocation(this.TwoDeeTex);//RL2DRenders;
-		}
-		else if(this.RenderType == 2)
-		{
-			return new ResourceLocation(this.ModelTex);
-		}
-
 		return null;
 	}
 
-	public void renderBullet(Entity par1EntityBullet, double par2, double par4, double par6, float par8, float par9)
+	public void renderBullet(EntityProjectile proj, ProjRenderProp projProp, double par2, double par4, double par6, float par8, float par9)
 	{
-		this.bindEntityTexture(par1EntityBullet);
+		if (projProp.ResLocBullet != null)
+			this.bindTexture(projProp.ResLocBullet);
 		GL11.glTranslatef((float)par2, (float)par4, (float)par6);
-		GL11.glRotatef(par1EntityBullet.prevRotationYaw + (par1EntityBullet.rotationYaw - par1EntityBullet.prevRotationYaw) * par9 - 90.0F, 0.0F, 1.0F, 0.0F);
-		GL11.glRotatef(par1EntityBullet.prevRotationPitch + (par1EntityBullet.rotationPitch - par1EntityBullet.prevRotationPitch) * par9, 0.0F, 0.0F, 1.0F);
+		GL11.glRotatef(proj.prevRotationYaw + (proj.rotationYaw - proj.prevRotationYaw) * par9 - 90.0F, 0.0F, 1.0F, 0.0F);
+		GL11.glRotatef(proj.prevRotationPitch + (proj.rotationPitch - proj.prevRotationPitch) * par9, 0.0F, 0.0F, 1.0F);
 		Tessellator tessellator = Tessellator.instance;
 		byte b0 = 0;
 		float f2 = 0.0F;
@@ -167,28 +175,28 @@ public class RenderProjectile extends Render {
 		}
 
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-		
+
 	}
-	
-	public void renderLargeProjectile(Entity par1EntityBullet, double par2, double par4, double par6, float par8, float par9)
+
+	public void renderLargeProjectile(EntityProjectile proj, ProjRenderProp projProp, double par2, double par4, double par6, float par8, float par9)
 	{
-		this.bindEntityTexture(par1EntityBullet);
-		
+		if (projProp.ResLocBullet != null)
+			this.bindTexture(projProp.ResLocBullet);
 		GL11.glTranslatef((float)par2, (float)par4, (float)par6);
-		GL11.glRotatef(par1EntityBullet.prevRotationYaw + (par1EntityBullet.rotationYaw - par1EntityBullet.prevRotationYaw) * par9 - 90.0F, 0.0F, 1.0F, 0.0F);
-		GL11.glRotatef(par1EntityBullet.prevRotationPitch + (par1EntityBullet.rotationPitch - par1EntityBullet.prevRotationPitch) * par9, 0.0F, 0.0F, 1.0F);
+		GL11.glRotatef(proj.prevRotationYaw + (proj.rotationYaw - proj.prevRotationYaw) * par9 - 90.0F, 0.0F, 1.0F, 0.0F);
+		GL11.glRotatef(proj.prevRotationPitch + (proj.rotationPitch - proj.prevRotationPitch) * par9, 0.0F, 0.0F, 1.0F);
 		Tessellator tessellator = Tessellator.instance;
 		float f1 = 0.0F;
 		float f2 = 0F;
 		float f3 = 1F;
 		float f4 = 0.28125F;
-		float f5 = par1EntityBullet.ticksExisted > 1 ? 1F : 0.2F;
-		
+		float f5 = proj.ticksExisted > 1 ? 1F : 0.2F;
+
 		float f6 = 0.0F;
 		float f7 = 0.28125F;
 		float f8 = 0.28125F;
 		float f9 = 0.5625F;
-		
+
 		float f10 = 0.05625F;
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 
@@ -225,25 +233,26 @@ public class RenderProjectile extends Render {
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 	}
 
-	public void renderEntityModel(ModelBase model, Entity entity, double par2, double par4, double par6, float par8, float par9)
+	public void renderEntityModel(ModelBase model, EntityProjectile proj, ProjRenderProp projProp, double par2, double par4, double par6, float par8, float par9)
 	{
-		
 		GL11.glTranslatef((float)par2, (float)par4, (float)par6);
 		GL11.glRotatef(180.0F - par8, 0.0F, 1.0F, 0.0F);
 		float f4 = 0.75F;
 		GL11.glScalef(f4, f4, f4);
 		GL11.glScalef(1.0F / f4, 1.0F / f4, 1.0F / f4);
-		this.bindEntityTexture(entity);
+		if (projProp.ResLocModel != null)
+			this.bindTexture(projProp.ResLocModel);
 		GL11.glScalef(-1.0F, -1.0F, 1.0F);
-		model.render(entity, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+		model.render(proj, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
 	}
 
-	private void render2DImageOverEntity(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
+	private void render2DImageOverEntity(EntityProjectile proj, ProjRenderProp projProp, double par2, double par4, double par6, float par8, float par9)
 	{
 		GL11.glTranslatef((float)par2, (float)par4, (float)par6);
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glScalef(0.5F, 0.5F, 0.5F);
-		this.bindEntityTexture(par1Entity);
+		if (projProp.ResLocTwoDee != null)
+			this.bindTexture(projProp.ResLocTwoDee);
 		Tessellator tessellator = Tessellator.instance;
 		float f = 0F;//par2Icon.getMinU();
 		float f1 = 1F;//par2Icon.getMaxU();

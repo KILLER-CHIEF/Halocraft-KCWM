@@ -63,9 +63,8 @@ public class EntityProjectile extends Entity implements IProjectile
 	//public double RicochetFactor = 1D;
 	//public int MaxAllowedEncounteredEntities = 0;//or -1
 
-	//These must stay unaccessible from other classes/code and mustn't be modified.
-	private int ID = -255;
-	private String ExternalProperties = null;
+	//These must stay unaccessible from other classes/code and must NOT be modified.
+	private int ID = -1;
 	private ItemWeaponProperties properties;//Must not be used or set in NBT.
 
 	public EntityProjectile(World world)
@@ -75,42 +74,42 @@ public class EntityProjectile extends Entity implements IProjectile
 		this.setSize(0.25F, 0.25F);
 		this.renderDistanceWeight = 10.0D;
 	}
-	
-	public EntityProjectile(World world, EntityLivingBase shooter, EntityLivingBase target, int propertiesID, String externalproperties)
-    {
-        super(world);
-        if (this.initProperties(propertiesID, externalproperties, KCWeaponMod.weapons.length))
-        {
-        	this.thrower = shooter;
 
-        	this.posY = shooter.posY + (double)shooter.getEyeHeight() - 0.10000000149011612D;
-        	double d0 = target.posX - shooter.posX;
-        	double d1 = target.boundingBox.minY + (double)(target.height / 3.0F) - this.posY;
-        	double d2 = target.posZ - shooter.posZ;
-        	double d3 = (double)MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+	public EntityProjectile(World world, EntityLivingBase shooter, EntityLivingBase target, int propertiesID)
+	{
+		super(world);
+		if (this.initProperties(propertiesID, KCWeaponMod.weapons.length))
+		{
+			this.thrower = shooter;
 
-        	if (d3 >= 1.0E-7D)
-        	{
-        		float f2 = (float)(Math.atan2(d2, d0) * 180.0D / Math.PI) - 90.0F;
-        		float f3 = (float)(-(Math.atan2(d1, d3) * 180.0D / Math.PI));
-        		double d4 = d0 / d3;
-        		double d5 = d2 / d3;
-        		this.setLocationAndAngles(shooter.posX + d4, this.posY, shooter.posZ + d5, f2, f3);
-        		this.yOffset = 0.0F;
-        		float f4 = (float)d3 * 0.2F;
-        		this.setThrowableHeading(d0, d1 + (double)f4, d2, properties.ProjectileSpeed, properties.Accuracy);
-        	}
-        }
+			this.posY = shooter.posY + (double)shooter.getEyeHeight() - 0.10000000149011612D;
+			double d0 = target.posX - shooter.posX;
+			double d1 = target.boundingBox.minY + (double)(target.height / 3.0F) - this.posY;
+			double d2 = target.posZ - shooter.posZ;
+			double d3 = (double)MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+
+			if (d3 >= 1.0E-7D)
+			{
+				float f2 = (float)(Math.atan2(d2, d0) * 180.0D / Math.PI) - 90.0F;
+				float f3 = (float)(-(Math.atan2(d1, d3) * 180.0D / Math.PI));
+				double d4 = d0 / d3;
+				double d5 = d2 / d3;
+				this.setLocationAndAngles(shooter.posX + d4, this.posY, shooter.posZ + d5, f2, f3);
+				this.yOffset = 0.0F;
+				float f4 = (float)d3 * 0.2F;
+				this.setThrowableHeading(d0, d1 + (double)f4, d2, properties.ProjectileSpeed, properties.Accuracy);
+			}
+		}
 		else
 		{
 			this.setDead();
 		}
-    }
+	}
 
-	public EntityProjectile(World world, EntityLivingBase thrower, int propertiesID, String externalproperties)
+	public EntityProjectile(World world, EntityLivingBase thrower, int propertiesID)
 	{
 		this(world);
-		if (this.initProperties(propertiesID, externalproperties, KCWeaponMod.weapons.length))
+		if (this.initProperties(propertiesID, KCWeaponMod.weapons.length))
 		{
 			this.thrower = thrower;
 			this.setLocationAndAngles(thrower.posX, thrower.posY + (double)thrower.getEyeHeight(), thrower.posZ, thrower.rotationYaw, thrower.rotationPitch);
@@ -130,16 +129,16 @@ public class EntityProjectile extends Entity implements IProjectile
 		}
 	}
 
-	public EntityProjectile(World world, EntityLivingBase thrower, int propertiesID, String externalproperties, Entity trackEntity)
+	public EntityProjectile(World world, EntityLivingBase thrower, int propertiesID, Entity trackEntity)
 	{
-		this(world, thrower, propertiesID, externalproperties);
+		this(world, thrower, propertiesID);
 		this.trackEntity = trackEntity;
 	}
 
-	public EntityProjectile(World world, double posx, double posy, double posz, EntityLivingBase thrower, int propertiesID, String externalproperties)
+	public EntityProjectile(World world, double posx, double posy, double posz, EntityLivingBase thrower, int propertiesID)
 	{
 		this(world);
-		if (this.initProperties(propertiesID, externalproperties, KCWeaponMod.weapons.length))
+		if (this.initProperties(propertiesID, KCWeaponMod.weapons.length))
 		{
 			this.thrower = thrower;
 			this.setLocationAndAngles(posx, posy, posz, thrower.rotationYaw, thrower.rotationPitch);
@@ -155,7 +154,7 @@ public class EntityProjectile extends Entity implements IProjectile
 		}
 	}
 
-	public EntityProjectile(World world, double posx, double posy, double posz, double motionx, double motiony, double motionz, EntityLivingBase thrower, int propertiesID, String externalproperties)
+	public EntityProjectile(World world, double posx, double posy, double posz, double motionx, double motiony, double motionz, EntityLivingBase thrower, int propertiesID)
 	{
 		this(world);
 		this.thrower = thrower;
@@ -170,97 +169,37 @@ public class EntityProjectile extends Entity implements IProjectile
 		this.motionY = motiony;
 		this.motionZ = motionz;
 
-		if (!this.initProperties(propertiesID, externalproperties, KCWeaponMod.weapons.length))
+		if (!this.initProperties(propertiesID, KCWeaponMod.weapons.length))
 		{
 			this.setDead();
 		}
 	}
 
-	public boolean initProperties(int propertiesID, String externalproperties, int num)
+	public boolean initProperties(int propertiesID, int num)
 	{
-		if (propertiesID == -1)
+		if (propertiesID >= 0 && propertiesID < KCWeaponMod.weapons.length && num == KCWeaponMod.weapons.length)
 		{
 			if (!this.worldObj.isRemote)
 			{
 				this.setPropertiesID(propertiesID);
-				this.setExternalProperties(externalproperties);
 				this.setPastWeaponArrayLength(num);
 			}
 			this.ID = propertiesID;
-			//this.PastWeaponArrayLength = num;
-			this.ExternalProperties = externalproperties;
-
-			String[] name = externalproperties.split("\\.");
-			String className;
-			String variableName;
-			if (name.length > 1)
-			{
-				className = name[0];
-				int i = 1;
-				while (i < name.length-1)
-				{
-					className = className+"."+name[i];
-					i++;
-				}
-				variableName = name[i];
-			}
-			else
-			{
-				className = EntityProjectile.class.getName();
-				variableName = externalproperties;
-			}
-
-			try {
-				Class c = Class.forName(className);
-				Object b = c.newInstance();
-				properties = (ItemWeaponProperties) c.getField(variableName).get(b);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-				return false;
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-				return false;
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-				return false;
-			} catch (NoSuchFieldException e) {
-				e.printStackTrace();
-				return false;
-			} catch (SecurityException e) {
-				e.printStackTrace();
-				return false;
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-				return false;
-			}
-		}
-		else if (propertiesID >= 0 && propertiesID < KCWeaponMod.weapons.length && num == KCWeaponMod.weapons.length)
-		{
-			if (!this.worldObj.isRemote)
-			{
-				this.setPropertiesID(propertiesID);
-				this.setExternalProperties(externalproperties);
-				this.setPastWeaponArrayLength(num);
-			}
-			this.ID = propertiesID;
-			//this.PastWeaponArrayLength = num;
-			this.ExternalProperties = externalproperties;
-
-			properties = KCWeaponMod.weapons[propertiesID].Properties;
+			this.properties = KCWeaponMod.weapons[propertiesID].Properties;
 		}
 		else
 		{
 			return false;
 		}
-		this.Gravity = properties.Gravity;
-		this.MaxEffectiveTicksAlive = properties.MaxEffectiveTicksAlive;
-		this.ProjLivingActArgs = properties.ProjLivingActArgs;
-		this.ProjImpactActArgs = properties.ProjImpactActArgs;
-		this.ProjPrematureEndLifeActArgs = properties.ProjPrematureEndLifeActArgs;
-		this.ProjectileDragInAir = properties.ProjectileDragInAir;
-		this.ProjectileDragInWater = properties.ProjectileDragInWater;
-		this.Glows = properties.ProjectileGlows;
-		this.TrackSensitivity = properties.TrackSensitivity;
+		this.Gravity = this.properties.Gravity;
+		this.MaxEffectiveTicksAlive = this.properties.MaxEffectiveTicksAlive;
+		this.ProjLivingActArgs = this.properties.ProjLivingActArgs;
+		this.ProjImpactActArgs = this.properties.ProjImpactActArgs;
+		this.ProjPrematureEndLifeActArgs = this.properties.ProjPrematureEndLifeActArgs;
+		this.ProjectileDragInAir = this.properties.ProjectileDragInAir;
+		this.ProjectileDragInWater = this.properties.ProjectileDragInWater;
+		this.Glows = this.properties.ProjectileGlows;
+		this.TrackSensitivity = this.properties.TrackSensitivity;
 		return true;
 	}
 
@@ -289,9 +228,8 @@ public class EntityProjectile extends Entity implements IProjectile
 	@Override
 	protected void entityInit()
 	{
-		this.dataWatcher.addObject(16, -255);
-		this.dataWatcher.addObject(18, -1);
-		this.dataWatcher.addObject(17, new String(""));
+		this.dataWatcher.addObject(16, -1);//PropertiesID
+		this.dataWatcher.addObject(18, -1);//PastWeaponArrayLength
 	}
 
 	public void setPropertiesID(int propertiesID)
@@ -299,6 +237,7 @@ public class EntityProjectile extends Entity implements IProjectile
 		this.dataWatcher.updateObject(16, propertiesID);
 	}
 
+	/** Gets the ID of this projectile in the weapon array from KCWeaponMod.weapons (safe to use everywhere). */
 	public int getPropertiesID()
 	{
 		return this.dataWatcher.getWatchableObjectInt(16);
@@ -312,16 +251,6 @@ public class EntityProjectile extends Entity implements IProjectile
 	public int getPastWeaponArrayLength()
 	{
 		return this.dataWatcher.getWatchableObjectInt(18);
-	}
-
-	public void setExternalProperties(String propertiesID)
-	{
-		this.dataWatcher.updateObject(17, propertiesID);
-	}
-
-	public String getExternalProperties()
-	{
-		return this.dataWatcher.getWatchableObjectString(17);
 	}
 
 	/**
@@ -391,8 +320,7 @@ public class EntityProjectile extends Entity implements IProjectile
 			par1NBTTagCompound.setInteger("PastWeaponArrayLength", this.getPastWeaponArrayLength());
 		}
 		par1NBTTagCompound.setInteger("ID", this.ID);
-		par1NBTTagCompound.setString("ExternalProperties", (this.ExternalProperties == null ? "" : this.ExternalProperties));
-		
+
 		par1NBTTagCompound.setBoolean("Glows", this.Glows);
 
 		par1NBTTagCompound.setInteger("ticksExisted", this.ticksExisted);
@@ -430,13 +358,11 @@ public class EntityProjectile extends Entity implements IProjectile
 			this.setPastWeaponArrayLength(par1NBTTagCompound.getInteger("PastWeaponArrayLength"));
 		}
 		this.ID = par1NBTTagCompound.getInteger("ID");
-		this.ExternalProperties = par1NBTTagCompound.getString("ExternalProperties");
 		if (!this.worldObj.isRemote)
 		{
 			this.setPropertiesID(this.ID);
-			this.setExternalProperties(this.ExternalProperties);
 		}
-		
+
 		this.Glows = par1NBTTagCompound.getBoolean("Glows");
 
 		this.ticksExisted = par1NBTTagCompound.getInteger("ticksExisted");
@@ -492,12 +418,11 @@ public class EntityProjectile extends Entity implements IProjectile
 				this.setDead();
 			return;
 		}
-		if (this.ID != this.getPropertiesID() || this.ExternalProperties != this.getExternalProperties())
+		if (this.ID != this.getPropertiesID())
 		{
 			this.ID = this.getPropertiesID();
-			this.ExternalProperties = this.getExternalProperties();
-			if (this.ID >= 0 || (this.ExternalProperties != null && this.ExternalProperties.equalsIgnoreCase("")))
-				if (!this.initProperties(this.ID, this.ExternalProperties, this.getPastWeaponArrayLength()))
+			if (this.ID >= 0)
+				if (!this.initProperties(this.ID, this.getPastWeaponArrayLength()))
 					if (!this.worldObj.isRemote)
 						this.setDead();
 		}
@@ -511,7 +436,7 @@ public class EntityProjectile extends Entity implements IProjectile
 		this.lastTickPosZ = this.posZ;
 		super.onUpdate();
 
-		if (this.ID >= -1)
+		if (this.ID >= 0)
 		{
 			if (this.worldObj.isRemote && 0.04D > Math.sqrt((this.motionX * this.motionX) + (this.motionY * this.motionY) + (this.motionZ * this.motionZ)) && 0.04D > Math.sqrt((this.prevMotionX * this.prevMotionX) + (this.prevMotionY * this.prevMotionY) + (this.prevMotionZ * this.prevMotionZ)))
 			{
@@ -644,6 +569,7 @@ public class EntityProjectile extends Entity implements IProjectile
 					}
 					else
 					{
+						//System.out.println("Impact: "+movingobjectposition.typeOfHit.name());
 						for (Object arg : this.ProjImpactActArgs)
 						{
 							KCUtils.CallPropertyParts(this, movingobjectposition, arg);
@@ -720,7 +646,7 @@ public class EntityProjectile extends Entity implements IProjectile
 			this.tagLoopExitBreakout = false;
 		}
 
-		if (this.ID < -1 || this.ticksExisted > this.MaxEffectiveTicksAlive)
+		if (this.ID < 0 || this.ticksExisted > this.MaxEffectiveTicksAlive)
 		{
 			//System.out.println("Premature Death");
 			for (Object arg : this.ProjPrematureEndLifeActArgs)

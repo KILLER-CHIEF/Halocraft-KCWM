@@ -10,7 +10,6 @@ import net.killerchief.halocraft.commands.CommandSpawnEntity;
 import net.killerchief.halocraft.config.HalocraftConfig;
 import net.killerchief.halocraft.config.HalocraftItemsWeapons;
 import net.killerchief.halocraft.config.InitHcWeapons;
-import net.killerchief.halocraft.entities.projectiles.EntityCustomProjectileHelper;
 import net.killerchief.halocraft.worldGen.WorldGenerator;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
@@ -122,7 +121,5 @@ public class Halocraft {
 	{
 		HalocraftItemsWeapons.initWeapons();
 		proxy.registerRenderers();
-
-		EntityCustomProjectileHelper.initProjectiles();
 	}
 }

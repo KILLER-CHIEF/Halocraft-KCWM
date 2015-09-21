@@ -4,13 +4,15 @@ import net.killerchief.halocraft.Halocraft;
 import net.killerchief.kcweaponmod.ItemWeapon;
 import net.killerchief.kcweaponmod.ItemWeaponProperties;
 import net.killerchief.kcweaponmod.KCWeaponMod;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
 public class InitHcWeapons {
 	
 	public static void DefineAndSendWeapons()
 	{
-		ItemWeapon[] weapons = new ItemWeapon[20];
+		ItemWeapon[] weapons = new ItemWeapon[25];
 		
 		
 		//BattleRifle
@@ -963,8 +965,100 @@ public class InitHcWeapons {
 		SentinelBeam.ProjectileDragInWater = 1F;
 		
 		weapons[19] = new ItemWeapon(SentinelBeam);
+
 		
-		if (KCWeaponMod.registerModItems(Halocraft.MODID, "1.0", weapons))
+		
+		//Ghost Plasma Bolts
+		ItemWeaponProperties GhostPlasmaBolts = new ItemWeaponProperties();
+		GhostPlasmaBolts.RegisterItem = false;
+		GhostPlasmaBolts.Name = Halocraft.MODID+".Vehicle.GhostPlasmaBolts";
+		GhostPlasmaBolts.ProjectileRenderProperties = Halocraft.MODID+":textures/entities/BluePlasmaRender.png";
+		GhostPlasmaBolts.ProjectileGlows = true;
+		GhostPlasmaBolts.ProjectileSpeed = 4F;
+		GhostPlasmaBolts.Accuracy = 4F;
+		GhostPlasmaBolts.Gravity = 0.004F;
+		GhostPlasmaBolts.MaxEffectiveTicksAlive = 80;
+		GhostPlasmaBolts.ProjectileImpactProperties = "";
+		GhostPlasmaBolts.ProjImpactActArgs = new Object[]{ImpactBlockObject, new Object[]{"ImpactEntity", new String[]{"6", "0", "Die"}}};
+		GhostPlasmaBolts.ProjectileDragInAir = 0.99F;
+		GhostPlasmaBolts.ProjectileDragInWater = 0.5F;
+		
+		weapons[20] = new ItemWeapon(GhostPlasmaBolts);
+
+
+		//Warthog Turret
+		ItemWeaponProperties ChainGunBullet = new ItemWeaponProperties();
+		ChainGunBullet.RegisterItem = false;
+		ChainGunBullet.Name = Halocraft.MODID+".Vehicle.ChainGunBullet";
+		ChainGunBullet.ProjectileRenderProperties = Halocraft.MODID+":textures/entities/BulletRender.png";
+		ChainGunBullet.ProjectileGlows = false;
+		ChainGunBullet.ProjectileSpeed = 7F;
+		ChainGunBullet.Accuracy = 5F;
+		ChainGunBullet.Gravity = 0.004F;
+		ChainGunBullet.MaxEffectiveTicksAlive = 80;
+		ChainGunBullet.ProjectileImpactProperties = "";
+		ChainGunBullet.ProjImpactActArgs = new Object[]{ImpactBlockObject, new Object[]{"ImpactEntity", new String[]{"2", "0", "Die"}}};
+		ChainGunBullet.ProjectileDragInAir = 0.99F;
+		ChainGunBullet.ProjectileDragInWater = 0.5F;
+		
+		weapons[21] = new ItemWeapon(ChainGunBullet);
+
+
+		//Elite Carbine
+		ItemWeaponProperties EliteCarbine = new ItemWeaponProperties();
+		EliteCarbine.RegisterItem = false;
+		EliteCarbine.Name = Halocraft.MODID+".Mob.EliteCarbine";
+		EliteCarbine.ProjectileRenderProperties = Halocraft.MODID+":textures/entities/GreenPlasmaRender.png";
+		EliteCarbine.ProjectileGlows = true;
+		EliteCarbine.ProjectileSpeed = 8F;
+		EliteCarbine.Accuracy = 2F;
+		EliteCarbine.Gravity = 0.004F;
+		EliteCarbine.MaxEffectiveTicksAlive = 100;
+		EliteCarbine.ProjectileImpactProperties = "";
+		EliteCarbine.ProjImpactActArgs = new Object[]{ImpactBlockObject, new Object[]{"ImpactEntity", new String[]{"4", "0", "Die"}}};
+		EliteCarbine.ProjectileDragInAir = 0.99F;
+		EliteCarbine.ProjectileDragInWater = 0.5F;
+
+		weapons[22] = new ItemWeapon(EliteCarbine);
+		
+
+		//Elite Plasma Rifle
+		ItemWeaponProperties ElitePlasmaRifle = new ItemWeaponProperties();
+		ElitePlasmaRifle.RegisterItem = false;
+		ElitePlasmaRifle.Name = Halocraft.MODID+".Mob.ElitePlasmaRifle";
+		ElitePlasmaRifle.ProjectileRenderProperties = Halocraft.MODID+":textures/entities/BluePlasmaRender.png";
+		ElitePlasmaRifle.ProjectileGlows = true;
+		ElitePlasmaRifle.ProjectileSpeed = 4F;
+		ElitePlasmaRifle.Accuracy = 5F;
+		ElitePlasmaRifle.Gravity = 0.004F;
+		ElitePlasmaRifle.MaxEffectiveTicksAlive = 80;
+		ElitePlasmaRifle.ProjectileImpactProperties = "";
+		ElitePlasmaRifle.ProjImpactActArgs = new Object[]{ImpactBlockObject, new Object[]{"ImpactEntity", new String[]{"2", "0", "Die"}}};
+		ElitePlasmaRifle.ProjectileDragInAir = 0.99F;
+		ElitePlasmaRifle.ProjectileDragInWater = 0.5F;
+
+		weapons[23] = new ItemWeapon(ElitePlasmaRifle);
+		
+
+		//Grunt Plasma Pistol
+		ItemWeaponProperties GruntPlasmaPistol = new ItemWeaponProperties();
+		GruntPlasmaPistol.RegisterItem = false;
+		GruntPlasmaPistol.Name = Halocraft.MODID+".Mob.GruntPlasmaPistol";
+		GruntPlasmaPistol.ProjectileRenderProperties = Halocraft.MODID+":textures/entities/GreenPlasmaRender.png";
+		GruntPlasmaPistol.ProjectileGlows = true;
+		GruntPlasmaPistol.ProjectileSpeed = 2F;
+		GruntPlasmaPistol.Accuracy = 4F;
+		GruntPlasmaPistol.Gravity = 0.004F;
+		GruntPlasmaPistol.MaxEffectiveTicksAlive = 80;
+		GruntPlasmaPistol.ProjectileImpactProperties = "";
+		GruntPlasmaPistol.ProjImpactActArgs = new Object[]{ImpactBlockObject, new Object[]{"ImpactEntity", new String[]{"2", "0", "Die"}}};
+		GruntPlasmaPistol.ProjectileDragInAir = 0.99F;
+		GruntPlasmaPistol.ProjectileDragInWater = 0.5F;
+		
+		weapons[24] = new ItemWeapon(GruntPlasmaPistol);
+		
+		
+		if (KCWeaponMod.registerModItems(Halocraft.MODID, "1.1", weapons))
 		{
 			System.out.println("KCWeaponMod: Successfully Registered Halocraft Weapons");
 		}
@@ -973,4 +1067,8 @@ public class InitHcWeapons {
 			System.err.println("KCWeaponMod - ERROR: Halocraft Weapons Were NOT Registered!");
 		}
 	}
+	
+	//GruntPlasmaPistol.ProjectileImpactProperties = "*ImpactBlock(tallgrass+vine, glass+leaves+glass_pane+yellow_flower+red_flower+brown_mushroom+red_mushroom+reeds+deadbush+waterlily+flower_pot+cocoa+double_plant+stained_glass+stained_glass_pane, Die), ImpactEntity(4, 0, Die)";
+	public static Object[] ImpactBlockObject = new Object[]{"ImpactBlock", new Object[]{new Block[]{Blocks.tallgrass, Blocks.vine}, new Block[]{Blocks.glass, Blocks.leaves, Blocks.glass_pane, Blocks.yellow_flower, Blocks.red_flower, Blocks.brown_mushroom, Blocks.red_mushroom, Blocks.reeds, Blocks.deadbush, Blocks.waterlily, Blocks.flower_pot, Blocks.cocoa, Blocks.double_plant, Blocks.stained_glass, Blocks.stained_glass_pane}, "Die"}};
+	
 }
