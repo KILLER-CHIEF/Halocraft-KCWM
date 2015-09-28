@@ -2,6 +2,7 @@ package net.killerchief.halocraft.client;
 
 import net.killerchief.halocraft.CommonProxy;
 import net.killerchief.halocraft.Halocraft;
+import net.killerchief.halocraft.client.models.armor.ModelMarkVArmor;
 import net.killerchief.halocraft.client.models.guns.ModelAssaultRifle;
 import net.killerchief.halocraft.client.models.guns.ModelBattleRifle;
 import net.killerchief.halocraft.client.models.guns.ModelBeamRifle;
@@ -60,6 +61,7 @@ import net.killerchief.halocraft.tileEntities.TileEntityGunHolder;
 import net.killerchief.halocraft.tileEntities.TileEntityHealthPack;
 import net.killerchief.kcweaponmod.KCWeaponMod;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.world.World;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;

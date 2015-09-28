@@ -1,8 +1,6 @@
 package net.killerchief.halocraft.client.render;
 
 import net.killerchief.halocraft.Halocraft;
-import net.killerchief.halocraft.client.models.Model3DBase;
-import net.killerchief.halocraft.client.models.vehicles.ModelWarthog;
 import net.killerchief.halocraft.client.models.vehicles.ModelWarthogMachineGunTurret;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
 import net.minecraft.client.renderer.entity.Render;
@@ -17,8 +15,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderWarthog extends Render
 {
-	public static final Model3DBase WarthogModel = new ModelWarthog();
-	public static final ResourceLocation WarthogTexture = new ResourceLocation(Halocraft.MODID+":textures/entities/WarthogModel.png");
 	public static final ModelWarthogMachineGunTurret MachineGunModel = new ModelWarthogMachineGunTurret();
 	public static final ResourceLocation MachineGunTexture = new ResourceLocation(Halocraft.MODID+":textures/entities/SkinMachineGunTurret.png");
 
@@ -30,7 +26,7 @@ public class RenderWarthog extends Render
 	/**
 	 * The render method used in RenderBoat that renders the boat model.
 	 */
-	public void renderMongoose(EntityWarthog entity, double par2, double par4, double par6, float par8, float par9)
+	public void renderWarthog(EntityWarthog entity, double par2, double par4, double par6, float par8, float par9)
 	{
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float)par2, (float)par4, (float)par6);
@@ -38,13 +34,12 @@ public class RenderWarthog extends Render
 		float f4 = 0.75F;
 		GL11.glScalef(f4, f4, f4);
 		GL11.glScalef(0.86F / f4, 0.86F / f4, 0.86F / f4);
-		this.bindEntityTexture(entity);
 		GL11.glScalef(-1.0F, -1.0F, 1.0F);
 		GL11.glRotatef(180F, 1F, 0F, 0F);
 		GL11.glRotatef(-90F, 0F, 1F, 0F);
 		GL11.glTranslatef(0F, -0.75F, 0F);
-		this.bindTexture(WarthogTexture);
-		WarthogModel.render(entity, 0F, 0F, 0F, 0F, 0F, 0.0625F);
+		this.bindTexture(entity.getTexture());
+		entity.getModel().render(entity, 0F, 0F, 0F, 0F, 0F, 0.0625F);
 		GL11.glDisable(GL11.GL_BLEND);
 		GL11.glDepthMask(true);
 		GL11.glRotatef(90F, 0F, 1F, 0F);
@@ -66,7 +61,7 @@ public class RenderWarthog extends Render
 	@Override
 	protected ResourceLocation getEntityTexture(Entity par1Entity)
 	{
-		return WarthogTexture;
+		return null;
 	}
 
 	/**
@@ -78,6 +73,6 @@ public class RenderWarthog extends Render
 	@Override
 	public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
 	{
-		this.renderMongoose((EntityWarthog)par1Entity, par2, par4, par6, par8, par9);
+		this.renderWarthog((EntityWarthog)par1Entity, par2, par4, par6, par8, par9);
 	}
 }

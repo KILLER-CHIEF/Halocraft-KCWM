@@ -4,13 +4,13 @@
 
 package net.killerchief.halocraft.client.models.vehicles;
 
-import org.lwjgl.opengl.GL11;
-
 import net.killerchief.halocraft.client.models.Model3DBase;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
 import net.killerchief.turbomodelthingy.ModelRendererTurbo;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+
+import org.lwjgl.opengl.GL11;
 
 public class ModelWarthog extends Model3DBase
 {
@@ -915,14 +915,14 @@ public class ModelWarthog extends Model3DBase
 
 		//translateAll(0F, 0F, 0F);
 		//flipAll();
-		
+
 		this.flip(this.bodyModel);
 		this.flip(this.bodyDoorOpenModel);
 		this.flip(this.frontWheelModel);
 		this.flip(this.backWheelModel);
 		this.flip(this.leftTrackModel);
 	}
-	
+
 	@Override
 	protected void renderAllParts(Entity entity, float par7)
 	{
@@ -946,7 +946,7 @@ public class ModelWarthog extends Model3DBase
 				}
 			}
 		}
-		
+
 		if (this.bodyModel != null)
 		{
 			for (ModelRendererTurbo part : this.bodyModel)

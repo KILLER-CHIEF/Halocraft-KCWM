@@ -471,5 +471,4 @@ public class EntityGhost extends EntityVehicle
 				this.texture = this.Damage0TextureOn;
 		}
 	}
-
 }

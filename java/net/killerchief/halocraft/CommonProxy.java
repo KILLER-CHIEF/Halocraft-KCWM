@@ -2,6 +2,7 @@ package net.killerchief.halocraft;
 
 import net.killerchief.halocraft.entities.vehicles.EntityMongoose;
 import net.killerchief.halocraft.entities.vehicles.EntityVehicle;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.world.World;
 
 public class CommonProxy {

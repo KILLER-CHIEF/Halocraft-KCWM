@@ -109,12 +109,15 @@ public abstract class Model3DBase extends ModelBase {
 
 	protected void flip(ModelRendererTurbo model[])
 	{
-		for (ModelRendererTurbo part : model)
+		if (model != null)
 		{
-			if (part != null)
+			for (ModelRendererTurbo part : model)
 			{
-				part.doMirror(false, true, true);
-				part.setRotationPoint(part.rotationPointX, -part.rotationPointY, -part.rotationPointZ);
+				if (part != null)
+				{
+					part.doMirror(false, true, true);
+					part.setRotationPoint(part.rotationPointX, -part.rotationPointY, -part.rotationPointZ);
+				}
 			}
 		}
 	}

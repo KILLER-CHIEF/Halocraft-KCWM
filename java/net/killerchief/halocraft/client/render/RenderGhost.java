@@ -31,7 +31,7 @@ public class RenderGhost extends Render
 		float f4 = 0.75F;
 		GL11.glScalef(f4, f4, f4);
 		GL11.glScalef(1F / f4, 1F / f4, 1F / f4);
-		this.bindEntityTexture(entity);
+		this.bindTexture(entity.getTexture());
 		GL11.glScalef(-1.0F, -1.0F, 1.0F);
 		entity.getModel().render(entity, 0F, 0F, 0F, 0F, 0F, 0.0625F);
 		GL11.glPopMatrix();
@@ -40,11 +40,6 @@ public class RenderGhost extends Render
 	@Override
 	protected ResourceLocation getEntityTexture(Entity par1Entity)
 	{
-		if (par1Entity instanceof EntityGhost)
-		{
-			EntityGhost entity = (EntityGhost)par1Entity;
-			return entity.getTexture();
-		}
 		return null;
 	}
 

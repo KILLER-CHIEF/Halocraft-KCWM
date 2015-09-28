@@ -10,7 +10,7 @@ public class ItemWeaponProperties {
 	
 	/** NOT TO BE SET IN CONFIG! This is handled by the mod. */
 	public int ID = -1;
-	/** Whether an item of this property set will appear ingame (false for vehicles). */
+	/** Whether an item of this property set will appear ingame (false for vehicle projectiles). */
 	public boolean RegisterItem = true;
 	/** The unlocalized name of the weapon. */
 	public String Name;

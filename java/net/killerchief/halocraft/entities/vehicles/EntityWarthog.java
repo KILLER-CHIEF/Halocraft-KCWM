@@ -2,12 +2,22 @@ package net.killerchief.halocraft.entities.vehicles;
 
 import net.killerchief.halocraft.Halocraft;
 import net.killerchief.halocraft.TickHandler;
+import net.killerchief.halocraft.client.models.Model3DBase;
+import net.killerchief.halocraft.client.models.vehicles.ModelGhost;
+import net.killerchief.halocraft.client.models.vehicles.ModelGhostDamage1;
+import net.killerchief.halocraft.client.models.vehicles.ModelGhostDamage2;
+import net.killerchief.halocraft.client.models.vehicles.ModelGhostDamage3;
+import net.killerchief.halocraft.client.models.vehicles.ModelWarthog;
+import net.killerchief.halocraft.client.models.vehicles.ModelWarthogDamage1;
+import net.killerchief.halocraft.client.models.vehicles.ModelWarthogDamage2;
+import net.killerchief.halocraft.client.models.vehicles.ModelWarthogDamage3;
 import net.killerchief.halocraft.config.HalocraftItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class EntityWarthog extends EntityVehicle
@@ -537,9 +547,72 @@ public class EntityWarthog extends EntityVehicle
 	{
 		return (float)Math.toRadians(-this.rotatePassengerFrame);
 	}
+	
+	private void handleDyingEffects()
+	{
+		//if(riddenByEntity!=null) worldObj.spawnParticle("smoke", posX, posY-0.15, posZ, 0, 0, 0);
+		if(this.getHealth()<=30 && !isInWater())
+		{
+			double xOffset = -Math.sin(Math.toRadians(rotationYaw+50-rand.nextInt(101))) * 0.6;
+			double zOffset = Math.cos(Math.toRadians(rotationYaw+50-rand.nextInt(101))) * 0.6;
+			worldObj.spawnParticle("smoke", posX+xOffset, posY+0.16, posZ+zOffset, this.motionX/2, this.motionY/2, this.motionZ/2);
+			if (this.getHealth()<=20 && rand.nextInt(100)<20)
+			{
+				worldObj.spawnParticle("flame", posX+xOffset, posY+0.2, posZ+zOffset, this.motionX/2, this.motionY/2, this.motionZ/2);
+			}
+			if (this.getHealth()<10 && rand.nextInt(100)<60)
+			{
+				worldObj.spawnParticle("flame", posX+xOffset, posY+0.2, posZ+zOffset, this.motionX/2, this.motionY/2, this.motionZ/2);
+				worldObj.spawnParticle("smoke", posX+xOffset, posY+0.16, posZ+zOffset, this.motionX/2, this.motionY/2, this.motionZ/2);
+			}
+		}
+	}
+	
+	public static final Model3DBase Damage0Model = new ModelWarthog();
+	public static final ResourceLocation Damage0Texture = new ResourceLocation(Halocraft.MODID+":textures/entities/WarthogModel.png");
+	public static final Model3DBase Damage1Model = new ModelWarthogDamage1();
+	public static final ResourceLocation Damage1Texture = new ResourceLocation(Halocraft.MODID+":textures/entities/WarthogModel_Damaged.png");
+	public static final Model3DBase Damage2Model = new ModelWarthogDamage2();
+	public static final ResourceLocation Damage2Texture = new ResourceLocation(Halocraft.MODID+":textures/entities/WarthogModel_Damaged_2.png");
+	public static final Model3DBase Damage3Model = new ModelWarthogDamage3();
+	public static final ResourceLocation Damage3Texture = new ResourceLocation(Halocraft.MODID+":textures/entities/WarthogModel_Damaged_3.png");
+
+	private Model3DBase model = this.Damage0Model;
+	private ResourceLocation texture = this.Damage0Texture;
+
+	public Model3DBase getModel()
+	{
+		return this.model;
+	}
+
+	public ResourceLocation getTexture()
+	{
+		return this.texture;
+	}
 
 	private void updateModel()
 	{
+		if (this.getHealth() <= 15)
+		{
+			this.model = this.Damage3Model;
+			this.texture = this.Damage3Texture;
+		}
+		else if (this.getHealth() <= 40)
+		{
+			this.model = this.Damage2Model;
+			this.texture = this.Damage2Texture;
+		}
+		else if (this.getHealth() <= 60)
+		{
+			this.model = this.Damage1Model;
+			this.texture = this.Damage1Texture;
+		}
+		else
+		{
+			this.model = this.Damage0Model;
+			this.texture = this.Damage0Texture;
+		}
+		
 		if (Minecraft.getMinecraft().inGameHasFocus)
 		{
 			this.rotateWheelSpeed += Math.sqrt((motionX * motionX) + (motionZ * motionZ)) * Math.signum(this.getFwdVelocity()) * 1.4F;
@@ -563,26 +636,6 @@ public class EntityWarthog extends EntityVehicle
 			else if (this.isMovingRight()) {
 				this.wheelTurnAngle = this.wheelTurnAngle>-0.3F?this.wheelTurnAngle-turnSpeed:-0.3F;
 				this.steeringTurnAngle = this.steeringTurnAngle<0.25F?this.steeringTurnAngle+turnSpeed:0.25F;
-			}
-		}
-	}
-
-	private void handleDyingEffects()
-	{
-		//if(riddenByEntity!=null) worldObj.spawnParticle("smoke", posX, posY-0.15, posZ, 0, 0, 0);
-		if(this.getHealth()<=30 && !isInWater())
-		{
-			double xOffset = -Math.sin(Math.toRadians(rotationYaw+50-rand.nextInt(101))) * 0.6;
-			double zOffset = Math.cos(Math.toRadians(rotationYaw+50-rand.nextInt(101))) * 0.6;
-			worldObj.spawnParticle("smoke", posX+xOffset, posY+0.16, posZ+zOffset, this.motionX/2, this.motionY/2, this.motionZ/2);
-			if (this.getHealth()<=20 && rand.nextInt(100)<20)
-			{
-				worldObj.spawnParticle("flame", posX+xOffset, posY+0.2, posZ+zOffset, this.motionX/2, this.motionY/2, this.motionZ/2);
-			}
-			if (this.getHealth()<10 && rand.nextInt(100)<60)
-			{
-				worldObj.spawnParticle("flame", posX+xOffset, posY+0.2, posZ+zOffset, this.motionX/2, this.motionY/2, this.motionZ/2);
-				worldObj.spawnParticle("smoke", posX+xOffset, posY+0.16, posZ+zOffset, this.motionX/2, this.motionY/2, this.motionZ/2);
 			}
 		}
 	}

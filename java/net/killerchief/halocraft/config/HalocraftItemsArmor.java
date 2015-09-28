@@ -1,9 +1,10 @@
 package net.killerchief.halocraft.config;
 
 import net.killerchief.halocraft.Halocraft;
+import net.killerchief.halocraft.client.models.armor.ModelMarkVArmor;
 import net.killerchief.halocraft.inventory.RecipeShapelessDamagedConvert;
 import net.killerchief.halocraft.items.HalocraftItem;
-import net.killerchief.halocraft.items.ItemArmor;
+import net.killerchief.halocraft.items.ItemCustomArmor;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -56,42 +57,43 @@ public class HalocraftItemsArmor {
 	public static void load(Configuration config) {
 		ArmorMaterial MARINE = new EnumHelper().addArmorMaterial("Marine", 20,  new int[]{3, 7, 5, 3}, 9);
 		
-		HelmetUnderArmor = (new HalocraftItem("HelmetUnderArmor", "HelmetUnderArmor")).setMaxStackSize(1);
-		BodyUnderArmor = (new HalocraftItem("BodyUnderArmor", "BodyUnderArmor")).setMaxStackSize(1);
-		LegsUnderArmor = (new HalocraftItem("LegsUnderArmor", "LegsUnderArmor")).setMaxStackSize(1);
-		BootsUnderArmor = (new HalocraftItem("BootsUnderArmor", "BootsUnderArmor")).setMaxStackSize(1);
-		MarkVHelmetBlack = (new ItemArmor("MarkVHelmetBlack", "MarkVHelmetBlack", true, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"), 0, true, Halocraft.MODID+":textures/overlays/MarkVHelmetZoomOverlay.png"));
-		MarkVBodyBlack = (new ItemArmor("MarkVBodyBlack", "MarkVBodyBlack", true, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"), 1));
-		MarkVLegsBlack = (new ItemArmor("MarkVLegsBlack", "MarkVLegsBlack", true, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"), 2));
-		MarkVBootsBlack = (new ItemArmor("MarkVBootsBlack", "MarkVBootsBlack", true, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"), 3));
-		MarkVHelmetGreen = (new ItemArmor("MarkVHelmetGreen", "MarkVHelmetGreen", true, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"), 0, true, Halocraft.MODID+":textures/overlays/MarkVHelmetZoomOverlay.png"));
-		MarkVBodyGreen = (new ItemArmor("MarkVBodyGreen", "MarkVBodyGreen", true, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"), 1));
-		MarkVLegsGreen = (new ItemArmor("MarkVLegsGreen", "MarkVLegsGreen", true, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"), 2));
-		MarkVBootsGreen = (new ItemArmor("MarkVBootsGreen", "MarkVBootsGreen", true, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"), 3));
-		MarkVHelmetBlue = (new ItemArmor("MarkVHelmetBlue", "MarkVHelmetBlue", true, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"), 0, true, Halocraft.MODID+":textures/overlays/MarkVHelmetZoomOverlay.png"));
-		MarkVBodyBlue = (new ItemArmor("MarkVBodyBlue", "MarkVBodyBlue", true, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"), 1));
-		MarkVLegsBlue = (new ItemArmor("MarkVLegsBlue", "MarkVLegsBlue", true, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"), 2));
-		MarkVBootsBlue = (new ItemArmor("MarkVBootsBlue", "MarkVBootsBlue", true, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"), 3));
-		MarkVHelmetRed = (new ItemArmor("MarkVHelmetRed", "MarkVHelmetRed", true, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"), 0, true, Halocraft.MODID+":textures/overlays/MarkVHelmetZoomOverlay.png"));
-		MarkVBodyRed = (new ItemArmor("MarkVBodyRed", "MarkVBodyRed", true, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"), 1));
-		MarkVLegsRed = (new ItemArmor("MarkVLegsRed", "MarkVLegsRed", true, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"), 2));
-		MarkVBootsRed = (new ItemArmor("MarkVBootsRed", "MarkVBootsRed", true, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"), 3));
-		ODSTHelmet = (new ItemArmor("ODSTHelmet", "ODSTHelmet", true, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("ODST"), 0, true, Halocraft.MODID+":textures/overlays/ODSTHelmetZoomOverlay.png"));
-		ODSTBody = (new ItemArmor("ODSTBody", "ODSTBody", true, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("ODST"), 1));
-		ODSTLegs = (new ItemArmor("ODSTLegs", "ODSTLegs", true, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("ODST"), 2));
-		ODSTBoots = (new ItemArmor("ODSTBoots", "ODSTBoots", true, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("ODST"), 3));
-		MarineHelmet = (new ItemArmor("MarineHelmet", "MarineHelmet", true, MARINE, Halocraft.proxy.addArmor("Marine"), 0));
-		MarineBody = (new ItemArmor("MarineBody", "MarineBody", true, MARINE, Halocraft.proxy.addArmor("Marine"), 1));
-		MarineLegs = (new ItemArmor("MarineLegs", "MarineLegs", true, MARINE, Halocraft.proxy.addArmor("Marine"), 2));
-		MarineBoots = (new ItemArmor("MarineBoots", "MarineBoots", true, MARINE, Halocraft.proxy.addArmor("Marine"), 3));
-		MarkVIHelmetGreen = (new ItemArmor("MarkVIHelmetGreen", "MarkVIHelmetGreen", true, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("MarkVI"), 0, true, Halocraft.MODID+":textures/overlays/MarkVIHelmetZoomOverlay.png"));
-		MarkVIBodyGreen = (new ItemArmor("MarkVIBodyGreen", "MarkVIBodyGreen", true, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("MarkVI"), 1));
-		MarkVILegsGreen = (new ItemArmor("MarkVILegsGreen", "MarkVILegsGreen", true, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("MarkVI"), 2));
-		MarkVIBootsGreen = (new ItemArmor("MarkVIBootsGreen", "MarkVIBootsGreen", true, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("MarkVI"), 3));
-		ReconHelmet = (new ItemArmor("ReconHelmet", "ReconHelmet", true, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("Recon"), 0, true, Halocraft.MODID+":textures/overlays/ReconHelmetZoomOverlay.png"));
-		ReconBody = (new ItemArmor("ReconBody", "ReconBody", true, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("Recon"), 1));
-		ReconLegs = (new ItemArmor("ReconLegs", "ReconLegs", true, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("Recon"), 2));
-		ReconBoots = (new ItemArmor("ReconBoots", "ReconBoots", true, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("Recon"), 3));
+		HelmetUnderArmor = new HalocraftItem("HelmetUnderArmor", "HelmetUnderArmor").setMaxStackSize(1);
+		BodyUnderArmor = new HalocraftItem("BodyUnderArmor", "BodyUnderArmor").setMaxStackSize(1);
+		LegsUnderArmor = new HalocraftItem("LegsUnderArmor", "LegsUnderArmor").setMaxStackSize(1);
+		BootsUnderArmor = new HalocraftItem("BootsUnderArmor", "BootsUnderArmor").setMaxStackSize(1);
+		MarkVHelmetBlack = new ItemCustomArmor("MarkVHelmetBlack", "MarkVHelmetBlack", null, Halocraft.MODID+":textures/armor/MarkVBlack.png", 0, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"), true, Halocraft.MODID+":textures/overlays/MarkVHelmetZoomOverlay.png");
+		MarkVBodyBlack = new ItemCustomArmor("MarkVBodyBlack", "MarkVBodyBlack", null, Halocraft.MODID+":textures/armor/MarkVBlack.png", 1, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"));
+		MarkVLegsBlack = new ItemCustomArmor("MarkVLegsBlack", "MarkVLegsBlack", null, Halocraft.MODID+":textures/armor/MarkVBlack.png", 2, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"));
+		MarkVBootsBlack = new ItemCustomArmor("MarkVBootsBlack", "MarkVBootsBlack", null, Halocraft.MODID+":textures/armor/MarkVBlack.png", 3, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"));
+		MarkVHelmetGreen = new ItemCustomArmor("MarkVHelmetGreen", "MarkVHelmetGreen", null, Halocraft.MODID+":textures/armor/MarkVGreen.png", 0, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"), true, Halocraft.MODID+":textures/overlays/MarkVHelmetZoomOverlay.png");
+		MarkVBodyGreen = new ItemCustomArmor("MarkVBodyGreen", "MarkVBodyGreen", null, Halocraft.MODID+":textures/armor/MarkVGreen.png", 1, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"));
+		MarkVLegsGreen = new ItemCustomArmor("MarkVLegsGreen", "MarkVLegsGreen", null, Halocraft.MODID+":textures/armor/MarkVGreen.png", 2, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"));
+		MarkVBootsGreen = new ItemCustomArmor("MarkVBootsGreen", "MarkVBootsGreen", null, Halocraft.MODID+":textures/armor/MarkVGreen.png", 3, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"));
+		MarkVHelmetBlue = new ItemCustomArmor("MarkVHelmetBlue", "MarkVHelmetBlue", null, Halocraft.MODID+":textures/armor/MarkVBlue.png", 0, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"), true, Halocraft.MODID+":textures/overlays/MarkVHelmetZoomOverlay.png");
+		MarkVBodyBlue = new ItemCustomArmor("MarkVBodyBlue", "MarkVBodyBlue", null, Halocraft.MODID+":textures/armor/MarkVBlue.png", 1, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"));
+		MarkVLegsBlue = new ItemCustomArmor("MarkVLegsBlue", "MarkVLegsBlue", null, Halocraft.MODID+":textures/armor/MarkVBlue.png", 2, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"));
+		MarkVBootsBlue = new ItemCustomArmor("MarkVBootsBlue", "MarkVBootsBlue", null, Halocraft.MODID+":textures/armor/MarkVBlue.png", 3, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"));
+		MarkVHelmetRed = new ItemCustomArmor("MarkVHelmetRed", "MarkVHelmetRed", null, Halocraft.MODID+":textures/armor/MarkVRed.png", 0, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"), true, Halocraft.MODID+":textures/overlays/MarkVHelmetZoomOverlay.png");
+		MarkVBodyRed = new ItemCustomArmor("MarkVBodyRed", "MarkVBodyRed", null, Halocraft.MODID+":textures/armor/MarkVRed.png", 1, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"));
+		MarkVLegsRed = new ItemCustomArmor("MarkVLegsRed", "MarkVLegsRed", null, Halocraft.MODID+":textures/armor/MarkVRed.png", 2, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"));
+		MarkVBootsRed = new ItemCustomArmor("MarkVBootsRed", "MarkVBootsRed", null, Halocraft.MODID+":textures/armor/MarkVRed.png", 3, ArmorMaterial.GOLD, Halocraft.proxy.addArmor("MarkV"));
+		ODSTHelmet = new ItemCustomArmor("ODSTHelmet", "ODSTHelmet", null, Halocraft.MODID+":textures/armor/ODST.png", 0, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("ODST"), true, Halocraft.MODID+":textures/overlays/ODSTHelmetZoomOverlay.png");
+		ODSTBody = new ItemCustomArmor("ODSTBody", "ODSTBody", null, Halocraft.MODID+":textures/armor/ODST.png", 1, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("ODST"));
+		ODSTLegs = new ItemCustomArmor("ODSTLegs", "ODSTLegs", null, Halocraft.MODID+":textures/armor/ODST.png", 2, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("ODST"));
+		ODSTBoots = new ItemCustomArmor("ODSTBoots", "ODSTBoots", null, Halocraft.MODID+":textures/armor/ODST.png", 3, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("ODST"));
+		MarineHelmet = new ItemCustomArmor("MarineHelmet", "MarineHelmet", null, Halocraft.MODID+":textures/armor/Marine.png", 0, MARINE, Halocraft.proxy.addArmor("Marine"));
+		MarineBody = new ItemCustomArmor("MarineBody", "MarineBody", null, Halocraft.MODID+":textures/armor/Marine.png", 1, MARINE, Halocraft.proxy.addArmor("Marine"));
+		MarineLegs = new ItemCustomArmor("MarineLegs", "MarineLegs", null, Halocraft.MODID+":textures/armor/Marine.png", 2, MARINE, Halocraft.proxy.addArmor("Marine"));
+		MarineBoots = new ItemCustomArmor("MarineBoots", "MarineBoots", null, Halocraft.MODID+":textures/armor/Marine.png", 3, MARINE, Halocraft.proxy.addArmor("Marine"));
+		MarkVIHelmetGreen = new ItemCustomArmor("MarkVIHelmetGreen", "MarkVIHelmetGreen", null, Halocraft.MODID+":textures/armor/MarkVIGreen.png", 0, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("MarkVI"), true, Halocraft.MODID+":textures/overlays/MarkVIHelmetZoomOverlay.png");
+		MarkVIBodyGreen = new ItemCustomArmor("MarkVIBodyGreen", "MarkVIBodyGreen", null, Halocraft.MODID+":textures/armor/MarkVIGreen.png", 1, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("MarkVI"));
+		MarkVILegsGreen = new ItemCustomArmor("MarkVILegsGreen", "MarkVILegsGreen", null, Halocraft.MODID+":textures/armor/MarkVIGreen.png", 2, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("MarkVI"));
+		MarkVIBootsGreen = new ItemCustomArmor("MarkVIBootsGreen", "MarkVIBootsGreen", null, Halocraft.MODID+":textures/armor/MarkVIGreen.png", 3, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("MarkVI"));
+		ReconHelmet = new ItemCustomArmor("ReconHelmet", "ReconHelmet", new ModelMarkVArmor(), Halocraft.MODID+":textures/armor/MarkV.png", 0, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("Recon"), true, Halocraft.MODID+":textures/overlays/ReconHelmetZoomOverlay.png");
+		ReconBody = new ItemCustomArmor("ReconBody", "ReconBody", new ModelMarkVArmor(), Halocraft.MODID+":textures/armor/MarkV.png", 1, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("Recon"));
+		ReconLegs = new ItemCustomArmor("ReconLegs", "ReconLegs", new ModelMarkVArmor(), Halocraft.MODID+":textures/armor/MarkV.png", 2, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("Recon"));
+		ReconBoots = new ItemCustomArmor("ReconBoots", "ReconBoots", new ModelMarkVArmor(), Halocraft.MODID+":textures/armor/MarkV.png", 3, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("Recon"));
+		//FIXME: Recon
 	}
 	
 	public static void registerItems() {
