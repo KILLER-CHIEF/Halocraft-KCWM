@@ -90,22 +90,23 @@ public class GuiUpdater extends GuiScreen {
 
 	public void selectModIndex(int var1)
 	{
-		this.selected=var1;
 		this.kcwmversindex = 0;
-		if (var1>=0 && var1<=HalocraftVersions.length) {
-			this.selectedMod=HalocraftVersions[selected];
+		if (var1 >= 0 && HalocraftVersions != null && var1 < HalocraftVersions.length) {
+			this.selected = var1;
+			this.selectedMod = HalocraftVersions[selected];
 			this.kcwmbtnversions = this.selectedMod.KCWMVersion.replace(" ", "").trim().split(",");
 			this.btnKCWMVers.displayString = this.kcwmbtnversions.length != 0 ? this.kcwmbtnversions[0] : "Bugged";
 			if (this.btnKCWMVers.displayString.equalsIgnoreCase(KCWeaponMod.getVersion()))
 				this.btnKCWMVers.displayString = strLoc("version.current");
 		} else {
-			this.selectedMod=null;
+			this.selected = -1;
+			this.selectedMod = null;
 		}
 	}
 
 	public boolean modIndexSelected(int var1)
 	{
-		return var1==selected;
+		return var1 == selected;
 	}
 
 	public GuiUpdater(GuiScreen parentscreen)
