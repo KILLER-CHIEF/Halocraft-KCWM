@@ -19,6 +19,7 @@ public class GuiGunHolder extends GuiContainer
 	private GuiButton btnMountSwap;
 	private GuiButton btnMountRotate;
 	private GuiButton btnGunRotaTrans;
+	private boolean btnTransMode = false;
 	private GuiButton btnGunXP;
 	private GuiButton btnGunXM;
 	private GuiButton btnGunYP;
@@ -40,15 +41,15 @@ public class GuiGunHolder extends GuiContainer
 	{
 		super.initGui();
 		this.buttonList.clear();
-		this.btnMountSwap = new GuiButton(1, (width / 2) - 25, (height / 2) - 56, 54, 15, "Swap Side");
-		this.btnMountRotate = new GuiButton(2, (width / 2) + 30, (height / 2) - 56, 50, 15, "Rotate");
+		this.btnMountSwap = new GuiButton(1, (width / 2) + 20, (height / 2) - 66, 54, 12, "Swap Side");
+		this.btnMountRotate = new GuiButton(2, (width / 2) + 20, (height / 2) - 53, 54, 12, "Rotate");
 		this.btnGunRotaTrans = new GuiButton(3, (width / 2) - 4, (height / 2) - 37, 84, 12, "Translate Mode");
-		this.btnGunXP = new GuiButton(4, (width / 2) + 20, (height / 2) - 24, 14, 11, "X+");
-		this.btnGunXM = new GuiButton(5, (width / 2) + 20, (height / 2) - 13, 14, 11, "X-");
-		this.btnGunYP = new GuiButton(6, (width / 2) + 43, (height / 2) - 24, 14, 11, "Y+");
-		this.btnGunYM = new GuiButton(7, (width / 2) + 43, (height / 2) - 13, 14, 11, "Y-");
-		this.btnGunZP = new GuiButton(8, (width / 2) + 66, (height / 2) - 24, 14, 11, "Z+");
-		this.btnGunZM = new GuiButton(9, (width / 2) + 66, (height / 2) - 13, 14, 11, "Z-");
+		this.btnGunXP = new GuiButton(4, (width / 2) + 13, (height / 2) - 24, 14, 11, "X+");
+		this.btnGunXM = new GuiButton(5, (width / 2) + 13, (height / 2) - 13, 14, 11, "X-");
+		this.btnGunYP = new GuiButton(6, (width / 2) + 41, (height / 2) - 24, 14, 11, "Y+");
+		this.btnGunYM = new GuiButton(7, (width / 2) + 41, (height / 2) - 13, 14, 11, "Y-");
+		this.btnGunZP = new GuiButton(8, (width / 2) + 69, (height / 2) - 24, 14, 11, "Z+");
+		this.btnGunZM = new GuiButton(9, (width / 2) + 69, (height / 2) - 13, 14, 11, "Z-");
 		this.buttonList.add(this.btnMountSwap);
 		this.buttonList.add(this.btnMountRotate);
 		this.buttonList.add(this.btnGunRotaTrans);
@@ -86,16 +87,17 @@ public class GuiGunHolder extends GuiContainer
 		}
 		else if (guibutton.id == 3)
 		{
-			if (this.btnGunRotaTrans.displayString.equalsIgnoreCase("Translate Mode"))
-			{
-				this.btnGunRotaTrans.displayString = "Rotate Mode";
-			}
-			else
+			if (this.btnTransMode)
 			{
 				this.btnGunRotaTrans.displayString = "Translate Mode";
 			}
+			else
+			{
+				this.btnGunRotaTrans.displayString = "Rotate Mode";
+			}
+			this.btnTransMode = !this.btnTransMode;
 		}
-		else if (this.btnGunRotaTrans.displayString.equalsIgnoreCase("Translate Mode"))
+		else if (!this.btnTransMode)
 		{
 			if (guibutton.id == 4) {
 				Halocraft.network.sendToServer(new PacketGunHolder(this.tileentity.xCoord, this.tileentity.yCoord, this.tileentity.zCoord, (byte)1));
@@ -158,7 +160,12 @@ public class GuiGunHolder extends GuiContainer
 		int l = (width - xSize) / 2;
 		int i1 = (height - ySize) / 2;
 		this.drawTexturedModalRect(l, i1, 0, 0, xSize, ySize);
-		this.drawCenteredString(this.fontRendererObj, "Gun Mount", (width / 2) + 30, (height / 2) - 66, 0xffffff);
-		this.drawCenteredString(this.fontRendererObj, "Gun", (width / 2) + 6, (height / 2) - 18, 0xffffff);
+		this.drawCenteredString(this.fontRendererObj, "Gun Mount", (width / 2) - 10, (height / 2) - 58, 0xffffff);
+		this.drawCenteredString(this.fontRendererObj, "Gun", (width / 2) + 2, (height / 2) - 24, 0xffffff);
+		this.drawCenteredString(this.fontRendererObj, ""+this.tileentity.getMountSide(), (width / 2) + 79, (height / 2) - 64, 0xffffff);
+		this.drawCenteredString(this.fontRendererObj, ""+this.tileentity.getMountRotate(), (width / 2) + 79, (height / 2) - 51, 0xffffff);
+		this.drawCenteredString(this.fontRendererObj, ""+(this.btnTransMode ? this.tileentity.getTranslationXGun() : this.tileentity.getRotationXGun()), (width / 2) + 6, (height / 2) - 12, 0xffffff);
+		this.drawCenteredString(this.fontRendererObj, ""+(this.btnTransMode ? this.tileentity.getTranslationYGun() : this.tileentity.getRotationYGun()), (width / 2) + 34, (height / 2) - 12, 0xffffff);
+		this.drawCenteredString(this.fontRendererObj, ""+(this.btnTransMode ? this.tileentity.getTranslationZGun() : this.tileentity.getRotationZGun()), (width / 2) + 62, (height / 2) - 12, 0xffffff);
 	}
 }
