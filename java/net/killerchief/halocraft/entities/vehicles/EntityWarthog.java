@@ -74,30 +74,30 @@ public class EntityWarthog extends EntityVehicle
 	@Override
 	protected String getSoundLoopIdle()
 	{
-		return Halocraft.MODID+":entities.mongoose.MongooseEngineIdle";
+		return Halocraft.MODID+":entities.warthog.WarthogEngineIdle";
 	}
 
 	@Override
 	protected String getSoundLoopRun()
 	{
-		return Halocraft.MODID+":entities.mongoose.MongooseEngineHigh";
+		return Halocraft.MODID+":entities.warthog.WarthogEngineHigh";
 	}
 
 	@Override
 	protected String getSoundEnter()
 	{
-		return Halocraft.MODID+":entities.mongoose.MongooseEnter";
+		return Halocraft.MODID+":entities.warthog.WarthogEnter";
 	}
 
 	@Override
 	protected String getSoundExit()
 	{
-		return Halocraft.MODID+":entities.mongoose.MongooseExit";
+		return Halocraft.MODID+":entities.warthog.WarthogExit";
 	}
 
 	@Override
-	protected int getSoundLoopDelay() {
-		return 10;
+	protected int getBeginLoopSoundDelay() {
+		return 14;
 	}
 
 	/** Gets whether the entity is moving left.*/

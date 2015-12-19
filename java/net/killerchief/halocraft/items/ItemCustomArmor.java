@@ -2,7 +2,7 @@ package net.killerchief.halocraft.items;
 
 import net.killerchief.halocraft.Halocraft;
 import net.killerchief.halocraft.client.models.Model3DArmor;
-import net.killerchief.halocraft.client.models.armor.ModelMarkVArmor;
+import net.killerchief.halocraft.client.models.armor.ModelArmorMarkV;
 import net.killerchief.kcweaponmod.InterfaceZoomReticle;
 import net.killerchief.turbomodelthingy.ModelRendererTurbo;
 import net.minecraft.client.model.ModelBiped;
@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -22,17 +23,18 @@ public class ItemCustomArmor extends net.minecraft.item.ItemArmor implements Int
 	private Model3DArmor ArmorModel;
 	private String ArmorTex;
 
-	public ItemCustomArmor(String name, String texture, Model3DArmor armorModel, String armorTex, int armorType, ArmorMaterial par2EnumArmorMaterial, int renderIndex)
+	public ItemCustomArmor(String name, String texture, int armorModel, String armorTex, int armorType, ArmorMaterial par2EnumArmorMaterial, int renderIndex)
 	{
 		super(par2EnumArmorMaterial, renderIndex, armorType);
 		this.setUnlocalizedName(Halocraft.MODID + "." + name);
 		this.Texture = texture;
-		this.ArmorModel = armorModel;
+		this.ArmorModel = Halocraft.proxy.armor3DType(armorModel);
+		//this.ArmorModel = armorModel;
 		this.ArmorTex = armorTex;
 		this.setCreativeTab(Halocraft.InvTabHalocraft);
 	}
 
-	public ItemCustomArmor(String name, String texture, Model3DArmor armorModel, String armorTex, int armorType, ArmorMaterial par2EnumArmorMaterial, int renderIndex, boolean iszoomable, String zoomtexture)
+	public ItemCustomArmor(String name, String texture, int armorModel, String armorTex, int armorType, ArmorMaterial par2EnumArmorMaterial, int renderIndex, boolean iszoomable, String zoomtexture)
 	{
 		this(name, texture, armorModel, armorTex, armorType, par2EnumArmorMaterial, renderIndex);
 		this.IsZoomable = iszoomable;
@@ -83,12 +85,12 @@ public class ItemCustomArmor extends net.minecraft.item.ItemArmor implements Int
 	@SideOnly(Side.CLIENT)
 	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, int armorSlot)
 	{
-		ModelBiped armorModel = null;
+		Model3DArmor armorModel = null;
 		if(itemStack != null)
 		{
 			if(itemStack.getItem() instanceof ItemCustomArmor)
 			{
-				armorModel = Halocraft.proxy.isSideClient() ? this.ArmorModel : null;
+				armorModel = this.ArmorModel;//Halocraft.proxy.isSideClient() ? this.ArmorModel : null;
 			}
 			if(armorModel != null)
 			{
@@ -100,44 +102,76 @@ public class ItemCustomArmor extends net.minecraft.item.ItemArmor implements Int
 				armorModel.bipedRightLeg.showModel = false;
 				armorModel.bipedLeftLeg.showModel = false;
 
-				for (ModelRendererTurbo part : ((ModelMarkVArmor)armorModel).headModel)
-				{
-					part.showModel  = armorSlot == 0;
-				}
-				for (ModelRendererTurbo part : ((ModelMarkVArmor)armorModel).bodyModel)
-				{
-					part.showModel = armorSlot == 1;
-				}
-				for (ModelRendererTurbo part : ((ModelMarkVArmor)armorModel).leftArmModel)
-				{
-					part.showModel  = armorSlot == 1;
-				}
-				for (ModelRendererTurbo part : ((ModelMarkVArmor)armorModel).rightArmModel)
-				{
-					part.showModel  = armorSlot == 1;
-				}
-				for (ModelRendererTurbo part : ((ModelMarkVArmor)armorModel).leftLegModel)
-				{
-					part.showModel  = armorSlot == 2;
-				}
-				for (ModelRendererTurbo part : ((ModelMarkVArmor)armorModel).rightLegModel)
-				{
-					part.showModel  = armorSlot == 2;
-				}
-				for (ModelRendererTurbo part : ((ModelMarkVArmor)armorModel).leftBootModel)
-				{
-					part.showModel  = armorSlot == 3;
-				}
-				for (ModelRendererTurbo part : ((ModelMarkVArmor)armorModel).rightBootModel)
-				{
-					part.showModel  = armorSlot == 3;
-				}
+				if (armorModel.headModel != null)
+					for (ModelRendererTurbo part : armorModel.headModel)
+					{
+						part.showModel = armorSlot == 0;
+					}
+				if (armorModel.bodyModel != null)
+					for (ModelRendererTurbo part : armorModel.bodyModel)
+					{
+						part.showModel = armorSlot == 1;
+					}
+				if (armorModel.leftArmModel != null)
+					for (ModelRendererTurbo part : armorModel.leftArmModel)
+					{
+						part.showModel = armorSlot == 1;
+					}
+				if (armorModel.rightArmModel != null)
+					for (ModelRendererTurbo part : armorModel.rightArmModel)
+					{
+						part.showModel = armorSlot == 1;
+					}
+				if (armorModel.leftLegModel != null)
+					for (ModelRendererTurbo part : armorModel.leftLegModel)
+					{
+						part.showModel = armorSlot == 2;
+					}
+				if (armorModel.rightLegModel != null)
+					for (ModelRendererTurbo part : armorModel.rightLegModel)
+					{
+						part.showModel = armorSlot == 2;
+					}
+				if (armorModel.leftBootModel != null)
+					for (ModelRendererTurbo part : armorModel.leftBootModel)
+					{
+						part.showModel = armorSlot == 3;
+					}
+				if (armorModel.rightBootModel != null)
+					for (ModelRendererTurbo part : armorModel.rightBootModel)
+					{
+						part.showModel = armorSlot == 3;
+					}
+				
+				if (armorModel.bodyModelLights != null)
+					for (ModelRendererTurbo part : armorModel.bodyModelLights)
+					{
+						part.showModel = armorSlot == 1;
+					}
+				if (armorModel.leftArmModelLights != null)
+					for (ModelRendererTurbo part : armorModel.leftArmModelLights)
+					{
+						part.showModel = armorSlot == 1;
+					}
+				if (armorModel.rightArmModelLights != null)
+					for (ModelRendererTurbo part : armorModel.rightArmModelLights)
+					{
+						part.showModel = armorSlot == 1;
+					}
+				if (armorModel.visorModel != null)
+					for (ModelRendererTurbo part : armorModel.visorModel)
+					{
+						part.showModel = armorSlot == 0;
+					}
+				
 				armorModel.isSneak = entityLiving.isSneaking();
 				armorModel.isRiding = entityLiving.isRiding();
 				armorModel.isChild = entityLiving.isChild();
-				armorModel.heldItemRight = ((EntityPlayer)entityLiving).getCurrentEquippedItem() != null ? 1 : 0;
 				if (entityLiving instanceof EntityPlayer) {
-					armorModel.aimedBow = ((EntityPlayer)entityLiving).getItemInUseDuration() > 2;
+					EntityPlayer player = (EntityPlayer)entityLiving;
+					armorModel.heldItemRight = player.getCurrentEquippedItem() != null ? (player.getItemInUseCount() > 0 && player.getCurrentEquippedItem().getItemUseAction() == EnumAction.block ? 3 : 1) : 0;
+					//armorModel.aimedBow = ((EntityPlayer)entityLiving).getItemInUseDuration() > 2;
+					armorModel.aimedBow = player.getItemInUseCount() > 0 && player.getCurrentEquippedItem().getItemUseAction() == EnumAction.bow;
 				}
 				return armorModel;
 			}

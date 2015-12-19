@@ -2,7 +2,6 @@ package net.killerchief.halocraft.comm.packetHandlers;
 
 import io.netty.buffer.ByteBuf;
 import net.killerchief.halocraft.tileEntities.TileEntityGravityLift;
-import net.killerchief.halocraft.tileEntities.TileEntityLandmine;
 import net.minecraft.entity.player.EntityPlayerMP;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;

@@ -9,6 +9,11 @@
         "category": "record",
         "sounds": [{"name":"records/TheHalo3WarthogRun", "stream": true}]
     },
+	"armour.ShieldHit":
+    {
+        "category": "player",
+        "sounds": ["armour/ShieldHit"]
+    },
 	"armour.ShieldLowBeep":
     {
         "category": "player",
@@ -20,6 +25,16 @@
             "armour/ShieldLowBeep4",
             "armour/ShieldLowBeep5",
             "armour/ShieldLowBeep6"
+        ]
+    },
+	"armour.ShieldPop":
+    {
+        "category": "player",
+        "sounds":
+        [
+            "armour/ShieldPop1",
+            "armour/ShieldPop2",
+            "armour/ShieldPop3"
         ]
     },
 	"armour.ShieldRecharge":
@@ -111,6 +126,26 @@
 			"entities/warthog/ChainGunFire2",
             "entities/warthog/ChainGunFire3"
         ]
+    },
+	"entities.warthog.WarthogEngineHigh":
+    {
+        "category": "player",
+        "sounds": ["entities/warthog/WarthogEngineHigh"]
+    },
+    "entities.warthog.WarthogEngineIdle":
+    {
+        "category": "player",
+        "sounds": ["entities/warthog/WarthogEngineIdle"]
+    },
+	"entities.warthog.WarthogEnter":
+    {
+        "category": "player",
+        "sounds": ["entities/warthog/WarthogEnter"]
+    },
+	"entities.warthog.WarthogExit":
+    {
+        "category": "player",
+        "sounds": ["entities/warthog/WarthogExit"]
     },
 	"items.PickupHealth":
     {

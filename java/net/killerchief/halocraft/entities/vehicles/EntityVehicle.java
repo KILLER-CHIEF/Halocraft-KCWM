@@ -48,8 +48,8 @@ public abstract class EntityVehicle extends Entity
 	public double vehicleYaw;
 	public double vehiclePitch;
 
-	protected abstract int getSoundLoopDelay();
-	public int enterSoundDelay = this.getSoundLoopDelay();
+	protected abstract int getBeginLoopSoundDelay();
+	public int enterSoundDelay = this.getBeginLoopSoundDelay();
 	private Entity prevRiddenByEntity = null;
 	private boolean InitializedVehicleLoopingSounds = false;
 
@@ -413,9 +413,9 @@ public abstract class EntityVehicle extends Entity
 			--this.enterSoundDelay;
 		}
 
-		if (this.riddenByEntity == null && this.enterSoundDelay != this.getSoundLoopDelay())
+		if (this.riddenByEntity == null && this.enterSoundDelay != this.getBeginLoopSoundDelay())
 		{
-			this.enterSoundDelay = this.getSoundLoopDelay();
+			this.enterSoundDelay = this.getBeginLoopSoundDelay();
 		}
 	}
 

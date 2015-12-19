@@ -78,7 +78,7 @@ public abstract class EntityMongoose extends EntityVehicle
 	}
 
 	@Override
-	protected int getSoundLoopDelay() {
+	protected int getBeginLoopSoundDelay() {
 		return 10;
 	}
 

@@ -3,14 +3,17 @@ package net.killerchief.halocraft;
 import net.killerchief.halocraft.client.gui.GuiGravityLift;
 import net.killerchief.halocraft.client.gui.GuiGunHolder;
 import net.killerchief.halocraft.client.gui.GuiLandmine;
+import net.killerchief.halocraft.client.gui.GuiLightBridge;
 import net.killerchief.halocraft.client.gui.GuiRechargeStation;
 import net.killerchief.halocraft.inventory.ContainerGravityLift;
 import net.killerchief.halocraft.inventory.ContainerGunHolder;
 import net.killerchief.halocraft.inventory.ContainerLandmine;
+import net.killerchief.halocraft.inventory.ContainerLightBridge;
 import net.killerchief.halocraft.inventory.ContainerRechargeStation;
 import net.killerchief.halocraft.tileEntities.TileEntityGravityLift;
 import net.killerchief.halocraft.tileEntities.TileEntityGunHolder;
 import net.killerchief.halocraft.tileEntities.TileEntityLandmine;
+import net.killerchief.halocraft.tileEntities.TileEntityLightBridgeGen;
 import net.killerchief.halocraft.tileEntities.TileEntityRechargeStation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -45,6 +48,13 @@ public class GuiHandler implements IGuiHandler {
 			TileEntityGunHolder tileentitygunholder = (TileEntityGunHolder) world.getTileEntity(x, y, z);
 			return new ContainerGunHolder(player.inventory, tileentitygunholder);
 		}
+		else if (ID == 4)
+		{
+			TileEntity te = world.getTileEntity(x, y, z);
+			if (te != null && te instanceof TileEntityLightBridgeGen) {
+				return new ContainerLightBridge(player.inventory, (TileEntityLightBridgeGen)te);
+			}
+		}
 		return null;
 	}
 
@@ -73,6 +83,13 @@ public class GuiHandler implements IGuiHandler {
 		{
 			TileEntityGunHolder tileentitygunholder = (TileEntityGunHolder) world.getTileEntity(x, y, z);
 			return new GuiGunHolder(player.inventory, tileentitygunholder);
+		}
+		else if (ID == 4)
+		{
+			TileEntity te = world.getTileEntity(x, y, z);
+			if (te != null && te instanceof TileEntityLightBridgeGen) {
+				return new GuiLightBridge(player.inventory, (TileEntityLightBridgeGen)te);
+			}
 		}
 		return null;
 	}

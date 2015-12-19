@@ -13,6 +13,23 @@ public abstract class Model3DBase extends ModelBase {
 	protected ModelRendererTurbo[] backWheelModel;
 	protected ModelRendererTurbo[] bodyDoorOpenModel;
 	protected ModelRendererTurbo[] leftTrackModel;
+	protected ModelRendererTurbo[] gunModel;
+	protected ModelRendererTurbo[] ammoModel;
+	protected ModelRendererTurbo[] bladeModel;
+	protected ModelRendererTurbo[] firestarModel;
+	
+	public void flipAll()
+	{
+		flip(this.bodyModel);
+		flip(this.frontWheelModel);
+		flip(this.backWheelModel);
+		flip(this.bodyDoorOpenModel);
+		flip(this.leftTrackModel);
+		flip(this.gunModel);
+		flip(this.ammoModel);
+		flip(this.bladeModel);
+		flip(this.firestarModel);
+	}
 
 	protected ModelRenderer[] techneModel;
 
@@ -102,6 +119,46 @@ public abstract class Model3DBase extends ModelBase {
 				if (part != null)
 				{
 					part.render(par7);
+				}
+			}
+		}
+		if (this.gunModel != null)
+		{
+			for (ModelRendererTurbo part : this.gunModel)
+			{
+				if (part != null)
+				{
+					part.render(par7);
+				}
+			}
+		}
+		if (this.ammoModel != null)
+		{
+			for (ModelRendererTurbo part : this.ammoModel)
+			{
+				if (part != null)
+				{
+					part.render(par7);
+				}
+			}
+		}
+		if (this.bladeModel != null)
+		{
+			for (ModelRendererTurbo part : this.bladeModel)
+			{
+				if (part != null)
+				{
+					part.render(par7);
+				}
+			}
+		}
+		if (this.firestarModel != null)
+		{
+			for (ModelRendererTurbo part : this.firestarModel)
+			{
+				if (part != null)
+				{
+					//part.render(par7);
 				}
 			}
 		}

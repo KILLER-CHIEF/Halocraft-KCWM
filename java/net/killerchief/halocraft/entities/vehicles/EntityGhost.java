@@ -83,7 +83,7 @@ public class EntityGhost extends EntityVehicle
 	}
 
 	@Override
-	protected int getSoundLoopDelay() {
+	protected int getBeginLoopSoundDelay() {
 		return 10;
 	}
 

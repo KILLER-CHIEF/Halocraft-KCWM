@@ -210,6 +210,9 @@ tile.halocraft.Landmine.name=Landmine
 tile.halocraft.GunHolder.name=Gun Holder
 tile.halocraft.CovSupplyCaseBase.name=Covenant Supply Case
 tile.halocraft.CovSupplyCaseTop.name=Cov Supply Case Top
+tile.halocraft.LightBridgeGenActive.name=Light Bridge Generator
+tile.halocraft.LightBridgeGenIdle.name=Light Bridge Generator
+tile.halocraft.LightBridgeExt.name=Light Bridge Extension
 
 # Entities
 entity.halocraft.EliteSword.name=an Elite wielding an Energy Sword

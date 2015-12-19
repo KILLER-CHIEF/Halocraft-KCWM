@@ -163,7 +163,7 @@ public class EventHandler {
 		
 		if (HalocraftUtils.isPlayerWearingArmor(entityplayer, 0, false, true, true, true))
 		{
-			//mc.theWorld.provider.dimensionId
+			//TODO: Armour Jump: mc.theWorld.provider.dimensionId
 			entityplayer.motionY += 0.3D;
 		}
 		else if (HalocraftUtils.isPlayerWearingArmor(entityplayer, 1, false, true, true, true))

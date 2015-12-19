@@ -36,8 +36,9 @@ public class TileEntityGravityLift extends TileEntity implements IInventory
 	@Override
 	public void updateEntity()
 	{
-		if (this.tick2fast <= 0)
+		if (--this.tick2fast <= 0)
 		{
+			this.tick2fast = 20;
 			if (!this.worldObj.isRemote)
 			{
 				if (!this.OverrideRedstone && (this.worldObj.isBlockIndirectlyGettingPowered(this.xCoord, this.yCoord, this.zCoord)) || (this.OverrideRedstone && this.OverrideOn))
@@ -47,7 +48,9 @@ public class TileEntityGravityLift extends TileEntity implements IInventory
 						for (int h = 1; h <= this.maxHeight; h++) {
 							if (((TileEntityGravityLift)this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord)).getGravitationalHeight() >= h)
 							{
-								if (this.worldObj.getBlock(this.xCoord, this.yCoord + h, this.zCoord) == Blocks.air || this.worldObj.getBlock(this.xCoord, this.yCoord + h, this.zCoord) == HalocraftBlocks.PermanentGravityLiftExt) {
+								if (this.worldObj.getBlock(this.xCoord, this.yCoord + h, this.zCoord) == HalocraftBlocks.PermanentGravityLiftExt)
+								{}
+								else if (this.worldObj.getBlock(this.xCoord, this.yCoord + h, this.zCoord) == Blocks.air) {
 									this.worldObj.setBlock(this.xCoord, this.yCoord + h, this.zCoord, HalocraftBlocks.PermanentGravityLiftExt);
 									this.hasSomethingChanged = true;
 								} else
@@ -93,11 +96,6 @@ public class TileEntityGravityLift extends TileEntity implements IInventory
 					this.markDirty();
 				}
 			}
-			this.tick2fast = 10;
-		}
-		else
-		{
-			--this.tick2fast;
 		}
 
 		if (!this.OverrideRedstone && (this.worldObj.isBlockIndirectlyGettingPowered(this.xCoord, this.yCoord, this.zCoord)) || (this.OverrideRedstone && this.OverrideOn))

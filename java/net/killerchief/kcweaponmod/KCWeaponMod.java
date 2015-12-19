@@ -81,10 +81,12 @@ public class KCWeaponMod {
 	}
 
 	public static boolean ExplosionBlockDamage;
+	public static boolean RecoilInLocalSP;
 
 	public static void DoSettingsConfiguration(Configuration config)
 	{
 		ExplosionBlockDamage = config.get("general", "Enable Explosion Block Damage", true).getBoolean(true);
+		RecoilInLocalSP = config.get("general", "Weapon Recoil In Local SP", true).getBoolean(true);
 
 		config.save();
 	}

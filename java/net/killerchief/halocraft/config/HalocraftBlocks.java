@@ -9,6 +9,8 @@ import net.killerchief.halocraft.blocks.BlockHalfSlab;
 import net.killerchief.halocraft.blocks.BlockHealthPack;
 import net.killerchief.halocraft.blocks.BlockInvisibleBarrierHard;
 import net.killerchief.halocraft.blocks.BlockLandmine;
+import net.killerchief.halocraft.blocks.BlockLightBridgeExt;
+import net.killerchief.halocraft.blocks.BlockLightBridgeGen;
 import net.killerchief.halocraft.blocks.BlockMetalFence;
 import net.killerchief.halocraft.blocks.BlockMetalLadder;
 import net.killerchief.halocraft.blocks.BlockPermanentGravityLiftBase;
@@ -22,6 +24,8 @@ import net.killerchief.halocraft.tileEntities.TileEntityGravityLift;
 import net.killerchief.halocraft.tileEntities.TileEntityGunHolder;
 import net.killerchief.halocraft.tileEntities.TileEntityHealthPack;
 import net.killerchief.halocraft.tileEntities.TileEntityLandmine;
+import net.killerchief.halocraft.tileEntities.TileEntityLightBridgeExt;
+import net.killerchief.halocraft.tileEntities.TileEntityLightBridgeGen;
 import net.killerchief.halocraft.tileEntities.TileEntityRechargeStation;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
@@ -80,6 +84,10 @@ public class HalocraftBlocks {
 	//TODO: STRIPED - CovSupplyCase
 	public static Block CovSupplyCaseBase;
 	public static Block CovSupplyCaseTop;
+	
+	public static Block LightBridgeExt;
+	public static Block LightBridgeGenActive;
+	public static Block LightBridgeGenIdle;
 
 	public static void load(Configuration configuration) {
 		TitaniumOre = (new HalocraftBlock("TitaniumOre", "TitaniumOre", Material.rock, 2)).setHardness(8F).setResistance(10F).setStepSound(Block.soundTypeStone);
@@ -126,6 +134,10 @@ public class HalocraftBlocks {
 		GunHolder = (new BlockGunHolder(Material.circuits)).setHardness(2F).setResistance(2F).setStepSound(Block.soundTypeMetal);
 		//CovSupplyCaseBase = (new BlockCovSupplyCase("CovSupplyCaseBase", true)).setHardness(10F).setResistance(10F).setStepSound(Block.soundTypeMetal);
 		//CovSupplyCaseTop = (new BlockCovSupplyCase("CovSupplyCaseTop", false)).setHardness(10F).setResistance(10F).setStepSound(Block.soundTypeMetal);
+		
+		LightBridgeExt = new BlockLightBridgeExt("LightBridgeExt").setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
+		LightBridgeGenActive = (new BlockLightBridgeGen("LightBridgeGenActive", true)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
+		LightBridgeGenIdle = (new BlockLightBridgeGen("LightBridgeGenIdle", false)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
 	}
 
 	public static void registerBlocks() {
@@ -173,6 +185,9 @@ public class HalocraftBlocks {
 		GameRegistry.registerBlock(GunHolder, GunHolder.getUnlocalizedName().substring(5));
 		//GameRegistry.registerBlock(CovSupplyCaseBase, CovSupplyCaseBase.getUnlocalizedName().substring(5));
 		//GameRegistry.registerBlock(CovSupplyCaseTop, CovSupplyCaseTop.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(LightBridgeExt, LightBridgeExt.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(LightBridgeGenActive, LightBridgeGenActive.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(LightBridgeGenIdle, LightBridgeGenIdle.getUnlocalizedName().substring(5));
 
 		registerTileEntities();
 	}
@@ -185,6 +200,8 @@ public class HalocraftBlocks {
 		GameRegistry.registerTileEntity(TileEntityGunHolder.class, "Halocraft.GunHolder");
 		GameRegistry.registerTileEntity(TileEntityLandmine.class, "Halocraft.Landmine");
 		GameRegistry.registerTileEntity(TileEntityCovSupplyCase.class, "Halocraft.CovSupplyCase");
+		GameRegistry.registerTileEntity(TileEntityLightBridgeExt.class, "Halocraft.LightBridgeExt");
+		GameRegistry.registerTileEntity(TileEntityLightBridgeGen.class, "Halocraft.LightBridgeGen");
 	}
 
 	public static void addRecipes() {

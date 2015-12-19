@@ -84,9 +84,11 @@ public class TickHandlerClient {
 		{
 			this.Recoil *= 0.8F;
 		}
-		minecraft.thePlayer.rotationPitch -= this.Recoil;
+		if (!(!KCWeaponMod.RecoilInLocalSP && minecraft.isSingleplayer()))
+			minecraft.thePlayer.rotationPitch -= this.Recoil;
 		this.AntiRecoil += this.Recoil;
-		minecraft.thePlayer.rotationPitch += AntiRecoil * 0.2F;
+		if (!(!KCWeaponMod.RecoilInLocalSP && minecraft.isSingleplayer()))
+			minecraft.thePlayer.rotationPitch += AntiRecoil * 0.2F;
 		this.AntiRecoil *= 0.78F;
 	}
 
