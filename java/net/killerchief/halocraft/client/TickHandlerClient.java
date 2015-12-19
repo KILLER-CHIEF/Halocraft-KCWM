@@ -117,7 +117,6 @@ public class TickHandlerClient {
 				this.onRenderTick(mc);
 
 				this.HandleButtonInterface(mc);
-				this.HandleArmourAbilities(mc);
 				this.HandleZoomingReticle(mc);
 				this.HandleHUD(mc);
 			}
@@ -570,9 +569,9 @@ public class TickHandlerClient {
 	}
 
 	//HandleShootingReloading
-	public static boolean IsReloading = false;
+	//public static boolean IsReloading = false;
 	//private int shootReloadCodeDelay = 0;
-	public Item ReloadingWeaponID = HalocraftItemsWeapons.AssaultRifle;
+	//public Item ReloadingWeaponID = HalocraftItemsWeapons.AssaultRifle;
 
 	//HandleShields
 	public static int ShieldHealth = 0;
@@ -695,29 +694,6 @@ public class TickHandlerClient {
 		else
 		{
 			this.RightClickPressed = false;
-		}
-	}
-
-	private void HandleArmourAbilities(Minecraft minecraft)
-	{
-		EntityPlayerSP entityplayersp = minecraft.thePlayer;
-		//Client Only, this would cause issues...
-		if (HalocraftUtils.isPlayerWearingArmor(minecraft, 0, false, true, true, true))
-		{
-			//mc.theWorld.provider.dimensionId
-			double jumpVelocity = 0.65D;
-			if(previousTickWasOnGround && !entityplayersp.onGround && entityplayersp.movementInput.jump)
-			{
-				entityplayersp.motionY = jumpVelocity;
-			}
-			previousTickWasOnGround = entityplayersp.onGround;
-
-			HalocraftUtils.MoveSpeed(0.12F);
-			minecraft.thePlayer.jumpMovementFactor = 0.03F;
-			entityplayersp.stepHeight = 1F;
-		}else{
-			HalocraftUtils.MoveSpeed(0.1F);//FIXME: Would cause problems with other mods.
-			entityplayersp.stepHeight = 0.5F;
 		}
 	}
 

@@ -19,21 +19,21 @@ import cpw.mods.fml.common.ObfuscationReflectionHelper;
 
 public class HalocraftUtils {
 	
-	public static boolean ErrorMoveSpeed = false;
+	public static boolean ErrorMoveSpeedMP = false;
 	public static boolean ErrorButtonList = false;
 	public static boolean ErrorItemInUse = false;
 	public static boolean ErrorItemInUseCount = false;
 	
-	public static void MoveSpeed(float moveSpeed)
+	public static void MoveSpeedMP(EntityPlayer player, float moveSpeed)
 	{
-		if (!ErrorMoveSpeed)
+		if (!ErrorMoveSpeedMP)
 		{
 			try {
-				ObfuscationReflectionHelper.setPrivateValue(PlayerCapabilities.class, Minecraft.getMinecraft().thePlayer.capabilities, Float.valueOf(moveSpeed), "g", "walkSpeed");
+				ObfuscationReflectionHelper.setPrivateValue(PlayerCapabilities.class, player.capabilities, Float.valueOf(moveSpeed), "g", "walkSpeed");
 			} catch (Exception e) {
 				System.err.println("I forgot to update the obfuscated reflection for MoveSpeed D:");
 				e.printStackTrace();
-				ErrorMoveSpeed = true;
+				ErrorMoveSpeedMP = true;
 			}
 		}
 	}

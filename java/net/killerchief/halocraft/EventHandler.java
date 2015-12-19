@@ -1,5 +1,7 @@
 package net.killerchief.halocraft;
 
+import java.util.HashMap;
+
 import net.killerchief.halocraft.comm.packetHandlers.PacketOvershield;
 import net.killerchief.halocraft.config.HalocraftItems;
 import net.killerchief.halocraft.config.HalocraftItemsWeapons;
@@ -14,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -117,15 +120,69 @@ public class EventHandler {
 		//event.renderer.modelBipedMain.bipedLeftArm.rotateAngleZ = 1.5F;
 		//event.renderer.modelBipedMain.isSneak = true;
 	}*/
+	
+	public static HashMap<EntityPlayer, Float> PlayerMPMoveSpeed = new HashMap();
+	public static HashMap<EntityPlayer, Float> PlayerMPStepHeight = new HashMap();
+	
+	private void HandleArmourAbilities(EntityPlayer entityplayer)
+	{
+		if (HalocraftUtils.isPlayerWearingArmor(entityplayer, 0, false, true, true, true))
+		{
+			if (entityplayer.capabilities.getWalkSpeed() < 0.12F)
+			{
+				PlayerMPMoveSpeed.put(entityplayer, entityplayer.capabilities.getWalkSpeed());
+				HalocraftUtils.MoveSpeedMP(entityplayer, 0.12F);
+			}
+			if (entityplayer.stepHeight < 1F)
+			{
+				PlayerMPStepHeight.put(entityplayer, entityplayer.stepHeight);
+				entityplayer.stepHeight = 1F;
+			}
+			entityplayer.jumpMovementFactor = 0.03F;
+		}else{
+			if (PlayerMPMoveSpeed.containsKey(entityplayer))
+			{
+				HalocraftUtils.MoveSpeedMP(entityplayer, PlayerMPMoveSpeed.get(entityplayer)); //0.1F
+				PlayerMPMoveSpeed.remove(entityplayer);
+			}
+			if (PlayerMPStepHeight.containsKey(entityplayer))
+			{
+				entityplayer.stepHeight = PlayerMPStepHeight.get(entityplayer); //0.5F;
+				PlayerMPStepHeight.remove(entityplayer);
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void livingJumpEvent(LivingJumpEvent event)
+	{
+		if (!(event.entityLiving instanceof EntityPlayer)) {
+			return;
+		}
+		EntityPlayer entityplayer = (EntityPlayer) event.entityLiving;
+		
+		if (HalocraftUtils.isPlayerWearingArmor(entityplayer, 0, false, true, true, true))
+		{
+			//mc.theWorld.provider.dimensionId
+			entityplayer.motionY += 0.3D;
+		}
+		else if (HalocraftUtils.isPlayerWearingArmor(entityplayer, 1, false, true, true, true))
+		{
+			entityplayer.motionY += 0.17D;
+		}
+	}
 
 	@SubscribeEvent
 	public void livingEvent(LivingEvent event)
 	{
+		if (event.entityLiving instanceof EntityPlayer) {
+			HandleArmourAbilities((EntityPlayer)event.entityLiving);
+		}
 		if (!(event.entityLiving instanceof EntityPlayerMP)) {
 			return;
 		}
 		EntityPlayerMP entityplayermp = (EntityPlayerMP) event.entityLiving;
-
+		
 		if(entityplayermp.inventory != null && entityplayermp.inventory.mainInventory != null && entityplayermp.inventory.hasItem(HalocraftItemsWeapons.EnergySword))
 		{
 			int i = 0;
@@ -217,6 +274,7 @@ public class EventHandler {
 					TickHandler.ShieldHealthMap.put(entityplayermp, new Integer(0));
 					//System.out.println("Lost Shields");
 					Halocraft.network.sendTo(new PacketOvershield(TickHandler.ShieldHealthMap.get(entityplayermp), false), entityplayermp);
+					event.entityLiving.worldObj.playSoundAtEntity(event.entityLiving, Halocraft.MODID+":armour.ShieldPop", 1.0F, 1.0F);
 				}
 				else
 				{
@@ -229,6 +287,10 @@ public class EventHandler {
 					event.ammount = 0;
 					//System.out.println("Shielded");
 					Halocraft.network.sendTo(new PacketOvershield(TickHandler.ShieldHealthMap.get(entityplayermp), false), entityplayermp);
+					if (TickHandler.ShieldHealthMap.get(entityplayermp) <= 0)
+						event.entityLiving.worldObj.playSoundAtEntity(event.entityLiving, Halocraft.MODID+":armour.ShieldPop", 1.0F, 1.0F);
+					else
+						event.entityLiving.worldObj.playSoundAtEntity(event.entityLiving, Halocraft.MODID+":armour.ShieldHit", 1.0F, 1.0F);
 				}
 			}
 		}
