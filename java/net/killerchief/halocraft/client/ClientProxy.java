@@ -2,7 +2,8 @@ package net.killerchief.halocraft.client;
 
 import net.killerchief.halocraft.CommonProxy;
 import net.killerchief.halocraft.Halocraft;
-import net.killerchief.halocraft.client.models.armor.ModelMarkVArmor;
+import net.killerchief.halocraft.client.models.Model3DArmor;
+import net.killerchief.halocraft.client.models.armor.ModelArmorMarkV;
 import net.killerchief.halocraft.client.models.guns.ModelAssaultRifle;
 import net.killerchief.halocraft.client.models.guns.ModelBattleRifle;
 import net.killerchief.halocraft.client.models.guns.ModelBeamRifle;
@@ -33,6 +34,7 @@ import net.killerchief.halocraft.client.render.RenderGruntPlasmaPistol;
 import net.killerchief.halocraft.client.render.RenderGun;
 import net.killerchief.halocraft.client.render.RenderGunHolder;
 import net.killerchief.halocraft.client.render.RenderHealthPack;
+import net.killerchief.halocraft.client.render.RenderLightBridgeExt;
 import net.killerchief.halocraft.client.render.RenderMongoose;
 import net.killerchief.halocraft.client.render.RenderProjectile;
 import net.killerchief.halocraft.client.render.RenderProjectile.EnumType;
@@ -59,6 +61,7 @@ import net.killerchief.halocraft.entities.vehicles.MovingVehicleSoundLoop;
 import net.killerchief.halocraft.tileEntities.TileEntityCovSupplyCase;
 import net.killerchief.halocraft.tileEntities.TileEntityGunHolder;
 import net.killerchief.halocraft.tileEntities.TileEntityHealthPack;
+import net.killerchief.halocraft.tileEntities.TileEntityLightBridgeExt;
 import net.killerchief.kcweaponmod.KCWeaponMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
@@ -76,10 +79,20 @@ public class ClientProxy extends CommonProxy {
 		//KeyBindings.init();
 	}
 
-	public static int addArmor(String armor)
+	@Override
+	public int addArmor(String armor)
 	{
 		return RenderingRegistry.addNewArmourRendererPrefix(armor);
 	}
+	
+	@Override
+	public Model3DArmor armor3DType(int t)
+    {
+		if (t == 1)
+			return new ModelArmorMarkV();
+		else
+			return null;
+    }
 
 	@Override
 	public void registerRenderers()
@@ -134,6 +147,8 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGunHolder.class, new RenderGunHolder());
 		//TODO: STRIPED - CovSupplyCase
 		//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCovSupplyCase.class, new RenderCovSupplyCase());
+		
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLightBridgeExt.class, new RenderLightBridgeExt());
 	}
 
 	@Override
