@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -121,8 +122,8 @@ public class ItemWeapon extends Item implements InterfaceZoomReticle {
 	}
 
 	@Override
-	public String ZoomTexture() {
-		return this.Properties.ZoomTexture;
+	public ResourceLocation ZoomTexture() {
+		return new ResourceLocation(this.Properties.ZoomTexture);
 	}
 	
 	@Override
@@ -132,16 +133,22 @@ public class ItemWeapon extends Item implements InterfaceZoomReticle {
 	
 	@Override
 	public boolean HasReticle() {
-		return false;
+		return this.Properties.HasReticle;
 	}
 
 	@Override
-	public String ReticleTexture() {
-		return null;
+	public ResourceLocation ReticleTexture() {
+		return new ResourceLocation(this.Properties.ReticleTexture);
+	}
+	
+	@Override
+	public float ReticleTransparency() {
+		return this.Properties.ReticleTransparency;
 	}
 
 	@Override
 	public int[] ReticleProperties() {
-		return null;
+		return this.Properties.ReticleProperties;
 	}
+
 }

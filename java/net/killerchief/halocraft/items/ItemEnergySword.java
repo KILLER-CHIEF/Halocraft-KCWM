@@ -4,6 +4,7 @@ import com.google.common.collect.Multimap;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.killerchief.halocraft.Halocraft;
 import net.killerchief.halocraft.HalocraftUtils;
 import net.killerchief.kcweaponmod.InterfaceZoomReticle;
 import net.killerchief.kcweaponmod.KCWeaponMod;
@@ -23,6 +24,7 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class ItemEnergySword extends HalocraftItem implements InterfaceZoomReticle {
@@ -202,7 +204,7 @@ public class ItemEnergySword extends HalocraftItem implements InterfaceZoomRetic
 	}
 
 	@Override
-	public String ZoomTexture() {
+	public ResourceLocation ZoomTexture() {
 		return null;
 	}
 
@@ -213,18 +215,24 @@ public class ItemEnergySword extends HalocraftItem implements InterfaceZoomRetic
 
 	@Override
 	public boolean HasReticle() {
-		return false;
+		return true;
 	}
 
 	@Override
-	public String ReticleTexture() {
-		return null;
+	public ResourceLocation ReticleTexture() {
+		return new ResourceLocation(Halocraft.MODID+":textures/overlays/Reticle.png");
+	}
+	
+	@Override
+	public float ReticleTransparency() {
+		return 1.0F;
 	}
 
 	@Override
 	public int[] ReticleProperties() {
-		return null;
+		return new int[]{43, 75, 41, 41, 20, 20};
 	}
+
 
 	/*/*
 	 * Return whether this item is repairable in an anvil.

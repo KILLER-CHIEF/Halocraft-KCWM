@@ -696,6 +696,8 @@ public class TickHandlerClient {
 			this.RightClickPressed = false;
 		}
 	}
+	
+	private static boolean rndrChChngd = false;
 
 	private void HandleZoomingReticle(Minecraft minecraft)
 	{
@@ -710,118 +712,55 @@ public class TickHandlerClient {
 			HelmetOn = false;
 		}
 
-		GuiIngameForge.renderCrosshairs = true;
-
+		if (this.rndrChChngd)
+		{
+			this.rndrChChngd = false;
+			GuiIngameForge.renderCrosshairs = true;
+		}
 
 		if(minecraft.inGameHasFocus && minecraft.gameSettings.thirdPersonView == 0)
 		{
 			if (minecraft.thePlayer.ridingEntity instanceof EntityTurretSeat)
 			{
-				GuiIngameForge.renderCrosshairs = false;
+				KCWeaponMod.requestDisableReticle(Halocraft.MODID);
+				if (GuiIngameForge.renderCrosshairs)
+				{
+					this.rndrChChngd = true;
+					GuiIngameForge.renderCrosshairs = false;
+				}
 				GunReticle(1.0F, RLReticle, 132, 117, 45, 45, 22, 22);
 			}
 			else if (minecraft.thePlayer.ridingEntity instanceof EntityGhost)
 			{
-				GuiIngameForge.renderCrosshairs = false;
+				KCWeaponMod.requestDisableReticle(Halocraft.MODID);
+				if (GuiIngameForge.renderCrosshairs)
+				{
+					this.rndrChChngd = true;
+					GuiIngameForge.renderCrosshairs = false;
+				}
 				GunReticle(1.0F, RLReticle, 39, 163, 49, 29, 24, 19);
 			}
 			else if (minecraft.thePlayer.ridingEntity instanceof EntityWarthog)
 			{
-				GuiIngameForge.renderCrosshairs = false;
-				GunReticle(1.0F, RLReticle, 125, 91, 23, 10, 11, 2);
-			}
-			else if (minecraft.thePlayer.inventory.getCurrentItem() != null && minecraft.thePlayer.inventory.getCurrentItem().getItem() instanceof InterfaceZoomReticle)
-			{
-				InterfaceZoomReticle currentItem = (InterfaceZoomReticle)minecraft.thePlayer.inventory.getCurrentItem().getItem();
-				if (!net.killerchief.kcweaponmod.TickHandlerClient.IsZooming() || (!currentItem.IsZoomable() && !net.killerchief.kcweaponmod.TickHandlerClient.IsZooming()))
+				KCWeaponMod.requestDisableReticle(Halocraft.MODID);
+				if (GuiIngameForge.renderCrosshairs)
 				{
-					if (HalocraftUtils.isPlayerHoldingGun(minecraft, true, false))
-					{
-						GuiIngameForge.renderCrosshairs = false;
-						if(currentItem == HalocraftItemsWeapons.BattleRifle)
-						{
-							GunReticle(1.0F, RLReticle, 25, 1, 23, 23, 11, 11);
-						}
-						else if(currentItem == HalocraftItemsWeapons.DMR)
-						{
-							GunReticle(1.0F, RLReticle, 49, 1, 23, 23, 11, 11);
-						}
-						else if(currentItem == HalocraftItemsWeapons.SniperRifle)
-						{
-							GunReticle(1.0F, RLReticle, 2, 26, 9, 9, 4, 4);
-						}
-						else if(currentItem == HalocraftItemsWeapons.Magnum)
-						{
-							GunReticle(1.0F, RLReticle, 1, 1, 23, 23, 11, 11);
-						}
-						else if(currentItem == HalocraftItemsWeapons.RocketLauncher)
-						{
-							GunReticle(1.0F, RLReticle, 208, 1, 47, 47, 23, 23);
-						}
-						else if(currentItem == HalocraftItemsWeapons.Carbine)
-						{
-							GunReticle(1.0F, RLReticle, 115, 47, 27, 23, 13, 11);
-						}
-						else if(currentItem == HalocraftItemsWeapons.BeamRifle)
-						{
-							GunReticle(1.0F, RLReticle, 12, 26, 11, 9, 5, 4);
-						}
-						else if(currentItem == HalocraftItemsWeapons.AssaultRifle)
-						{
-							GunReticle(1.0F, RLReticle, 86, 1, 31, 31, 15, 15);
-						}
-						else if(currentItem == HalocraftItemsWeapons.Shotgun)
-						{
-							GunReticle(1.0F, RLReticle, 162, 1, 45, 45, 22, 22);
-						}
-						else if(currentItem == HalocraftItemsWeapons.SMG)
-						{
-							GunReticle(1.0F, RLReticle, 118, 1, 43, 43, 21, 21);
-						}
-						else if(currentItem == HalocraftItemsWeapons.PlasmaRifle)
-						{
-							GunReticle(1.0F, RLReticle, 1, 37, 37, 37, 18, 18);
-						}
-						else if(currentItem == HalocraftItemsWeapons.PlasmaPistol)
-						{
-							GunReticle(1.0F, RLReticle, 39, 33, 37, 41, 18, 22);
-						}
-						else if(currentItem == HalocraftItemsWeapons.Needler)
-						{
-							GunReticle(1.0F, RLReticle, 143, 47, 31, 21, 15, 10);
-						}
-						else if(currentItem == HalocraftItemsWeapons.Spiker)
-						{
-							GunReticle(1.0F, RLReticle, 77, 33, 37, 35, 18, 17);
-						}
-						else if(currentItem == HalocraftItemsWeapons.Mauler)
-						{
-							GunReticle(1.0F, RLReticle, 1, 75, 41, 41, 20, 20);
-						}
-						else if(currentItem == HalocraftItemsWeapons.Flamethrower)
-						{
-							GunReticle(1.0F, RLReticle, 208, 97, 47, 47, 23, 23);
-						}
-						else if(currentItem == HalocraftItemsWeapons.EnergySword)
-						{
-							GunReticle(1.0F, RLReticle, 43, 75, 41, 41, 20, 20);
-						}
-						else if (currentItem == KCWeaponMod.weapons[HalocraftItemsWeapons.ModMapOffset+19])
-						{
-							GunReticle(1.0F, RLReticle, 125, 75, 23, 13, 11, 6);
-						}
-						else
-							GuiIngameForge.renderCrosshairs = true;
-					}
-				}
-				if (HalocraftUtils.isPlayerHoldingGun(minecraft, false, true) && net.killerchief.kcweaponmod.TickHandlerClient.IsZooming())
-				{
+					this.rndrChChngd = true;
 					GuiIngameForge.renderCrosshairs = false;
 				}
+				GunReticle(1.0F, RLReticle, 125, 91, 23, 10, 11, 2);
 			}
-			if (GuiIngameForge.renderCrosshairs && minecraft.thePlayer.ridingEntity instanceof EntityMongoose)
+			else
 			{
-				GuiIngameForge.renderCrosshairs = false;
+				KCWeaponMod.revokeRequestDisableReticle(Halocraft.MODID);
+			}
+			if (GuiIngameForge.renderCrosshairs && !KCWeaponMod.RenderingReticle() && minecraft.thePlayer.ridingEntity instanceof EntityMongoose)
+			{
+				if (GuiIngameForge.renderCrosshairs)
+				{
+					this.rndrChChngd = true;
+					GuiIngameForge.renderCrosshairs = false;
+				}
 				GunReticle(1.0F, RLReticle, 125, 91, 23, 10, 11, 2);
 			}
 
@@ -845,6 +784,37 @@ public class TickHandlerClient {
 					RenderHelmetVisor(1.0F, RLArmourODSTVisor);
 				}
 			}
+		}
+	}
+	
+	public static void GunReticle(float transparency, ResourceLocation overlay, int iBCoordX, int iBCoordY, int iBWidth /* xOffset */, int iBHeight /* yOffset */, int posX, int posY)
+	{
+		if (!mc.gameSettings.hideGUI)
+		{
+			ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+			int i = scaledresolution.getScaledWidth();
+			int k = scaledresolution.getScaledHeight();
+			mc.entityRenderer.setupOverlayRendering();
+			GL11.glEnable(GL11.GL_BLEND);
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
+			GL11.glDepthMask(false);
+			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, transparency);
+			GL11.glDisable(GL11.GL_ALPHA_TEST);
+			GL11.glDisable(GL11.GL_LIGHTING);
+			mc.getTextureManager().bindTexture(overlay);//FMLClientHandler.instance().getClient().renderEngine.bindTexture(OverlayOxygenTanks.guiTexture);
+			Tessellator tessellator = Tessellator.instance;
+			tessellator.startDrawingQuads();
+			tessellator.addVertexWithUV((double)((i / 2 - posX) + 0), (double)((k / 2 - posY) + iBHeight), (double)0.0F, (double)(iBCoordX + 0) * 0.00390625F, (double)(iBCoordY + iBHeight) * 0.00390625F);
+			tessellator.addVertexWithUV((double)((i / 2 - posX) + iBWidth), (double)((k / 2 - posY) + iBHeight), (double)0.0F, (double)(iBCoordX + iBWidth) * 0.00390625F, (double)(iBCoordY + iBHeight) * 0.00390625F);
+			tessellator.addVertexWithUV((double)((i / 2 - posX) + iBWidth), (double)((k / 2 - posY) + 0), (double)0.0F, (double)(iBCoordX + iBWidth) * 0.00390625F, (double)(iBCoordY + 0) * 0.00390625F);
+			tessellator.addVertexWithUV((double)((i / 2 - posX) + 0), (double)((k / 2 - posY) + 0), (double)0.0F, (double)(iBCoordX + 0) * 0.00390625F, (double)(iBCoordY + 0) * 0.00390625F);
+			tessellator.draw();
+			GL11.glDepthMask(true);
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
+			GL11.glEnable(GL11.GL_ALPHA_TEST);
+			//GL11.glEnable(GL11.GL_LIGHTING);
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		}
 	}
 
@@ -1128,37 +1098,6 @@ public class TickHandlerClient {
 			fontRender.drawStringWithShadow(text, x1, y, color);
 			String count = Integer.toString(number);
 			fontRender.drawStringWithShadow(count, x2, y, color);
-		}
-	}
-
-	public static void GunReticle(float transparency, ResourceLocation overlay, int iBCoordX, int iBCoordY, int iBWidth /* xOffset */, int iBHeight /* yOffset */, int posX, int posY)
-	{
-		if (!mc.gameSettings.hideGUI)
-		{
-			ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-			int i = scaledresolution.getScaledWidth();
-			int k = scaledresolution.getScaledHeight();
-			mc.entityRenderer.setupOverlayRendering();
-			GL11.glEnable(GL11.GL_BLEND);
-			GL11.glDisable(GL11.GL_DEPTH_TEST);
-			GL11.glDepthMask(false);
-			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-			GL11.glColor4f(1.0F, 1.0F, 1.0F, transparency);
-			GL11.glDisable(GL11.GL_ALPHA_TEST);
-			GL11.glDisable(GL11.GL_LIGHTING);
-			mc.getTextureManager().bindTexture(overlay);//FMLClientHandler.instance().getClient().renderEngine.bindTexture(OverlayOxygenTanks.guiTexture);
-			Tessellator tessellator = Tessellator.instance;
-			tessellator.startDrawingQuads();
-			tessellator.addVertexWithUV((double)((i / 2 - posX) + 0), (double)((k / 2 - posY) + iBHeight), (double)0.0F, (double)(iBCoordX + 0) * 0.00390625F, (double)(iBCoordY + iBHeight) * 0.00390625F);
-			tessellator.addVertexWithUV((double)((i / 2 - posX) + iBWidth), (double)((k / 2 - posY) + iBHeight), (double)0.0F, (double)(iBCoordX + iBWidth) * 0.00390625F, (double)(iBCoordY + iBHeight) * 0.00390625F);
-			tessellator.addVertexWithUV((double)((i / 2 - posX) + iBWidth), (double)((k / 2 - posY) + 0), (double)0.0F, (double)(iBCoordX + iBWidth) * 0.00390625F, (double)(iBCoordY + 0) * 0.00390625F);
-			tessellator.addVertexWithUV((double)((i / 2 - posX) + 0), (double)((k / 2 - posY) + 0), (double)0.0F, (double)(iBCoordX + 0) * 0.00390625F, (double)(iBCoordY + 0) * 0.00390625F);
-			tessellator.draw();
-			GL11.glDepthMask(true);
-			GL11.glEnable(GL11.GL_DEPTH_TEST);
-			GL11.glEnable(GL11.GL_ALPHA_TEST);
-			//GL11.glEnable(GL11.GL_LIGHTING);
-			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		}
 	}
 

@@ -30,6 +30,12 @@ public class ItemWeaponProperties {
 	public int[] ZoomMultiplier = {1};
 	/** The zooming texture overlay file location and name. (Only active if IsZoomable is true) */
 	public String ZoomTexture = KCWeaponMod.MODID + ":textures/items/Default/DefaultZoom.png";
+	
+	public boolean HasReticle = false;
+	public String ReticleTexture = KCWeaponMod.MODID + ":textures/items/Default/DefaultReticle.png";
+	public float ReticleTransparency = 1.0F;
+	public int[] ReticleProperties = new int[]{0,0,20,20,10,10};
+	
 	/** How long the delay is between being able to shoot again. */
 	public int GunShootDelay = 0;
 	/** How much recoil the player experiences per shot. (the final amount of experienced recoil is multiplied by this and ShootBurstCount) */

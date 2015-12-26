@@ -43,6 +43,9 @@ public class InitHcWeapons {
 		BattleRifle.IsZoomable = true;
 		BattleRifle.ZoomMultiplier = new int[]{3};
 		BattleRifle.ZoomTexture = Halocraft.MODID+":textures/overlays/BattleRifleOverlay.png";
+		BattleRifle.HasReticle = true;
+		BattleRifle.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
+		BattleRifle.ReticleProperties = new int[]{25, 1, 23, 23, 11, 11};
 		BattleRifle.GunShootDelay = 20;
 		BattleRifle.Recoil = 0.7F;
 		BattleRifle.PerformOnly1ShootSound = true;
@@ -90,6 +93,9 @@ public class InitHcWeapons {
 		DMR.IsZoomable = true;
 		DMR.ZoomMultiplier = new int[]{4};
 		DMR.ZoomTexture = Halocraft.MODID+":textures/overlays/DMROverlay.png";
+		DMR.HasReticle = true;
+		DMR.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
+		DMR.ReticleProperties = new int[]{49, 1, 23, 23, 11, 11};
 		DMR.GunShootDelay = 10;
 		DMR.Recoil = 2F;
 		DMR.PerformOnly1ShootSound = true;
@@ -137,6 +143,9 @@ public class InitHcWeapons {
 		AssaultRifle.IsZoomable = false;
 		//AssaultRifle.ZoomMultiplier = new int[]{2};
 		//AssaultRifle.ZoomTexture = Halocraft.MODID+":textures/overlays/AssaultRifleOverlay.png";
+		AssaultRifle.HasReticle = true;
+		AssaultRifle.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
+		AssaultRifle.ReticleProperties = new int[]{86, 1, 31, 31, 15, 15};
 		AssaultRifle.GunShootDelay = 2;
 		AssaultRifle.Recoil = 2F;
 		AssaultRifle.PerformOnly1ShootSound = true;
@@ -184,6 +193,9 @@ public class InitHcWeapons {
 		Shotgun.IsZoomable = false;
 		//Shotgun.ZoomMultiplier = new int[]{4};
 		//Shotgun.ZoomTexture = Halocraft.MODID+":textures/overlays/ShotgunOverlay.png";
+		Shotgun.HasReticle = true;
+		Shotgun.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
+		Shotgun.ReticleProperties = new int[]{162, 1, 45, 45, 22, 22};
 		Shotgun.GunShootDelay = 30;
 		Shotgun.Recoil = 6F;
 		Shotgun.PerformOnly1ShootSound = true;
@@ -231,6 +243,9 @@ public class InitHcWeapons {
 		SniperRifle.IsZoomable = true;
 		SniperRifle.ZoomMultiplier = new int[]{4, 8};
 		SniperRifle.ZoomTexture = Halocraft.MODID+":textures/overlays/SniperRifleOverlay.png";
+		SniperRifle.HasReticle = true;
+		SniperRifle.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
+		SniperRifle.ReticleProperties = new int[]{2, 26, 9, 9, 4, 4};
 		SniperRifle.GunShootDelay = 40;
 		SniperRifle.Recoil = 4F;
 		SniperRifle.PerformOnly1ShootSound = true;
@@ -278,6 +293,9 @@ public class InitHcWeapons {
 		Magnum.IsZoomable = true;
 		Magnum.ZoomMultiplier = new int[]{2};
 		Magnum.ZoomTexture = Halocraft.MODID+":textures/overlays/MagnumOverlay.png";
+		Magnum.HasReticle = true;
+		Magnum.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
+		Magnum.ReticleProperties = new int[]{1, 1, 23, 23, 11, 11};
 		Magnum.GunShootDelay = 8;
 		Magnum.Recoil = 3F;
 		Magnum.PerformOnly1ShootSound = true;
@@ -325,6 +343,9 @@ public class InitHcWeapons {
 		SMG.IsZoomable = false;
 		//SMG.ZoomMultiplier = new int[]{2};
 		//SMG.ZoomTexture = Halocraft.MODID+":textures/overlays/SMGOverlay.png";
+		SMG.HasReticle = true;
+		SMG.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
+		SMG.ReticleProperties = new int[]{118, 1, 43, 43, 21, 21};
 		SMG.GunShootDelay = 1;
 		SMG.Recoil = 2F;
 		SMG.PerformOnly1ShootSound = true;
@@ -372,6 +393,9 @@ public class InitHcWeapons {
 		RocketLauncher.IsZoomable = true;
 		RocketLauncher.ZoomMultiplier = new int[]{2};
 		RocketLauncher.ZoomTexture = Halocraft.MODID+":textures/overlays/RocketLauncherOverlay.png";
+		RocketLauncher.HasReticle = true;
+		RocketLauncher.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
+		RocketLauncher.ReticleProperties = new int[]{208, 1, 47, 47, 23, 23};
 		RocketLauncher.GunShootDelay = 40;
 		RocketLauncher.Recoil = 12F;
 		RocketLauncher.PerformOnly1ShootSound = true;
@@ -419,6 +443,9 @@ public class InitHcWeapons {
 		Carbine.IsZoomable = true;
 		Carbine.ZoomMultiplier = new int[]{4};
 		Carbine.ZoomTexture = Halocraft.MODID+":textures/overlays/CarbineOverlay.png";
+		Carbine.HasReticle = true;
+		Carbine.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
+		Carbine.ReticleProperties = new int[]{115, 47, 27, 23, 13, 11};
 		Carbine.GunShootDelay = 10;
 		Carbine.Recoil = 1.6F;
 		Carbine.PerformOnly1ShootSound = true;
@@ -466,6 +493,9 @@ public class InitHcWeapons {
 		PlasmaRifle.IsZoomable = false;
 		//PlasmaRifle.ZoomMultiplier = new int[]{2};
 		//PlasmaRifle.ZoomTexture = Halocraft.MODID+":textures/overlays/PlasmaRifleOverlay.png";
+		PlasmaRifle.HasReticle = true;
+		PlasmaRifle.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
+		PlasmaRifle.ReticleProperties = new int[]{1, 37, 37, 37, 18, 18};
 		PlasmaRifle.GunShootDelay = 3;
 		PlasmaRifle.Recoil = 1.6F;
 		PlasmaRifle.PerformOnly1ShootSound = true;
@@ -513,6 +543,9 @@ public class InitHcWeapons {
 		PlasmaPistol.IsZoomable = false;
 		//PlasmaPistol.ZoomMultiplier = new int[]{2};
 		//PlasmaPistol.ZoomTexture = Halocraft.MODID+":textures/overlays/PlasmaPistolOverlay.png";
+		PlasmaPistol.HasReticle = true;
+		PlasmaPistol.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
+		PlasmaPistol.ReticleProperties = new int[]{39, 33, 37, 41, 18, 22};
 		PlasmaPistol.GunShootDelay = 4;
 		PlasmaPistol.Recoil = 1.4F;
 		PlasmaPistol.PerformOnly1ShootSound = true;
@@ -560,6 +593,9 @@ public class InitHcWeapons {
 		Needler.IsZoomable = false;
 		//Needler.ZoomMultiplier = new int[]{2};
 		//Needler.ZoomTexture = Halocraft.MODID+":textures/overlays/NeedlerOverlay.png";
+		Needler.HasReticle = true;
+		Needler.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
+		Needler.ReticleProperties = new int[]{143, 47, 31, 21, 15, 10};
 		Needler.GunShootDelay = 4;
 		Needler.Recoil = 1.4F;
 		Needler.PerformOnly1ShootSound = true;
@@ -607,6 +643,9 @@ public class InitHcWeapons {
 		BeamRifle.IsZoomable = true;
 		BeamRifle.ZoomMultiplier = new int[]{4, 8};
 		BeamRifle.ZoomTexture = Halocraft.MODID+":textures/overlays/BeamRifleOverlay.png";
+		BeamRifle.HasReticle = true;
+		BeamRifle.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
+		BeamRifle.ReticleProperties = new int[]{12, 26, 11, 9, 5, 4};
 		BeamRifle.GunShootDelay = 40;
 		BeamRifle.Recoil = 3F;
 		BeamRifle.PerformOnly1ShootSound = true;
@@ -654,6 +693,9 @@ public class InitHcWeapons {
 		Flamethrower.IsZoomable = false;
 		//Flamethrower.ZoomMultiplier = new int[]{2};
 		//Flamethrower.ZoomTexture = Halocraft.MODID+":textures/overlays/FlamethrowerOverlay.png";
+		Flamethrower.HasReticle = true;
+		Flamethrower.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
+		Flamethrower.ReticleProperties = new int[]{208, 97, 47, 47, 23, 23};
 		Flamethrower.GunShootDelay = 3;
 		Flamethrower.Recoil = 1F;
 		Flamethrower.PerformOnly1ShootSound = true;
@@ -701,6 +743,9 @@ public class InitHcWeapons {
 		Spiker.IsZoomable = false;
 		//Spiker.ZoomMultiplier = new int[]{2};
 		//Spiker.ZoomTexture = Halocraft.MODID+":textures/overlays/SpikerOverlay.png";
+		Spiker.HasReticle = true;
+		Spiker.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
+		Spiker.ReticleProperties = new int[]{77, 33, 37, 35, 18, 17};
 		Spiker.GunShootDelay = 4;
 		Spiker.Recoil = 1.5F;
 		Spiker.PerformOnly1ShootSound = true;
@@ -752,6 +797,9 @@ public class InitHcWeapons {
 		Mauler.IsZoomable = false;
 		//Mauler.ZoomMultiplier = new int[]{2};
 		//Mauler.ZoomTexture = Halocraft.MODID+":textures/overlays/MaulerOverlay.png";
+		Mauler.HasReticle = true;
+		Mauler.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
+		Mauler.ReticleProperties = new int[]{1, 75, 41, 41, 20, 20};
 		Mauler.GunShootDelay = 20;
 		Mauler.Recoil = 6F;
 		Mauler.PerformOnly1ShootSound = true;
@@ -970,6 +1018,9 @@ public class InitHcWeapons {
 		SentinelBeam.IsZoomable = false;
 		//SentinelBeam.ZoomMultiplier = new int[]{2};
 		//SentinelBeam.ZoomTexture = Halocraft.MODID+":textures/overlays/SentinelBeamOverlay.png";
+		SentinelBeam.HasReticle = true;
+		SentinelBeam.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
+		SentinelBeam.ReticleProperties = new int[]{125, 75, 23, 13, 11, 6};
 		SentinelBeam.GunShootDelay = 1;
 		SentinelBeam.Recoil = 0.8F;
 		SentinelBeam.PerformOnly1ShootSound = true;

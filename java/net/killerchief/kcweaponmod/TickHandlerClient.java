@@ -1,5 +1,6 @@
 package net.killerchief.kcweaponmod;
 
+import net.killerchief.halocraft.HalocraftUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -8,6 +9,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.GuiIngameForge;
 
 import org.lwjgl.opengl.GL11;
 
@@ -64,6 +66,7 @@ public class TickHandlerClient {
 				this.HandleShootingReloading(mc);
 				this.HandleBugs(mc);
 				this.HandleButtonInterface(mc);
+				this.HandleReticle(mc);
 				this.HandleZooming(mc);
 			}
 		}
@@ -250,6 +253,80 @@ public class TickHandlerClient {
 			}
 		}
 	}
+	
+	private static boolean rndrChChngd = false;
+	protected static boolean rndrngReticle = false;
+	
+	private void HandleReticle(Minecraft minecraft)
+	{
+		if (this.rndrChChngd && !this.rndrngReticle)
+		{
+			this.rndrChChngd = false;
+			GuiIngameForge.renderCrosshairs = true;
+		}
+		
+		this.rndrngReticle = false;
+		if(!KCWeaponMod.DisabledReticle() && minecraft.inGameHasFocus && minecraft.gameSettings.thirdPersonView == 0)
+		{
+			if (minecraft.thePlayer.inventory.getCurrentItem() != null && minecraft.thePlayer.inventory.getCurrentItem().getItem() instanceof InterfaceZoomReticle)
+			{
+				InterfaceZoomReticle currentItem = (InterfaceZoomReticle)minecraft.thePlayer.inventory.getCurrentItem().getItem();
+				if (!net.killerchief.kcweaponmod.TickHandlerClient.IsZooming() || (!currentItem.IsZoomable() && !net.killerchief.kcweaponmod.TickHandlerClient.IsZooming()))
+				{
+					int[] rp = currentItem.ReticleProperties();
+					if (currentItem.HasReticle() && rp != null && rp.length == 6)
+					{
+						if (GuiIngameForge.renderCrosshairs)
+						{
+							this.rndrChChngd = true;
+							GuiIngameForge.renderCrosshairs = false;
+						}
+						this.rndrngReticle = true;
+						GunReticle(currentItem.ReticleTexture(), currentItem.ReticleTransparency(), rp[0], rp[1], rp[2], rp[3], rp[4], rp[5]);
+					}
+				}
+				if (currentItem.IsZoomable() && this.IsZooming())
+				{
+					if (GuiIngameForge.renderCrosshairs)
+					{
+						this.rndrChChngd = true;
+						GuiIngameForge.renderCrosshairs = false;
+					}
+				}
+			}
+		}
+	}
+	
+	public static void GunReticle(ResourceLocation overlay, float transparency, int iBCoordX, int iBCoordY, int iBWidth /* xOffset */, int iBHeight /* yOffset */, int posX, int posY)
+	{
+		if (!mc.gameSettings.hideGUI)
+		{
+			ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+			int i = scaledresolution.getScaledWidth();
+			int k = scaledresolution.getScaledHeight();
+			mc.entityRenderer.setupOverlayRendering();
+			GL11.glEnable(GL11.GL_BLEND);
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
+			GL11.glDepthMask(false);
+			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, transparency);
+			GL11.glDisable(GL11.GL_ALPHA_TEST);
+			GL11.glDisable(GL11.GL_LIGHTING);
+			mc.getTextureManager().bindTexture(overlay);//FMLClientHandler.instance().getClient().renderEngine.bindTexture(OverlayOxygenTanks.guiTexture);
+			Tessellator tessellator = Tessellator.instance;
+			tessellator.startDrawingQuads();
+			tessellator.addVertexWithUV((double)((i / 2 - posX) + 0), (double)((k / 2 - posY) + iBHeight), (double)0.0F, (double)(iBCoordX + 0) * 0.00390625F, (double)(iBCoordY + iBHeight) * 0.00390625F);
+			tessellator.addVertexWithUV((double)((i / 2 - posX) + iBWidth), (double)((k / 2 - posY) + iBHeight), (double)0.0F, (double)(iBCoordX + iBWidth) * 0.00390625F, (double)(iBCoordY + iBHeight) * 0.00390625F);
+			tessellator.addVertexWithUV((double)((i / 2 - posX) + iBWidth), (double)((k / 2 - posY) + 0), (double)0.0F, (double)(iBCoordX + iBWidth) * 0.00390625F, (double)(iBCoordY + 0) * 0.00390625F);
+			tessellator.addVertexWithUV((double)((i / 2 - posX) + 0), (double)((k / 2 - posY) + 0), (double)0.0F, (double)(iBCoordX + 0) * 0.00390625F, (double)(iBCoordY + 0) * 0.00390625F);
+			tessellator.draw();
+			GL11.glDepthMask(true);
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
+			GL11.glEnable(GL11.GL_ALPHA_TEST);
+			//GL11.glEnable(GL11.GL_LIGHTING);
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		}
+	}
 
 	public static boolean ErrorZooming = false;
 	public static void CameraZoom(int zoomLevel)
@@ -342,7 +419,7 @@ public class TickHandlerClient {
 	{
 		if (minecraft.inGameHasFocus)
 		{
-			if (minecraft.gameSettings.thirdPersonView == 0 && ((minecraft.thePlayer.getCurrentEquippedItem() != null && minecraft.thePlayer.getCurrentEquippedItem().getItem() instanceof InterfaceZoomReticle) || (minecraft.thePlayer.inventory.armorInventory != null && minecraft.thePlayer.inventory.armorInventory[3] != null && minecraft.thePlayer.inventory.armorInventory[3].getItem() instanceof InterfaceZoomReticle)))
+			if (!KCWeaponMod.DisabledReticle() && minecraft.gameSettings.thirdPersonView == 0 && ((minecraft.thePlayer.getCurrentEquippedItem() != null && minecraft.thePlayer.getCurrentEquippedItem().getItem() instanceof InterfaceZoomReticle) || (minecraft.thePlayer.inventory.armorInventory != null && minecraft.thePlayer.inventory.armorInventory[3] != null && minecraft.thePlayer.inventory.armorInventory[3].getItem() instanceof InterfaceZoomReticle)))
 			{
 				InterfaceZoomReticle item = null;
 				if (minecraft.thePlayer.getCurrentEquippedItem() != null && minecraft.thePlayer.getCurrentEquippedItem().getItem() instanceof InterfaceZoomReticle && ((InterfaceZoomReticle)minecraft.thePlayer.getCurrentEquippedItem().getItem()).IsZoomable())
@@ -461,9 +538,9 @@ public class TickHandlerClient {
 			minecraft.gameSettings.setOptionFloatValue(GameSettings.Options.SENSITIVITY, OriginalSensitivity/(zoom > 3 ? zoom * 0.40F : (zoom * 0.15F) + 1F));
 			CameraZoom(zoom);
 			if (!weapon.ZoomLikeHelmet())
-				GunScope(1.0F, new ResourceLocation(weapon.ZoomTexture()));
+				GunScope(1.0F, weapon.ZoomTexture());
 			else
-				RenderHelmetVisor(1.0F, new ResourceLocation(weapon.ZoomTexture()));
+				RenderHelmetVisor(1.0F, weapon.ZoomTexture());
 			//this.IsZooming = true;
 		}
 	}

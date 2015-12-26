@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -190,8 +191,8 @@ public class ItemCustomArmor extends net.minecraft.item.ItemArmor implements Int
 	}
 
 	@Override
-	public String ZoomTexture() {
-		return this.ZoomTexture;
+	public ResourceLocation ZoomTexture() {
+		return new ResourceLocation(this.ZoomTexture);
 	}
 
 	@Override
@@ -205,12 +206,18 @@ public class ItemCustomArmor extends net.minecraft.item.ItemArmor implements Int
 	}
 
 	@Override
-	public String ReticleTexture() {
+	public ResourceLocation ReticleTexture() {
 		return null;
 	}
 
 	@Override
+	public float ReticleTransparency() {
+		return 1.0F;
+	}
+	
+	@Override
 	public int[] ReticleProperties() {
 		return null;
 	}
+
 }

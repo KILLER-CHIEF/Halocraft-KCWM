@@ -2,8 +2,10 @@ package net.killerchief.kcweaponmod;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -117,6 +119,29 @@ public class KCWeaponMod {
 			return n.item(0).getTextContent();
 		}
 		return "";
+	}
+	
+	public static boolean RenderingReticle()
+	{
+		return TickHandlerClient.rndrngReticle;
+	}
+	
+	private static ArrayList<String> DisableReticleRequests = new ArrayList<String>();
+	
+	public static boolean DisabledReticle()
+	{
+		return DisableReticleRequests.size() > 0;
+	}
+	
+	public static void requestDisableReticle(String modid)
+	{
+		if (!DisableReticleRequests.contains(modid))
+			DisableReticleRequests.add(modid);
+	}
+	
+	public static void revokeRequestDisableReticle(String modid)
+	{
+		DisableReticleRequests.remove(modid);
 	}
 
 	public static boolean registerModItems(String modid, String weaponVerison, ItemWeapon[] modWeapons)
