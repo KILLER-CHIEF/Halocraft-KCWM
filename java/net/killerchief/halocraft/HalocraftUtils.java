@@ -81,7 +81,7 @@ public class HalocraftUtils {
 		}
 	}
 	
-	public static boolean isPlayerHoldingGun(Minecraft minecraft, boolean all, boolean zoom)
+	/*public static boolean isPlayerHoldingGun(Minecraft minecraft, boolean all, boolean zoom)//OBSOLETE
 	{
 		if (minecraft.thePlayer.inventory != null)
 		{
@@ -89,7 +89,7 @@ public class HalocraftUtils {
 				return false;
 			Item currentItem = minecraft.thePlayer.inventory.getCurrentItem().getItem();
 			if (all)
-			{//TODO: Remove kc weapon reference for sentinelbeam
+			{//TOD: Remove kc weapon reference for sentinelbeam
 				if (currentItem == KCWeaponMod.weapons[HalocraftItemsWeapons.ModMapOffset+19] || currentItem == HalocraftItemsWeapons.BattleRifle || currentItem == HalocraftItemsWeapons.DMR || currentItem == HalocraftItemsWeapons.SniperRifle || currentItem == HalocraftItemsWeapons.Magnum || currentItem == HalocraftItemsWeapons.RocketLauncher || currentItem == HalocraftItemsWeapons.Carbine || currentItem == HalocraftItemsWeapons.BeamRifle || currentItem == HalocraftItemsWeapons.AssaultRifle || currentItem == HalocraftItemsWeapons.Shotgun || currentItem == HalocraftItemsWeapons.SMG || currentItem == HalocraftItemsWeapons.PlasmaRifle || currentItem == HalocraftItemsWeapons.PlasmaPistol || currentItem == HalocraftItemsWeapons.Needler || currentItem == HalocraftItemsWeapons.Flamethrower || currentItem == HalocraftItemsWeapons.EnergySword || currentItem == HalocraftItemsWeapons.Spiker || currentItem == HalocraftItemsWeapons.Mauler)
 				{
 					return true;
@@ -104,7 +104,7 @@ public class HalocraftUtils {
 			}
 		}
 		return false;
-	}
+	}*/
 	
 	/**
 	 * This is designed for the client part of the game, i would make it ClientOnly but, i'd prefer not to as of yet.
