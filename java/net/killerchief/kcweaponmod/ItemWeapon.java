@@ -14,7 +14,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ItemWeapon extends Item implements InterfaceZoomReticle {
 	
 	public ItemWeaponProperties Properties;
-	private boolean IsEquipment = false;//was blank ;
 	private boolean loweredweapon = false;
 	
 	public ItemWeapon(ItemWeaponProperties properties) {
@@ -104,11 +103,6 @@ public class ItemWeapon extends Item implements InterfaceZoomReticle {
 	public EnumAction getItemUseAction(ItemStack par1ItemStack)
 	{
 		return EnumAction.bow;
-	}
-	
-	public boolean isEquipment()
-	{
-		return this.IsEquipment;
 	}
 	
 	public boolean doloweredweapon()

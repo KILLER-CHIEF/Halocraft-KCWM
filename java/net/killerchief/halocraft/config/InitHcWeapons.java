@@ -1,12 +1,31 @@
 package net.killerchief.halocraft.config;
 
 import net.killerchief.halocraft.Halocraft;
+import net.killerchief.halocraft.client.models.guns.ModelAssaultRifle;
+import net.killerchief.halocraft.client.models.guns.ModelBattleRifle;
+import net.killerchief.halocraft.client.models.guns.ModelBeamRifle;
+import net.killerchief.halocraft.client.models.guns.ModelCarbine;
+import net.killerchief.halocraft.client.models.guns.ModelDMR;
+import net.killerchief.halocraft.client.models.guns.ModelFlamethrower;
+import net.killerchief.halocraft.client.models.guns.ModelMagnum;
+import net.killerchief.halocraft.client.models.guns.ModelMauler;
+import net.killerchief.halocraft.client.models.guns.ModelNeedler;
+import net.killerchief.halocraft.client.models.guns.ModelPlasmaPistol;
+import net.killerchief.halocraft.client.models.guns.ModelPlasmaRifle;
+import net.killerchief.halocraft.client.models.guns.ModelRocketLauncher;
+import net.killerchief.halocraft.client.models.guns.ModelSMG;
+import net.killerchief.halocraft.client.models.guns.ModelSentinelBeam;
+import net.killerchief.halocraft.client.models.guns.ModelShotgun;
+import net.killerchief.halocraft.client.models.guns.ModelSniperRifle;
+import net.killerchief.halocraft.client.models.guns.ModelSpiker;
 import net.killerchief.kcweaponmod.ItemWeapon;
+import net.killerchief.kcweaponmod.ItemWeaponModel;
 import net.killerchief.kcweaponmod.ItemWeaponProperties;
 import net.killerchief.kcweaponmod.KCWeaponMod;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 
 public class InitHcWeapons {
 	
@@ -19,6 +38,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties BattleRifle = new ItemWeaponProperties();
 		BattleRifle.Name = Halocraft.MODID+".BattleRifle";
 		BattleRifle.Texture = Halocraft.MODID + ":BattleRifle";
+		BattleRifle.WeaponModel = new ItemWeaponModel(new ModelBattleRifle(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinBattleRifle.png"));
 		BattleRifle.IsAutomaticOrHasSecondaryShoot = false;
 		BattleRifle.IsZoomable = true;
 		BattleRifle.ZoomMultiplier = new int[]{3};
@@ -65,6 +85,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties DMR = new ItemWeaponProperties();
 		DMR.Name = Halocraft.MODID+".DMR";
 		DMR.Texture = Halocraft.MODID + ":DMR";
+		DMR.WeaponModel = new ItemWeaponModel(new ModelDMR(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinDMR.png"));
 		DMR.IsAutomaticOrHasSecondaryShoot = false;
 		DMR.IsZoomable = true;
 		DMR.ZoomMultiplier = new int[]{4};
@@ -111,6 +132,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties AssaultRifle = new ItemWeaponProperties();
 		AssaultRifle.Name = Halocraft.MODID+".AssaultRifle";
 		AssaultRifle.Texture = Halocraft.MODID + ":AssaultRifle";
+		AssaultRifle.WeaponModel = new ItemWeaponModel(new ModelAssaultRifle(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinAssaultRifle.png"));
 		AssaultRifle.IsAutomaticOrHasSecondaryShoot = true;
 		AssaultRifle.IsZoomable = false;
 		//AssaultRifle.ZoomMultiplier = new int[]{2};
@@ -157,6 +179,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties Shotgun = new ItemWeaponProperties();
 		Shotgun.Name = Halocraft.MODID+".Shotgun";
 		Shotgun.Texture = Halocraft.MODID + ":Shotgun";
+		Shotgun.WeaponModel = new ItemWeaponModel(new ModelShotgun(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinShotgun.png"));
 		Shotgun.IsAutomaticOrHasSecondaryShoot = false;
 		Shotgun.IsZoomable = false;
 		//Shotgun.ZoomMultiplier = new int[]{4};
@@ -203,6 +226,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties SniperRifle = new ItemWeaponProperties();
 		SniperRifle.Name = Halocraft.MODID+".SniperRifle";
 		SniperRifle.Texture = Halocraft.MODID + ":SniperRifle";
+		SniperRifle.WeaponModel = new ItemWeaponModel(new ModelSniperRifle(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinSniperRifle.png"));
 		SniperRifle.IsAutomaticOrHasSecondaryShoot = false;
 		SniperRifle.IsZoomable = true;
 		SniperRifle.ZoomMultiplier = new int[]{4, 8};
@@ -249,6 +273,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties Magnum = new ItemWeaponProperties();
 		Magnum.Name = Halocraft.MODID+".Magnum";
 		Magnum.Texture = Halocraft.MODID + ":Magnum";
+		Magnum.WeaponModel = new ItemWeaponModel(new ModelMagnum(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinMagnum.png"));
 		Magnum.IsAutomaticOrHasSecondaryShoot = false;
 		Magnum.IsZoomable = true;
 		Magnum.ZoomMultiplier = new int[]{2};
@@ -295,6 +320,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties SMG = new ItemWeaponProperties();
 		SMG.Name = Halocraft.MODID+".SMG";
 		SMG.Texture = Halocraft.MODID + ":SMG";
+		SMG.WeaponModel = new ItemWeaponModel(new ModelSMG(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinSMG.png"));
 		SMG.IsAutomaticOrHasSecondaryShoot = true;
 		SMG.IsZoomable = false;
 		//SMG.ZoomMultiplier = new int[]{2};
@@ -341,6 +367,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties RocketLauncher = new ItemWeaponProperties();
 		RocketLauncher.Name = Halocraft.MODID+".RocketLauncher";
 		RocketLauncher.Texture = Halocraft.MODID + ":RocketLauncher";
+		RocketLauncher.WeaponModel = new ItemWeaponModel(new ModelRocketLauncher(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinRocketLauncher.png"));
 		RocketLauncher.IsAutomaticOrHasSecondaryShoot = false;
 		RocketLauncher.IsZoomable = true;
 		RocketLauncher.ZoomMultiplier = new int[]{2};
@@ -387,6 +414,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties Carbine = new ItemWeaponProperties();
 		Carbine.Name = Halocraft.MODID+".Carbine";
 		Carbine.Texture = Halocraft.MODID + ":Carbine";
+		Carbine.WeaponModel = new ItemWeaponModel(new ModelCarbine(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinCarbine.png"));
 		Carbine.IsAutomaticOrHasSecondaryShoot = false;
 		Carbine.IsZoomable = true;
 		Carbine.ZoomMultiplier = new int[]{4};
@@ -433,6 +461,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties PlasmaRifle = new ItemWeaponProperties();
 		PlasmaRifle.Name = Halocraft.MODID+".PlasmaRifle";
 		PlasmaRifle.Texture = Halocraft.MODID + ":PlasmaRifle";
+		PlasmaRifle.WeaponModel = new ItemWeaponModel(new ModelPlasmaRifle(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinPlasmaRifle.png"));
 		PlasmaRifle.IsAutomaticOrHasSecondaryShoot = true;
 		PlasmaRifle.IsZoomable = false;
 		//PlasmaRifle.ZoomMultiplier = new int[]{2};
@@ -479,6 +508,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties PlasmaPistol = new ItemWeaponProperties();
 		PlasmaPistol.Name = Halocraft.MODID+".PlasmaPistol";
 		PlasmaPistol.Texture = Halocraft.MODID + ":PlasmaPistol";
+		PlasmaPistol.WeaponModel = new ItemWeaponModel(new ModelPlasmaPistol(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinPlasmaPistol.png"));
 		PlasmaPistol.IsAutomaticOrHasSecondaryShoot = false;
 		PlasmaPistol.IsZoomable = false;
 		//PlasmaPistol.ZoomMultiplier = new int[]{2};
@@ -525,6 +555,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties Needler = new ItemWeaponProperties();
 		Needler.Name = Halocraft.MODID+".Needler";
 		Needler.Texture = Halocraft.MODID + ":Needler";
+		Needler.WeaponModel = new ItemWeaponModel(new ModelNeedler(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinNeedler.png"));
 		Needler.IsAutomaticOrHasSecondaryShoot = true;
 		Needler.IsZoomable = false;
 		//Needler.ZoomMultiplier = new int[]{2};
@@ -571,6 +602,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties BeamRifle = new ItemWeaponProperties();
 		BeamRifle.Name = Halocraft.MODID+".BeamRifle";
 		BeamRifle.Texture = Halocraft.MODID + ":BeamRifle";
+		BeamRifle.WeaponModel = new ItemWeaponModel(new ModelBeamRifle(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinBeamRifle.png"));
 		BeamRifle.IsAutomaticOrHasSecondaryShoot = false;
 		BeamRifle.IsZoomable = true;
 		BeamRifle.ZoomMultiplier = new int[]{4, 8};
@@ -617,6 +649,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties Flamethrower = new ItemWeaponProperties();
 		Flamethrower.Name = Halocraft.MODID+".Flamethrower";
 		Flamethrower.Texture = Halocraft.MODID + ":Flamethrower";
+		Flamethrower.WeaponModel = new ItemWeaponModel(new ModelFlamethrower(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinFlamethrower.png"));
 		Flamethrower.IsAutomaticOrHasSecondaryShoot = true;
 		Flamethrower.IsZoomable = false;
 		//Flamethrower.ZoomMultiplier = new int[]{2};
@@ -663,6 +696,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties Spiker = new ItemWeaponProperties();
 		Spiker.Name = Halocraft.MODID+".Spiker";
 		Spiker.Texture = Halocraft.MODID + ":Spiker";
+		Spiker.WeaponModel = new ItemWeaponModel(new ModelSpiker(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinSpiker.png"));
 		Spiker.IsAutomaticOrHasSecondaryShoot = true;
 		Spiker.IsZoomable = false;
 		//Spiker.ZoomMultiplier = new int[]{2};
@@ -713,6 +747,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties Mauler = new ItemWeaponProperties();
 		Mauler.Name = Halocraft.MODID+".Mauler";
 		Mauler.Texture = Halocraft.MODID + ":Mauler";
+		Mauler.WeaponModel = new ItemWeaponModel(new ModelMauler(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinMauler.png"));
 		Mauler.IsAutomaticOrHasSecondaryShoot = false;
 		Mauler.IsZoomable = false;
 		//Mauler.ZoomMultiplier = new int[]{2};
@@ -759,6 +794,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties FragGrenade = new ItemWeaponProperties();
 		FragGrenade.Name = Halocraft.MODID+".FragGrenade";
 		FragGrenade.Texture = Halocraft.MODID + ":FragGrenade";
+		FragGrenade.AimItem = false;
 		FragGrenade.IsAutomaticOrHasSecondaryShoot = false;
 		FragGrenade.IsZoomable = false;
 		//FragGrenade.ZoomMultiplier = new int[]{};
@@ -809,6 +845,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties PlasmaGrenade = new ItemWeaponProperties();
 		PlasmaGrenade.Name = Halocraft.MODID+".PlasmaGrenade";
 		PlasmaGrenade.Texture = Halocraft.MODID + ":PlasmaGrenade";
+		PlasmaGrenade.AimItem = false;
 		PlasmaGrenade.IsAutomaticOrHasSecondaryShoot = false;
 		PlasmaGrenade.IsZoomable = false;
 		//PlasmaGrenade.ZoomMultiplier = new int[]{};
@@ -858,6 +895,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties FirebombGrenade = new ItemWeaponProperties();
 		FirebombGrenade.Name = Halocraft.MODID+".FirebombGrenade";
 		FirebombGrenade.Texture = Halocraft.MODID + ":FirebombGrenade";
+		FirebombGrenade.AimItem = false;
 		FirebombGrenade.IsAutomaticOrHasSecondaryShoot = false;
 		FirebombGrenade.IsZoomable = false;
 		//FirebombGrenade.ZoomMultiplier = new int[]{};
@@ -926,6 +964,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties SentinelBeam = new ItemWeaponProperties();
 		SentinelBeam.Name = Halocraft.MODID+".SentinelBeam";
 		SentinelBeam.Texture = Halocraft.MODID + ":NullX";
+		SentinelBeam.WeaponModel = new ItemWeaponModel(new ModelSentinelBeam(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinSentinelBeamMajor.png"));
 		SentinelBeam.InventoryTab = null;
 		SentinelBeam.IsAutomaticOrHasSecondaryShoot = true;
 		SentinelBeam.IsZoomable = false;
@@ -1058,7 +1097,7 @@ public class InitHcWeapons {
 		weapons[24] = new ItemWeapon(GruntPlasmaPistol);
 		
 		
-		if (KCWeaponMod.registerModItems(Halocraft.MODID, "1.1", weapons))
+		if (KCWeaponMod.registerModItems(Halocraft.MODID, "1.2", weapons))
 		{
 			System.out.println("KCWeaponMod: Successfully Registered Halocraft Weapons");
 		}

@@ -48,11 +48,10 @@ public class EventHandler {
 		}
 	}
 
-	//@SideOnly(Side.CLIENT)
 	private int stopAimingCoolDown = 0;
 
 	@SubscribeEvent
-	public void livingEventClient(LivingEvent event)//TODO: Add in Gun Mod
+	public void livingEventClient(LivingEvent event)
 	{
 		if (event.entityLiving instanceof EntityPlayer)
 		{
@@ -60,16 +59,10 @@ public class EventHandler {
 
 			if (Halocraft.proxy.isSideClient())
 			{
-				if (entityplayer.getHeldItem() != null && ((entityplayer.getHeldItem().getItem() instanceof ItemWeapon && !((ItemWeapon)entityplayer.getHeldItem().getItem()).isEquipment()) || entityplayer.getHeldItem().getItem() instanceof ItemEnergySword))
+				if (entityplayer.getHeldItem() != null && entityplayer.getHeldItem().getItem() instanceof ItemEnergySword)
 				{
-					if ((!entityplayer.isSprinting() && !(entityplayer.getHeldItem().getItem() instanceof ItemWeapon && ((ItemWeapon)entityplayer.getHeldItem().getItem()).doloweredweapon())) || entityplayer.getHeldItem().getItem() instanceof ItemEnergySword)
-					{
-						HalocraftUtils.setItemInUseCount(entityplayer, 71005);
-					}
-					else
-					{
-						HalocraftUtils.setItemInUseCount(entityplayer, 0);
-					}
+					HalocraftUtils.setItemInUseCount(entityplayer, 71005);
+					
 					if (stopAimingCoolDown != 4)
 					{
 						stopAimingCoolDown = 4;

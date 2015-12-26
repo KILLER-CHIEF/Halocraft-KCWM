@@ -16,6 +16,10 @@ public class ItemWeaponProperties {
 	public String Name;
 	/** The Texture used for the weapons item. */
 	public String Texture = KCWeaponMod.MODID + ":Default/DefaultItem";
+	/** The model rendered for the item in first person and third person. */
+	public ItemWeaponModel WeaponModel = null;
+	/** Aim the item like when using a bow. */
+	public boolean AimItem = true;
 	/** The Creative Inventory Tab the Weapon will appear under. */
 	public CreativeTabs InventoryTab = KCWeaponMod.InventoryTab;
 	/** If the weapon requires a shorter shooting delay or it has a secondary shoot projectile type. */

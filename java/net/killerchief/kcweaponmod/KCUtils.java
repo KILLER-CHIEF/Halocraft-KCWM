@@ -3,6 +3,7 @@ package net.killerchief.kcweaponmod;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -12,6 +13,22 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 public class KCUtils {
+	
+	public static boolean ErrorItemInUseCount = false;
+	
+	public static void setItemInUseCount(EntityPlayer entityplayer, int value)
+	{
+		if (!ErrorItemInUseCount)
+		{
+			try {
+				ObfuscationReflectionHelper.setPrivateValue(EntityPlayer.class, entityplayer, Integer.valueOf(value), "g", "itemInUseCount");
+			} catch (Exception e) {
+				System.err.println("I forgot to update the obfuscated reflection for itemInUseCount D:");
+				e.printStackTrace();
+				ErrorItemInUseCount = true;
+			}
+		}
+	}
 	
 	public static boolean fireProjectile(World world, EntityLivingBase thrower, int propID)
 	{

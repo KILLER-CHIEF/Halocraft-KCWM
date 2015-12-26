@@ -103,31 +103,15 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityGruntPlasmaPistol.class, new RenderGruntPlasmaPistol(new ModelGrunt(), 0.0F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityGruntFlee.class, new RenderGruntPlasmaPistol(new ModelGrunt(), 0.0F));
 
-		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.SniperRifle, (IItemRenderer)new RenderGun(new ModelSniperRifle(), Halocraft.MODID+":textures/guns/SkinSniperRifle.png", false));
-		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.DMR, (IItemRenderer)new RenderGun(new ModelDMR(), Halocraft.MODID+":textures/guns/SkinDMR.png", false));
-		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.PlasmaPistol, (IItemRenderer)new RenderGun(new ModelPlasmaPistol(), Halocraft.MODID+":textures/guns/SkinPlasmaPistol.png", false));
-		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.PlasmaRifle, (IItemRenderer)new RenderGun(new ModelPlasmaRifle(), Halocraft.MODID+":textures/guns/SkinPlasmaRifle.png", false));
-		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Magnum, (IItemRenderer)new RenderGun(new ModelMagnum(), Halocraft.MODID+":textures/guns/SkinMagnum.png", false));
-		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.AssaultRifle, (IItemRenderer)new RenderGun(new ModelAssaultRifle(), Halocraft.MODID+":textures/guns/SkinAssaultRifle.png", false));
-		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Needler, (IItemRenderer)new RenderGun(new ModelNeedler(), Halocraft.MODID+":textures/guns/SkinNeedler.png", false));
-		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Carbine, (IItemRenderer)new RenderGun(new ModelCarbine(), Halocraft.MODID+":textures/guns/SkinCarbine.png", false));
 		MinecraftForgeClient.registerItemRenderer(HalocraftItems.SwordHilt, (IItemRenderer)new RenderGun(new ModelEnergySword(), Halocraft.MODID+":textures/guns/SkinEnergySwordOff.png", true));
 		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.EnergySword, (IItemRenderer)new RenderGun(new ModelEnergySword(), Halocraft.MODID+":textures/guns/SkinEnergySword.png", true));
-		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.RocketLauncher, (IItemRenderer)new RenderGun(new ModelRocketLauncher(), Halocraft.MODID+":textures/guns/SkinRocketLauncher.png", false));
-		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Flamethrower, (IItemRenderer)new RenderGun(new ModelFlamethrower(), Halocraft.MODID+":textures/guns/SkinFlamethrower.png", false));
-		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.BattleRifle, (IItemRenderer)new RenderGun(new ModelBattleRifle(), Halocraft.MODID+":textures/guns/SkinBattleRifle.png", false));
-		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Spiker, (IItemRenderer)new RenderGun(new ModelSpiker(), Halocraft.MODID+":textures/guns/SkinSpiker.png", false));
-		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.SMG, (IItemRenderer)new RenderGun(new ModelSMG(), Halocraft.MODID+":textures/guns/SkinSMG.png", false));
-		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Shotgun, (IItemRenderer)new RenderGun(new ModelShotgun(), Halocraft.MODID+":textures/guns/SkinShotgun.png", false));
-		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.BeamRifle, (IItemRenderer)new RenderGun(new ModelBeamRifle(), Halocraft.MODID+":textures/guns/SkinBeamRifle.png", false));
-		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Mauler, (IItemRenderer)new RenderGun(new ModelMauler(), Halocraft.MODID+":textures/guns/SkinMauler.png", false));
-
+		
 		//FIXME: Add New Gun Models
+		//MinecraftForgeClient.registerItemRenderer(KCWeaponMod.weapons[HalocraftItemsWeapons.ModMapOffset+19], (IItemRenderer)new RenderGun(new ModelSentinelBeam(), Halocraft.MODID+":textures/guns/SkinSentinelBeamMajor.png", false));
 		//MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.AssaultRifle, (IItemRenderer)new RenderGun(new ModelGravityHammer(), Halocraft.MODID+":textures/guns/SkinBruteHammer.png", false));
 		//MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Carbine, (IItemRenderer)new RenderGun(new ModelBruteShot(), Halocraft.MODID+":textures/guns/SkinBruteShot.png", false));
 		//MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.RocketLauncher, (IItemRenderer)new RenderGun(new ModelFuelRodCannon(), Halocraft.MODID+":textures/guns/SkinFuelRodGun.png", false));
 		//MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Magnum, (IItemRenderer)new RenderGun(new ModelSentinelBeam(), Halocraft.MODID+":textures/guns/SkinSentinelBeam.png", false));
-		MinecraftForgeClient.registerItemRenderer(KCWeaponMod.weapons[HalocraftItemsWeapons.ModMapOffset+19], (IItemRenderer)new RenderGun(new ModelSentinelBeam(), Halocraft.MODID+":textures/guns/SkinSentinelBeamMajor.png", false));
 		//MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.SniperRifle, (IItemRenderer)new RenderGun(new ModelSpartanLaser(), Halocraft.MODID+":textures/guns/SkinSpartanLaser.png", false));
 		//MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Carbine, (IItemRenderer)new RenderGun(new ModelPlasmaRifleOpen(), Halocraft.MODID+":textures/guns/SkinPlasmaRifle_Open.png", false));
 		//MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Magnum, (IItemRenderer)new RenderGun(new ModelPlasmaPistolOpen(), Halocraft.MODID+":textures/guns/SkinPlasmaPistol_Open.png", false));

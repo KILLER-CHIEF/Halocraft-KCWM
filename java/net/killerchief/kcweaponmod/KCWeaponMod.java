@@ -10,10 +10,12 @@ import java.util.Map.Entry;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 
@@ -43,11 +45,11 @@ public class KCWeaponMod {
 
 	public static final String MODID = "kcweaponmod";
 	public static final String NAME = "KC's Weapon Mod";
-	public static final String VERSION = "0.1.3";
+	public static final String VERSION = "0.1.4";
 
 	public static String getVersion() { return VERSION; }
 
-	public static final String WeaponFileVersion = "1.1";
+	public static final String WeaponFileVersion = "1.2";
 
 	/** The instance of this mod that Forge uses.*/
 	@Instance(KCWeaponMod.MODID)
@@ -164,6 +166,8 @@ public class KCWeaponMod {
 				else
 				{
 					try {
+						System.out.println("KCWeaponMod: Loading XML File: "+file.getAbsolutePath());
+						
 						Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
 
 						doc.getDocumentElement().normalize();
@@ -197,23 +201,74 @@ public class KCWeaponMod {
 
 										if (!eElement.getAttribute("name").equals(""))
 										{
+											System.out.println("Loading Weapon: "+eElement.getAttribute("name"));
 											properties.Name = eElement.getAttribute("name");
 											String a = getTagElementString(eElement, "texture");
 											properties.Texture = !a.equals("") ? a : properties.Texture;
-											//if (KCWeaponMod.proxy.isSideClient()) {
-											properties.InventoryTab = properties.InventoryTab;
-											String ca = getTagElementString(eElement, "inventorytab");
-											for (CreativeTabs i : InventoryTab.creativeTabArray) {
-												//System.out.println(i.getTabLabel());
-												if (i.getTabLabel().equalsIgnoreCase(ca)) {
-													//System.out.println("found it: "+i.getTabLabel());
-													properties.InventoryTab = i;
-													break;
+											String ma = getTagElementString(eElement, "modelclass");
+											String mb = getTagElementString(eElement, "modeltexture");
+											if (KCWeaponMod.proxy.isSideClient() && !ma.equals("") && !mb.equals(""))
+											{
+												ModelBase modelClass = null;
+												try {
+													modelClass = (ModelBase)Class.forName(ma).newInstance();
+												} catch (ClassNotFoundException e) {
+													System.err.println("Class not found exception: "+ma);
+													e.printStackTrace();
+												} catch (InstantiationException e) {
+													System.err.println("Cannot create a new instance to call the class: \""+ma);
+													e.printStackTrace();
+												} catch (IllegalAccessException e) {
+													System.err.println("The method \""+ma+"\" cannot be accessed!");
+													e.printStackTrace();
 												}
+												if (modelClass != null)
+												{
+													ItemWeaponModel model = new ItemWeaponModel(modelClass, new ResourceLocation(mb));
+													String mc = getTagElementString(eElement, "modelnochangeonsprint");
+													model.NoChngOnSprint = !mc.equals("") ? Boolean.parseBoolean(mc) : model.NoChngOnSprint;
+													
+													String[] m1 = getTagElementString(eElement, "tpscale").split(",");
+													if (m1.length == 3) { model.TPScale(Float.parseFloat(m1[0]), Float.parseFloat(m1[1]), Float.parseFloat(m1[2])); }
+													String[] m2 = getTagElementString(eElement, "tptrans").split(",");
+													if (m2.length == 3) { model.TPTrans(Float.parseFloat(m2[0]), Float.parseFloat(m2[1]), Float.parseFloat(m2[2])); }
+													String[] m3 = getTagElementString(eElement, "tprotate").split(",");
+													if (m3.length == 3) { model.TPRotate(Float.parseFloat(m3[0]), Float.parseFloat(m3[1]), Float.parseFloat(m3[2])); }
+													String[] m4 = getTagElementString(eElement, "tpsprinttrans").split(",");
+													if (m4.length == 3) { model.TPSprintTrans(Float.parseFloat(m4[0]), Float.parseFloat(m4[1]), Float.parseFloat(m4[2])); }
+													String[] m5 = getTagElementString(eElement, "tpsprintrotate").split(",");
+													if (m5.length == 3) { model.TPSprintRotate(Float.parseFloat(m5[0]), Float.parseFloat(m5[1]), Float.parseFloat(m5[2])); }
+													String[] m6 = getTagElementString(eElement, "fpscale").split(",");
+													if (m6.length == 3) { model.FPScale(Float.parseFloat(m6[0]), Float.parseFloat(m6[1]), Float.parseFloat(m6[2])); }
+													String[] m7 = getTagElementString(eElement, "fptrans").split(",");
+													if (m7.length == 3) { model.FPTrans(Float.parseFloat(m7[0]), Float.parseFloat(m7[1]), Float.parseFloat(m7[2])); }
+													String[] m8 = getTagElementString(eElement, "fprotate").split(",");
+													if (m8.length == 3) { model.FPRotate(Float.parseFloat(m8[0]), Float.parseFloat(m8[1]), Float.parseFloat(m8[2])); }
+													String[] m9 = getTagElementString(eElement, "fpsprinttrans").split(",");
+													if (m9.length == 3) { model.FPSprintTrans(Float.parseFloat(m9[0]), Float.parseFloat(m9[1]), Float.parseFloat(m9[2])); }
+													String[] m10 = getTagElementString(eElement, "fpsprintrotate").split(",");
+													if (m10.length == 3) { model.FPSprintRotate(Float.parseFloat(m10[0]), Float.parseFloat(m10[1]), Float.parseFloat(m10[2])); }
+													
+													properties.WeaponModel = model;
+												}
+												
 											}
-											//} else {
-											//	properties.InventoryTab = properties.InventoryTab;
-											//}
+											String cb = getTagElementString(eElement, "aimitem");
+											properties.AimItem = !cb.equals("") ? Boolean.parseBoolean(cb) : properties.AimItem;
+											if (KCWeaponMod.proxy.isSideClient()) {
+												properties.InventoryTab = properties.InventoryTab;
+												String ca = getTagElementString(eElement, "inventorytab");
+												for (CreativeTabs i : InventoryTab.creativeTabArray) {
+													//System.out.println(i.getTabLabel());
+													if (i.getTabLabel().equalsIgnoreCase(ca)) {
+														//System.out.println("found it: "+i.getTabLabel());
+														properties.InventoryTab = i;
+														break;
+													}
+												}
+											} else {
+												properties.InventoryTab = properties.InventoryTab;
+											}
 											String b = getTagElementString(eElement, "isautomaticorhassecondaryshoot");
 											properties.IsAutomaticOrHasSecondaryShoot = !b.equals("") ? Boolean.parseBoolean(b) : properties.IsAutomaticOrHasSecondaryShoot;
 											String c = getTagElementString(eElement, "iszoomable");
@@ -312,13 +367,14 @@ public class KCWeaponMod {
 						}
 					}
 					catch (Exception e) {
-						System.err.println("Failed to Load Weapon Properties File: "+file.getAbsolutePath());
 						e.printStackTrace();
+						System.err.println("Failed to Load Weapon Properties File: "+file.getAbsolutePath());
 					}
 				}
 			}
 		}
 
+		System.out.println("Finished Receiving Weapon Configuration Data.");
 		for (ItemWeapon weapon : weapons)
 		{
 			System.out.println("KCWeaponMod: Registered Weapons: "+weapon.Properties.Name);
