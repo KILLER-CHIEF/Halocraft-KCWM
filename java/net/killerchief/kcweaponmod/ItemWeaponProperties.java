@@ -1,8 +1,5 @@
 package net.killerchief.kcweaponmod;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
@@ -30,12 +27,14 @@ public class ItemWeaponProperties {
 	public int[] ZoomMultiplier = {1};
 	/** The zooming texture overlay file location and name. (Only active if IsZoomable is true) */
 	public String ZoomTexture = KCWeaponMod.MODID + ":textures/items/Default/DefaultZoom.png";
-	
+	/** If the weapon has a reticle. */
 	public boolean HasReticle = false;
+	/** The texture location of the reticle to be rendered. */
 	public String ReticleTexture = KCWeaponMod.MODID + ":textures/items/Default/DefaultReticle.png";
+	/** The transparency of the reticle texture displayed on screen. */
 	public float ReticleTransparency = 1.0F;
+	/** The co-ords of the reticle in the texture file: TopLeftX, TopLeftY, Width, Height, OffsetTopLeftOnScreenFromCentreX, OffsetTopLeftOnScreenFromCentreY. */
 	public int[] ReticleProperties = new int[]{0,0,20,20,10,10};
-	
 	/** How long the delay is between being able to shoot again. */
 	public int GunShootDelay = 0;
 	/** How much recoil the player experiences per shot. (the final amount of experienced recoil is multiplied by this and ShootBurstCount) */
@@ -49,8 +48,8 @@ public class ItemWeaponProperties {
 	public int SecondaryGunShootDelay = 0;
 	public String HeldShootEntity = "";//TODO Code this, can have tracking here too!
 	
-	/** How many ticks it takes for the weapon to reload */
-	public int ReloadTime = 0;
+	/** How many ticks it takes for the weapon to reload. (Must be value more than 0!) */
+	public int ReloadTime = 1;
 	/** The reload sound file location and name. */
 	public String ReloadSound = KCWeaponMod.MODID + ":Default.DefaultReload";
 	/** How much ammo can be loaded into the weapon at any one time when reloading. (Coded to activate a reload loop and slow increase of weapon ammo if set to anything greater than 0) */

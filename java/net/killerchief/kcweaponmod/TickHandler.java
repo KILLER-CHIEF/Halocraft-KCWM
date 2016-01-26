@@ -59,7 +59,7 @@ public class TickHandler {
 						TickHandler.ReloadDelayMap.put(entry.getKey(), new Integer(0));
 						KCWeaponMod.network.sendTo(new PacketReload(0, 0), (EntityPlayerMP)entry.getKey());
 					}
-					if (entry.getValue() == 1 && entry.getKey().inventory.getCurrentItem() != null)
+					if (entry.getValue() <= 1 && entry.getKey().inventory.getCurrentItem() != null)
 					{
 						//System.out.println("Reached Last Tick");
 						int Used = 0;

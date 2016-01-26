@@ -47,7 +47,7 @@ public class KCWeaponMod {
 
 	public static final String MODID = "kcweaponmod";
 	public static final String NAME = "KC's Weapon Mod";
-	public static final String VERSION = "0.1.4";
+	public static final String VERSION = "0.1.3.02";
 
 	public static String getVersion() { return VERSION; }
 
@@ -158,12 +158,22 @@ public class KCWeaponMod {
 		}
 		else
 		{
+			ItemWeapon[] tempmodweapons = new ItemWeapon[modWeapons.length];
+			int tempIndex = 0;
+			for (int i = 0; i < modWeapons.length; i++) {
+				if (modWeapons[i] != null) {
+					tempmodweapons[tempIndex++] = modWeapons[i];
+				} else {
+					System.err.println("KCWeaponMod: The invoking mod of ID \""+modid+"\" has empty weapon index at "+i+"!");
+				}
+			}
+			
 			modMap.put(modid, weapons.length);
 
 			ItemWeapon[] tempweapons = weapons;
-			weapons = new ItemWeapon[tempweapons.length+modWeapons.length];
+			weapons = new ItemWeapon[tempweapons.length+tempIndex];
 			System.arraycopy(tempweapons, 0, weapons, 0, tempweapons.length);
-			System.arraycopy(modWeapons, 0, weapons, tempweapons.length, modWeapons.length);
+			System.arraycopy(tempmodweapons, 0, weapons, tempweapons.length, tempIndex);
 
 			return true;
 		}
@@ -304,6 +314,16 @@ public class KCWeaponMod {
 											properties.ZoomMultiplier = !d.equals("") ? d1 : properties.ZoomMultiplier;
 											String e = getTagElementString(eElement, "zoomtexture");
 											properties.ZoomTexture = !e.equals("") ? e : properties.ZoomTexture;
+											String za = getTagElementString(eElement, "hasreticle");
+											properties.HasReticle = !za.equals("") ? Boolean.parseBoolean(za) : properties.HasReticle;
+											String zb = getTagElementString(eElement, "reticletexture");
+											properties.ReticleTexture = !zb.equals("") ? zb : properties.ReticleTexture;
+											String zc = getTagElementString(eElement, "reticletransparency");
+											properties.ReticleTransparency = !zc.equals("") ? Float.parseFloat(zc) : properties.ReticleTransparency;
+											String[] zd = getTagElementString(eElement, "reticleproperties").split(",");
+											if (zd.length == 6) {
+												properties.ReticleProperties = new int[]{Integer.parseInt(zd[0]), Integer.parseInt(zd[1]), Integer.parseInt(zd[2]), Integer.parseInt(zd[3]), Integer.parseInt(zd[4]), Integer.parseInt(zd[5])};
+											}
 											String f = getTagElementString(eElement, "gunshootdelay");
 											properties.GunShootDelay = !f.equals("") ? Integer.parseInt(f) : properties.GunShootDelay;
 											String g = getTagElementString(eElement, "recoil");

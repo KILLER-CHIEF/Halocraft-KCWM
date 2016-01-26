@@ -39,6 +39,7 @@ public class HalocraftItemsWeapons {
 	
 	public static ItemWeapon GhostPlasmaBolt;
 	public static ItemWeapon ChainGunBullet;
+	public static ItemWeapon GaussSlug;
 	
 	public static ItemWeapon EliteCarbine;
 	public static ItemWeapon ElitePlasmaRifle;
@@ -50,32 +51,33 @@ public class HalocraftItemsWeapons {
 	{
 		ModMapOffset = KCWeaponMod.modMap.get(Halocraft.MODID);
 		
-		BattleRifle = KCWeaponMod.weapons[ModMapOffset];
-		DMR = KCWeaponMod.weapons[ModMapOffset+1];
-		AssaultRifle = KCWeaponMod.weapons[ModMapOffset+2];
-		Shotgun = KCWeaponMod.weapons[ModMapOffset+3];
-		SniperRifle = KCWeaponMod.weapons[ModMapOffset+4];
-		Magnum = KCWeaponMod.weapons[ModMapOffset+5];
-		SMG = KCWeaponMod.weapons[ModMapOffset+6];
-		RocketLauncher = KCWeaponMod.weapons[ModMapOffset+7];
-		Carbine = KCWeaponMod.weapons[ModMapOffset+8];
-		PlasmaRifle = KCWeaponMod.weapons[ModMapOffset+9];
-		PlasmaPistol = KCWeaponMod.weapons[ModMapOffset+10];
-		Needler = KCWeaponMod.weapons[ModMapOffset+11];
-		BeamRifle = KCWeaponMod.weapons[ModMapOffset+12];
-		Flamethrower = KCWeaponMod.weapons[ModMapOffset+13];
-		Spiker = KCWeaponMod.weapons[ModMapOffset+14];
-		Mauler = KCWeaponMod.weapons[ModMapOffset+15];
-		FragGrenade = KCWeaponMod.weapons[ModMapOffset+16];
-		PlasmaGrenade = KCWeaponMod.weapons[ModMapOffset+17];
-		FirebombGrenade = KCWeaponMod.weapons[ModMapOffset+18];
+		BattleRifle = KCWeaponMod.weapons[ModMapOffset++];
+		DMR = KCWeaponMod.weapons[ModMapOffset++];
+		AssaultRifle = KCWeaponMod.weapons[ModMapOffset++];
+		Shotgun = KCWeaponMod.weapons[ModMapOffset++];
+		SniperRifle = KCWeaponMod.weapons[ModMapOffset++];
+		Magnum = KCWeaponMod.weapons[ModMapOffset++];
+		SMG = KCWeaponMod.weapons[ModMapOffset++];
+		RocketLauncher = KCWeaponMod.weapons[ModMapOffset++];
+		Carbine = KCWeaponMod.weapons[ModMapOffset++];
+		PlasmaRifle = KCWeaponMod.weapons[ModMapOffset++];
+		PlasmaPistol = KCWeaponMod.weapons[ModMapOffset++];
+		Needler = KCWeaponMod.weapons[ModMapOffset++];
+		BeamRifle = KCWeaponMod.weapons[ModMapOffset++];
+		Flamethrower = KCWeaponMod.weapons[ModMapOffset++];
+		Spiker = KCWeaponMod.weapons[ModMapOffset++];
+		Mauler = KCWeaponMod.weapons[ModMapOffset++];
+		FragGrenade = KCWeaponMod.weapons[ModMapOffset++];
+		PlasmaGrenade = KCWeaponMod.weapons[ModMapOffset++];
+		FirebombGrenade = KCWeaponMod.weapons[ModMapOffset++];
+		ModMapOffset++;
+		GhostPlasmaBolt = KCWeaponMod.weapons[ModMapOffset++];
+		ChainGunBullet = KCWeaponMod.weapons[ModMapOffset++];
+		GaussSlug = KCWeaponMod.weapons[ModMapOffset++];
 		
-		GhostPlasmaBolt = KCWeaponMod.weapons[ModMapOffset+20];
-		ChainGunBullet = KCWeaponMod.weapons[ModMapOffset+21];
-		
-		EliteCarbine = KCWeaponMod.weapons[ModMapOffset+22];
-		ElitePlasmaRifle = KCWeaponMod.weapons[ModMapOffset+23];
-		GruntPlasmaPistol = KCWeaponMod.weapons[ModMapOffset+24];
+		EliteCarbine = KCWeaponMod.weapons[ModMapOffset++];
+		ElitePlasmaRifle = KCWeaponMod.weapons[ModMapOffset++];
+		GruntPlasmaPistol = KCWeaponMod.weapons[ModMapOffset++];
 	}
 
 	//public static Item SilencedSMG = (new HCItemWeapons(22007)).setIconCoord(7, 0).setUnlocalizedName("SilencedSMG");

@@ -1,9 +1,12 @@
 package net.killerchief.halocraft.config;
 
+import java.util.ArrayList;
+
 import net.killerchief.halocraft.Halocraft;
 import net.killerchief.halocraft.client.models.guns.ModelAssaultRifle;
 import net.killerchief.halocraft.client.models.guns.ModelBattleRifle;
 import net.killerchief.halocraft.client.models.guns.ModelBeamRifle;
+import net.killerchief.halocraft.client.models.guns.ModelBruteShot;
 import net.killerchief.halocraft.client.models.guns.ModelCarbine;
 import net.killerchief.halocraft.client.models.guns.ModelDMR;
 import net.killerchief.halocraft.client.models.guns.ModelFlamethrower;
@@ -31,8 +34,7 @@ public class InitHcWeapons {
 	
 	public static void DefineAndSendWeapons()
 	{
-		ItemWeapon[] weapons = new ItemWeapon[25];
-		
+		ArrayList<ItemWeapon> weapons = new ArrayList<ItemWeapon>();
 		
 		//BattleRifle
 		ItemWeaponProperties BattleRifle = new ItemWeaponProperties();
@@ -81,7 +83,7 @@ public class InitHcWeapons {
 		
 		//BattleRifle.TrackSensitivity = 0;
 		
-		weapons[0] = new ItemWeapon(BattleRifle);
+		weapons.add(new ItemWeapon(BattleRifle));
 		
 		
 		//DMR
@@ -131,7 +133,7 @@ public class InitHcWeapons {
 		
 		//DMR.TrackSensitivity = 0;
 		
-		weapons[1] = new ItemWeapon(DMR);
+		weapons.add(new ItemWeapon(DMR));
 		
 		
 		//AssaultRifle
@@ -181,7 +183,7 @@ public class InitHcWeapons {
 		
 		//AssaultRifle.TrackSensitivity = 0;
 		
-		weapons[2] = new ItemWeapon(AssaultRifle);
+		weapons.add(new ItemWeapon(AssaultRifle));
 		
 		
 		//Shotgun
@@ -231,7 +233,7 @@ public class InitHcWeapons {
 		
 		//Shotgun.TrackSensitivity = 0;
 		
-		weapons[3] = new ItemWeapon(Shotgun);
+		weapons.add(new ItemWeapon(Shotgun));
 		
 		
 		//SniperRifle
@@ -281,7 +283,7 @@ public class InitHcWeapons {
 		
 		//SniperRifle.TrackSensitivity = 0;
 		
-		weapons[4] = new ItemWeapon(SniperRifle);
+		weapons.add(new ItemWeapon(SniperRifle));
 		
 		
 		//Magnum
@@ -331,7 +333,7 @@ public class InitHcWeapons {
 		
 		//Magnum.TrackSensitivity = 0;
 		
-		weapons[5] = new ItemWeapon(Magnum);
+		weapons.add(new ItemWeapon(Magnum));
 		
 		
 		//SMG
@@ -381,7 +383,7 @@ public class InitHcWeapons {
 		
 		//SMG.TrackSensitivity = 0;
 		
-		weapons[6] = new ItemWeapon(SMG);
+		weapons.add(new ItemWeapon(SMG));
 		
 		
 		//RocketLauncher
@@ -431,7 +433,7 @@ public class InitHcWeapons {
 		
 		RocketLauncher.TrackSensitivity = 0.1F;
 		
-		weapons[7] = new ItemWeapon(RocketLauncher);
+		weapons.add(new ItemWeapon(RocketLauncher));
 		
 		
 		//Carbine
@@ -481,7 +483,7 @@ public class InitHcWeapons {
 		
 		//Carbine.TrackSensitivity = 0;
 		
-		weapons[8] = new ItemWeapon(Carbine);
+		weapons.add(new ItemWeapon(Carbine));
 		
 		
 		//PlasmaRifle
@@ -531,7 +533,7 @@ public class InitHcWeapons {
 		
 		//PlasmaRifle.TrackSensitivity = 0;
 		
-		weapons[9] = new ItemWeapon(PlasmaRifle);
+		weapons.add(new ItemWeapon(PlasmaRifle));
 		
 		
 		//PlasmaPistol
@@ -581,7 +583,7 @@ public class InitHcWeapons {
 		
 		//PlasmaPistol.TrackSensitivity = 0;
 		
-		weapons[10] = new ItemWeapon(PlasmaPistol);
+		weapons.add(new ItemWeapon(PlasmaPistol));
 		
 		
 		//Needler
@@ -631,7 +633,7 @@ public class InitHcWeapons {
 		
 		//Needler.TrackSensitivity = 0;
 		
-		weapons[11] = new ItemWeapon(Needler);
+		weapons.add(new ItemWeapon(Needler));
 		
 		
 		//BeamRifle
@@ -681,7 +683,7 @@ public class InitHcWeapons {
 		
 		//BeamRifle.TrackSensitivity = 0;
 		
-		weapons[12] = new ItemWeapon(BeamRifle);
+		weapons.add(new ItemWeapon(BeamRifle));
 		
 		
 		//Flamethrower
@@ -731,7 +733,7 @@ public class InitHcWeapons {
 		
 		//Flamethrower.TrackSensitivity = 0;
 		
-		weapons[13] = new ItemWeapon(Flamethrower);
+		weapons.add(new ItemWeapon(Flamethrower));
 		
 		
 		//Spiker
@@ -785,7 +787,7 @@ public class InitHcWeapons {
 		//RicochetFactor = 1D;
 		//MaxAllowedEncounteredEntities = 2;
 		
-		weapons[14] = new ItemWeapon(Spiker);
+		weapons.add(new ItemWeapon(Spiker));
 		
 		
 		//Mauler
@@ -835,7 +837,7 @@ public class InitHcWeapons {
 		
 		//Mauler.TrackSensitivity = 0;
 		
-		weapons[15] = new ItemWeapon(Mauler);
+		weapons.add(new ItemWeapon(Mauler));
 		
 		
 		//FragGrenade
@@ -886,7 +888,7 @@ public class InitHcWeapons {
 		
 		FragGrenade.TrackSensitivity = 0;
 		
-		weapons[16] = new ItemWeapon(FragGrenade);
+		weapons.add(new ItemWeapon(FragGrenade));
 		
 		
 		//PlasmaGrenade
@@ -936,7 +938,7 @@ public class InitHcWeapons {
 		
 		PlasmaGrenade.TrackSensitivity = 0;
 		
-		weapons[17] = new ItemWeapon(PlasmaGrenade);
+		weapons.add(new ItemWeapon(PlasmaGrenade));
 		
 		
 		//FirebombGrenade
@@ -986,7 +988,7 @@ public class InitHcWeapons {
 		
 		FirebombGrenade.TrackSensitivity = 0;
 		
-		weapons[18] = new ItemWeapon(FirebombGrenade);
+		weapons.add(new ItemWeapon(FirebombGrenade));
 		
 		
 		//SpikeGrenade TODO
@@ -1054,7 +1056,7 @@ public class InitHcWeapons {
 		SentinelBeam.ProjectileDragInAir = 1F;
 		SentinelBeam.ProjectileDragInWater = 1F;
 		
-		weapons[19] = new ItemWeapon(SentinelBeam);
+		weapons.add(new ItemWeapon(SentinelBeam));
 
 		
 		
@@ -1073,7 +1075,7 @@ public class InitHcWeapons {
 		GhostPlasmaBolts.ProjectileDragInAir = 0.99F;
 		GhostPlasmaBolts.ProjectileDragInWater = 0.5F;
 		
-		weapons[20] = new ItemWeapon(GhostPlasmaBolts);
+		weapons.add(new ItemWeapon(GhostPlasmaBolts));
 
 
 		//Warthog Turret
@@ -1091,9 +1093,29 @@ public class InitHcWeapons {
 		ChainGunBullet.ProjectileDragInAir = 0.99F;
 		ChainGunBullet.ProjectileDragInWater = 0.5F;
 		
-		weapons[21] = new ItemWeapon(ChainGunBullet);
+		weapons.add(new ItemWeapon(ChainGunBullet));
+		
+		
+		
+		//Warthog Gauss Turret
+		ItemWeaponProperties GaussSlug = new ItemWeaponProperties();
+		GaussSlug.RegisterItem = false;
+		GaussSlug.Name = Halocraft.MODID+".Vehicle.GaussSlug";
+		GaussSlug.ProjectileRenderProperties = Halocraft.MODID+":textures/entities/BulletRender.png";
+		GaussSlug.ProjectileGlows = false;
+		GaussSlug.ProjectileSpeed = 7F;
+		GaussSlug.Accuracy = 1F;
+		GaussSlug.Gravity = 0.004F;
+		GaussSlug.MaxEffectiveTicksAlive = 80;
+		GaussSlug.ProjectileLivingProperties = "net.killerchief.halocraft.config.NewWeaponTags.ParticleFXRocket()";
+		GaussSlug.ProjectileImpactProperties = "ImpactEntity(40, 0, null), Explode(2, Die), Die";
+		GaussSlug.ProjectileDragInAir = 0.99F;
+		GaussSlug.ProjectileDragInWater = 0.5F;
+		
+		weapons.add(new ItemWeapon(GaussSlug));
+		
 
-
+		
 		//Elite Carbine
 		ItemWeaponProperties EliteCarbine = new ItemWeaponProperties();
 		EliteCarbine.RegisterItem = false;
@@ -1109,7 +1131,7 @@ public class InitHcWeapons {
 		EliteCarbine.ProjectileDragInAir = 0.99F;
 		EliteCarbine.ProjectileDragInWater = 0.5F;
 
-		weapons[22] = new ItemWeapon(EliteCarbine);
+		weapons.add(new ItemWeapon(EliteCarbine));
 		
 
 		//Elite Plasma Rifle
@@ -1127,7 +1149,7 @@ public class InitHcWeapons {
 		ElitePlasmaRifle.ProjectileDragInAir = 0.99F;
 		ElitePlasmaRifle.ProjectileDragInWater = 0.5F;
 
-		weapons[23] = new ItemWeapon(ElitePlasmaRifle);
+		weapons.add(new ItemWeapon(ElitePlasmaRifle));
 		
 
 		//Grunt Plasma Pistol
@@ -1145,10 +1167,60 @@ public class InitHcWeapons {
 		GruntPlasmaPistol.ProjectileDragInAir = 0.99F;
 		GruntPlasmaPistol.ProjectileDragInWater = 0.5F;
 		
-		weapons[24] = new ItemWeapon(GruntPlasmaPistol);
+		weapons.add(new ItemWeapon(GruntPlasmaPistol));
 		
 		
-		if (KCWeaponMod.registerModItems(Halocraft.MODID, "1.2", weapons))
+		//BruteShot
+		ItemWeaponProperties BruteShot = new ItemWeaponProperties();
+		BruteShot.Name = Halocraft.MODID+".BruteShot";
+		BruteShot.Texture = Halocraft.MODID + ":BruteShot";
+		BruteShot.WeaponModel = new ItemWeaponModel(new ModelBruteShot(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinBruteShot.png"));
+		BruteShot.IsAutomaticOrHasSecondaryShoot = false;
+		BruteShot.IsZoomable = false;
+		//BruteShot.ZoomMultiplier = new int[]{2};
+		//BruteShot.ZoomTexture = Halocraft.MODID+":textures/overlays/MagnumOverlay.png";
+		BruteShot.HasReticle = true;
+		BruteShot.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
+		BruteShot.ReticleProperties = new int[]{85, 75, 39, 21, 19, 10};
+		BruteShot.GunShootDelay = 20;
+		BruteShot.Recoil = 8F;
+		BruteShot.PerformOnly1ShootSound = true;
+		BruteShot.ShootSound = Halocraft.MODID+":weapons.shoot.BruteShotShoot";
+		//BruteShot.
+		BruteShot.ReloadTime = 50;
+		BruteShot.ReloadSound = Halocraft.MODID+":weapons.reload.BruteShotReload";
+		BruteShot.ReloadMaxAmmoFlow = 0;
+		BruteShot.ReloadTimeLoop = 0;
+		BruteShot.ReloadSoundLoop = "";
+		BruteShot.ReloadSoundExit = "";
+		BruteShot.AmmoFeedsFromInventory = false;
+		BruteShot.AmmoType = null;//new ItemStack(HalocraftItemsWeapons.MediumRounds);
+		BruteShot.MagazineSize = 6;
+		BruteShot.ItemStackDecreaseOnUse = false;
+		BruteShot.ItemStackMaxStackSize = 1;
+		BruteShot.RequiredUsesPerShot = 1;
+		BruteShot.ShootBurstCount = 1;
+		//BruteShot.BurstAccuracyDecrease = 0.6F;
+		BruteShot.SingleShotProjectileCount = 1;
+
+		BruteShot.ProjectileRenderProperties = Halocraft.MODID+":textures/entities/BulletRender.png";
+		BruteShot.ProjectileGlows = false;
+
+		BruteShot.ProjectileSpeed = 0.8F;
+		BruteShot.Accuracy = 5F;
+		BruteShot.Gravity = 0.01F;
+		BruteShot.MaxEffectiveTicksAlive = 1000;
+		BruteShot.ProjectileLivingProperties = "null";
+		BruteShot.ProjectileImpactProperties = "Bounce(0.97, 1, ExceededMaxEncounteredEntities(1, Explode(2, Die))), ImpactEntity(8, 0, Die)";
+		BruteShot.ProjectileDragInAir = 0.99F;
+		BruteShot.ProjectileDragInWater = 0.5F;
+
+		//BruteShot.TrackSensitivity = 0;
+
+		weapons.add(new ItemWeapon(BruteShot));
+		
+		
+		if (KCWeaponMod.registerModItems(Halocraft.MODID, "1.2", weapons.toArray(new ItemWeapon[weapons.size()])))
 		{
 			System.out.println("KCWeaponMod: Successfully Registered Halocraft Weapons");
 		}
