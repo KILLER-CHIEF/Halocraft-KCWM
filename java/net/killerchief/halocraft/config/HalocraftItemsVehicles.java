@@ -15,6 +15,9 @@ public class HalocraftItemsVehicles {
 	public static Item ItemMongooseRed;
 	public static Item ItemGhost;
 	public static Item ItemWarthog;
+	public static Item ItemWarthogChainGun;
+	public static Item ItemWarthogGauss;
+	public static Item ItemWarthogRocket;
 	
 	public static void load(Configuration config) {
 		ItemMongooseDefault = (new ItemVehicle("MongooseDefault", "MongooseDefaultItem", 0));
@@ -23,6 +26,9 @@ public class HalocraftItemsVehicles {
 		ItemMongooseRed = (new ItemVehicle("MongooseRed", "MongooseRedItem", 3));
 		ItemGhost = (new ItemVehicle("Ghost", "GhostItem", 4));
 		ItemWarthog = (new ItemVehicle("Warthog", "WarthogItem", 5));
+		ItemWarthogChainGun = (new ItemVehicle("WarthogChainGun", "WarthogItem", 6));
+		ItemWarthogGauss = (new ItemVehicle("WarthogGauss", "WarthogItem", 7));
+		ItemWarthogRocket = (new ItemVehicle("WarthogRocket", "WarthogItem", 8));
 	}
 	
 	public static void registerItems() {
@@ -32,6 +38,9 @@ public class HalocraftItemsVehicles {
 		GameRegistry.registerItem(ItemMongooseRed, ItemMongooseRed.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(ItemGhost, ItemGhost.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(ItemWarthog, ItemWarthog.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(ItemWarthogChainGun, ItemWarthogChainGun.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(ItemWarthogGauss, ItemWarthogGauss.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(ItemWarthogRocket, ItemWarthogRocket.getUnlocalizedName().substring(5));
 	}
 	
 	public static void addRecipes() {

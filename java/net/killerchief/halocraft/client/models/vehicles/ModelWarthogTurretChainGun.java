@@ -4,20 +4,16 @@
 
 package net.killerchief.halocraft.client.models.vehicles;
 
-import org.lwjgl.opengl.GL11;
-
 import net.killerchief.halocraft.client.models.Model3DBase;
-import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
 import net.killerchief.turbomodelthingy.ModelRendererTurbo;
-import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelWarthogMachineGunTurret extends Model3DBase
+public class ModelWarthogTurretChainGun extends Model3DBase
 {
 	int textureX = 128;
 	int textureY = 128;
 
-	public ModelWarthogMachineGunTurret()
+	public ModelWarthogTurretChainGun()
 	{
 		bodyModel = new ModelRendererTurbo[27];
 		bodyModel[0] = new ModelRendererTurbo(this, 37, 48, textureX, textureY); // Box 7

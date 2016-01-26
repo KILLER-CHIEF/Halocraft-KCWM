@@ -67,6 +67,8 @@ item.halocraft.Flamethrower.name=Flamethrower
 item.halocraft.Spiker.name=Spiker
 item.halocraft.Mauler.name=Mauler
 item.halocraft.SentinelBeam.name=(WIP) Sentinel Beam
+item.halocraft.BruteShot.name=Brute Shot
+item.halocraft.FuelRodCannon.name=Fuel Rod Cannon
 
 item.halocraft.EnergySword.name=Energy Sword
 item.halocraft.Machete.name=Machete
@@ -164,6 +166,9 @@ item.halocraft.MongooseBlue.name=Mongoose Blue
 item.halocraft.MongooseRed.name=Mongoose Red
 item.halocraft.Ghost.name=Ghost
 item.halocraft.Warthog.name=Warthog
+item.halocraft.WarthogChainGun.name=Warthog Chain Gun
+item.halocraft.WarthogGauss.name=Warthog Gauss
+item.halocraft.WarthogRocket.name=Warthog Rocket
 
 # ------------Blocks------------
 tile.halocraft.TitaniumOre.name=Titanium Ore

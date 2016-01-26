@@ -1,6 +1,9 @@
 package net.killerchief.halocraft.entities.vehicles;
 
+import net.killerchief.halocraft.Halocraft;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
 public class EntityTurretSeat extends EntityPassengerSeat {
@@ -22,11 +25,17 @@ public class EntityTurretSeat extends EntityPassengerSeat {
 			if (this.parentBody != null && this.parentBody instanceof EntityWarthog)
 			{
 				EntityLivingBase entity = ((EntityLivingBase)this.riddenByEntity);
-				//entity.cameraPitch = 0F;
 				if (entity.rotationPitch > 30F) {
 					entity.rotationPitch = 30F;
 				} else if (entity.rotationPitch < -50F) {
 					entity.rotationPitch = -50F;
+				}
+				if (Halocraft.proxy.isSideClient())
+				{
+					if (Minecraft.getMinecraft().gameSettings.thirdPersonView == 1)
+					{
+						//entity.cameraPitch = -15F;
+					}
 				}
 			}
 		}

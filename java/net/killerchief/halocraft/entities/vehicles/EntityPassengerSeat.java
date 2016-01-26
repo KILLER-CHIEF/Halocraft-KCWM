@@ -175,7 +175,8 @@ public class EntityPassengerSeat extends Entity {
 			{
 				int id = this.dataWatcher.getWatchableObjectInt(25);
 				if (id > 0)
-					this.parentBody = (EntityVehicle)this.worldObj.getEntityByID(id);
+					if (this.worldObj.getEntityByID(id) instanceof EntityVehicle)
+						this.parentBody = (EntityVehicle)this.worldObj.getEntityByID(id);
 			}
 		}
 

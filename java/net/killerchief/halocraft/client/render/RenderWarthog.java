@@ -1,7 +1,5 @@
 package net.killerchief.halocraft.client.render;
 
-import net.killerchief.halocraft.Halocraft;
-import net.killerchief.halocraft.client.models.vehicles.ModelWarthogMachineGunTurret;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
@@ -15,9 +13,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderWarthog extends Render
 {
-	public static final ModelWarthogMachineGunTurret MachineGunModel = new ModelWarthogMachineGunTurret();
-	public static final ResourceLocation MachineGunTexture = new ResourceLocation(Halocraft.MODID+":textures/entities/SkinMachineGunTurret.png");
-
 	public RenderWarthog()
 	{
 		this.shadowSize = 1.5F;
@@ -42,19 +37,22 @@ public class RenderWarthog extends Render
 		entity.getModel().render(entity, 0F, 0F, 0F, 0F, 0F, 0.0625F);
 		GL11.glDisable(GL11.GL_BLEND);
 		GL11.glDepthMask(true);
-		GL11.glRotatef(90F, 0F, 1F, 0F);
-		GL11.glTranslatef(0F, 2F, -1.8F);
-		if (entity.seatGunner != null && entity.seatGunner.riddenByEntity != null)
-			GL11.glRotatef(entity.rotationYaw - entity.seatGunner.riddenByEntity.rotationYaw, 0F, 1F, 0F);//entity.getWheelTurnAngle()*400
-		this.bindTexture(MachineGunTexture);
-		//MachineGunModel.render(entity, 0F, 0F, 0F, 0F, 0F, 0.0625F);
-		GL11.glTranslatef(0F, 0F, -0.2F);
-		MachineGunModel.renderSomeParts(false, 0.0625F);
-		GL11.glTranslatef(0F, 0.5F, 0.85F);
-		if (entity.seatGunner != null && entity.seatGunner.riddenByEntity != null)
-			GL11.glRotatef(entity.seatGunner.riddenByEntity.rotationPitch, 1F, 0F, 0F);//entity.getWheelTurnAngle()*150
-		GL11.glTranslatef(0F, -0.45F, -0.85F);
-		MachineGunModel.renderSomeParts(true, 0.0625F);
+		if (entity.getTurretModel() != null)
+		{
+			GL11.glRotatef(90F, 0F, 1F, 0F);
+			GL11.glTranslatef(0F, 2F, -1.8F);
+			if (entity.seatGunner != null && entity.seatGunner.riddenByEntity != null)
+				GL11.glRotatef(entity.rotationYaw - entity.seatGunner.riddenByEntity.rotationYaw, 0F, 1F, 0F);//entity.getWheelTurnAngle()*400
+			this.bindTexture(entity.getTurretTexture());
+			//MachineGunModel.render(entity, 0F, 0F, 0F, 0F, 0F, 0.0625F);
+			GL11.glTranslatef(0F, 0F, -0.2F);
+			entity.getTurretModel().renderSomeParts(false, 0.0625F);
+			GL11.glTranslatef(0F, 0.5F, 0.85F);
+			if (entity.seatGunner != null && entity.seatGunner.riddenByEntity != null)
+				GL11.glRotatef(entity.seatGunner.riddenByEntity.rotationPitch, 1F, 0F, 0F);//entity.getWheelTurnAngle()*150
+			GL11.glTranslatef(0F, -0.45F, -0.85F);
+			entity.getTurretModel().renderSomeParts(true, 0.0625F);
+		}
 		GL11.glPopMatrix();
 	}
 

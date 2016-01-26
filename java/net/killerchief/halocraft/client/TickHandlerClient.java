@@ -33,6 +33,9 @@ import net.killerchief.halocraft.entities.vehicles.EntityMongoose;
 import net.killerchief.halocraft.entities.vehicles.EntityPassengerSeat;
 import net.killerchief.halocraft.entities.vehicles.EntityTurretSeat;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
+import net.killerchief.halocraft.entities.vehicles.EntityWarthogChainGun;
+import net.killerchief.halocraft.entities.vehicles.EntityWarthogGauss;
+import net.killerchief.halocraft.entities.vehicles.EntityWarthogRocket;
 import net.killerchief.kcweaponmod.InterfaceZoomReticle;
 import net.killerchief.kcweaponmod.KCWeaponMod;
 import net.minecraft.client.Minecraft;
@@ -668,11 +671,23 @@ public class TickHandlerClient {
 					else if (this.mc.thePlayer.ridingEntity instanceof EntityTurretSeat)
 					{
 						EntityPassengerSeat turret = (EntityPassengerSeat)this.mc.thePlayer.ridingEntity;
-						if (turret.parentBody != null && turret.parentBody instanceof EntityWarthog)
+						if (turret.parentBody != null)
 						{
-							//System.out.println("TurretShootSend");
-							Halocraft.network.sendToServer(new PacketVehicleShoot());
-							this.VehicleShootDelay = 2;
+							if (turret.parentBody instanceof EntityWarthogChainGun)
+							{
+								Halocraft.network.sendToServer(new PacketVehicleShoot());
+								this.VehicleShootDelay = 2;
+							}
+							else if (turret.parentBody instanceof EntityWarthogGauss)
+							{
+								Halocraft.network.sendToServer(new PacketVehicleShoot());
+								this.VehicleShootDelay = 5;
+							}
+							else if (turret.parentBody instanceof EntityWarthogRocket)
+							{
+								Halocraft.network.sendToServer(new PacketVehicleShoot());
+								this.VehicleShootDelay = 5;
+							}
 						}
 					}
 				}
@@ -722,13 +737,37 @@ public class TickHandlerClient {
 		{
 			if (minecraft.thePlayer.ridingEntity instanceof EntityTurretSeat)
 			{
-				KCWeaponMod.requestDisableReticle(Halocraft.MODID);
-				if (GuiIngameForge.renderCrosshairs)
+				EntityTurretSeat turret = (EntityTurretSeat)minecraft.thePlayer.ridingEntity;
+				if (turret.parentBody instanceof EntityWarthogChainGun)
 				{
-					this.rndrChChngd = true;
-					GuiIngameForge.renderCrosshairs = false;
+					KCWeaponMod.requestDisableReticle(Halocraft.MODID);
+					if (GuiIngameForge.renderCrosshairs)
+					{
+						this.rndrChChngd = true;
+						GuiIngameForge.renderCrosshairs = false;
+					}
+					GunReticle(1.0F, RLReticle, 132, 117, 45, 45, 22, 22);
 				}
-				GunReticle(1.0F, RLReticle, 132, 117, 45, 45, 22, 22);
+				else if (turret.parentBody instanceof EntityWarthogGauss)
+				{
+					KCWeaponMod.requestDisableReticle(Halocraft.MODID);
+					if (GuiIngameForge.renderCrosshairs)
+					{
+						this.rndrChChngd = true;
+						GuiIngameForge.renderCrosshairs = false;
+					}
+					GunReticle(1.0F, RLReticle, 175, 47, 31, 49, 15, 24);
+				}
+				else if (turret.parentBody instanceof EntityWarthogRocket)
+				{
+					KCWeaponMod.requestDisableReticle(Halocraft.MODID);
+					if (GuiIngameForge.renderCrosshairs)
+					{
+						this.rndrChChngd = true;
+						GuiIngameForge.renderCrosshairs = false;
+					}
+					GunReticle(1.0F, RLReticle, 210, 145, 45, 45, 22, 22);
+				}
 			}
 			else if (minecraft.thePlayer.ridingEntity instanceof EntityGhost)
 			{

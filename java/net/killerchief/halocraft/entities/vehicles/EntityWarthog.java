@@ -11,6 +11,7 @@ import net.killerchief.halocraft.client.models.vehicles.ModelWarthog;
 import net.killerchief.halocraft.client.models.vehicles.ModelWarthogDamage1;
 import net.killerchief.halocraft.client.models.vehicles.ModelWarthogDamage2;
 import net.killerchief.halocraft.client.models.vehicles.ModelWarthogDamage3;
+import net.killerchief.halocraft.client.models.vehicles.ModelWarthogTurretChainGun;
 import net.killerchief.halocraft.config.HalocraftItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -304,7 +305,7 @@ public class EntityWarthog extends EntityVehicle
 		return true;
 	}
 
-	private void handleAttachedEntities()
+	protected void handleAttachedEntities()
 	{
 		if (this.entityback != null)
 		{
@@ -350,28 +351,6 @@ public class EntityWarthog extends EntityVehicle
 				int id = this.dataWatcher.getWatchableObjectInt(29);
 				if (id > 0)
 					this.seatShotgun = (EntityPassengerSeat)this.worldObj.getEntityByID(id);//Code for case of invalid id (on update detect for) maybe?
-			}
-		}
-
-		if (this.seatGunner != null)
-		{
-			//this.setRiderLocation(this.seatGunner, 0.22D, -0.2D, -0.44D, true, this.rotationYaw+20F);
-			this.setRiderLocation(this.seatGunner, 0.95D, -1.56D, 0D, false);
-		}
-		else
-		{
-			if (!this.worldObj.isRemote)
-			{
-				this.seatGunner = new EntityTurretSeat(this.worldObj, this, this.posX, this.posY, this.posZ);
-				this.setRiderLocation(this.seatGunner, 0.95D, -1.56D, 0D, false);
-				this.worldObj.spawnEntityInWorld(this.seatGunner);
-				this.dataWatcher.updateObject(30, this.seatGunner.getEntityId());
-			}
-			else
-			{
-				int id = this.dataWatcher.getWatchableObjectInt(30);
-				if (id > 0)
-					this.seatGunner = (EntityTurretSeat)this.worldObj.getEntityByID(id);
 			}
 		}
 	}
@@ -568,14 +547,25 @@ public class EntityWarthog extends EntityVehicle
 		}
 	}
 	
+	public ModelWarthogTurretChainGun TurretModel = null;
+	public ResourceLocation TurretTexture = null;
+	public ModelWarthogTurretChainGun getTurretModel()
+	{
+		return this.TurretModel;
+	}
+	public ResourceLocation getTurretTexture()
+	{
+		return this.TurretTexture;
+	}
+	
 	public static final Model3DBase Damage0Model = new ModelWarthog();
-	public static final ResourceLocation Damage0Texture = new ResourceLocation(Halocraft.MODID+":textures/entities/WarthogModel.png");
+	public ResourceLocation Damage0Texture = new ResourceLocation(Halocraft.MODID+":textures/entities/WarthogModel.png");
 	public static final Model3DBase Damage1Model = new ModelWarthogDamage1();
-	public static final ResourceLocation Damage1Texture = new ResourceLocation(Halocraft.MODID+":textures/entities/WarthogModel_Damaged.png");
+	public ResourceLocation Damage1Texture = new ResourceLocation(Halocraft.MODID+":textures/entities/WarthogModel_Damaged.png");
 	public static final Model3DBase Damage2Model = new ModelWarthogDamage2();
-	public static final ResourceLocation Damage2Texture = new ResourceLocation(Halocraft.MODID+":textures/entities/WarthogModel_Damaged_2.png");
+	public ResourceLocation Damage2Texture = new ResourceLocation(Halocraft.MODID+":textures/entities/WarthogModel_Damaged_2.png");
 	public static final Model3DBase Damage3Model = new ModelWarthogDamage3();
-	public static final ResourceLocation Damage3Texture = new ResourceLocation(Halocraft.MODID+":textures/entities/WarthogModel_Damaged_3.png");
+	public ResourceLocation Damage3Texture = new ResourceLocation(Halocraft.MODID+":textures/entities/WarthogModel_Damaged_3.png");
 
 	private Model3DBase model = this.Damage0Model;
 	private ResourceLocation texture = this.Damage0Texture;

@@ -127,6 +127,17 @@
             "entities/warthog/ChainGunFire3"
         ]
     },
+	"entities.warthog.GaussFire":
+    {
+        "category": "player",
+        "sounds":
+        [
+            "entities/warthog/GaussFire1",
+			"entities/warthog/GaussFire2",
+            "entities/warthog/GaussFire3",
+            "entities/warthog/GaussFire4"
+        ]
+    },
 	"entities.warthog.WarthogEngineHigh":
     {
         "category": "player",

@@ -8,6 +8,9 @@ import net.killerchief.halocraft.entities.vehicles.EntityMongooseDefault;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseGreen;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseRed;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
+import net.killerchief.halocraft.entities.vehicles.EntityWarthogChainGun;
+import net.killerchief.halocraft.entities.vehicles.EntityWarthogGauss;
+import net.killerchief.halocraft.entities.vehicles.EntityWarthogRocket;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -121,8 +124,20 @@ public class ItemVehicle extends HalocraftItem {
 						vehicle = new EntityGhost(par2World, (double)((float)i + 0.5F), (double)((float)j + 1.0F), (double)((float)k + 0.5F));
 					}
 					else if (this.Type == 5)
-					{//EntityGhost
+					{
 						vehicle = new EntityWarthog(par2World, (double)((float)i + 0.5F), (double)((float)j + 1.0F), (double)((float)k + 0.5F));
+					}
+					else if (this.Type == 6)
+					{
+						vehicle = new EntityWarthogChainGun(par2World, (double)((float)i + 0.5F), (double)((float)j + 1.0F), (double)((float)k + 0.5F));
+					}
+					else if (this.Type == 7)
+					{
+						vehicle = new EntityWarthogGauss(par2World, (double)((float)i + 0.5F), (double)((float)j + 1.0F), (double)((float)k + 0.5F));
+					}
+					else if (this.Type == 8)
+					{
+						vehicle = new EntityWarthogRocket(par2World, (double)((float)i + 0.5F), (double)((float)j + 1.0F), (double)((float)k + 0.5F));
 					}
 					else
 					{

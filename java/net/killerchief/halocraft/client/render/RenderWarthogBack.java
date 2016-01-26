@@ -3,7 +3,7 @@ package net.killerchief.halocraft.client.render;
 import net.killerchief.halocraft.Halocraft;
 import net.killerchief.halocraft.client.models.Model3DBase;
 import net.killerchief.halocraft.client.models.vehicles.ModelWarthog;
-import net.killerchief.halocraft.client.models.vehicles.ModelWarthogMachineGunTurret;
+import net.killerchief.halocraft.client.models.vehicles.ModelWarthogTurretChainGun;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
@@ -19,7 +19,7 @@ public class RenderWarthogBack extends Render
 {
 	public static final Model3DBase WarthogModel = new ModelWarthog();
 	public static final ResourceLocation WarthogTexture = new ResourceLocation(Halocraft.MODID+":textures/entities/WarthogModel.png");
-	public static final ModelWarthogMachineGunTurret MachineGunModel = new ModelWarthogMachineGunTurret();
+	public static final ModelWarthogTurretChainGun MachineGunModel = new ModelWarthogTurretChainGun();
 	public static final ResourceLocation MachineGunTexture = new ResourceLocation(Halocraft.MODID+":textures/entities/SkinMachineGunTurret.png");
 
 	public RenderWarthogBack()
