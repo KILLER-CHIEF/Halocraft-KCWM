@@ -10,7 +10,7 @@ import net.killerchief.halocraft.client.models.guns.ModelBruteShot;
 import net.killerchief.halocraft.client.models.guns.ModelCarbine;
 import net.killerchief.halocraft.client.models.guns.ModelDMR;
 import net.killerchief.halocraft.client.models.guns.ModelFlamethrower;
-import net.killerchief.halocraft.client.models.guns.ModelMagnum;
+import net.killerchief.halocraft.client.models.guns.ModelMagnumM6G;
 import net.killerchief.halocraft.client.models.guns.ModelMauler;
 import net.killerchief.halocraft.client.models.guns.ModelNeedler;
 import net.killerchief.halocraft.client.models.guns.ModelPlasmaPistol;
@@ -290,7 +290,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties Magnum = new ItemWeaponProperties();
 		Magnum.Name = Halocraft.MODID+".Magnum";
 		Magnum.Texture = Halocraft.MODID + ":Magnum";
-		Magnum.WeaponModel = new ItemWeaponModel(new ModelMagnum(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinMagnum.png"));
+		Magnum.WeaponModel = new ItemWeaponModel(new ModelMagnumM6G(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinMagnumM6G.png"));
 		Magnum.IsAutomaticOrHasSecondaryShoot = false;
 		Magnum.IsZoomable = true;
 		Magnum.ZoomMultiplier = new int[]{2};

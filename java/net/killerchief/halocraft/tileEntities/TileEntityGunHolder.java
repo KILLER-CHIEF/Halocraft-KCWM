@@ -1,6 +1,6 @@
 package net.killerchief.halocraft.tileEntities;
 
-import net.killerchief.halocraft.client.models.Model3DBase;
+import net.killerchief.kcweaponmod.Model3DWeaponBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -32,7 +32,7 @@ public class TileEntityGunHolder extends TileEntity implements IInventory {
 	private int TranslationYGun = 0;
 	private int TranslationZGun = 0;
 	
-	public Model3DBase gunModel = null;
+	public Model3DWeaponBase gunModel = null;
 
 	/**
 	 * Reads a tile entity from NBT.

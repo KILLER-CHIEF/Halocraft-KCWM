@@ -55,12 +55,12 @@ public abstract class Model3DBase extends ModelBase {
 		this.renderAllParts(tileentity, par7);
 	}
 
-	protected void renderAllParts(TileEntity entity, float par7)
+	public void renderAllParts(TileEntity entity, float par7)
 	{
 		this.renderAllParts(par7);
 	}
 
-	protected void renderAllParts(float par7)
+	public void renderAllParts(float par7)
 	{
 		if (this.bodyModel != null)
 		{

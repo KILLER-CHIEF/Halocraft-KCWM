@@ -4,10 +4,10 @@
 
 package net.killerchief.halocraft.client.models.guns;
 
-import net.killerchief.halocraft.client.models.Model3DBase;
+import net.killerchief.kcweaponmod.Model3DWeaponBase;
 import net.killerchief.turbomodelthingy.ModelRendererTurbo;
 
-public class ModelGravityHammer extends Model3DBase
+public class ModelGravityHammer extends Model3DWeaponBase
 {
 	int textureX = 128;
 	int textureY = 128;
