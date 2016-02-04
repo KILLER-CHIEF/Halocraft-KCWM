@@ -2,7 +2,6 @@ package net.killerchief.halocraft.blocks;
 
 import net.killerchief.halocraft.Halocraft;
 import net.killerchief.halocraft.tileEntities.TileEntityLightBridgeExt;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -29,9 +28,9 @@ public class BlockLightBridgeExt extends BlockContainer {
 	@Override
 	public void registerBlockIcons(IIconRegister iiconregister)
 	{
-		this.blockIcon = iiconregister.registerIcon(Halocraft.MODID+":NullX");
+		this.blockIcon = iiconregister.registerIcon(Halocraft.MODID+":LightBridgeExt");
 	}
-	
+
 	/**
 	 * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
 	 */
@@ -56,10 +55,7 @@ public class BlockLightBridgeExt extends BlockContainer {
 	@Override
 	public void setBlockBoundsForItemRender()
 	{
-		//System.out.println("check");
-		//gonna haveta do metadata for this
-		this.setBlockBounds(0.0F, 0.6F, 0.0F, 1.0F, 0.9F, 1.0F);
-		//this.setBlockBounds(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+		this.setBlockBounds(0.0F, 0.8F, 0.0F, 1.0F, 0.9F, 1.0F);
 	}
 
 	/**

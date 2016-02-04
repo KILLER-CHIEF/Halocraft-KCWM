@@ -24,6 +24,7 @@ import net.killerchief.halocraft.config.HalocraftItems;
 import net.killerchief.halocraft.config.HalocraftItemsWeapons;
 import net.killerchief.halocraft.entities.EntityDeployableGravityLift;
 import net.killerchief.halocraft.entities.EntityGravityLiftFX;
+import net.killerchief.halocraft.entities.EntityLightBridgeFX;
 import net.killerchief.halocraft.entities.mobs.EntityEliteCarbine;
 import net.killerchief.halocraft.entities.mobs.EntityElitePlasmaRifle;
 import net.killerchief.halocraft.entities.mobs.EntityEliteSword;
@@ -131,6 +132,10 @@ public class ClientProxy extends CommonProxy {
 		if (type == 1)
 		{
 			effectR.addEffect(new EntityGravityLiftFX(worldObj, posX, posY, posZ, motionX, motionY, motionZ));
+		}
+		else if (type == 2)
+		{
+			effectR.addEffect(new EntityLightBridgeFX(worldObj, posX, posY, posZ, motionX, motionY, motionZ));
 		}
 	}
 

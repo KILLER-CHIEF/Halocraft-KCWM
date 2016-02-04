@@ -29,12 +29,7 @@ public class BlockLightBridgeGen extends BlockContainer {
 	@SideOnly(Side.CLIENT)
 	private IIcon iconTop;
 	@SideOnly(Side.CLIENT)
-	private IIcon iconSideA;
-	private IIcon iconSideB;
-	private IIcon iconSideC;
-	private IIcon iconSideD;
-	@SideOnly(Side.CLIENT)
-	private IIcon iconBottom;
+	private IIcon iconSide;
 
 	private boolean isActive = false;
 	private static boolean isBlockSwapping;
@@ -69,23 +64,13 @@ public class BlockLightBridgeGen extends BlockContainer {
 	@Override
 	public IIcon getIcon(int side, int metadata)
 	{
-		//System.out.println(metadata);
+		if (side <= 1)
+			return this.iconTop;
+		if ((metadata & 7) <= 1)
+			return this.blockIcon;
 		if(side == (metadata & 7))
-			return this.iconTop;
-		/*if(side == 0)
-			return this.iconBottom;
-		if(side == 1)
-			return this.iconTop;
-		if(side == 2)
-			return this.iconSideA;
-		if(side == 3)
-			return this.iconSideB;
-		if(side == 4)
-			return this.iconSideC;
-		if(side == 5)
-			return this.iconSideD;*/
-
-		return this.iconBottom;
+			return this.blockIcon;
+		return this.iconSide;
 	}
 
 	/**
@@ -96,13 +81,9 @@ public class BlockLightBridgeGen extends BlockContainer {
 	@Override
 	public void registerBlockIcons(IIconRegister iiconregister)
 	{
-		this.blockIcon = iiconregister.registerIcon(Halocraft.MODID + ":PermanentGravityLiftDarkTop");
-		this.iconTop = iiconregister.registerIcon(Halocraft.MODID+":PermanentGravityLiftBrightTop");
-		this.iconSideA = iiconregister.registerIcon(Halocraft.MODID+":PermanentGravityLiftBrightSide");
-		this.iconSideB = iiconregister.registerIcon(Halocraft.MODID+":TitaniumOre");
-		this.iconSideC = iiconregister.registerIcon(Halocraft.MODID+":TitaniumBlock");
-		this.iconSideD = iiconregister.registerIcon(Halocraft.MODID+":ForerunnerMetal");
-		this.iconBottom = iiconregister.registerIcon(Halocraft.MODID+":PermanentGravityLiftBrightBottom");
+		this.blockIcon = iiconregister.registerIcon(Halocraft.MODID + ":LightBridgeFront");
+		this.iconTop = iiconregister.registerIcon(Halocraft.MODID+":ForerunnerFloorPattern1");
+		this.iconSide = iiconregister.registerIcon(Halocraft.MODID + ":ForerunnerFloorPattern3");
 	}
 
 	public void swapBlockType(boolean setToActive, World world, int i, int j, int k)
@@ -147,19 +128,30 @@ public class BlockLightBridgeGen extends BlockContainer {
 	{
 		int i1 = 0;
 		int z1 = 0;
-		if (meta == 2) {
+		if (meta <= 1 || meta == 2) {
 			i1 = 0;
 			z1 = -1;
-		} else if (meta == 3) {
+			genOffHelper(world, i, j, k, i1, z1);
+		}
+		if (meta <= 1 || meta == 3) {
 			i1 = 0;
 			z1 = 1;
-		} else if (meta == 4) {
+			genOffHelper(world, i, j, k, i1, z1);
+		}
+		if (meta <= 1 || meta == 4) {
 			i1 = -1;
 			z1 = 0;
-		} else if (meta == 5) {
+			genOffHelper(world, i, j, k, i1, z1);
+		}
+		if (meta <= 1 || meta == 5) {
 			i1 = 1;
 			z1 = 0;
+			genOffHelper(world, i, j, k, i1, z1);
 		}
+	}
+	
+	private static void genOffHelper(World world, int i, int j, int k, int i1, int z1)
+	{
 		if (!(i1 == 0 && z1 == 0))
 		{
 			for (int d = 1; d <= TileEntityLightBridgeGen.maxDistance; d++) {

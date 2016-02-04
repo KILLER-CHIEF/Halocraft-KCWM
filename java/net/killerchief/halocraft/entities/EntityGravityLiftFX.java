@@ -12,11 +12,10 @@ import org.lwjgl.opengl.GL11;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-
 @SideOnly(Side.CLIENT)
 public class EntityGravityLiftFX extends EntityFX
 {
-	private static final ResourceLocation texture = new ResourceLocation(Halocraft.MODID+":textures/particleFX/GravityLiftFX.png");
+	protected static ResourceLocation texture = new ResourceLocation(Halocraft.MODID+":textures/particleFX/GravityLiftFX.png");
 
 	public EntityGravityLiftFX(World par1World, double par2, double par4, double par6, double par8, double par10, double par12)
 	{
@@ -137,42 +136,3 @@ public class EntityGravityLiftFX extends EntityFX
 		}
 	}
 }
-
-/*public class HCEntityGravityLiftFX extends EntityFX
-{
-    public HCEntityGravityLiftFX(World par1World, double par2, double par4, double par6, double par8, double par10, double par12)
-    {
-        super(par1World, par2, par4, par6, par8, par10, par12);
-        float f = rand.nextFloat() * 0.1F + 0.2F;
-        particleRed = 0f;
-        particleGreen = 0.2f;
-        particleBlue = 0.8f;
-        setParticleTextureIndex(22);
-        setSize(0.02F, 0.02F);
-        particleScale = particleScale * (rand.nextFloat() * 0.6F + 0.5F);
-        motionX *= 0.019999999552965164D;
-        motionY *= 3.0D;
-        motionZ *= 0.019999999552965164D;
-        particleMaxAge = (int)(20D / (Math.random() * 0.80000000000000004D + 0.20000000000000001D));
-        noClip = true;
-    }
-
-    /**
- * Called to update the entity's position/logic.
- */
-/*public void onUpdate()
-    {
-        prevPosX = posX;
-        prevPosY = posY;
-        prevPosZ = posZ;
-        moveEntity(motionX, motionY, motionZ);
-        motionX *= 0.98999999999999999D;
-        motionY *= 0.98999999999999999D;
-        motionZ *= 0.98999999999999999D;
-
-        if (particleMaxAge-- <= 0)
-        {
-            setDead();
-        }
-    }
-}*/

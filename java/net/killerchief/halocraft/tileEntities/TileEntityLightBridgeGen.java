@@ -16,7 +16,7 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import cpw.mods.fml.client.FMLClientHandler;
 
-public class TileEntityLightBridgeGen extends TileEntity implements IInventory{
+public class TileEntityLightBridgeGen extends TileEntity implements IInventory {
 
 	public int delay = 0;
 	public boolean hasSomethingChanged = true;
@@ -47,82 +47,25 @@ public class TileEntityLightBridgeGen extends TileEntity implements IInventory{
 						int meta = this.worldObj.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord);
 						int i1 = 0;
 						int z1 = 0;
-						if (meta == 2) {
+						if (meta <= 1 || meta == 2) {
 							i1 = 0;
 							z1 = -1;
-						} else if (meta == 3) {
+							this.doPlacement(i1, z1);
+						}
+						if (meta <= 1 || meta == 3) {
 							i1 = 0;
 							z1 = 1;
-						} else if (meta == 4) {
+							this.doPlacement(i1, z1);
+						}
+						if (meta <= 1 || meta == 4) {
 							i1 = -1;
 							z1 = 0;
-						} else if (meta == 5) {
+							this.doPlacement(i1, z1);
+						}
+						if (meta <= 1 || meta == 5) {
 							i1 = 1;
 							z1 = 0;
-						}
-						if (!(i1 == 0 && z1 == 0))
-						{
-							for (int d = 1; d <= maxDistance; d++) {
-								int x = this.xCoord+(d*i1);
-								int y = this.yCoord;
-								int z = this.zCoord+(d*z1);
-								Block blockScan = this.worldObj.getBlock(x, y, z);
-
-								if (this.getBridgeDistance() >= d)
-								{//correct height
-									if (blockScan == HalocraftBlocks.LightBridgeExt)
-									{
-										TileEntity te = this.worldObj.getTileEntity(x, y, z);
-										if (te instanceof TileEntityLightBridgeExt) {
-											TileEntityLightBridgeExt lbext = (TileEntityLightBridgeExt)te;
-											if (!lbext.active) {
-												lbext.active = true;//set then send changes to client
-												lbext.genX = this.xCoord;
-												lbext.genY = this.yCoord;
-												lbext.genZ = this.zCoord;
-												lbext.renderType = (z1==0 ? 1 : (i1==0 ? 2 : 0));
-												this.worldObj.markBlockForUpdate(x, y, z);
-												lbext.markDirty();
-												this.hasSomethingChanged = true;
-											}
-										}
-									}
-									else if (blockScan == Blocks.air) {
-										this.delay = 0;
-										this.worldObj.setBlock(x, y, z, HalocraftBlocks.LightBridgeExt);
-										TileEntity te = this.worldObj.getTileEntity(x, y, z);
-										if (te instanceof TileEntityLightBridgeExt) {
-											TileEntityLightBridgeExt lbext = (TileEntityLightBridgeExt)te;
-											lbext.active = true;//set then send changes to client
-											lbext.genX = this.xCoord;
-											lbext.genY = this.yCoord;
-											lbext.genZ = this.zCoord;
-											lbext.renderType = (z1==0 ? 1 : (i1==0 ? 2 : 0));
-											this.worldObj.markBlockForUpdate(x, y, z);
-											lbext.markDirty();
-										}
-										this.hasSomethingChanged = true;
-									} else
-										break;
-								}
-								else if (blockScan == HalocraftBlocks.LightBridgeExt)
-								{//overflow set to air
-									TileEntity te = this.worldObj.getTileEntity(x, y, z);
-									if (te instanceof TileEntityLightBridgeExt) {
-										TileEntityLightBridgeExt lbext = (TileEntityLightBridgeExt)te;
-										if (lbext.active && lbext.genX == this.xCoord && lbext.genY == this.yCoord && lbext.genZ == this.zCoord) {
-											lbext.active = false;//set then send changes to client
-											this.worldObj.markBlockForUpdate(x, y, z);
-											lbext.markDirty();
-										}
-									}
-									this.hasSomethingChanged = true;
-								}
-								else
-								{//if normal block then break
-									break;
-								}
-							}
+							this.doPlacement(i1, z1);
 						}
 					}
 					else
@@ -146,6 +89,74 @@ public class TileEntityLightBridgeGen extends TileEntity implements IInventory{
 					this.hasSomethingChanged = false;
 					this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
 					this.markDirty();
+				}
+			}
+		}
+	}
+
+	private void doPlacement(int i1, int z1)
+	{
+		if (!(i1 == 0 && z1 == 0))
+		{
+			for (int d = 1; d <= maxDistance; d++) {
+				int x = this.xCoord+(d*i1);
+				int y = this.yCoord;
+				int z = this.zCoord+(d*z1);
+				Block blockScan = this.worldObj.getBlock(x, y, z);
+
+				if (this.getBridgeDistance() >= d)
+				{//correct height
+					if (blockScan == HalocraftBlocks.LightBridgeExt)
+					{
+						TileEntity te = this.worldObj.getTileEntity(x, y, z);
+						if (te instanceof TileEntityLightBridgeExt) {
+							TileEntityLightBridgeExt lbext = (TileEntityLightBridgeExt)te;
+							if (!lbext.active) {
+								lbext.active = true;//set then send changes to client
+								lbext.genX = this.xCoord;
+								lbext.genY = this.yCoord;
+								lbext.genZ = this.zCoord;
+								lbext.renderType = (z1==0 ? 1 : (i1==0 ? 2 : 0));
+								this.worldObj.markBlockForUpdate(x, y, z);
+								lbext.markDirty();
+								this.hasSomethingChanged = true;
+							}
+						}
+					}
+					else if (blockScan == Blocks.air) {
+						this.delay = 0;
+						this.worldObj.setBlock(x, y, z, HalocraftBlocks.LightBridgeExt);
+						TileEntity te = this.worldObj.getTileEntity(x, y, z);
+						if (te instanceof TileEntityLightBridgeExt) {
+							TileEntityLightBridgeExt lbext = (TileEntityLightBridgeExt)te;
+							lbext.active = true;//set then send changes to client
+							lbext.genX = this.xCoord;
+							lbext.genY = this.yCoord;
+							lbext.genZ = this.zCoord;
+							lbext.renderType = (z1==0 ? 1 : (i1==0 ? 2 : 0));
+							this.worldObj.markBlockForUpdate(x, y, z);
+							lbext.markDirty();
+						}
+						this.hasSomethingChanged = true;
+					} else
+						break;
+				}
+				else if (blockScan == HalocraftBlocks.LightBridgeExt)
+				{//overflow set to air
+					TileEntity te = this.worldObj.getTileEntity(x, y, z);
+					if (te instanceof TileEntityLightBridgeExt) {
+						TileEntityLightBridgeExt lbext = (TileEntityLightBridgeExt)te;
+						if (lbext.active && lbext.genX == this.xCoord && lbext.genY == this.yCoord && lbext.genZ == this.zCoord) {
+							lbext.active = false;//set then send changes to client
+							this.worldObj.markBlockForUpdate(x, y, z);
+							lbext.markDirty();
+						}
+					}
+					this.hasSomethingChanged = true;
+				}
+				else
+				{//if normal block then break
+					break;
 				}
 			}
 		}

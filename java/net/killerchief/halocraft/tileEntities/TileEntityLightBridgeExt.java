@@ -14,12 +14,14 @@ import net.minecraft.tileentity.TileEntity;
 public class TileEntityLightBridgeExt extends TileEntity {
 
 	public int delay = 10;
+	public int delay2 = 10;
 	
 	public int genX = 0;
 	public int genY = -1;
 	public int genZ = 0;
 	public boolean active = false;
 	public int deathTimer = 0;
+	private boolean dying = false;
 	
 	public int renderType = 0;
 	public int[] renderEdges = {0,0,0, 0,0,0, 0,0,0, 0,0,0};
@@ -28,19 +30,20 @@ public class TileEntityLightBridgeExt extends TileEntity {
 	{
 		if (this.getWorldObj().getBlock(x, y, z) != HalocraftBlocks.LightBridgeGenActive || this.yCoord != y)
 			return false;
+		int meta = this.getWorldObj().getBlockMetadata(x, y, z);
 		if (this.xCoord == x)
 		{
 			if (z - this.zCoord > 0)
-				return this.getWorldObj().getBlockMetadata(x, y, z) == 2;
+				return meta <= 1 || meta == 2;
 			else
-				return this.getWorldObj().getBlockMetadata(x, y, z) == 3;
+				return meta <= 1 || meta == 3;
 		}
 		if (this.zCoord == z)
 		{
 			if (x - this.xCoord > 0)
-				return this.getWorldObj().getBlockMetadata(x, y, z) == 4;
+				return meta <= 1 || meta == 4;
 			else
-				return this.getWorldObj().getBlockMetadata(x, y, z) == 5;
+				return meta <= 1 || meta == 5;
 		}
 		return false;
 	}
@@ -54,10 +57,10 @@ public class TileEntityLightBridgeExt extends TileEntity {
 	{
 		if (--this.delay <= 0)
 		{
-			//System.out.println(this.deathTimer);
 			this.delay = 50;
 			if (this.active && this.genY >= 0 && this.genY == this.yCoord && this.checkGenAndOrient(this.genX, this.genY, this.genZ))
 			{
+				this.dying = false;
 				this.renderType = (this.genZ == this.zCoord ? 1 : (this.genX == this.xCoord ? 2 : 0));
 				if (	(this.worldObj.getBlock(this.xCoord + 1, this.yCoord, this.zCoord) == HalocraftBlocks.LightBridgeExt ||
 						this.worldObj.getBlock(this.xCoord - 1, this.yCoord, this.zCoord) == HalocraftBlocks.LightBridgeExt) &&
@@ -110,16 +113,10 @@ public class TileEntityLightBridgeExt extends TileEntity {
 						this.renderEdges[d*3] = 0;
 					}
 				}
-				System.out.println(this.renderEdges);
-				
-				
-				if (this.deathTimer < 4)
-				{
-					this.deathTimer++;
-				}
 			}
 			else
 			{
+				this.dying = true;
 				this.active = false;
 				//System.out.println("Scan");
 				/*if (!this.scanGen(TileEntityLightBridgeGen.maxDistance))
@@ -128,7 +125,7 @@ public class TileEntityLightBridgeExt extends TileEntity {
 					this.genY = this.yCoord;
 					this.genZ = this.zCoord;
 				}*/
-				if (--this.deathTimer < 0)
+				if (this.deathTimer < 0)
 				{
 					this.worldObj.setBlock(this.xCoord, this.yCoord, this.zCoord, Blocks.air);
 					this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
@@ -136,12 +133,30 @@ public class TileEntityLightBridgeExt extends TileEntity {
 				//System.out.println("Scan Complete");
 			}
 		}
-		if (this.active)
+		if (--this.delay2 <= 0)
+		{
+			this.delay2 = 10;
+			if (this.dying)
+			{
+				if (this.deathTimer >= 0)
+				{
+					this.deathTimer--;
+				}
+			}
+			else
+			{
+				if (this.deathTimer < 4)
+				{
+					this.deathTimer++;
+				}
+			}
+		}
+		if (this.deathTimer > 0)
 		{
 			//System.out.println("ActiveGen: X:"+genX+" Y:"+genY+" Z:"+genZ+" - "+this.getWorldObj().getBlock(genX, genY, genZ));
 			if (this.worldObj.isRemote)
 			{
-				Halocraft.proxy.ParticleFX(1, worldObj, (float)xCoord + this.worldObj.rand.nextFloat(), (float)yCoord + 0.1F, (float)zCoord + this.worldObj.rand.nextFloat(), 0.0D, 1.0D, 0.0D);
+				Halocraft.proxy.ParticleFX(2, worldObj, (float)xCoord + this.worldObj.rand.nextFloat(), (float)yCoord + 0.84F, (float)zCoord + this.worldObj.rand.nextFloat(), 0.0D, 0.0D, 0.0D);
 			}
 		}
 	}

@@ -1,62 +1,116 @@
 //This File was created with the Minecraft-SMP Modelling Toolbox 2.1.3.0
-// Copyright (C) 2015 Minecraft-SMP.de
+// Copyright (C) 2016 Minecraft-SMP.de
 // This file is for Flan's Flying Mod Version 4.0.x+
 
 package net.killerchief.halocraft.client.models.items;
 
 import net.killerchief.halocraft.client.models.Model3DBase;
 import net.killerchief.turbomodelthingy.ModelRendererTurbo;
-import net.minecraft.tileentity.TileEntity;
 
 public class ModelLightBridgeExt extends Model3DBase
 {
-	protected ModelRendererTurbo[] bodyModel;
-	protected ModelRendererTurbo[] edgeAModel;
-	protected ModelRendererTurbo[] edgeBModel;
-	protected ModelRendererTurbo[] edgeCModel;
-	protected ModelRendererTurbo[] edgeDModel;
-	
 	int textureX = 256;
 	int textureY = 256;
+	
+	protected ModelRendererTurbo[] skidsModel;
+	protected ModelRendererTurbo[] noseModel;
+	protected ModelRendererTurbo[] tailModel;
+	protected ModelRendererTurbo[] bayModel;
+	protected ModelRendererTurbo[] leftWingModel;
+	protected ModelRendererTurbo[] rightWingModel;
+	protected ModelRendererTurbo[] topWingModel;
+	protected ModelRendererTurbo[] yawFlapModel;
+	protected ModelRendererTurbo[] pitchFlapLeftModel;
 
 	public ModelLightBridgeExt()
 	{
 		bodyModel = new ModelRendererTurbo[1];
-		bodyModel[0] = new ModelRendererTurbo(this, 0, 0, textureX, textureY); // Import Box1
-		edgeAModel = new ModelRendererTurbo[1];
-		edgeAModel[0] = new ModelRendererTurbo(this, 0, 0, textureX, textureY); // Box 0
-		edgeBModel = new ModelRendererTurbo[1];
-		edgeBModel[0] = new ModelRendererTurbo(this, 0, 0, textureX, textureY); // Box 1
-		edgeCModel = new ModelRendererTurbo[1];
-		edgeCModel[0] = new ModelRendererTurbo(this, 0, 0, textureX, textureY); // Box 2
-		edgeDModel = new ModelRendererTurbo[1];
-		edgeDModel[0] = new ModelRendererTurbo(this, 0, 0, textureX, textureY); // Box 3
+		bodyModel[0] = new ModelRendererTurbo(this, 0, 0, textureX, textureY); // Main1D
 
-		bodyModel[0].addShapeBox(0F, 1.6F, 0F, 12, 5, 15, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Import Box1
-		bodyModel[0].setRotationPoint(0F, 0F, 0F);
+		bodyModel[0].addShapeBox(0F, 0F, 0F, 64, 1, 64, 0F, 0F, 0F, 0F, -48F, 0F, 0F, -48F, 0F, -48F, 0F, 0F, -48F, 0F, 0F, 0F, -48F, 0F, 0F, -48F, 0F, -48F, 0F, 0F, -48F); // Main1D
+		bodyModel[0].setRotationPoint(0F, 1.6F, 0F);
+		
+		
+		skidsModel = new ModelRendererTurbo[1];
+		skidsModel[0] = new ModelRendererTurbo(this, 0, 66, textureX, textureY); // Main2D
 
-		edgeAModel[0].addShapeBox(0F, 1.6F, -4F, 16, 5, 4, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 0
-		edgeAModel[0].setRotationPoint(0F, 0F, 0F);
+		skidsModel[0].addShapeBox(0F, 0F, 0F, 64, 1, 64, 0F, 0F, 0F, 0F, -48F, 0F, 0F, -48F, 0F, -48F, 0F, 0F, -48F, 0F, 0F, 0F, -48F, 0F, 0F, -48F, 0F, -48F, 0F, 0F, -48F); // Main2D
+		skidsModel[0].setRotationPoint(0F, 1.6F, 0F);
 
-		edgeBModel[0].addShapeBox(0F, 1.6F, 16F, 16, 5, 4, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 1
-		edgeBModel[0].setRotationPoint(0F, 0F, 0F);
 
-		edgeCModel[0].addShapeBox(-4F, 1.6F, 0F, 4, 5, 16, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 2
-		edgeCModel[0].setRotationPoint(0F, 0F, 0F);
+		noseModel = new ModelRendererTurbo[1];
+		noseModel[0] = new ModelRendererTurbo(this, 132, 154, textureX, textureY); // Part0A
 
-		edgeDModel[0].addShapeBox(16F, 1.6F, 0F, 4, 5, 16, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 3
-		edgeDModel[0].setRotationPoint(0F, 0F, 0F);
+		noseModel[0].addShapeBox(-1F, -10F, 0F, 1, 15, 56, 0F, -2F, -10.5F, 0F, 2F, -10F, 0F, 2F, -10F, -48F, -2F, -10.5F, -48F, 0F, 0F, 0F, 2F, -4F, 0F, 2F, -4F, -48F, 0F, 0F, -48F); // Part0A
+		noseModel[0].setRotationPoint(-2F, 1.6F, 0F);
 
+
+		tailModel = new ModelRendererTurbo[1];
+		tailModel[0] = new ModelRendererTurbo(this, 0, 90, textureX, textureY); // Part1A
+
+		tailModel[0].addShapeBox(-1F, -10F, 0F, 1, 15, 64, 0F, -2F, -10.5F, 1F, 2F, -10F, 0F, 2F, -10F, -56F, -2F, -10.5F, -56F, 0F, 0F, 3F, 2F, -4F, 0F, 2F, -4F, -56F, 0F, 0F, -56F); // Part1A
+		tailModel[0].setRotationPoint(-2F, 1.6F, 0F);
+
+
+		bayModel = new ModelRendererTurbo[1];
+		bayModel[0] = new ModelRendererTurbo(this, 123, 69, textureX, textureY); // Part-1A
+
+		bayModel[0].addShapeBox(-1F, -10F, 0F, 1, 15, 64, 0F, -2F, -10.5F, -1F, 2F, -10F, 0F, 2F, -10F, -56F, -2F, -10.5F, -56F, 0F, 0F, -3F, 2F, -4F, 0F, 2F, -4F, -56F, 0F, 0F, -56F); // Part-1A
+		bayModel[0].setRotationPoint(-2F, 1.6F, 0F);
+
+
+		leftWingModel = new ModelRendererTurbo[1];
+		leftWingModel[0] = new ModelRendererTurbo(this, 13, 172, textureX, textureY); // Part2A
+
+		leftWingModel[0].addShapeBox(-1F, -10F, 0F, 1, 15, 64, 0F, -3F, -10.5F, 1.5F, 2F, -10F, 0F, 2F, -10F, -56F, -2F, -10.5F, -56F, -3F, 0F, 4F, 2F, -4F, 0F, 2F, -4F, -56F, 0F, 0F, -56F); // Part2A
+		leftWingModel[0].setRotationPoint(-2F, 1.6F, 0F);
+
+
+		rightWingModel = new ModelRendererTurbo[1];
+		rightWingModel[0] = new ModelRendererTurbo(this, 132, 154, textureX, textureY); // Part0B
+
+		rightWingModel[0].addShapeBox(-1F, -10F, -40F, 1, 15, 56, 0F, -2F, -10.5F, -48F, 2F, -10F, -48F, 2F, -10F, 0F, -2F, -10.5F, 0F, 0F, 0F, -48F, 2F, -4F, -48F, 2F, -4F, 0F, 0F, 0F, 0F); // Part0B
+		rightWingModel[0].setRotationPoint(-2F, 1.6F, 0F);
+
+
+		topWingModel = new ModelRendererTurbo[1];
+		topWingModel[0] = new ModelRendererTurbo(this, 0, 90, textureX, textureY); // Part1B
+
+		topWingModel[0].addShapeBox(-1F, -10F, -48F, 1, 15, 64, 0F, -2F, -10.5F, -56F, 2F, -10F, -56F, 2F, -10F, 0F, -2F, -10.5F, 1F, 0F, 0F, -56F, 2F, -4F, -56F, 2F, -4F, 0F, 0F, 0F, 3F); // Part1B
+		topWingModel[0].setRotationPoint(-2F, 1.6F, 0F);
+
+
+		yawFlapModel = new ModelRendererTurbo[1];
+		yawFlapModel[0] = new ModelRendererTurbo(this, 123, 69, textureX, textureY); // Part-1B
+
+		yawFlapModel[0].addShapeBox(-1F, -10F, -48F, 1, 15, 64, 0F, -2F, -10.5F, -56F, 2F, -10F, -56F, 2F, -10F, 0F, -2F, -10.5F, -1F, 0F, 0F, -56F, 2F, -4F, -56F, 2F, -4F, 0F, 0F, 0F, -3F); // Part-1B
+		yawFlapModel[0].setRotationPoint(-2F, 1.6F, 0F);
+
+
+		pitchFlapLeftModel = new ModelRendererTurbo[1];
+		pitchFlapLeftModel[0] = new ModelRendererTurbo(this, 13, 172, textureX, textureY); // Part2B
+
+		pitchFlapLeftModel[0].addShapeBox(-1F, -10F, -48F, 1, 15, 64, 0F, -2F, -10.5F, -56F, 2F, -10F, -56F, 2F, -10F, 0F, -3F, -10.5F, 1.5F, 0F, 0F, -56F, 2F, -4F, -56F, 2F, -4F, 0F, -3F, 0F, 4F); // Part2B
+		pitchFlapLeftModel[0].setRotationPoint(-2F, 1.6F, 0F);
+
+		//translateAll(0F, 0F, 0F);
+		//flipAll();
+		
 		this.flip(this.bodyModel);
-		this.flip(this.edgeAModel);
-		this.flip(this.edgeBModel);
-		this.flip(this.edgeCModel);
-		this.flip(this.edgeDModel);
+		this.flip(this.skidsModel);
+		this.flip(this.noseModel);
+		this.flip(this.tailModel);
+		this.flip(this.bayModel);
+		this.flip(this.leftWingModel);
+		this.flip(this.rightWingModel);
+		this.flip(this.topWingModel);
+		this.flip(this.yawFlapModel);
+		this.flip(this.pitchFlapLeftModel);
 	}
 	
-	public void renderModel(int model, float par7)
+	public void renderModel(boolean isA, int section, float par7)
 	{
-		if (model == 0)
+		if (section == 4)
 		{
 			if (this.bodyModel != null)
 			{
@@ -69,11 +123,11 @@ public class ModelLightBridgeExt extends Model3DBase
 				}
 			}
 		}
-		else if (model == 1)
+		else if (section == 5)
 		{
-			if (this.edgeAModel != null)
+			if (this.skidsModel != null)
 			{
-				for (ModelRendererTurbo part : this.edgeAModel)
+				for (ModelRendererTurbo part : this.skidsModel)
 				{
 					if (part != null)
 					{
@@ -82,99 +136,113 @@ public class ModelLightBridgeExt extends Model3DBase
 				}
 			}
 		}
-		else if (model == 2)
+		else if (isA)
 		{
-			if (this.edgeBModel != null)
+			if (section == 0)
 			{
-				for (ModelRendererTurbo part : this.edgeBModel)
+				if (this.noseModel != null)
 				{
-					if (part != null)
+					for (ModelRendererTurbo part : this.noseModel)
 					{
-						part.render(par7);
+						if (part != null)
+						{
+							part.render(par7);
+						}
+					}
+				}
+			}
+			else if (section == 1)
+			{
+				if (this.tailModel != null)
+				{
+					for (ModelRendererTurbo part : this.tailModel)
+					{
+						if (part != null)
+						{
+							part.render(par7);
+						}
+					}
+				}
+			}
+			else if (section == -1)
+			{
+				if (this.bayModel != null)
+				{
+					for (ModelRendererTurbo part : this.bayModel)
+					{
+						if (part != null)
+						{
+							part.render(par7);
+						}
+					}
+				}
+			}
+			else if (section == 2)
+			{
+				if (this.leftWingModel != null)
+				{
+					for (ModelRendererTurbo part : this.leftWingModel)
+					{
+						if (part != null)
+						{
+							part.render(par7);
+						}
 					}
 				}
 			}
 		}
-		else if (model == 3)
+		else
 		{
-			if (this.edgeCModel != null)
+			if (section == 0)
 			{
-				for (ModelRendererTurbo part : this.edgeCModel)
+				if (this.rightWingModel != null)
 				{
-					if (part != null)
+					for (ModelRendererTurbo part : this.rightWingModel)
 					{
-						part.render(par7);
+						if (part != null)
+						{
+							part.render(par7);
+						}
 					}
 				}
 			}
-		}
-		else if (model == 4)
-		{
-			if (this.edgeDModel != null)
+			else if (section == 1)
 			{
-				for (ModelRendererTurbo part : this.edgeDModel)
+				if (this.topWingModel != null)
 				{
-					if (part != null)
+					for (ModelRendererTurbo part : this.topWingModel)
 					{
-						part.render(par7);
+						if (part != null)
+						{
+							part.render(par7);
+						}
 					}
 				}
 			}
-		}
-	}
-	
-	/**
-	 * Sets the models various rotation angles then renders the model.
-	 */
-	public void render(TileEntity tileentity, float par2, float par3, float par4, float par5, float par6, float par7)
-	{
-		if (this.bodyModel != null)
-		{
-			for (ModelRendererTurbo part : this.bodyModel)
+			else if (section == -1)
 			{
-				if (part != null)
+				if (this.yawFlapModel != null)
 				{
-					part.render(par7);
+					for (ModelRendererTurbo part : this.yawFlapModel)
+					{
+						if (part != null)
+						{
+							part.render(par7);
+						}
+					}
 				}
 			}
-		}
-		if (this.edgeAModel != null)
-		{
-			for (ModelRendererTurbo part : this.edgeAModel)
+			else if (section == 2)
 			{
-				if (part != null)
+				if (this.pitchFlapLeftModel != null)
 				{
-					part.render(par7);
-				}
-			}
-		}
-		if (this.edgeBModel != null)
-		{
-			for (ModelRendererTurbo part : this.edgeBModel)
-			{
-				if (part != null)
-				{
-					part.render(par7);
-				}
-			}
-		}
-		if (this.edgeCModel != null)
-		{
-			for (ModelRendererTurbo part : this.edgeCModel)
-			{
-				if (part != null)
-				{
-					part.render(par7);
-				}
-			}
-		}
-		if (this.edgeDModel != null)
-		{
-			for (ModelRendererTurbo part : this.edgeDModel)
-			{
-				if (part != null)
-				{
-					part.render(par7);
+					for (ModelRendererTurbo part : this.pitchFlapLeftModel)
+					{
+						if (part != null)
+						{
+							part.render(par7);
+						}
+					}
 				}
 			}
 		}
