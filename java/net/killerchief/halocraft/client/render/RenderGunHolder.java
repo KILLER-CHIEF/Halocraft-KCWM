@@ -23,8 +23,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.IItemRenderer.ItemRenderType;
-import net.minecraftforge.client.MinecraftForgeClient;
 
 import org.lwjgl.opengl.GL11;
 
@@ -37,6 +35,11 @@ public class RenderGunHolder extends TileEntitySpecialRenderer {
 	private ModelGunHolderMount gunMount = new ModelGunHolderMount();
 	private static final ResourceLocation resourcelocationGunMount = new ResourceLocation(Halocraft.MODID+":textures/entities/GunHolderRender.png");
 
+	private Model3DWeaponBase modelEnergySword = new ModelEnergySword();
+	private static final ResourceLocation resourcelocationEnergySwordOn = new ResourceLocation(Halocraft.MODID+":textures/guns/SkinEnergySword.png");
+	private static final ResourceLocation resourcelocationEnergySwordOff = new ResourceLocation(Halocraft.MODID+":textures/guns/SkinEnergySwordOff.png");
+
+	
 	public RenderGunHolder() {}
 
 	public void renderBlock(TileEntityGunHolder tileentity, double par2, double par4, double par6, float par8)
@@ -93,6 +96,7 @@ public class RenderGunHolder extends TileEntitySpecialRenderer {
 			GL11.glTranslated(-1D, -1D, 1D);
 			GL11.glRotatef(180F, 1F, 0F, 0F);
 			boolean glows = false;
+			tileentity.gunModel = null;
 
 			//length to middle (Varies on Weapon) Make function that looks for weapon length dimensions and divide by 2 and subtract offset
 			float l = 0F;
@@ -132,14 +136,14 @@ public class RenderGunHolder extends TileEntitySpecialRenderer {
 			}
 			else if (item == HalocraftItems.SwordHilt)
 			{
-				this.bindTexture(new ResourceLocation(Halocraft.MODID+":textures/guns/SkinEnergySwordOff.png"));
-				tileentity.gunModel = new ModelEnergySword();
+				this.bindTexture(this.resourcelocationEnergySwordOff);
+				tileentity.gunModel = this.modelEnergySword;
 				l = 0.0F;//SwordHilt
 			}
 			else if (item == HalocraftItemsWeapons.EnergySword)
 			{
-				this.bindTexture(new ResourceLocation(Halocraft.MODID+":textures/guns/SkinEnergySword.png"));
-				tileentity.gunModel = new ModelEnergySword();
+				this.bindTexture(this.resourcelocationEnergySwordOn);
+				tileentity.gunModel = this.modelEnergySword;
 				glows = true;
 				l = 0.6F;//EnergySword
 			}
