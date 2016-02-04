@@ -37,6 +37,7 @@ import net.killerchief.halocraft.entities.vehicles.EntityWarthogChainGun;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogGauss;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogRocket;
 import net.killerchief.kcweaponmod.InterfaceZoomReticle;
+import net.killerchief.kcweaponmod.ItemWeapon;
 import net.killerchief.kcweaponmod.KCWeaponMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -49,6 +50,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
@@ -870,82 +872,31 @@ public class TickHandlerClient {
 		if (minecraft.inGameHasFocus && minecraft.thePlayer.inventory.getCurrentItem() != null && (HalocraftUtils.isPlayerWearingArmor(minecraft, 0, true, false, false, false) || HalocraftUtils.isPlayerWearingArmor(minecraft, 1, true, false, false, false) || HalocraftUtils.isPlayerWearingArmor(minecraft, 2, true, false, false, false)))
 		{
 			Item currentItem = minecraft.thePlayer.inventory.getCurrentItem().getItem();
-			if (currentItem == HalocraftItemsWeapons.AssaultRifle || currentItem == HalocraftItemsWeapons.SMG || currentItem == HalocraftItemsWeapons.BattleRifle || currentItem == HalocraftItemsWeapons.DMR || currentItem == HalocraftItemsWeapons.Magnum || currentItem == HalocraftItemsWeapons.SniperRifle || currentItem == HalocraftItemsWeapons.Shotgun || currentItem == HalocraftItemsWeapons.RocketLauncher || currentItem == HalocraftItemsWeapons.Mauler)
+			if (currentItem.isDamageable() && (currentItem instanceof ItemWeapon || currentItem == HalocraftItemsWeapons.EnergySword))
 			{
 				int Number = currentItem.getMaxDamage() - minecraft.thePlayer.inventory.getCurrentItem().getItemDamage();
 				this.RenderMag(minecraft, Number);
 			}
-			if (currentItem == HalocraftItemsWeapons.AssaultRifle || currentItem == HalocraftItemsWeapons.SMG)
-			{
-				int Number = 0;
-				for(int i = 0; i <= minecraft.thePlayer.inventory.mainInventory.length; i += 1) {
-					if(minecraft.thePlayer.inventory.getStackInSlot(i) != null) {
-						if(minecraft.thePlayer.inventory.getStackInSlot(i).getItem() == HalocraftItemsWeapons.SmallRounds) {
-							Number += minecraft.thePlayer.inventory.getStackInSlot(i).stackSize;
-						}
-					}
-				}
-				this.RenderAmmo(minecraft, Number);
-			}
-			if (currentItem == HalocraftItemsWeapons.BattleRifle || currentItem == HalocraftItemsWeapons.DMR || currentItem == HalocraftItemsWeapons.Magnum)
-			{
-				int Number = 0;
-				for(int i = 0; i <= minecraft.thePlayer.inventory.mainInventory.length; i += 1) {
-					if(minecraft.thePlayer.inventory.getStackInSlot(i) != null) {
-						if(minecraft.thePlayer.inventory.getStackInSlot(i).getItem() == HalocraftItemsWeapons.MediumRounds) {
-							Number += minecraft.thePlayer.inventory.getStackInSlot(i).stackSize;
-						}
-					}
-				}
-				this.RenderAmmo(minecraft, Number);
-			}
-			if (currentItem == HalocraftItemsWeapons.SniperRifle)
-			{
-				int Number = 0;
-				for(int i = 0; i <= minecraft.thePlayer.inventory.mainInventory.length; i += 1) {
-					if(minecraft.thePlayer.inventory.getStackInSlot(i) != null) {
-						if(minecraft.thePlayer.inventory.getStackInSlot(i).getItem() == HalocraftItemsWeapons.LargeRounds) {
-							Number += minecraft.thePlayer.inventory.getStackInSlot(i).stackSize;
-						}
-					}
-				}
-				this.RenderAmmo(minecraft, Number);
-			}
-			if (currentItem == HalocraftItemsWeapons.Shotgun || currentItem == HalocraftItemsWeapons.Mauler)
-			{
-				int Number = 0;
-				for(int i = 0; i <= minecraft.thePlayer.inventory.mainInventory.length; i += 1) {
-					if(minecraft.thePlayer.inventory.getStackInSlot(i) != null) {
-						if(minecraft.thePlayer.inventory.getStackInSlot(i).getItem() == HalocraftItemsWeapons.ShotgunRounds) {
-							Number += minecraft.thePlayer.inventory.getStackInSlot(i).stackSize;
-						}
-					}
-				}
-				this.RenderAmmo(minecraft, Number);
-			}
-			if (currentItem == HalocraftItemsWeapons.RocketLauncher)
-			{
-				int Number = 0;
-				for(int i = 0; i <= minecraft.thePlayer.inventory.mainInventory.length; i += 1) {
-					if(minecraft.thePlayer.inventory.getStackInSlot(i) != null) {
-						if(minecraft.thePlayer.inventory.getStackInSlot(i).getItem() == HalocraftItemsWeapons.Rocket) {
-							Number += minecraft.thePlayer.inventory.getStackInSlot(i).stackSize;
-						}
-					}
-				}
-				this.RenderAmmo(minecraft, Number);
-			}
-			if (currentItem == HalocraftItemsWeapons.Carbine || currentItem == HalocraftItemsWeapons.PlasmaRifle || currentItem == HalocraftItemsWeapons.PlasmaPistol || currentItem == HalocraftItemsWeapons.Needler || currentItem == HalocraftItemsWeapons.BeamRifle || currentItem == HalocraftItemsWeapons.EnergySword || currentItem == HalocraftItems.SwordHilt || currentItem == HalocraftItemsWeapons.Flamethrower || currentItem == HalocraftItemsWeapons.Spiker)
-			{
-				int Number = currentItem.getMaxDamage() - minecraft.thePlayer.inventory.getCurrentItem().getItemDamage();
-				this.RenderAmmo(minecraft, Number);
-			}
+			
 			if (currentItem == Items.bow)
 			{
 				int Number = 0;
 				for(int i = 0; i <= minecraft.thePlayer.inventory.mainInventory.length; i += 1) {
 					if(minecraft.thePlayer.inventory.getStackInSlot(i) != null) {
 						if(minecraft.thePlayer.inventory.getStackInSlot(i).getItem() == Items.arrow) {
+							Number += minecraft.thePlayer.inventory.getStackInSlot(i).stackSize;
+						}
+					}
+				}
+				this.RenderAmmo(minecraft, Number);
+			}
+			else if (currentItem instanceof ItemWeapon && ((ItemWeapon)currentItem).Properties.AmmoType != null)
+			{
+				Item item = ((ItemWeapon)currentItem).Properties.AmmoType.getItem();
+				int Number = 0;
+				for(int i = 0; i <= minecraft.thePlayer.inventory.mainInventory.length; i += 1) {
+					if(minecraft.thePlayer.inventory.getStackInSlot(i) != null) {
+						if(minecraft.thePlayer.inventory.getStackInSlot(i).getItem() == item) {
 							Number += minecraft.thePlayer.inventory.getStackInSlot(i).stackSize;
 						}
 					}
