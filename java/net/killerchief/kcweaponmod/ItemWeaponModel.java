@@ -8,6 +8,7 @@ public class ItemWeaponModel {
 	public ModelBase Model;
 	public ResourceLocation Texture;
 	public boolean NoChngOnSprint = false;
+	public boolean Glows = false;
 	
 	public ItemWeaponModel(ModelBase model, ResourceLocation texture)
 	{
@@ -19,6 +20,12 @@ public class ItemWeaponModel {
 	{
 		this(model, texture);
 		this.NoChngOnSprint = noChngOnSprint;
+	}
+	
+	public ItemWeaponModel(ModelBase model, ResourceLocation texture, boolean noChngOnSprint, boolean glows)
+	{
+		this(model, texture, noChngOnSprint);
+		this.Glows = glows;
 	}
 	
 	public float TPScaleX = 1F;

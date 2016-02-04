@@ -17,13 +17,13 @@ import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 
-public class RenderGun implements IItemRenderer {
+public class RenderGun2Old implements IItemRenderer {
 	
 	private ModelBase Model = new ModelSniperRifle();
 	private ResourceLocation par1ResourceLocation = new ResourceLocation(Halocraft.MODID+":textures/guns/SkinSniperRifle.png");
 	private boolean NoChngOnSprint = false;
 	
-	public RenderGun(ModelBase model, String texture, boolean nochngonsprint)
+	public RenderGun2Old(ModelBase model, String texture, boolean nochngonsprint)
 	{
 		this.Model = model;
 		this.par1ResourceLocation = new ResourceLocation(texture);

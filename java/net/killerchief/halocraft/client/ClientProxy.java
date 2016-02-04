@@ -11,7 +11,6 @@ import net.killerchief.halocraft.client.render.RenderEliteGun;
 import net.killerchief.halocraft.client.render.RenderEliteSword;
 import net.killerchief.halocraft.client.render.RenderGhost;
 import net.killerchief.halocraft.client.render.RenderGruntPlasmaPistol;
-import net.killerchief.halocraft.client.render.RenderGun;
 import net.killerchief.halocraft.client.render.RenderGunHolder;
 import net.killerchief.halocraft.client.render.RenderHealthPack;
 import net.killerchief.halocraft.client.render.RenderLightBridgeExt;
@@ -45,7 +44,10 @@ import net.killerchief.halocraft.entities.vehicles.MovingVehicleSoundLoop;
 import net.killerchief.halocraft.tileEntities.TileEntityGunHolder;
 import net.killerchief.halocraft.tileEntities.TileEntityHealthPack;
 import net.killerchief.halocraft.tileEntities.TileEntityLightBridgeExt;
+import net.killerchief.kcweaponmod.ItemWeaponModel;
+import net.killerchief.kcweaponmod.RenderWeapon;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -65,15 +67,15 @@ public class ClientProxy extends CommonProxy {
 	{
 		return RenderingRegistry.addNewArmourRendererPrefix(armor);
 	}
-	
+
 	@Override
 	public Model3DArmor armor3DType(int t)
-    {
+	{
 		if (t == 1)
 			return new ModelArmorMarkV();
 		else
 			return null;
-    }
+	}
 
 	@Override
 	public void registerRenderers()
@@ -84,9 +86,9 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityGruntPlasmaPistol.class, new RenderGruntPlasmaPistol(new ModelGrunt(), 0.0F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityGruntFlee.class, new RenderGruntPlasmaPistol(new ModelGrunt(), 0.0F));
 
-		MinecraftForgeClient.registerItemRenderer(HalocraftItems.SwordHilt, (IItemRenderer)new RenderGun(new ModelEnergySword(), Halocraft.MODID+":textures/guns/SkinEnergySwordOff.png", true));
-		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.EnergySword, (IItemRenderer)new RenderGun(new ModelEnergySword(), Halocraft.MODID+":textures/guns/SkinEnergySword.png", true));
-		
+		MinecraftForgeClient.registerItemRenderer(HalocraftItems.SwordHilt, (IItemRenderer)new RenderWeapon(new ItemWeaponModel(new ModelEnergySword(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinEnergySwordOff.png"), true)));
+		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.EnergySword, (IItemRenderer)new RenderWeapon(new ItemWeaponModel(new ModelEnergySword(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinEnergySword.png"), false, true)));
+
 		//FIXME: Add New Gun Models
 		//MinecraftForgeClient.registerItemRenderer(KCWeaponMod.weapons[HalocraftItemsWeapons.ModMapOffset+19], (IItemRenderer)new RenderGun(new ModelSentinelBeam(), Halocraft.MODID+":textures/guns/SkinSentinelBeamMajor.png", false));
 		//MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.AssaultRifle, (IItemRenderer)new RenderGun(new ModelGravityHammer(), Halocraft.MODID+":textures/guns/SkinBruteHammer.png", false));
@@ -115,7 +117,7 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGunHolder.class, new RenderGunHolder());
 		//TODO: STRIPED - CovSupplyCase
 		//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCovSupplyCase.class, new RenderCovSupplyCase());
-		
+
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLightBridgeExt.class, new RenderLightBridgeExt());
 	}
 

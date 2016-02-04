@@ -262,6 +262,8 @@ public class KCWeaponMod {
 													ItemWeaponModel model = new ItemWeaponModel(modelClass, new ResourceLocation(mb));
 													String mc = getTagElementString(eElement, "modelnochangeonsprint");
 													model.NoChngOnSprint = !mc.equals("") ? Boolean.parseBoolean(mc) : model.NoChngOnSprint;
+													String md = getTagElementString(eElement, "modelglows");
+													model.Glows = !md.equals("") ? Boolean.parseBoolean(md) : model.Glows;
 													
 													String[] m1 = getTagElementString(eElement, "tpscale").split(",");
 													if (m1.length == 3) { model.TPScale(Float.parseFloat(m1[0]), Float.parseFloat(m1[1]), Float.parseFloat(m1[2])); }

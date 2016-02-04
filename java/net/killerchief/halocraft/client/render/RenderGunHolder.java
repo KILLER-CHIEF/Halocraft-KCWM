@@ -1,6 +1,7 @@
 package net.killerchief.halocraft.client.render;
 
 import net.killerchief.halocraft.Halocraft;
+import net.killerchief.halocraft.client.models.guns.ModelEnergySword;
 import net.killerchief.halocraft.client.models.items.ModelGunHolderMount;
 import net.killerchief.halocraft.config.HalocraftItems;
 import net.killerchief.halocraft.config.HalocraftItemsWeapons;
@@ -9,6 +10,7 @@ import net.killerchief.kcweaponmod.ItemWeapon;
 import net.killerchief.kcweaponmod.Model3DWeaponBase;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -21,6 +23,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.IItemRenderer.ItemRenderType;
+import net.minecraftforge.client.MinecraftForgeClient;
 
 import org.lwjgl.opengl.GL11;
 
@@ -88,6 +92,7 @@ public class RenderGunHolder extends TileEntitySpecialRenderer {
 			GL11.glScalef(-0.55F, -0.55F, 0.55F);
 			GL11.glTranslated(-1D, -1D, 1D);
 			GL11.glRotatef(180F, 1F, 0F, 0F);
+			boolean glows = false;
 
 			//length to middle (Varies on Weapon) Make function that looks for weapon length dimensions and divide by 2 and subtract offset
 			float l = 0F;
@@ -127,10 +132,15 @@ public class RenderGunHolder extends TileEntitySpecialRenderer {
 			}
 			else if (item == HalocraftItems.SwordHilt)
 			{
+				this.bindTexture(new ResourceLocation(Halocraft.MODID+":textures/guns/SkinEnergySwordOff.png"));
+				tileentity.gunModel = new ModelEnergySword();
 				l = 0.0F;//SwordHilt
 			}
 			else if (item == HalocraftItemsWeapons.EnergySword)
 			{
+				this.bindTexture(new ResourceLocation(Halocraft.MODID+":textures/guns/SkinEnergySword.png"));
+				tileentity.gunModel = new ModelEnergySword();
+				glows = true;
 				l = 0.6F;//EnergySword
 			}
 			else if (item == HalocraftItemsWeapons.RocketLauncher)
@@ -166,14 +176,18 @@ public class RenderGunHolder extends TileEntitySpecialRenderer {
 			{
 				l = 0.0F;//Mauler
 			}
-			if (item instanceof ItemWeapon && ((ItemWeapon)item).Properties.WeaponModel != null && ((ItemWeapon)item).Properties.WeaponModel.Model instanceof Model3DWeaponBase)
+			if (tileentity.gunModel == null)
 			{
-				this.bindTexture(((ItemWeapon)item).Properties.WeaponModel.Texture);
-				tileentity.gunModel = (Model3DWeaponBase) ((ItemWeapon)item).Properties.WeaponModel.Model;
-			}
-			else
-			{
-				tileentity.gunModel = null;
+				if (item instanceof ItemWeapon && ((ItemWeapon)item).Properties.WeaponModel != null && ((ItemWeapon)item).Properties.WeaponModel.Model instanceof Model3DWeaponBase)
+				{
+					this.bindTexture(((ItemWeapon)item).Properties.WeaponModel.Texture);
+					tileentity.gunModel = (Model3DWeaponBase) ((ItemWeapon)item).Properties.WeaponModel.Model;
+					glows = ((ItemWeapon)item).Properties.WeaponModel.Glows;
+				}
+				else
+				{
+					tileentity.gunModel = null;
+				}
 			}
 
 			double angle = (tileentity.getRotationYGun()*5F)*Math.PI / 180; //Centers the model <v
@@ -188,7 +202,16 @@ public class RenderGunHolder extends TileEntitySpecialRenderer {
 
 			if (tileentity.gunModel != null)
 			{
+				if (glows)
+				{
+					GL11.glDisable(GL11.GL_LIGHTING);
+					OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
+				}
 				tileentity.gunModel.render(tileentity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+				if (glows)
+				{
+					GL11.glEnable(GL11.GL_LIGHTING);
+				}
 			}
 			else
 			{

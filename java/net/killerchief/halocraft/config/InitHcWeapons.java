@@ -16,7 +16,7 @@ import net.killerchief.halocraft.client.models.guns.ModelNeedler;
 import net.killerchief.halocraft.client.models.guns.ModelPlasmaPistol;
 import net.killerchief.halocraft.client.models.guns.ModelPlasmaRifle;
 import net.killerchief.halocraft.client.models.guns.ModelRocketLauncher;
-import net.killerchief.halocraft.client.models.guns.ModelSMG;
+import net.killerchief.halocraft.client.models.guns.ModelSMGM7S;
 import net.killerchief.halocraft.client.models.guns.ModelSentinelBeam;
 import net.killerchief.halocraft.client.models.guns.ModelShotgun;
 import net.killerchief.halocraft.client.models.guns.ModelSniperRifle;
@@ -340,7 +340,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties SMG = new ItemWeaponProperties();
 		SMG.Name = Halocraft.MODID+".SMG";
 		SMG.Texture = Halocraft.MODID + ":SMG";
-		SMG.WeaponModel = new ItemWeaponModel(new ModelSMG(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinSMG.png"));
+		SMG.WeaponModel = new ItemWeaponModel(new ModelSMGM7S(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinSMGM7.png"));
 		SMG.IsAutomaticOrHasSecondaryShoot = true;
 		SMG.IsZoomable = false;
 		//SMG.ZoomMultiplier = new int[]{2};
