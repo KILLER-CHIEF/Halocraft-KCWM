@@ -6,11 +6,17 @@ import java.util.List;
 import net.killerchief.halocraft.entities.mobs.EntityEliteCarbine;
 import net.killerchief.halocraft.entities.mobs.EntityElitePlasmaRifle;
 import net.killerchief.halocraft.entities.mobs.EntityEliteSword;
+import net.killerchief.halocraft.entities.mobs.EntityGruntFlee;
 import net.killerchief.halocraft.entities.mobs.EntityGruntPlasmaPistol;
+import net.killerchief.halocraft.entities.vehicles.EntityGhost;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseBlue;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseDefault;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseGreen;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseRed;
+import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
+import net.killerchief.halocraft.entities.vehicles.EntityWarthogChainGun;
+import net.killerchief.halocraft.entities.vehicles.EntityWarthogGauss;
+import net.killerchief.halocraft.entities.vehicles.EntityWarthogRocket;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
@@ -48,55 +54,90 @@ public class CommandSpawnEntity implements ICommand {
 	{
 		return this.aliases;
 	}
-	
+
 	private String getModEntities()
 	{
-		return "Entities: MongooseBlack, MongooseGreen, MongooseBlue, MongooseRed, EliteSword, ElitePlasmaRifle, EliteCarbine, GruntPlasmaPistol";
+		return "Entities: Warthog, WarthogChainGun, WarthogGauss, WarthogRocket, Ghost, MongooseBlack, MongooseGreen, MongooseBlue, MongooseRed, Elite, EliteSword, ElitePlasmaRifle, EliteCarbine, Grunt, GruntPlasmaPistol";
 	}
-	
+
 	private void processSpawning(ICommandSender icommandsender, String stringentity, double x, double y, double z, float yaw, float pitch)
 	{
 		Entity entity = null;
-		if(stringentity.equalsIgnoreCase("mongooseblack"))
-        {
+		if (stringentity.equalsIgnoreCase("warthog"))
+		{
+			entity = new EntityWarthog(icommandsender.getEntityWorld());
+			entity.setLocationAndAngles(x, y, z, yaw, pitch);
+		}
+		else if (stringentity.equalsIgnoreCase("warthogchaingun"))
+		{
+			entity = new EntityWarthogChainGun(icommandsender.getEntityWorld());
+			entity.setLocationAndAngles(x, y, z, yaw, pitch);
+		}
+		else if (stringentity.equalsIgnoreCase("warthoggauss"))
+		{
+			entity = new EntityWarthogGauss(icommandsender.getEntityWorld());
+			entity.setLocationAndAngles(x, y, z, yaw, pitch);
+		}
+		else if (stringentity.equalsIgnoreCase("warthogrocket"))
+		{
+			entity = new EntityWarthogRocket(icommandsender.getEntityWorld());
+			entity.setLocationAndAngles(x, y, z, yaw, pitch);
+		}
+		else if (stringentity.equalsIgnoreCase("ghost"))
+		{
+			entity = new EntityGhost(icommandsender.getEntityWorld());
+			entity.setLocationAndAngles(x, y, z, yaw, pitch);
+		}
+		else if (stringentity.equalsIgnoreCase("mongooseblack"))
+		{
 			entity = new EntityMongooseDefault(icommandsender.getEntityWorld());
 			entity.setLocationAndAngles(x, y, z, yaw, pitch);
-        }
-		if(stringentity.equalsIgnoreCase("mongoosegreen"))
-        {
+		}
+		else if (stringentity.equalsIgnoreCase("mongoosegreen"))
+		{
 			entity = new EntityMongooseGreen(icommandsender.getEntityWorld());
 			entity.setLocationAndAngles(x, y, z, yaw, pitch);
-        }
-		if(stringentity.equalsIgnoreCase("mongooseblue"))
-        {
+		}
+		else if (stringentity.equalsIgnoreCase("mongooseblue"))
+		{
 			entity = new EntityMongooseBlue(icommandsender.getEntityWorld());
 			entity.setLocationAndAngles(x, y, z, yaw, pitch);
-        }
-		if(stringentity.equalsIgnoreCase("mongoosered"))
-        {
+		}
+		else if (stringentity.equalsIgnoreCase("mongoosered"))
+		{
 			entity = new EntityMongooseRed(icommandsender.getEntityWorld());
 			entity.setLocationAndAngles(x, y, z, yaw, pitch);
-        }
-		if(stringentity.equalsIgnoreCase("elitesword"))
-        {
+		}
+		else if (stringentity.equalsIgnoreCase("elite"))
+		{
+			entity = new EntityEliteSword(icommandsender.getEntityWorld(), null);
+			entity.setLocationAndAngles(x, y, z, yaw, pitch);
+		}
+		else if (stringentity.equalsIgnoreCase("elitesword"))
+		{
 			entity = new EntityEliteSword(icommandsender.getEntityWorld());
 			entity.setLocationAndAngles(x, y, z, yaw, pitch);
-        }
-		if(stringentity.equalsIgnoreCase("eliteplasmarifle"))
-        {
+		}
+		else if (stringentity.equalsIgnoreCase("eliteplasmarifle"))
+		{
 			entity = new EntityElitePlasmaRifle(icommandsender.getEntityWorld());
 			entity.setLocationAndAngles(x, y, z, yaw, pitch);
-        }
-		if(stringentity.equalsIgnoreCase("elitecarbine"))
-        {
+		}
+		else if (stringentity.equalsIgnoreCase("elitecarbine"))
+		{
 			entity = new EntityEliteCarbine(icommandsender.getEntityWorld());
 			entity.setLocationAndAngles(x, y, z, yaw, pitch);
-        }
-		if(stringentity.equalsIgnoreCase("gruntplasmapistol"))
-        {
+		}
+		else if (stringentity.equalsIgnoreCase("grunt"))
+		{
+			entity = new EntityGruntFlee(icommandsender.getEntityWorld(), null);
+			entity.setLocationAndAngles(x, y, z, yaw, pitch);
+		}
+		else if (stringentity.equalsIgnoreCase("gruntplasmapistol"))
+		{
 			entity = new EntityGruntPlasmaPistol(icommandsender.getEntityWorld());
 			entity.setLocationAndAngles(x, y, z, yaw, pitch);
-        }
+		}
 		/*if(stringentity.equalsIgnoreCase("fraggrenade"))
         {
 			entity = new HCEntityFragGrenade(icommandsender.getEntityWorld());
@@ -129,14 +170,14 @@ public class CommandSpawnEntity implements ICommand {
 			this.ErrorChatMsg(icommandsender, "command.halocraft.spawnentity.unknownentity", getModEntities());
 		}
 	}
-	
+
 	private void ErrorChatMsg(ICommandSender icommandsender, String s, String... s8)
 	{
 		icommandsender.addChatMessage(new ChatComponentText("\u00a74"+LanguageRegistry.instance().getStringLocalization("command.halocraft.commanderror")+"\u00a7f"+LanguageRegistry.instance().getStringLocalization(s)));
 		for (String stringText : s8)
-        {
+		{
 			icommandsender.addChatMessage(new ChatComponentText(stringText));
-        }
+		}
 		throw new WrongUsageException(getCommandUsage(icommandsender));
 	}
 
