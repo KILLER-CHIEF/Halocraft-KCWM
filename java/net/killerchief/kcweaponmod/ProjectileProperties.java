@@ -271,12 +271,15 @@ public class ProjectileProperties {
 				projectile.motionX *= bounceFactor;
 				projectile.motionY *= bounceFactor;
 				projectile.motionZ *= bounceFactor;
+				
+				boolean bounced = false;
 
 				if (collidedObject.sideHit == 0 || collidedObject.sideHit == 1)
 				{
 					if (ricochetFactor < 0 || Math.abs(projectile.motionY) * ricochetFactor < Math.abs(projectile.motionX) + Math.abs(projectile.motionZ))
 					{
 						projectile.motionY *= -1;
+						bounced = true;
 					}
 				}
 				else if (collidedObject.sideHit == 2 || collidedObject.sideHit == 3)
@@ -284,6 +287,7 @@ public class ProjectileProperties {
 					if (ricochetFactor < 0 || Math.abs(projectile.motionZ) * ricochetFactor < Math.abs(projectile.motionX) + Math.abs(projectile.motionY))
 					{
 						projectile.motionZ *= -1;
+						bounced = true;
 					}
 				}
 				else if (collidedObject.sideHit == 4 || collidedObject.sideHit == 5)
@@ -291,6 +295,7 @@ public class ProjectileProperties {
 					if (ricochetFactor < 0 || Math.abs(projectile.motionX) * ricochetFactor < Math.abs(projectile.motionY) + Math.abs(projectile.motionZ))
 					{
 						projectile.motionX *= -1;
+						bounced = true;
 					}
 				}
 				else
@@ -300,6 +305,8 @@ public class ProjectileProperties {
 					projectile.motionZ *= bounceFactor;
 				}
 				++projectile.EncounteredEntities;
+				
+				System.out.println(bounced);
 
 				KCUtils.CallPropertyParts(projectile, collidedObject, args[2]);
 			}

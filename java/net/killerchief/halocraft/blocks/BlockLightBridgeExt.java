@@ -16,7 +16,6 @@ public class BlockLightBridgeExt extends BlockContainer {
 	public BlockLightBridgeExt(String name) {
 		super(Material.iron);
 		this.setBlockName(Halocraft.MODID + "." + name);
-		this.setCreativeTab(Halocraft.InvTabHalocraft);
 		this.setLightLevel(0.8F);
 	}
 

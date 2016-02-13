@@ -73,27 +73,27 @@ public class EntityWarthog extends EntityVehicle
 	}
 
 	@Override
-	protected String getSoundLoopIdle()
+	protected String[] getSoundLoopIdle()
 	{
-		return Halocraft.MODID+":entities.warthog.WarthogEngineIdle";
+		return new String[]{Halocraft.MODID+":entities.warthog.WarthogEngineIdle"};
 	}
 
 	@Override
-	protected String getSoundLoopRun()
+	protected String[] getSoundLoopRun()
 	{
-		return Halocraft.MODID+":entities.warthog.WarthogEngineHigh";
+		return new String[]{Halocraft.MODID+":entities.warthog.WarthogEngineHigh"};
 	}
 
 	@Override
-	protected String getSoundEnter()
+	protected String[] getSoundEnter()
 	{
-		return Halocraft.MODID+":entities.warthog.WarthogEnter";
+		return new String[]{Halocraft.MODID+":entities.warthog.WarthogEnter"};
 	}
 
 	@Override
-	protected String getSoundExit()
+	protected String[] getSoundExit()
 	{
-		return Halocraft.MODID+":entities.warthog.WarthogExit";
+		return new String[]{Halocraft.MODID+":entities.warthog.WarthogExit"};
 	}
 
 	@Override
@@ -247,7 +247,8 @@ public class EntityWarthog extends EntityVehicle
 			if (this.riddenByEntity instanceof EntityLivingBase)
 			{
 				((EntityLivingBase)this.riddenByEntity).renderYawOffset = this.rotationYaw;
-				((EntityLivingBase)this.riddenByEntity).cameraPitch = -5F;
+				if (Halocraft.proxy.isSideClient() && Minecraft.getMinecraft().gameSettings.thirdPersonView == 1)
+					((EntityLivingBase)this.riddenByEntity).cameraPitch = -10F;
 			}
 		}
 	}
@@ -450,16 +451,16 @@ public class EntityWarthog extends EntityVehicle
 
 		this.motionX += -Math.sin(Math.toRadians(this.rotationYaw))*this.fwdVelocity;
 		this.motionZ += Math.cos(Math.toRadians(this.rotationYaw))*this.fwdVelocity;
-		this.fwdVelocity *= this.onGround?this.frictionFactor:0.99F;
-
-		if (this.fwdVelocity<0.01 && this.fwdVelocity>-0.01) {
+		
+		this.fwdVelocity *= this.onGround ? this.frictionFactor : 0.99F;
+		if (this.fwdVelocity < 0.01D && this.fwdVelocity > -0.01D) {
 			this.fwdVelocity = 0;
 		}
 
 		this.smoothMotion();
 
-		this.motionX = this.motionX*0.5;
-		this.motionY = this.motionY > -2 ? this.motionY - 0.08 : this.motionY;
+		this.motionX = this.motionX * 0.5D;
+		this.motionY = this.motionY > -2D ? this.motionY - 0.08D : this.motionY;
 		this.motionZ = this.motionZ * 0.5D;
 		this.moveEntity(this.motionX, this.motionY, this.motionZ);
 	}

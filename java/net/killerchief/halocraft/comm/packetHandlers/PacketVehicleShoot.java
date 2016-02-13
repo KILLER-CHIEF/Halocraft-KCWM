@@ -3,6 +3,7 @@ package net.killerchief.halocraft.comm.packetHandlers;
 import io.netty.buffer.ByteBuf;
 import net.killerchief.halocraft.Halocraft;
 import net.killerchief.halocraft.config.HalocraftItemsWeapons;
+import net.killerchief.halocraft.entities.vehicles.EntityBanshee;
 import net.killerchief.halocraft.entities.vehicles.EntityGhost;
 import net.killerchief.halocraft.entities.vehicles.EntityTurretSeat;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
@@ -62,6 +63,21 @@ public class PacketVehicleShoot implements IMessage {
 							double xOffset = -Math.sin(Math.toRadians(vehicle.rotationYaw)) * 2.2D * (vehicle.speed * 0.1 > 1D ? 1.1D : 1D);
 							double zOffset = Math.cos(Math.toRadians(vehicle.rotationYaw)) * 2.2D * (vehicle.speed * 0.1 > 1D ? 1.1D : 1D);
 							KCUtils.fireProjectile(player.worldObj, vehicle.posX + xOffset, vehicle.posY + 0.5D, vehicle.posZ + zOffset, player, HalocraftItemsWeapons.GhostPlasmaBolt.Properties.ID);
+						}
+					}
+					else if (player.ridingEntity instanceof EntityBanshee)
+					{
+						EntityBanshee vehicle = (EntityBanshee)player.ridingEntity;
+						if (vehicle.shootDelay <= 0)
+						{
+							player.worldObj.playSoundAtEntity(player, Halocraft.MODID+":entities.banshee.BansheeFire", 1.0F, 1.0F);
+							vehicle.shootDelay = 3;
+							Halocraft.network.sendTo(new PacketVehicleShoot(2F), (EntityPlayerMP)player);
+
+							double xOffset = -Math.sin(Math.toRadians(vehicle.rotationYaw)) * 3.2D * (vehicle.speed * 0.1 > 1D ? 1.1D : 1D);
+							double zOffset = Math.cos(Math.toRadians(vehicle.rotationYaw)) * 3.2D * (vehicle.speed * 0.1 > 1D ? 1.1D : 1D);
+							double yOffset = -Math.toRadians(vehicle.rotationPitch) * 1.5D;
+							KCUtils.fireProjectile(player.worldObj, vehicle.posX + xOffset, vehicle.posY + 0.5D + yOffset, vehicle.posZ + zOffset, player, HalocraftItemsWeapons.GhostPlasmaBolt.Properties.ID);
 						}
 					}
 					else if (player.ridingEntity instanceof EntityTurretSeat)

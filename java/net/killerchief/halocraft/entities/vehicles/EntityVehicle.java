@@ -26,10 +26,10 @@ public abstract class EntityVehicle extends Entity
 	/** Do All Vehicle Control & Movement Stuff Here */
 	abstract void updateMotionAndRotation();
 
-	protected abstract String getSoundLoopRun();
-	protected abstract String getSoundLoopIdle();
-	protected abstract String getSoundEnter();
-	protected abstract String getSoundExit();
+	protected abstract String[] getSoundLoopRun();
+	protected abstract String[] getSoundLoopIdle();
+	protected abstract String[] getSoundEnter();
+	protected abstract String[] getSoundExit();
 
 	public static final int maxHurtResistantTime = 10;
 	public double speed = 0D;
@@ -354,7 +354,7 @@ public abstract class EntityVehicle extends Entity
 			this.updateMotionAndRotation();
 		}
 
-		this.speed = Math.sqrt((this.motionX * this.motionX) + (this.motionZ * this.motionZ)) * 25D;
+		this.speed = Math.sqrt((this.motionX * this.motionX) + (this.motionY * this.motionY) + (this.motionZ * this.motionZ)) * 25D;
 		if (this.speed < 0.01 && this.speed > -0.01) {
 			this.speed = 0;
 		}
@@ -372,7 +372,9 @@ public abstract class EntityVehicle extends Entity
 			this.prevRiddenByEntity = this.riddenByEntity;
 			if (this.getSoundEnter() != null)
 			{
-				worldObj.playSoundAtEntity(this, this.getSoundEnter(), 1.0F, 1.0F);
+				for (String soundEnter : this.getSoundEnter()) {
+					this.worldObj.playSoundAtEntity(this, soundEnter, 1.0F, 1.0F);
+				}
 			}
 		}
 		if (this.riddenByEntity == null && this.prevRiddenByEntity != null)
@@ -380,7 +382,9 @@ public abstract class EntityVehicle extends Entity
 			this.prevRiddenByEntity = null;
 			if (this.getSoundExit() != null)
 			{
-				worldObj.playSoundAtEntity(this, this.getSoundExit(), 1.0F, 1.0F);
+				for (String soundExit : this.getSoundExit()) {
+					this.worldObj.playSoundAtEntity(this, soundExit, 1.0F, 1.0F);
+				}
 			}
 		}
 	}
@@ -397,7 +401,13 @@ public abstract class EntityVehicle extends Entity
 			{
 				if (Minecraft.getMinecraft().getSoundHandler() != null)
 				{
-					Halocraft.proxy.initializeVehicleLoopingSounds(this, this.getSoundLoopIdle(), this.getSoundLoopRun());
+					//Halocraft.proxy.initializeVehicleLoopingSounds(this, this.getSoundLoopIdle(), this.getSoundLoopRun());
+					for (String soundLoopIdle : this.getSoundLoopIdle()) {
+						Halocraft.proxy.initVehicleLoopSounds(this, 1, soundLoopIdle);						
+					}
+					for (String soundLoopRun : this.getSoundLoopRun()) {
+						Halocraft.proxy.initVehicleLoopSounds(this, 2, soundLoopRun);
+					}
 					this.InitializedVehicleLoopingSounds = true;
 				}
 			}

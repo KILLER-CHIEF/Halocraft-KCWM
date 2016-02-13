@@ -547,7 +547,7 @@ public class InitHcWeapons {
 		//PlasmaPistol.ZoomTexture = Halocraft.MODID+":textures/overlays/PlasmaPistolOverlay.png";
 		PlasmaPistol.HasReticle = true;
 		PlasmaPistol.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
-		PlasmaPistol.ReticleProperties = new int[]{39, 33, 37, 41, 18, 22};
+		PlasmaPistol.ReticleProperties = new int[]{39, 37, 37, 37, 18, 18};
 		PlasmaPistol.GunShootDelay = 4;
 		PlasmaPistol.Recoil = 1.4F;
 		PlasmaPistol.PerformOnly1ShootSound = true;

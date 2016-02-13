@@ -54,27 +54,27 @@ public abstract class EntityMongoose extends EntityVehicle
 	}
 
 	@Override
-	protected String getSoundLoopIdle()
+	protected String[] getSoundLoopIdle()
 	{
-		return Halocraft.MODID+":entities.mongoose.MongooseEngineIdle";
+		return new String[]{Halocraft.MODID+":entities.mongoose.MongooseEngineIdle"};
 	}
 
 	@Override
-	protected String getSoundLoopRun()
+	protected String[] getSoundLoopRun()
 	{
-		return Halocraft.MODID+":entities.mongoose.MongooseEngineHigh";
+		return new String[]{Halocraft.MODID+":entities.mongoose.MongooseEngineHigh"};
 	}
 
 	@Override
-	protected String getSoundEnter()
+	protected String[] getSoundEnter()
 	{
-		return Halocraft.MODID+":entities.mongoose.MongooseEnter";
+		return new String[]{Halocraft.MODID+":entities.mongoose.MongooseEnter"};
 	}
 
 	@Override
-	protected String getSoundExit()
+	protected String[] getSoundExit()
 	{
-		return Halocraft.MODID+":entities.mongoose.MongooseExit";
+		return new String[]{Halocraft.MODID+":entities.mongoose.MongooseExit"};
 	}
 
 	@Override
@@ -213,7 +213,8 @@ public abstract class EntityMongoose extends EntityVehicle
 			if (this.riddenByEntity instanceof EntityLivingBase)
 			{
 				((EntityLivingBase)this.riddenByEntity).renderYawOffset = this.rotationYaw;
-				//((EntityLivingBase)this.riddenByEntity).cameraPitch = -10F;
+				if (Halocraft.proxy.isSideClient() && Minecraft.getMinecraft().gameSettings.thirdPersonView == 1)
+					((EntityLivingBase)this.riddenByEntity).cameraPitch = -10F;
 			}
 		}
 	}
@@ -384,16 +385,16 @@ public abstract class EntityMongoose extends EntityVehicle
 
 		this.motionX += -Math.sin(Math.toRadians(this.rotationYaw))*this.fwdVelocity;
 		this.motionZ += Math.cos(Math.toRadians(this.rotationYaw))*this.fwdVelocity;
-		this.fwdVelocity *= this.onGround?this.frictionFactor:0.99F;
-
-		if (this.fwdVelocity<0.01 && this.fwdVelocity>-0.01) {
+		
+		this.fwdVelocity *= this.onGround ? this.frictionFactor : 0.99F;
+		if (this.fwdVelocity < 0.01D && this.fwdVelocity > -0.01D) {
 			this.fwdVelocity = 0;
 		}
 
 		this.smoothMotion();
 
-		this.motionX = this.motionX*0.5;
-		this.motionY = this.motionY > -2 ? this.motionY - 0.08 : this.motionY;
+		this.motionX = this.motionX * 0.5D;
+		this.motionY = this.motionY > -2D ? this.motionY - 0.08D : this.motionY;
 		this.motionZ = this.motionZ * 0.5D;
 		this.moveEntity(this.motionX, this.motionY, this.motionZ);
 	}

@@ -188,10 +188,6 @@ public class RenderGunHolder extends TileEntitySpecialRenderer {
 					tileentity.gunModel = (Model3DWeaponBase) ((ItemWeapon)item).Properties.WeaponModel.Model;
 					glows = ((ItemWeapon)item).Properties.WeaponModel.Glows;
 				}
-				else
-				{
-					tileentity.gunModel = null;
-				}
 			}
 
 			double angle = (tileentity.getRotationYGun()*5F)*Math.PI / 180; //Centers the model <v

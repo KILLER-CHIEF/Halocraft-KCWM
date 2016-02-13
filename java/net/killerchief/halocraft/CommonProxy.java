@@ -33,5 +33,7 @@ public class CommonProxy {
 	public void ParticleFX(int type, World par1World, double posX, double posY, double posZ, double motionX, double motionY, double motionZ) {}
 
 	public boolean initializeVehicleLoopingSounds(EntityVehicle vehicle, String soundRun, String soundIdle) { return false; }
+
+	public boolean initVehicleLoopSounds(EntityVehicle vehicle, int soundHandlerType, String soundFile) { return false; }
 	
 }

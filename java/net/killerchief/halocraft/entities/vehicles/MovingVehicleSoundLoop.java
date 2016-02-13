@@ -37,7 +37,7 @@ public class MovingVehicleSoundLoop extends MovingSound
 
 			if (this.Vehicle.riddenByEntity != null && this.Vehicle.enterSoundDelay <= 0)
 			{
-				double vehicleSpeed = (double)MathHelper.sqrt_double(this.Vehicle.motionX * this.Vehicle.motionX + this.Vehicle.motionZ * this.Vehicle.motionZ);
+				double vehicleSpeed = (double)MathHelper.sqrt_double(this.Vehicle.motionX * this.Vehicle.motionX + this.Vehicle.motionY * this.Vehicle.motionY + this.Vehicle.motionZ * this.Vehicle.motionZ);
 				this.volume = (float)vehicleSpeed * 0.9F * ((float)Math.abs(this.Vehicle.enterSoundDelay)/20F);
 				//System.out.println("High: "+this.volume);
 			}
@@ -79,7 +79,7 @@ public class MovingVehicleSoundLoop extends MovingSound
 
 				if (this.Vehicle.riddenByEntity != null && this.Vehicle.enterSoundDelay <= 0)
 				{
-					double vehicleSpeed = (double)MathHelper.sqrt_double(this.Vehicle.motionX * this.Vehicle.motionX + this.Vehicle.motionZ * this.Vehicle.motionZ);
+					double vehicleSpeed = (double)MathHelper.sqrt_double(this.Vehicle.motionX * this.Vehicle.motionX + this.Vehicle.motionY * this.Vehicle.motionY + this.Vehicle.motionZ * this.Vehicle.motionZ);
 					this.volume = (1.0F - ((float)vehicleSpeed)) * 0.8F * ((float)Math.abs(this.Vehicle.enterSoundDelay)/20F);
 					//System.out.println("Idle: "+this.volume);
 				}

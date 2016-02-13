@@ -30,13 +30,13 @@ public class EntityTurretSeat extends EntityPassengerSeat {
 				} else if (entity.rotationPitch < -50F) {
 					entity.rotationPitch = -50F;
 				}
-				if (Halocraft.proxy.isSideClient())
+				/*if (Halocraft.proxy.isSideClient())
 				{
 					if (Minecraft.getMinecraft().gameSettings.thirdPersonView == 1)
 					{
 						//entity.cameraPitch = -15F;
 					}
-				}
+				}*/
 			}
 		}
 	}

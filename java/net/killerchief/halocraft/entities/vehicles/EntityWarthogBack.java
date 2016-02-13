@@ -1,7 +1,10 @@
 package net.killerchief.halocraft.entities.vehicles;
 
+import net.killerchief.halocraft.Halocraft;
+import net.killerchief.halocraft.config.HalocraftItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
@@ -55,6 +58,24 @@ public class EntityWarthogBack extends Entity {
 	@Override
 	public boolean interactFirst(EntityPlayer par1EntityPlayer)
 	{
+		ItemStack heldItem = par1EntityPlayer.getCurrentEquippedItem();
+		if(heldItem != null && this.parentBody != null)
+		{
+			if(heldItem.getItem() == HalocraftItems.Wrench) {
+				if(this.parentBody.getHealth()<99) {
+					this.parentBody.setHealth(this.parentBody.getHealth() + 2);
+					heldItem.damageItem(1, par1EntityPlayer);
+					if(heldItem.getItemDamage()>=40) {
+						par1EntityPlayer.inventory.mainInventory[par1EntityPlayer.inventory.currentItem] = null;
+						this.playSound("random.break", 1.0F, 1.0F);
+						worldObj.playSoundAtEntity(this, "random.break", 1.0F, 1.0F);
+					}
+					worldObj.playSoundAtEntity(this, Halocraft.MODID+":items.WrenchFix", 1.0F, 1.0F);
+					return true;
+				}
+				return false;
+			}
+		}
 		//System.out.println(this.parentBody);//FIXME: Warthog Back: null for client (need data watchers)
 		if (this.parentBody != null && this.parentBody.seatGunner != null && this.parentBody.seatGunner.riddenByEntity == null)
 		{

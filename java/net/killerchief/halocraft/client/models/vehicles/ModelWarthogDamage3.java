@@ -494,311 +494,314 @@ public class ModelWarthogDamage3 extends ModelWarthog
 		bodyDoorOpenModel[2].rotateAngleZ = -0.43633231F;
 
 
-		frontWheelModel = new ModelRendererTurbo[76];
-		frontWheelModel[0] = new ModelRendererTurbo(this, 69, 274, textureX, textureY); // Wheels
-		frontWheelModel[1] = new ModelRendererTurbo(this, 69, 274, textureX, textureY); // Wheels
-		frontWheelModel[2] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
-		frontWheelModel[3] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
-		frontWheelModel[4] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
-		frontWheelModel[5] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
+		frontWheelModel = new ModelRendererTurbo[38];
+		frontWheelModel[0] = new ModelRendererTurbo(this, 34, 212, textureX, textureY); // Wheels
+		frontWheelModel[1] = new ModelRendererTurbo(this, 34, 212, textureX, textureY); // Wheels
+		frontWheelModel[2] = new ModelRendererTurbo(this, 8, 231, textureX, textureY); // Wheels
+		frontWheelModel[3] = new ModelRendererTurbo(this, 8, 231, textureX, textureY); // Wheels
+		frontWheelModel[4] = new ModelRendererTurbo(this, 40, 256, textureX, textureY); // Wheels
+		frontWheelModel[5] = new ModelRendererTurbo(this, 40, 256, textureX, textureY); // Wheels
 		frontWheelModel[6] = new ModelRendererTurbo(this, 76, 231, textureX, textureY); // Wheels
-		frontWheelModel[7] = new ModelRendererTurbo(this, 73, 213, textureX, textureY); // Wheels
-		frontWheelModel[8] = new ModelRendererTurbo(this, 34, 212, textureX, textureY); // Wheels
-		frontWheelModel[9] = new ModelRendererTurbo(this, 34, 212, textureX, textureY); // Wheels
-		frontWheelModel[10] = new ModelRendererTurbo(this, 8, 231, textureX, textureY); // Wheels
-		frontWheelModel[11] = new ModelRendererTurbo(this, 8, 231, textureX, textureY); // Wheels
-		frontWheelModel[12] = new ModelRendererTurbo(this, 12, 250, textureX, textureY); // Wheels
-		frontWheelModel[13] = new ModelRendererTurbo(this, 40, 256, textureX, textureY); // Wheels
-		frontWheelModel[14] = new ModelRendererTurbo(this, 40, 256, textureX, textureY); // Wheels
-		frontWheelModel[15] = new ModelRendererTurbo(this, 71, 251, textureX, textureY); // Wheels
-		frontWheelModel[16] = new ModelRendererTurbo(this, 76, 231, textureX, textureY); // Wheels
-		frontWheelModel[17] = new ModelRendererTurbo(this, 46, 231, textureX, textureY); // Wheels
-		frontWheelModel[18] = new ModelRendererTurbo(this, 73, 213, textureX, textureY); // Wheels
-		frontWheelModel[19] = new ModelRendererTurbo(this, 34, 212, textureX, textureY); // Wheels
+		frontWheelModel[7] = new ModelRendererTurbo(this, 76, 231, textureX, textureY); // Wheels
+		frontWheelModel[8] = new ModelRendererTurbo(this, 73, 213, textureX, textureY); // Wheels
+		frontWheelModel[9] = new ModelRendererTurbo(this, 73, 213, textureX, textureY); // Wheels
+		frontWheelModel[10] = new ModelRendererTurbo(this, 12, 250, textureX, textureY); // Wheels
+		frontWheelModel[11] = new ModelRendererTurbo(this, 71, 251, textureX, textureY); // Wheels
+		frontWheelModel[12] = new ModelRendererTurbo(this, 46, 231, textureX, textureY); // Wheels
+		frontWheelModel[13] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
+		frontWheelModel[14] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
+		frontWheelModel[15] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
+		frontWheelModel[16] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
+		frontWheelModel[17] = new ModelRendererTurbo(this, 69, 274, textureX, textureY); // Wheels
+		frontWheelModel[18] = new ModelRendererTurbo(this, 69, 274, textureX, textureY); // Wheels
+		frontWheelModel[19] = new ModelRendererTurbo(this, 73, 213, textureX, textureY); // Wheels
 		frontWheelModel[20] = new ModelRendererTurbo(this, 34, 212, textureX, textureY); // Wheels
-		frontWheelModel[21] = new ModelRendererTurbo(this, 8, 231, textureX, textureY); // Wheels
-		frontWheelModel[22] = new ModelRendererTurbo(this, 8, 231, textureX, textureY); // Wheels
-		frontWheelModel[23] = new ModelRendererTurbo(this, 40, 256, textureX, textureY); // Wheels
-		frontWheelModel[24] = new ModelRendererTurbo(this, 40, 256, textureX, textureY); // Wheels
-		frontWheelModel[25] = new ModelRendererTurbo(this, 76, 231, textureX, textureY); // Wheels
-		frontWheelModel[26] = new ModelRendererTurbo(this, 76, 231, textureX, textureY); // Wheels
-		frontWheelModel[27] = new ModelRendererTurbo(this, 73, 213, textureX, textureY); // Wheels
-		frontWheelModel[28] = new ModelRendererTurbo(this, 73, 213, textureX, textureY); // Wheels
-		frontWheelModel[29] = new ModelRendererTurbo(this, 12, 250, textureX, textureY); // Wheels
-		frontWheelModel[30] = new ModelRendererTurbo(this, 71, 251, textureX, textureY); // Wheels
-		frontWheelModel[31] = new ModelRendererTurbo(this, 46, 231, textureX, textureY); // Wheels
-		frontWheelModel[32] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
+		frontWheelModel[21] = new ModelRendererTurbo(this, 34, 212, textureX, textureY); // Wheels
+		frontWheelModel[22] = new ModelRendererTurbo(this, 73, 213, textureX, textureY); // Wheels
+		frontWheelModel[23] = new ModelRendererTurbo(this, 76, 231, textureX, textureY); // Wheels
+		frontWheelModel[24] = new ModelRendererTurbo(this, 76, 231, textureX, textureY); // Wheels
+		frontWheelModel[25] = new ModelRendererTurbo(this, 71, 251, textureX, textureY); // Wheels
+		frontWheelModel[26] = new ModelRendererTurbo(this, 40, 256, textureX, textureY); // Wheels
+		frontWheelModel[27] = new ModelRendererTurbo(this, 40, 256, textureX, textureY); // Wheels
+		frontWheelModel[28] = new ModelRendererTurbo(this, 12, 250, textureX, textureY); // Wheels
+		frontWheelModel[29] = new ModelRendererTurbo(this, 8, 231, textureX, textureY); // Wheels
+		frontWheelModel[30] = new ModelRendererTurbo(this, 8, 231, textureX, textureY); // Wheels
+		frontWheelModel[31] = new ModelRendererTurbo(this, 69, 274, textureX, textureY); // Wheels
+		frontWheelModel[32] = new ModelRendererTurbo(this, 69, 274, textureX, textureY); // Wheels
 		frontWheelModel[33] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
 		frontWheelModel[34] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
 		frontWheelModel[35] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
-		frontWheelModel[36] = new ModelRendererTurbo(this, 69, 274, textureX, textureY); // Wheels
-		frontWheelModel[37] = new ModelRendererTurbo(this, 69, 274, textureX, textureY); // Wheels
-		frontWheelModel[38] = new ModelRendererTurbo(this, 73, 213, textureX, textureY); // Wheels
-		frontWheelModel[39] = new ModelRendererTurbo(this, 34, 212, textureX, textureY); // Wheels
-		frontWheelModel[40] = new ModelRendererTurbo(this, 34, 212, textureX, textureY); // Wheels
-		frontWheelModel[41] = new ModelRendererTurbo(this, 73, 213, textureX, textureY); // Wheels
-		frontWheelModel[42] = new ModelRendererTurbo(this, 76, 231, textureX, textureY); // Wheels
-		frontWheelModel[43] = new ModelRendererTurbo(this, 76, 231, textureX, textureY); // Wheels
-		frontWheelModel[44] = new ModelRendererTurbo(this, 71, 251, textureX, textureY); // Wheels
-		frontWheelModel[45] = new ModelRendererTurbo(this, 40, 256, textureX, textureY); // Wheels
-		frontWheelModel[46] = new ModelRendererTurbo(this, 40, 256, textureX, textureY); // Wheels
-		frontWheelModel[47] = new ModelRendererTurbo(this, 12, 250, textureX, textureY); // Wheels
-		frontWheelModel[48] = new ModelRendererTurbo(this, 8, 231, textureX, textureY); // Wheels
-		frontWheelModel[49] = new ModelRendererTurbo(this, 8, 231, textureX, textureY); // Wheels
-		frontWheelModel[50] = new ModelRendererTurbo(this, 69, 274, textureX, textureY); // Wheels
-		frontWheelModel[51] = new ModelRendererTurbo(this, 69, 274, textureX, textureY); // Wheels
-		frontWheelModel[52] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
-		frontWheelModel[53] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
-		frontWheelModel[54] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
-		frontWheelModel[55] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
-		frontWheelModel[56] = new ModelRendererTurbo(this, 46, 231, textureX, textureY); // Wheels
-		frontWheelModel[57] = new ModelRendererTurbo(this, 46, 231, textureX, textureY); // Wheels
-		frontWheelModel[58] = new ModelRendererTurbo(this, 76, 231, textureX, textureY); // Wheels
-		frontWheelModel[59] = new ModelRendererTurbo(this, 76, 231, textureX, textureY); // Wheels
-		frontWheelModel[60] = new ModelRendererTurbo(this, 71, 251, textureX, textureY); // Wheels
-		frontWheelModel[61] = new ModelRendererTurbo(this, 40, 256, textureX, textureY); // Wheels
-		frontWheelModel[62] = new ModelRendererTurbo(this, 40, 256, textureX, textureY); // Wheels
-		frontWheelModel[63] = new ModelRendererTurbo(this, 12, 250, textureX, textureY); // Wheels
-		frontWheelModel[64] = new ModelRendererTurbo(this, 8, 231, textureX, textureY); // Wheels
-		frontWheelModel[65] = new ModelRendererTurbo(this, 8, 231, textureX, textureY); // Wheels
-		frontWheelModel[66] = new ModelRendererTurbo(this, 34, 212, textureX, textureY); // Wheels
-		frontWheelModel[67] = new ModelRendererTurbo(this, 73, 213, textureX, textureY); // Wheels
-		frontWheelModel[68] = new ModelRendererTurbo(this, 34, 212, textureX, textureY); // Wheels
-		frontWheelModel[69] = new ModelRendererTurbo(this, 73, 213, textureX, textureY); // Wheels
-		frontWheelModel[70] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
-		frontWheelModel[71] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
-		frontWheelModel[72] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
-		frontWheelModel[73] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
-		frontWheelModel[74] = new ModelRendererTurbo(this, 69, 274, textureX, textureY); // Wheels
-		frontWheelModel[75] = new ModelRendererTurbo(this, 69, 274, textureX, textureY); // Wheels
+		frontWheelModel[36] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
+		frontWheelModel[37] = new ModelRendererTurbo(this, 46, 231, textureX, textureY); // Wheels
 
-		frontWheelModel[0].addShapeBox(-2F, -2F, 0F, 4, 2, 4, 0F,-1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[0].setRotationPoint(-32.8F, -9.5F, 8F);
+		frontWheelModel[0].addShapeBox(-4F, -9F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 1F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		frontWheelModel[0].setRotationPoint(33.2F, -9.5F, 15F);
 
-		frontWheelModel[1].addShapeBox(-2F, 0F, 0F, 4, 2, 4, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F); // Wheels
-		frontWheelModel[1].setRotationPoint(-32.8F, -9.5F, 8F);
+		frontWheelModel[1].addShapeBox(0F, -9F, 0F, 4, 5, 9, 0F,0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		frontWheelModel[1].setRotationPoint(33.2F, -9.5F, 15F);
 
-		frontWheelModel[2].addShapeBox(-5F, -5F, 0F, 5, 5, 4, 0F,-3F, -4F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, -1F, -1F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[2].setRotationPoint(-32.8F, -9.5F, 11F);
+		frontWheelModel[2].addShapeBox(4F, -4F, 0F, 6, 4, 9, 0F,0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		frontWheelModel[2].setRotationPoint(33.2F, -9.5F, 15F);
 
-		frontWheelModel[3].addShapeBox(-5F, 0F, 0F, 5, 5, 4, 0F,-3F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, -3F, -4F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, -1F, -1F, 0F); // Wheels
-		frontWheelModel[3].setRotationPoint(-32.8F, -9.5F, 11F);
+		frontWheelModel[3].addShapeBox(4F, 0F, 0F, 6, 4, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		frontWheelModel[3].setRotationPoint(33.2F, -9.5F, 15F);
 
-		frontWheelModel[4].addShapeBox(0F, 0F, 0F, 5, 5, 4, 0F,0F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, -3F, 0F, -3F, -4F, 0F, -1F, -1F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[4].setRotationPoint(-32.8F, -9.5F, 11F);
+		frontWheelModel[4].addShapeBox(0F, 4F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F); // Wheels
+		frontWheelModel[4].setRotationPoint(33.2F, -9.5F, 15F);
 
-		frontWheelModel[5].addShapeBox(0F, -5F, 0F, 5, 5, 4, 0F,0F, -3F, 0F, -3F, -4F, 0F, -1F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F); // Wheels
-		frontWheelModel[5].setRotationPoint(-32.8F, -9.5F, 11F);
+		frontWheelModel[5].addShapeBox(-4F, 4F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 1F, 0F, 0F, 0F, 0F); // Wheels
+		frontWheelModel[5].setRotationPoint(33.2F, -9.5F, 15F);
 
-		frontWheelModel[6].addShapeBox(-10F, -4F, 0F, 6, 4, 9, 0F,-1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[6].setRotationPoint(-32.8F, -9.5F, 15F);
+		frontWheelModel[6].addShapeBox(-10F, 0F, 0F, 6, 4, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F); // Wheels
+		frontWheelModel[6].setRotationPoint(33.2F, -9.5F, 15F);
 
-		frontWheelModel[7].addShapeBox(-9F, -9F, 0F, 5, 5, 9, 0F,-2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[7].setRotationPoint(-32.8F, -9.5F, 15F);
+		frontWheelModel[7].addShapeBox(-10F, -4F, 0F, 6, 4, 9, 0F,-1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		frontWheelModel[7].setRotationPoint(33.2F, -9.5F, 15F);
 
-		frontWheelModel[8].addShapeBox(-4F, -9F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 1F, 0F, 0F, 1F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[8].setRotationPoint(-32.8F, -9.5F, 15F);
+		frontWheelModel[8].addShapeBox(-9F, -9F, 0F, 5, 5, 9, 0F,-2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		frontWheelModel[8].setRotationPoint(33.2F, -9.5F, 15F);
 
-		frontWheelModel[9].addShapeBox(0F, -9F, 0F, 4, 5, 9, 0F,0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 1F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[9].setRotationPoint(-32.8F, -9.5F, 15F);
+		frontWheelModel[9].addShapeBox(4F, -9F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, -2F, -2F, 0F, -2F, -2F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		frontWheelModel[9].setRotationPoint(33.2F, -9.5F, 15F);
 
-		frontWheelModel[10].addShapeBox(4F, -4F, 0F, 6, 4, 9, 0F,0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[10].setRotationPoint(-32.8F, -9.5F, 15F);
+		frontWheelModel[10].addShapeBox(4F, 4F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, -2F, -2F, 0F, 0F, 0F, 0F); // Wheels
+		frontWheelModel[10].setRotationPoint(33.2F, -9.5F, 15F);
 
-		frontWheelModel[11].addShapeBox(4F, 0F, 0F, 6, 4, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[11].setRotationPoint(-32.8F, -9.5F, 15F);
+		frontWheelModel[11].addShapeBox(-9F, 4F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, -1F); // Wheels
+		frontWheelModel[11].setRotationPoint(33.2F, -9.5F, 15F);
 
-		frontWheelModel[12].addShapeBox(4F, 4F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, -2F, -2F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[12].setRotationPoint(-32.8F, -9.5F, 15F);
+		frontWheelModel[12].addBox(-4F, -4F, 0F, 8, 8, 1, 0F); // Wheels
+		frontWheelModel[12].setRotationPoint(33.2F, -9.5F, 23F);
 
-		frontWheelModel[13].addShapeBox(0F, 4F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F); // Wheels
-		frontWheelModel[13].setRotationPoint(-32.8F, -9.5F, 15F);
+		frontWheelModel[13].addShapeBox(-5F, -5F, 0F, 5, 5, 4, 0F,-3F, -4F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, -1F, -1F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F); // Wheels
+		frontWheelModel[13].setRotationPoint(33.2F, -9.5F, 11F);
 
-		frontWheelModel[14].addShapeBox(-4F, 4F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 1F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[14].setRotationPoint(-32.8F, -9.5F, 15F);
+		frontWheelModel[14].addShapeBox(-5F, 0F, 0F, 5, 5, 4, 0F,-3F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, -3F, -4F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, -1F, -1F, 0F); // Wheels
+		frontWheelModel[14].setRotationPoint(33.2F, -9.5F, 11F);
 
-		frontWheelModel[15].addShapeBox(-9F, 4F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F); // Wheels
-		frontWheelModel[15].setRotationPoint(-32.8F, -9.5F, 15F);
+		frontWheelModel[15].addShapeBox(0F, 0F, 0F, 5, 5, 4, 0F,0F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, -3F, 0F, -3F, -4F, 0F, -1F, -1F, 0F, 0F, 0F, 0F); // Wheels
+		frontWheelModel[15].setRotationPoint(33.2F, -9.5F, 11F);
 
-		frontWheelModel[16].addShapeBox(-10F, 0F, 0F, 6, 4, 9, 0F,0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F); // Wheels
-		frontWheelModel[16].setRotationPoint(-32.8F, -9.5F, 15F);
+		frontWheelModel[16].addShapeBox(0F, -5F, 0F, 5, 5, 4, 0F,0F, -3F, 0F, -3F, -4F, 0F, -1F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F); // Wheels
+		frontWheelModel[16].setRotationPoint(33.2F, -9.5F, 11F);
 
-		frontWheelModel[17].addBox(-4F, -4F, 0F, 8, 8, 1, 0F); // Wheels
-		frontWheelModel[17].setRotationPoint(-32.8F, -9.5F, 23F);
+		frontWheelModel[17].addShapeBox(-2F, -2F, 0F, 4, 2, 4, 0F,-1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		frontWheelModel[17].setRotationPoint(33.2F, -9.5F, 8F);
 
-		frontWheelModel[18].addShapeBox(4F, -9F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, -2F, -2F, 0F, -2F, -2F, 0F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[18].setRotationPoint(-32.8F, -9.5F, 15F);
+		frontWheelModel[18].addShapeBox(-2F, 0F, 0F, 4, 2, 4, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F); // Wheels
+		frontWheelModel[18].setRotationPoint(33.2F, -9.5F, 8F);
 
-		frontWheelModel[19].addShapeBox(-4F, -9F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 1F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[19].setRotationPoint(33.2F, -9.5F, 15F);
+		frontWheelModel[19].addShapeBox(4F, -9F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, -2F, -2F, 0F, -2F, -2F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 0F); // Wheels
+		frontWheelModel[19].setRotationPoint(33.2F, -9.5F, -24F);
 
 		frontWheelModel[20].addShapeBox(0F, -9F, 0F, 4, 5, 9, 0F,0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[20].setRotationPoint(33.2F, -9.5F, 15F);
+		frontWheelModel[20].setRotationPoint(33.2F, -9.5F, -24F);
 
-		frontWheelModel[21].addShapeBox(4F, -4F, 0F, 6, 4, 9, 0F,0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[21].setRotationPoint(33.2F, -9.5F, 15F);
+		frontWheelModel[21].addShapeBox(-4F, -9F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 1F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		frontWheelModel[21].setRotationPoint(33.2F, -9.5F, -24F);
 
-		frontWheelModel[22].addShapeBox(4F, 0F, 0F, 6, 4, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[22].setRotationPoint(33.2F, -9.5F, 15F);
+		frontWheelModel[22].addShapeBox(-9F, -9F, 0F, 5, 5, 9, 0F,-2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		frontWheelModel[22].setRotationPoint(33.2F, -9.5F, -24F);
 
-		frontWheelModel[23].addShapeBox(0F, 4F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F); // Wheels
-		frontWheelModel[23].setRotationPoint(33.2F, -9.5F, 15F);
+		frontWheelModel[23].addShapeBox(-10F, -4F, 0F, 6, 4, 9, 0F,-1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		frontWheelModel[23].setRotationPoint(33.2F, -9.5F, -24F);
 
-		frontWheelModel[24].addShapeBox(-4F, 4F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 1F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[24].setRotationPoint(33.2F, -9.5F, 15F);
+		frontWheelModel[24].addShapeBox(-10F, 0F, 0F, 6, 4, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F); // Wheels
+		frontWheelModel[24].setRotationPoint(33.2F, -9.5F, -24F);
 
-		frontWheelModel[25].addShapeBox(-10F, 0F, 0F, 6, 4, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F); // Wheels
-		frontWheelModel[25].setRotationPoint(33.2F, -9.5F, 15F);
+		frontWheelModel[25].addShapeBox(-9F, 4F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, 0F, 0F, -1F, 0F, 0F, 0F, -2F, -2F, 0F); // Wheels
+		frontWheelModel[25].setRotationPoint(33.2F, -9.5F, -24F);
 
-		frontWheelModel[26].addShapeBox(-10F, -4F, 0F, 6, 4, 9, 0F,-1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[26].setRotationPoint(33.2F, -9.5F, 15F);
+		frontWheelModel[26].addShapeBox(-4F, 4F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 1F, 0F, 0F, 1F, 0F, 0F, 0F, 0F); // Wheels
+		frontWheelModel[26].setRotationPoint(33.2F, -9.5F, -24F);
 
-		frontWheelModel[27].addShapeBox(-9F, -9F, 0F, 5, 5, 9, 0F,-2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[27].setRotationPoint(33.2F, -9.5F, 15F);
+		frontWheelModel[27].addShapeBox(0F, 4F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F); // Wheels
+		frontWheelModel[27].setRotationPoint(33.2F, -9.5F, -24F);
 
-		frontWheelModel[28].addShapeBox(4F, -9F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, -2F, -2F, 0F, -2F, -2F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[28].setRotationPoint(33.2F, -9.5F, 15F);
+		frontWheelModel[28].addShapeBox(4F, 4F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, -2F, -2F, 0F, 0F, 0F, 0F); // Wheels
+		frontWheelModel[28].setRotationPoint(33.2F, -9.5F, -24F);
 
-		frontWheelModel[29].addShapeBox(4F, 4F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, -2F, -2F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[29].setRotationPoint(33.2F, -9.5F, 15F);
+		frontWheelModel[29].addShapeBox(4F, 0F, 0F, 6, 4, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		frontWheelModel[29].setRotationPoint(33.2F, -9.5F, -24F);
 
-		frontWheelModel[30].addShapeBox(-9F, 4F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, -1F); // Wheels
-		frontWheelModel[30].setRotationPoint(33.2F, -9.5F, 15F);
+		frontWheelModel[30].addShapeBox(4F, -4F, 0F, 6, 4, 9, 0F,0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		frontWheelModel[30].setRotationPoint(33.2F, -9.5F, -24F);
 
-		frontWheelModel[31].addBox(-4F, -4F, 0F, 8, 8, 1, 0F); // Wheels
-		frontWheelModel[31].setRotationPoint(33.2F, -9.5F, 23F);
+		frontWheelModel[31].addShapeBox(-2F, 0F, 0F, 4, 2, 4, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F); // Wheels
+		frontWheelModel[31].setRotationPoint(34.2F, -9.5F, -12F);
 
-		frontWheelModel[32].addShapeBox(-5F, -5F, 0F, 5, 5, 4, 0F,-3F, -4F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, -1F, -1F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[32].setRotationPoint(33.2F, -9.5F, 11F);
+		frontWheelModel[32].addShapeBox(-2F, -2F, 0F, 4, 2, 4, 0F,-1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		frontWheelModel[32].setRotationPoint(34.2F, -9.5F, -12F);
 
-		frontWheelModel[33].addShapeBox(-5F, 0F, 0F, 5, 5, 4, 0F,-3F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, -3F, -4F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, -1F, -1F, 0F); // Wheels
-		frontWheelModel[33].setRotationPoint(33.2F, -9.5F, 11F);
+		frontWheelModel[33].addShapeBox(0F, -5F, 0F, 5, 5, 4, 0F,0F, 0F, 0F, -1F, -1F, 0F, -3F, -4F, 0F, 0F, -3F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		frontWheelModel[33].setRotationPoint(33.2F, -9.5F, -15F);
 
-		frontWheelModel[34].addShapeBox(0F, 0F, 0F, 5, 5, 4, 0F,0F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, -3F, 0F, -3F, -4F, 0F, -1F, -1F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[34].setRotationPoint(33.2F, -9.5F, 11F);
+		frontWheelModel[34].addShapeBox(0F, 0F, 0F, 5, 5, 4, 0F,0F, 0F, 1F, 0F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, -1F, 0F, -3F, -4F, 0F, 0F, -3F, 0F); // Wheels
+		frontWheelModel[34].setRotationPoint(33.2F, -9.5F, -15F);
 
-		frontWheelModel[35].addShapeBox(0F, -5F, 0F, 5, 5, 4, 0F,0F, -3F, 0F, -3F, -4F, 0F, -1F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F); // Wheels
-		frontWheelModel[35].setRotationPoint(33.2F, -9.5F, 11F);
+		frontWheelModel[35].addShapeBox(-5F, 0F, 0F, 5, 5, 4, 0F,0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, -3F, 0F, 0F, -1F, -1F, 0F, 0F, 0F, 0F, 0F, -3F, 0F, -3F, -4F, 0F); // Wheels
+		frontWheelModel[35].setRotationPoint(33.2F, -9.5F, -15F);
 
-		frontWheelModel[36].addShapeBox(-2F, -2F, 0F, 4, 2, 4, 0F,-1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[36].setRotationPoint(33.2F, -9.5F, 8F);
+		frontWheelModel[36].addShapeBox(-5F, -5F, 0F, 5, 5, 4, 0F,-1F, -1F, 0F, 0F, 0F, 0F, 0F, -3F, 0F, -3F, -4F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, -3F, 0F, 0F); // Wheels
+		frontWheelModel[36].setRotationPoint(33.2F, -9.5F, -15F);
 
-		frontWheelModel[37].addShapeBox(-2F, 0F, 0F, 4, 2, 4, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F); // Wheels
-		frontWheelModel[37].setRotationPoint(33.2F, -9.5F, 8F);
+		frontWheelModel[37].addBox(-4F, -4F, 0F, 8, 8, 1, 0F); // Wheels
+		frontWheelModel[37].setRotationPoint(33.2F, -9.5F, -24F);
 
-		frontWheelModel[38].addShapeBox(4F, -9F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, -2F, -2F, 0F, -2F, -2F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[38].setRotationPoint(33.2F, -9.5F, -24F);
 
-		frontWheelModel[39].addShapeBox(0F, -9F, 0F, 4, 5, 9, 0F,0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[39].setRotationPoint(33.2F, -9.5F, -24F);
+		backWheelModel = new ModelRendererTurbo[38];
+		backWheelModel[0] = new ModelRendererTurbo(this, 69, 274, textureX, textureY); // Wheels
+		backWheelModel[1] = new ModelRendererTurbo(this, 69, 274, textureX, textureY); // Wheels
+		backWheelModel[2] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
+		backWheelModel[3] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
+		backWheelModel[4] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
+		backWheelModel[5] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
+		backWheelModel[6] = new ModelRendererTurbo(this, 76, 231, textureX, textureY); // Wheels
+		backWheelModel[7] = new ModelRendererTurbo(this, 73, 213, textureX, textureY); // Wheels
+		backWheelModel[8] = new ModelRendererTurbo(this, 34, 212, textureX, textureY); // Wheels
+		backWheelModel[9] = new ModelRendererTurbo(this, 34, 212, textureX, textureY); // Wheels
+		backWheelModel[10] = new ModelRendererTurbo(this, 8, 231, textureX, textureY); // Wheels
+		backWheelModel[11] = new ModelRendererTurbo(this, 8, 231, textureX, textureY); // Wheels
+		backWheelModel[12] = new ModelRendererTurbo(this, 12, 250, textureX, textureY); // Wheels
+		backWheelModel[13] = new ModelRendererTurbo(this, 40, 256, textureX, textureY); // Wheels
+		backWheelModel[14] = new ModelRendererTurbo(this, 40, 256, textureX, textureY); // Wheels
+		backWheelModel[15] = new ModelRendererTurbo(this, 71, 251, textureX, textureY); // Wheels
+		backWheelModel[16] = new ModelRendererTurbo(this, 76, 231, textureX, textureY); // Wheels
+		backWheelModel[17] = new ModelRendererTurbo(this, 46, 231, textureX, textureY); // Wheels
+		backWheelModel[18] = new ModelRendererTurbo(this, 73, 213, textureX, textureY); // Wheels
+		backWheelModel[19] = new ModelRendererTurbo(this, 46, 231, textureX, textureY); // Wheels
+		backWheelModel[20] = new ModelRendererTurbo(this, 76, 231, textureX, textureY); // Wheels
+		backWheelModel[21] = new ModelRendererTurbo(this, 76, 231, textureX, textureY); // Wheels
+		backWheelModel[22] = new ModelRendererTurbo(this, 71, 251, textureX, textureY); // Wheels
+		backWheelModel[23] = new ModelRendererTurbo(this, 40, 256, textureX, textureY); // Wheels
+		backWheelModel[24] = new ModelRendererTurbo(this, 40, 256, textureX, textureY); // Wheels
+		backWheelModel[25] = new ModelRendererTurbo(this, 12, 250, textureX, textureY); // Wheels
+		backWheelModel[26] = new ModelRendererTurbo(this, 8, 231, textureX, textureY); // Wheels
+		backWheelModel[27] = new ModelRendererTurbo(this, 8, 231, textureX, textureY); // Wheels
+		backWheelModel[28] = new ModelRendererTurbo(this, 34, 212, textureX, textureY); // Wheels
+		backWheelModel[29] = new ModelRendererTurbo(this, 73, 213, textureX, textureY); // Wheels
+		backWheelModel[30] = new ModelRendererTurbo(this, 34, 212, textureX, textureY); // Wheels
+		backWheelModel[31] = new ModelRendererTurbo(this, 73, 213, textureX, textureY); // Wheels
+		backWheelModel[32] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
+		backWheelModel[33] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
+		backWheelModel[34] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
+		backWheelModel[35] = new ModelRendererTurbo(this, 44, 275, textureX, textureY); // Wheels
+		backWheelModel[36] = new ModelRendererTurbo(this, 69, 274, textureX, textureY); // Wheels
+		backWheelModel[37] = new ModelRendererTurbo(this, 69, 274, textureX, textureY); // Wheels
 
-		frontWheelModel[40].addShapeBox(-4F, -9F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 1F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[40].setRotationPoint(33.2F, -9.5F, -24F);
+		backWheelModel[0].addShapeBox(-2F, -2F, 0F, 4, 2, 4, 0F,-1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		backWheelModel[0].setRotationPoint(-32.8F, -9.5F, 8F);
 
-		frontWheelModel[41].addShapeBox(-9F, -9F, 0F, 5, 5, 9, 0F,-2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[41].setRotationPoint(33.2F, -9.5F, -24F);
+		backWheelModel[1].addShapeBox(-2F, 0F, 0F, 4, 2, 4, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F); // Wheels
+		backWheelModel[1].setRotationPoint(-32.8F, -9.5F, 8F);
 
-		frontWheelModel[42].addShapeBox(-10F, -4F, 0F, 6, 4, 9, 0F,-1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[42].setRotationPoint(33.2F, -9.5F, -24F);
+		backWheelModel[2].addShapeBox(-5F, -5F, 0F, 5, 5, 4, 0F,-3F, -4F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, -1F, -1F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F); // Wheels
+		backWheelModel[2].setRotationPoint(-32.8F, -9.5F, 11F);
 
-		frontWheelModel[43].addShapeBox(-10F, 0F, 0F, 6, 4, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F); // Wheels
-		frontWheelModel[43].setRotationPoint(33.2F, -9.5F, -24F);
+		backWheelModel[3].addShapeBox(-5F, 0F, 0F, 5, 5, 4, 0F,-3F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, -3F, -4F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, -1F, -1F, 0F); // Wheels
+		backWheelModel[3].setRotationPoint(-32.8F, -9.5F, 11F);
 
-		frontWheelModel[44].addShapeBox(-9F, 4F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, 0F, 0F, -1F, 0F, 0F, 0F, -2F, -2F, 0F); // Wheels
-		frontWheelModel[44].setRotationPoint(33.2F, -9.5F, -24F);
+		backWheelModel[4].addShapeBox(0F, 0F, 0F, 5, 5, 4, 0F,0F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, -3F, 0F, -3F, -4F, 0F, -1F, -1F, 0F, 0F, 0F, 0F); // Wheels
+		backWheelModel[4].setRotationPoint(-32.8F, -9.5F, 11F);
 
-		frontWheelModel[45].addShapeBox(-4F, 4F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 1F, 0F, 0F, 1F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[45].setRotationPoint(33.2F, -9.5F, -24F);
+		backWheelModel[5].addShapeBox(0F, -5F, 0F, 5, 5, 4, 0F,0F, -3F, 0F, -3F, -4F, 0F, -1F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F); // Wheels
+		backWheelModel[5].setRotationPoint(-32.8F, -9.5F, 11F);
 
-		frontWheelModel[46].addShapeBox(0F, 4F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F); // Wheels
-		frontWheelModel[46].setRotationPoint(33.2F, -9.5F, -24F);
+		backWheelModel[6].addShapeBox(-10F, -4F, 0F, 6, 4, 9, 0F,-1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		backWheelModel[6].setRotationPoint(-32.8F, -9.5F, 15F);
 
-		frontWheelModel[47].addShapeBox(4F, 4F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, -2F, -2F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[47].setRotationPoint(33.2F, -9.5F, -24F);
+		backWheelModel[7].addShapeBox(-9F, -9F, 0F, 5, 5, 9, 0F,-2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		backWheelModel[7].setRotationPoint(-32.8F, -9.5F, 15F);
 
-		frontWheelModel[48].addShapeBox(4F, 0F, 0F, 6, 4, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[48].setRotationPoint(33.2F, -9.5F, -24F);
+		backWheelModel[8].addShapeBox(-4F, -9F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 1F, 0F, 0F, 1F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		backWheelModel[8].setRotationPoint(-32.8F, -9.5F, 15F);
 
-		frontWheelModel[49].addShapeBox(4F, -4F, 0F, 6, 4, 9, 0F,0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[49].setRotationPoint(33.2F, -9.5F, -24F);
+		backWheelModel[9].addShapeBox(0F, -9F, 0F, 4, 5, 9, 0F,0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 1F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		backWheelModel[9].setRotationPoint(-32.8F, -9.5F, 15F);
 
-		frontWheelModel[50].addShapeBox(-2F, 0F, 0F, 4, 2, 4, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F); // Wheels
-		frontWheelModel[50].setRotationPoint(34.2F, -9.5F, -12F);
+		backWheelModel[10].addShapeBox(4F, -4F, 0F, 6, 4, 9, 0F,0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		backWheelModel[10].setRotationPoint(-32.8F, -9.5F, 15F);
 
-		frontWheelModel[51].addShapeBox(-2F, -2F, 0F, 4, 2, 4, 0F,-1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[51].setRotationPoint(34.2F, -9.5F, -12F);
+		backWheelModel[11].addShapeBox(4F, 0F, 0F, 6, 4, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		backWheelModel[11].setRotationPoint(-32.8F, -9.5F, 15F);
 
-		frontWheelModel[52].addShapeBox(0F, -5F, 0F, 5, 5, 4, 0F,0F, 0F, 0F, -1F, -1F, 0F, -3F, -4F, 0F, 0F, -3F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[52].setRotationPoint(33.2F, -9.5F, -15F);
+		backWheelModel[12].addShapeBox(4F, 4F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, -2F, -2F, 0F, 0F, 0F, 0F); // Wheels
+		backWheelModel[12].setRotationPoint(-32.8F, -9.5F, 15F);
 
-		frontWheelModel[53].addShapeBox(0F, 0F, 0F, 5, 5, 4, 0F,0F, 0F, 1F, 0F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, -1F, 0F, -3F, -4F, 0F, 0F, -3F, 0F); // Wheels
-		frontWheelModel[53].setRotationPoint(33.2F, -9.5F, -15F);
+		backWheelModel[13].addShapeBox(0F, 4F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F); // Wheels
+		backWheelModel[13].setRotationPoint(-32.8F, -9.5F, 15F);
 
-		frontWheelModel[54].addShapeBox(-5F, 0F, 0F, 5, 5, 4, 0F,0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, -3F, 0F, 0F, -1F, -1F, 0F, 0F, 0F, 0F, 0F, -3F, 0F, -3F, -4F, 0F); // Wheels
-		frontWheelModel[54].setRotationPoint(33.2F, -9.5F, -15F);
+		backWheelModel[14].addShapeBox(-4F, 4F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 1F, 0F, 0F, 0F, 0F); // Wheels
+		backWheelModel[14].setRotationPoint(-32.8F, -9.5F, 15F);
 
-		frontWheelModel[55].addShapeBox(-5F, -5F, 0F, 5, 5, 4, 0F,-1F, -1F, 0F, 0F, 0F, 0F, 0F, -3F, 0F, -3F, -4F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, -3F, 0F, 0F); // Wheels
-		frontWheelModel[55].setRotationPoint(33.2F, -9.5F, -15F);
+		backWheelModel[15].addShapeBox(-9F, 4F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F); // Wheels
+		backWheelModel[15].setRotationPoint(-32.8F, -9.5F, 15F);
 
-		frontWheelModel[56].addBox(-4F, -4F, 0F, 8, 8, 1, 0F); // Wheels
-		frontWheelModel[56].setRotationPoint(33.2F, -9.5F, -24F);
+		backWheelModel[16].addShapeBox(-10F, 0F, 0F, 6, 4, 9, 0F,0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F); // Wheels
+		backWheelModel[16].setRotationPoint(-32.8F, -9.5F, 15F);
 
-		frontWheelModel[57].addBox(-4F, -4F, 0F, 8, 8, 1, 0F); // Wheels
-		frontWheelModel[57].setRotationPoint(-33.8F, -9.5F, -24F);
+		backWheelModel[17].addBox(-4F, -4F, 0F, 8, 8, 1, 0F); // Wheels
+		backWheelModel[17].setRotationPoint(-32.8F, -9.5F, 23F);
 
-		frontWheelModel[58].addShapeBox(-10F, -4F, 0F, 6, 4, 9, 0F,-1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[58].setRotationPoint(-33.8F, -9.5F, -24F);
+		backWheelModel[18].addShapeBox(4F, -9F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, -2F, -2F, 0F, -2F, -2F, 0F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		backWheelModel[18].setRotationPoint(-32.8F, -9.5F, 15F);
 
-		frontWheelModel[59].addShapeBox(-10F, 0F, 0F, 6, 4, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F); // Wheels
-		frontWheelModel[59].setRotationPoint(-33.8F, -9.5F, -24F);
+		backWheelModel[19].addBox(-4F, -4F, 0F, 8, 8, 1, 0F); // Wheels
+		backWheelModel[19].setRotationPoint(-33.8F, -9.5F, -24F);
 
-		frontWheelModel[60].addShapeBox(-9F, 4F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, -1F); // Wheels
-		frontWheelModel[60].setRotationPoint(-33.8F, -9.5F, -24F);
+		backWheelModel[20].addShapeBox(-10F, -4F, 0F, 6, 4, 9, 0F,-1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		backWheelModel[20].setRotationPoint(-33.8F, -9.5F, -24F);
 
-		frontWheelModel[61].addShapeBox(-4F, 4F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 1F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[61].setRotationPoint(-33.8F, -9.5F, -24F);
+		backWheelModel[21].addShapeBox(-10F, 0F, 0F, 6, 4, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F); // Wheels
+		backWheelModel[21].setRotationPoint(-33.8F, -9.5F, -24F);
 
-		frontWheelModel[62].addShapeBox(0F, 4F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F); // Wheels
-		frontWheelModel[62].setRotationPoint(-33.8F, -9.5F, -24F);
+		backWheelModel[22].addShapeBox(-9F, 4F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, -1F); // Wheels
+		backWheelModel[22].setRotationPoint(-33.8F, -9.5F, -24F);
 
-		frontWheelModel[63].addShapeBox(4F, 4F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, -2F, -2F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[63].setRotationPoint(-33.8F, -9.5F, -24F);
+		backWheelModel[23].addShapeBox(-4F, 4F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 1F, 0F, 0F, 0F, 0F); // Wheels
+		backWheelModel[23].setRotationPoint(-33.8F, -9.5F, -24F);
 
-		frontWheelModel[64].addShapeBox(4F, 0F, 0F, 6, 4, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[64].setRotationPoint(-33.8F, -9.5F, -24F);
+		backWheelModel[24].addShapeBox(0F, 4F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F); // Wheels
+		backWheelModel[24].setRotationPoint(-33.8F, -9.5F, -24F);
 
-		frontWheelModel[65].addShapeBox(4F, -4F, 0F, 6, 4, 9, 0F,0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[65].setRotationPoint(-33.8F, -9.5F, -24F);
+		backWheelModel[25].addShapeBox(4F, 4F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, -2F, -2F, 0F, 0F, 0F, 0F); // Wheels
+		backWheelModel[25].setRotationPoint(-33.8F, -9.5F, -24F);
 
-		frontWheelModel[66].addShapeBox(-4F, -9F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 1F, -1F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[66].setRotationPoint(-33.8F, -9.5F, -24F);
+		backWheelModel[26].addShapeBox(4F, 0F, 0F, 6, 4, 9, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		backWheelModel[26].setRotationPoint(-33.8F, -9.5F, -24F);
 
-		frontWheelModel[67].addShapeBox(4F, -9F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, -2F, -2F, 0F, -2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[67].setRotationPoint(-33.8F, -9.5F, -24F);
+		backWheelModel[27].addShapeBox(4F, -4F, 0F, 6, 4, 9, 0F,0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		backWheelModel[27].setRotationPoint(-33.8F, -9.5F, -24F);
 
-		frontWheelModel[68].addShapeBox(0F, -9F, 0F, 4, 5, 9, 0F,0F, 1F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[68].setRotationPoint(-33.8F, -9.5F, -24F);
+		backWheelModel[28].addShapeBox(-4F, -9F, 0F, 4, 5, 9, 0F,0F, 0F, 0F, 0F, 1F, -1F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		backWheelModel[28].setRotationPoint(-33.8F, -9.5F, -24F);
 
-		frontWheelModel[69].addShapeBox(-9F, -9F, 0F, 5, 5, 9, 0F,-2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[69].setRotationPoint(-33.8F, -9.5F, -24F);
+		backWheelModel[29].addShapeBox(4F, -9F, 0F, 5, 5, 9, 0F,0F, 0F, 0F, -2F, -2F, 0F, -2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		backWheelModel[29].setRotationPoint(-33.8F, -9.5F, -24F);
 
-		frontWheelModel[70].addShapeBox(0F, -5F, 0F, 5, 5, 4, 0F,0F, 0F, 0F, -1F, -1F, 0F, -3F, -4F, 0F, 0F, -3F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[70].setRotationPoint(-33.8F, -9.5F, -15F);
+		backWheelModel[30].addShapeBox(0F, -9F, 0F, 4, 5, 9, 0F,0F, 1F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		backWheelModel[30].setRotationPoint(-33.8F, -9.5F, -24F);
 
-		frontWheelModel[71].addShapeBox(0F, 0F, 0F, 5, 5, 4, 0F,0F, 0F, 1F, 0F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, -1F, 0F, -3F, -4F, 0F, 0F, -3F, 0F); // Wheels
-		frontWheelModel[71].setRotationPoint(-33.8F, -9.5F, -15F);
+		backWheelModel[31].addShapeBox(-9F, -9F, 0F, 5, 5, 9, 0F,-2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -2F, -2F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		backWheelModel[31].setRotationPoint(-33.8F, -9.5F, -24F);
 
-		frontWheelModel[72].addShapeBox(-5F, -5F, 0F, 5, 5, 4, 0F,-1F, -1F, 0F, 0F, 0F, 0F, 0F, -3F, 0F, -3F, -4F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, -3F, 0F, 0F); // Wheels
-		frontWheelModel[72].setRotationPoint(-33.8F, -9.5F, -15F);
+		backWheelModel[32].addShapeBox(0F, -5F, 0F, 5, 5, 4, 0F,0F, 0F, 0F, -1F, -1F, 0F, -3F, -4F, 0F, 0F, -3F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		backWheelModel[32].setRotationPoint(-33.8F, -9.5F, -15F);
 
-		frontWheelModel[73].addShapeBox(-5F, 0F, 0F, 5, 5, 4, 0F,0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, -3F, 0F, 0F, -1F, -1F, 0F, 0F, 0F, 0F, 0F, -3F, 0F, -3F, -4F, 0F); // Wheels
-		frontWheelModel[73].setRotationPoint(-33.8F, -9.5F, -15F);
+		backWheelModel[33].addShapeBox(0F, 0F, 0F, 5, 5, 4, 0F,0F, 0F, 1F, 0F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, -1F, 0F, -3F, -4F, 0F, 0F, -3F, 0F); // Wheels
+		backWheelModel[33].setRotationPoint(-33.8F, -9.5F, -15F);
 
-		frontWheelModel[74].addShapeBox(-2F, -2F, 0F, 4, 2, 4, 0F,-1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
-		frontWheelModel[74].setRotationPoint(-32.8F, -9.5F, -12F);
+		backWheelModel[34].addShapeBox(-5F, -5F, 0F, 5, 5, 4, 0F,-1F, -1F, 0F, 0F, 0F, 0F, 0F, -3F, 0F, -3F, -4F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, -3F, 0F, 0F); // Wheels
+		backWheelModel[34].setRotationPoint(-33.8F, -9.5F, -15F);
 
-		frontWheelModel[75].addShapeBox(-2F, 0F, 0F, 4, 2, 4, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F); // Wheels
-		frontWheelModel[75].setRotationPoint(-32.8F, -9.5F, -12F);
+		backWheelModel[35].addShapeBox(-5F, 0F, 0F, 5, 5, 4, 0F,0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, -3F, 0F, 0F, -1F, -1F, 0F, 0F, 0F, 0F, 0F, -3F, 0F, -3F, -4F, 0F); // Wheels
+		backWheelModel[35].setRotationPoint(-33.8F, -9.5F, -15F);
+
+		backWheelModel[36].addShapeBox(-2F, -2F, 0F, 4, 2, 4, 0F,-1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Wheels
+		backWheelModel[36].setRotationPoint(-32.8F, -9.5F, -12F);
+
+		backWheelModel[37].addShapeBox(-2F, 0F, 0F, 4, 2, 4, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F); // Wheels
+		backWheelModel[37].setRotationPoint(-32.8F, -9.5F, -12F);
 
 
 		leftTrackModel = new ModelRendererTurbo[3];

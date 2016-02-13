@@ -52,6 +52,85 @@
             "damage/hurtflesh3"
         ]
     },
+	"entities.banshee.BansheeEngineIn":
+    {
+        "category": "player",
+        "sounds": ["entities/banshee/BansheeEngineIn"]
+    },
+	"entities.banshee.BansheeEngineLoop":
+    {
+        "category": "player",
+        "sounds": ["entities/banshee/BansheeEngineLoop"]
+    },
+	"entities.banshee.BansheeEngineOut":
+    {
+        "category": "player",
+        "sounds": ["entities/banshee/BansheeEngineOut"]
+    },
+	"entities.banshee.BansheeBoostIn":
+    {
+        "category": "player",
+        "sounds": ["entities/banshee/BansheeBoostIn"]
+    },
+	"entities.banshee.BansheeBoostLoop":
+    {
+        "category": "player",
+        "sounds": ["entities/banshee/BansheeBoostLoop"]
+    },
+	"entities.banshee.BansheeContrailLoop":
+    {
+        "category": "player",
+        "sounds": ["entities/banshee/BansheeContrailLoop"]
+    },
+	"entities.banshee.BansheeOpen":
+    {
+        "category": "player",
+        "sounds":
+        [
+            "entities/banshee/BansheeOpen1",
+            "entities/banshee/BansheeOpen2"
+        ]
+    },
+	"entities.banshee.BansheeClose":
+    {
+        "category": "player",
+        "sounds":
+        [
+            "entities/banshee/BansheeClose1",
+            "entities/banshee/BansheeClose2"
+        ]
+    },
+	"entities.banshee.BansheeFire":
+    {
+        "category": "player",
+        "sounds":
+        [
+            "entities/banshee/BansheeFire1",
+            "entities/banshee/BansheeFire2",
+            "entities/banshee/BansheeFire3"
+        ]
+    },
+	"entities.banshee.BansheeCannonFire":
+    {
+        "category": "player",
+        "sounds":
+        [
+            "entities/banshee/BansheeCannonFire1",
+            "entities/banshee/BansheeCannonFire2",
+            "entities/banshee/BansheeCannonFire3"
+        ]
+    },
+	"entities.banshee.BansheeCannonExplode":
+    {
+        "category": "player",
+        "sounds":
+        [
+            "entities/banshee/BansheeCannonExplode1",
+            "entities/banshee/BansheeCannonExplode2",
+            "entities/banshee/BansheeCannonExplode3",
+            "entities/banshee/BansheeCannonExplode4"
+        ]
+    },
 	"entities.ghost.GhostEnter":
     {
         "category": "player",

@@ -2,6 +2,7 @@ package net.killerchief.halocraft.items;
 
 import java.util.List;
 
+import net.killerchief.halocraft.entities.vehicles.EntityBanshee;
 import net.killerchief.halocraft.entities.vehicles.EntityGhost;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseBlue;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseDefault;
@@ -138,6 +139,10 @@ public class ItemVehicle extends HalocraftItem {
 					else if (this.Type == 8)
 					{
 						vehicle = new EntityWarthogRocket(par2World, (double)((float)i + 0.5F), (double)((float)j + 1.0F), (double)((float)k + 0.5F));
+					}
+					else if (this.Type == 9)
+					{
+						vehicle = new EntityBanshee(par2World, (double)((float)i + 0.5F), (double)((float)j + 1.0F), (double)((float)k + 0.5F));
 					}
 					else
 					{

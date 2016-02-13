@@ -28,6 +28,7 @@ import net.killerchief.halocraft.config.HalocraftConfig;
 import net.killerchief.halocraft.config.HalocraftItems;
 import net.killerchief.halocraft.config.HalocraftItemsArmor;
 import net.killerchief.halocraft.config.HalocraftItemsWeapons;
+import net.killerchief.halocraft.entities.vehicles.EntityBanshee;
 import net.killerchief.halocraft.entities.vehicles.EntityGhost;
 import net.killerchief.halocraft.entities.vehicles.EntityMongoose;
 import net.killerchief.halocraft.entities.vehicles.EntityPassengerSeat;
@@ -371,7 +372,7 @@ public class TickHandlerClient {
 		minecraft.thePlayer.rotationPitch += AntiRecoil * 0.2F;
 		this.AntiRecoil *= 0.78F;*/
 
-		if (minecraft.thePlayer.ridingEntity instanceof EntityMongoose || minecraft.thePlayer.ridingEntity instanceof EntityGhost || minecraft.thePlayer.ridingEntity instanceof EntityWarthog)
+		if (minecraft.thePlayer.ridingEntity instanceof EntityMongoose || minecraft.thePlayer.ridingEntity instanceof EntityGhost || minecraft.thePlayer.ridingEntity instanceof EntityWarthog || minecraft.thePlayer.ridingEntity instanceof EntityBanshee)
 		{
 			//Forward
 
@@ -670,6 +671,11 @@ public class TickHandlerClient {
 						Halocraft.network.sendToServer(new PacketVehicleShoot());
 						this.VehicleShootDelay = 2;
 					}
+					else if (this.mc.thePlayer.ridingEntity instanceof EntityBanshee)
+					{
+						Halocraft.network.sendToServer(new PacketVehicleShoot());
+						this.VehicleShootDelay = 2;
+					}
 					else if (this.mc.thePlayer.ridingEntity instanceof EntityTurretSeat)
 					{
 						EntityPassengerSeat turret = (EntityPassengerSeat)this.mc.thePlayer.ridingEntity;
@@ -735,7 +741,7 @@ public class TickHandlerClient {
 			GuiIngameForge.renderCrosshairs = true;
 		}
 
-		if(minecraft.inGameHasFocus && minecraft.gameSettings.thirdPersonView == 0)
+		if(minecraft.inGameHasFocus && (minecraft.gameSettings.thirdPersonView == 0 || minecraft.gameSettings.thirdPersonView == 1))
 		{
 			if (minecraft.thePlayer.ridingEntity instanceof EntityTurretSeat)
 			{
@@ -780,6 +786,16 @@ public class TickHandlerClient {
 					GuiIngameForge.renderCrosshairs = false;
 				}
 				GunReticle(1.0F, RLReticle, 39, 163, 49, 29, 24, 19);
+			}
+			else if (minecraft.thePlayer.ridingEntity instanceof EntityBanshee)
+			{
+				KCWeaponMod.requestDisableReticle(Halocraft.MODID);
+				if (GuiIngameForge.renderCrosshairs)
+				{
+					this.rndrChChngd = true;
+					GuiIngameForge.renderCrosshairs = false;
+				}
+				GunReticle(1.0F, RLReticle, 94, 155, 37, 33, 18, 16);
 			}
 			else if (minecraft.thePlayer.ridingEntity instanceof EntityWarthog)
 			{

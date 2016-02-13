@@ -11,10 +11,19 @@ public class EntityWarthogGauss extends EntityWarthog {
 		super(par1World);
 		TurretModel = new ModelWarthogTurretGauss();
 		TurretTexture = new ResourceLocation(Halocraft.MODID+":textures/entities/SkinTurretGauss.png");
+		TurretTextureSeeThrough = new ResourceLocation(Halocraft.MODID+":textures/entities/SkinTurretGaussTransScreen.png");
 	}
 	
 	public EntityWarthogGauss(World par1World, double par2, double par4, double par6) {
 		super(par1World, par2, par4, par6);
+	}
+	
+	public ResourceLocation TurretTextureSeeThrough = null;
+	
+	@Override
+	public ResourceLocation getTurretTexture()
+	{
+		return this.seatGunner != null && this.seatGunner.riddenByEntity != null ? this.TurretTextureSeeThrough : this.TurretTexture;
 	}
 	
 	@Override

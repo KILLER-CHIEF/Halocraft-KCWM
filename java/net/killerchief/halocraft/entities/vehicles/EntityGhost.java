@@ -63,23 +63,23 @@ public class EntityGhost extends EntityVehicle
 	}
 
 	@Override
-	protected String getSoundLoopRun() {
-		return Halocraft.MODID+":entities.ghost.GhostLoopRun";
+	protected String[] getSoundLoopRun() {
+		return new String[]{Halocraft.MODID+":entities.ghost.GhostLoopRun"};
 	}
 
 	@Override
-	protected String getSoundLoopIdle() {
-		return Halocraft.MODID+":entities.ghost.GhostLoopIdle";
+	protected String[] getSoundLoopIdle() {
+		return new String[]{Halocraft.MODID+":entities.ghost.GhostLoopIdle"};
 	}
 
 	@Override
-	protected String getSoundEnter() {
-		return Halocraft.MODID+":entities.ghost.GhostEnter";
+	protected String[] getSoundEnter() {
+		return new String[]{Halocraft.MODID+":entities.ghost.GhostEnter"};
 	}
 
 	@Override
-	protected String getSoundExit() {
-		return Halocraft.MODID+":entities.ghost.GhostExit";
+	protected String[] getSoundExit() {
+		return new String[]{Halocraft.MODID+":entities.ghost.GhostExit"};
 	}
 
 	@Override

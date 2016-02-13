@@ -7,6 +7,7 @@ import net.killerchief.halocraft.client.models.armor.ModelArmorMarkV;
 import net.killerchief.halocraft.client.models.guns.ModelEnergySword;
 import net.killerchief.halocraft.client.models.mobs.ModelElite;
 import net.killerchief.halocraft.client.models.mobs.ModelGrunt;
+import net.killerchief.halocraft.client.render.RenderBanshee;
 import net.killerchief.halocraft.client.render.RenderEliteGun;
 import net.killerchief.halocraft.client.render.RenderEliteSword;
 import net.killerchief.halocraft.client.render.RenderGhost;
@@ -29,6 +30,7 @@ import net.killerchief.halocraft.entities.mobs.EntityElitePlasmaRifle;
 import net.killerchief.halocraft.entities.mobs.EntityEliteSword;
 import net.killerchief.halocraft.entities.mobs.EntityGruntFlee;
 import net.killerchief.halocraft.entities.mobs.EntityGruntPlasmaPistol;
+import net.killerchief.halocraft.entities.vehicles.EntityBanshee;
 import net.killerchief.halocraft.entities.vehicles.EntityGhost;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseBlue;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseDefault;
@@ -111,6 +113,8 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityWarthogChainGun.class, new RenderWarthog());
 		RenderingRegistry.registerEntityRenderingHandler(EntityWarthogGauss.class, new RenderWarthog());
 		RenderingRegistry.registerEntityRenderingHandler(EntityWarthogRocket.class, new RenderWarthog());
+		
+		RenderingRegistry.registerEntityRenderingHandler(EntityBanshee.class, new RenderBanshee());
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityDeployableGravityLift.class, new RenderProjectile(EnumType.DeployableGravityLift61));
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHealthPack.class, new RenderHealthPack());
@@ -151,6 +155,22 @@ public class ClientProxy extends CommonProxy {
 					Minecraft.getMinecraft().getSoundHandler().playSound(new MovingVehicleSoundLoop.Idle(vehicle, soundIdle));
 				if (soundRun != null)
 					Minecraft.getMinecraft().getSoundHandler().playSound(new MovingVehicleSoundLoop(vehicle, soundRun));
+			} catch(Exception e) { return false; }
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean initVehicleLoopSounds(EntityVehicle vehicle, int soundHandlerType, String soundFile)
+	{
+		if (Minecraft.getMinecraft().getSoundHandler() != null && vehicle != null)
+		{
+			try {
+				if (soundHandlerType == 1)
+					Minecraft.getMinecraft().getSoundHandler().playSound(new MovingVehicleSoundLoop.Idle(vehicle, soundFile));
+				else if (soundHandlerType == 2)
+					Minecraft.getMinecraft().getSoundHandler().playSound(new MovingVehicleSoundLoop(vehicle, soundFile));
 			} catch(Exception e) { return false; }
 			return true;
 		}

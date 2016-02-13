@@ -169,6 +169,7 @@ item.halocraft.Warthog.name=Warthog
 item.halocraft.WarthogChainGun.name=Warthog Chain Gun
 item.halocraft.WarthogGauss.name=Warthog Gauss
 item.halocraft.WarthogRocket.name=Warthog Rocket
+item.halocraft.Banshee.name=Banshee
 
 # ------------Blocks------------
 tile.halocraft.TitaniumOre.name=Titanium Ore

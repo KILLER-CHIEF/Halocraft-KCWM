@@ -5,6 +5,7 @@ import java.util.HashMap;
 import net.killerchief.halocraft.comm.packetHandlers.PacketOvershield;
 import net.killerchief.halocraft.config.HalocraftItems;
 import net.killerchief.halocraft.config.HalocraftItemsWeapons;
+import net.killerchief.halocraft.entities.vehicles.EntityBanshee;
 import net.killerchief.halocraft.entities.vehicles.EntityGhost;
 import net.killerchief.halocraft.entities.vehicles.EntityTurretSeat;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
@@ -19,6 +20,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -37,11 +39,23 @@ public class EventHandler {
 	}
 
 	@SubscribeEvent
+	public void attackEntityEvent(AttackEntityEvent event)
+	{
+		if (event.entityPlayer != null)
+		{
+			if (event.entityPlayer.ridingEntity instanceof EntityGhost || event.entityPlayer.ridingEntity instanceof EntityTurretSeat || event.entityPlayer.ridingEntity instanceof EntityWarthog || event.entityPlayer.ridingEntity instanceof EntityBanshee)
+			{
+				event.setCanceled(true);
+			}
+		}
+	}
+	
+	@SubscribeEvent
 	public void playerInteractEvent(PlayerInteractEvent event)
 	{
 		if (event.entityPlayer != null)
 		{
-			if (event.entityPlayer.ridingEntity instanceof EntityGhost || event.entityPlayer.ridingEntity instanceof EntityTurretSeat || event.entityPlayer.ridingEntity instanceof EntityWarthog)
+			if (event.entityPlayer.ridingEntity instanceof EntityGhost || event.entityPlayer.ridingEntity instanceof EntityTurretSeat || event.entityPlayer.ridingEntity instanceof EntityWarthog || event.entityPlayer.ridingEntity instanceof EntityBanshee)
 			{	// && event.action == PlayerInteractEvent.Action.LEFT_CLICK_BLOCK)//(event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR || event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK))
 				event.setCanceled(true);
 			}
