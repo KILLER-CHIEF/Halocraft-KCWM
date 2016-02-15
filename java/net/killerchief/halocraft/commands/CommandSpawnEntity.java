@@ -8,6 +8,7 @@ import net.killerchief.halocraft.entities.mobs.EntityElitePlasmaRifle;
 import net.killerchief.halocraft.entities.mobs.EntityEliteSword;
 import net.killerchief.halocraft.entities.mobs.EntityGruntFlee;
 import net.killerchief.halocraft.entities.mobs.EntityGruntPlasmaPistol;
+import net.killerchief.halocraft.entities.vehicles.EntityBanshee;
 import net.killerchief.halocraft.entities.vehicles.EntityGhost;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseBlue;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseDefault;
@@ -57,7 +58,7 @@ public class CommandSpawnEntity implements ICommand {
 
 	private String getModEntities()
 	{
-		return "Entities: Warthog, WarthogChainGun, WarthogGauss, WarthogRocket, Ghost, MongooseBlack, MongooseGreen, MongooseBlue, MongooseRed, Elite, EliteSword, ElitePlasmaRifle, EliteCarbine, Grunt, GruntPlasmaPistol";
+		return "Entities: Warthog, WarthogChainGun, WarthogGauss, WarthogRocket, Ghost, Banshee, MongooseBlack, MongooseGreen, MongooseBlue, MongooseRed, Elite, EliteSword, ElitePlasmaRifle, EliteCarbine, Grunt, GruntPlasmaPistol";
 	}
 
 	private void processSpawning(ICommandSender icommandsender, String stringentity, double x, double y, double z, float yaw, float pitch)
@@ -86,6 +87,11 @@ public class CommandSpawnEntity implements ICommand {
 		else if (stringentity.equalsIgnoreCase("ghost"))
 		{
 			entity = new EntityGhost(icommandsender.getEntityWorld());
+			entity.setLocationAndAngles(x, y, z, yaw, pitch);
+		}
+		else if (stringentity.equalsIgnoreCase("banshee"))
+		{
+			entity = new EntityBanshee(icommandsender.getEntityWorld());
 			entity.setLocationAndAngles(x, y, z, yaw, pitch);
 		}
 		else if (stringentity.equalsIgnoreCase("mongooseblack"))

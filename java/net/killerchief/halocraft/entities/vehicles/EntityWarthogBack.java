@@ -38,8 +38,8 @@ public class EntityWarthogBack extends Entity {
 	@Override
 	public boolean attackEntityFrom(DamageSource par1DamageSource, float par2)
 	{
-		if (this.parentBody != null && this.hurtResistantTime +1 < this.parentBody.hurtResistantTime)
-			this.parentBody.hurtResistantTime = this.hurtResistantTime;
+		//if (this.parentBody != null && this.hurtResistantTime +1 < this.parentBody.hurtResistantTime)
+		//	this.parentBody.hurtResistantTime = this.hurtResistantTime;
 		return this.isEntityInvulnerable() ? false : (this.parentBody == null ? false : this.parentBody.attackEntityFrom(par1DamageSource, par2));
 	}
 
@@ -158,9 +158,9 @@ public class EntityWarthogBack extends Entity {
 		//System.out.println(this.parentBody !=null?this.parentBody.getHealth():0);//this.worldObj.isRemote + " : " + this.getEntityId() + " : "+
 		if (this.parentBody != null)
 		{
-			if (this.hurtResistantTime +1 < this.parentBody.hurtResistantTime)
-				this.parentBody.hurtResistantTime = this.hurtResistantTime;
-			this.hurtResistantTime = this.parentBody.hurtResistantTime;
+			//if (this.hurtResistantTime +1 < this.parentBody.hurtResistantTime)
+			//	this.parentBody.hurtResistantTime = this.hurtResistantTime;
+			//this.hurtResistantTime = this.parentBody.hurtResistantTime;
 
 			double xOffset = -Math.sin(Math.toRadians(this.parentBody.rotationYaw)) * 2.2;
 			double zOffset = Math.cos(Math.toRadians(this.parentBody.rotationYaw)) * 2.2;

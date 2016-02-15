@@ -176,6 +176,7 @@ public class Model3DArmor extends ModelBiped
 		GL11.glDepthMask(true);
 		GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glEnable(GL11.GL_LIGHTING);
 	}
 
 	/**

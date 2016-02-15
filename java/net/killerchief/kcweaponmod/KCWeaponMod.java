@@ -47,7 +47,7 @@ public class KCWeaponMod {
 
 	public static final String MODID = "kcweaponmod";
 	public static final String NAME = "KC's Weapon Mod";
-	public static final String VERSION = "0.1.3.03";
+	public static final String VERSION = "0.1.3.05";
 
 	public static String getVersion() { return VERSION; }
 

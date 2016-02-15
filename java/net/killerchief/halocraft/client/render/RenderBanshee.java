@@ -38,13 +38,9 @@ public class RenderBanshee extends Render
 		entity.getModelBase().render(entity, 0F, 0F, 0F, 0F, 0F, 0.0625F);
 		GL11.glDisable(GL11.GL_BLEND);
 		GL11.glDepthMask(true);
-		//GL11.glRotatef(90F, 0F, 1F, 0F);
 		GL11.glTranslatef(0.125F, -2.1F, -0.4F);
-		//if (entity.riddenByEntity == null)
-		//{
-			GL11.glRotatef(30F*entity.topRotationProgress, 1F, 0F, 0F);
-			GL11.glTranslatef(0F, 0.28F*entity.topRotationProgress, -1.4F*entity.topRotationProgress);
-		//}
+		GL11.glRotatef(30F*entity.topRotationProgress, 1F, 0F, 0F);
+		GL11.glTranslatef(0F, 0.28F*entity.topRotationProgress, -1.4F*entity.topRotationProgress);
 		this.bindTexture(entity.getTextureTop());
 		entity.getModelTop().render(entity, 0F, 0F, 0F, 0F, 0F, 0.0625F);
 		GL11.glPopMatrix();

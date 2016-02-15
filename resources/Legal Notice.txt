@@ -2,7 +2,7 @@ http://halocraft.killerchief.net/
 
 
 * Legal Copyright
-Copyright (C) 2015 KILLER CHIEF - killerchief.net
+Copyright (C) 2016 KILLER CHIEF - killerchief.net
 
  
 
@@ -76,4 +76,4 @@ http://www.xbox.com/en-us/developers/rules
 
 
 
-© 2015 Killer Chief, All rights reserved.
+© 2016 Killer Chief, All rights reserved.

@@ -1182,7 +1182,7 @@ public class InitHcWeapons {
 		BruteShot.HasReticle = true;
 		BruteShot.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
 		BruteShot.ReticleProperties = new int[]{85, 75, 39, 21, 19, 10};
-		BruteShot.GunShootDelay = 20;
+		BruteShot.GunShootDelay = 16;
 		BruteShot.Recoil = 8F;
 		BruteShot.PerformOnly1ShootSound = true;
 		BruteShot.ShootSound = Halocraft.MODID+":weapons.shoot.BruteShotShoot";
@@ -1203,16 +1203,16 @@ public class InitHcWeapons {
 		//BruteShot.BurstAccuracyDecrease = 0.6F;
 		BruteShot.SingleShotProjectileCount = 1;
 
-		BruteShot.ProjectileRenderProperties = Halocraft.MODID+":textures/entities/BulletRender.png";
+		BruteShot.ProjectileRenderProperties = Halocraft.MODID+":textures/entities/BruteShotRender.png";
 		BruteShot.ProjectileGlows = false;
 
 		BruteShot.ProjectileSpeed = 0.8F;
 		BruteShot.Accuracy = 5F;
 		BruteShot.Gravity = 0.01F;
-		BruteShot.MaxEffectiveTicksAlive = 1000;
-		BruteShot.ProjectileLivingProperties = "null";
-		BruteShot.ProjectileImpactProperties = "Bounce(0.97, 1, ExceededMaxEncounteredEntities(1, Explode(2, Die))), ImpactEntity(8, 0, Die)";
-		BruteShot.ProjectileDragInAir = 0.99F;
+		BruteShot.MaxEffectiveTicksAlive = 500;
+		BruteShot.ProjectileLivingProperties = "Fuse(Explode(2, Die)), net.killerchief.halocraft.config.NewWeaponTags.ParticleFX()";
+		BruteShot.ProjectileImpactProperties = "Bounce(0.97, 1.2, StartFuse(10, PlaySound(1,"+Halocraft.MODID+":weapons.BruteShotBounce"+", ExceededMaxEncounteredEntities(1, Explode(2, Die)) ))), ImpactEntity(8, 0, Explode(2, Die))";
+		BruteShot.ProjectileDragInAir = 0.999F;
 		BruteShot.ProjectileDragInWater = 0.5F;
 
 		//BruteShot.TrackSensitivity = 0;

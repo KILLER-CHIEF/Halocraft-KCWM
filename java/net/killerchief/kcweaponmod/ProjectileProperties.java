@@ -237,7 +237,7 @@ public class ProjectileProperties {
 		if (args.length >= 3 && args[0] instanceof String && args[1] instanceof String)
 		{
 			float volume = 1F;
-			if (Float.parseFloat(args[0].toString()) > 0)
+			if (Float.parseFloat(args[0].toString()) > 0F)
 			{
 				if (Math.sqrt((projectile.prevMotionX * projectile.prevMotionX) + (projectile.prevMotionY * projectile.prevMotionY) + (projectile.prevMotionZ * projectile.prevMotionZ)) > 0.04D)
 				{
@@ -306,7 +306,7 @@ public class ProjectileProperties {
 				}
 				++projectile.EncounteredEntities;
 				
-				System.out.println(bounced);
+				//System.out.println(bounced);
 
 				KCUtils.CallPropertyParts(projectile, collidedObject, args[2]);
 			}
