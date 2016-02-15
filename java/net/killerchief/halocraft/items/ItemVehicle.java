@@ -2,6 +2,7 @@ package net.killerchief.halocraft.items;
 
 import java.util.List;
 
+import net.killerchief.halocraft.Halocraft;
 import net.killerchief.halocraft.entities.vehicles.EntityBanshee;
 import net.killerchief.halocraft.entities.vehicles.EntityGhost;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseBlue;
@@ -11,13 +12,16 @@ import net.killerchief.halocraft.entities.vehicles.EntityMongooseRed;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogChainGun;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogGauss;
+import net.killerchief.halocraft.entities.vehicles.EntityWarthogGold;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogRocket;
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
@@ -143,6 +147,19 @@ public class ItemVehicle extends HalocraftItem {
 					else if (this.Type == 9)
 					{
 						vehicle = new EntityBanshee(par2World, (double)((float)i + 0.5F), (double)((float)j + 1.0F), (double)((float)k + 0.5F));
+					}
+					else if (this.Type == 10)
+					{
+						if (this.getCreativeTab() == null)
+						{
+							if (Halocraft.proxy.isSideClient() && par2World.isRemote)
+							{
+								Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("I'm sorry, Dave. I'm afraid I can't do that."));
+							}
+							vehicle = new EntityWarthog(par2World, (double)((float)i + 0.5F), (double)((float)j + 1.0F), (double)((float)k + 0.5F));
+						}
+						else
+							vehicle = new EntityWarthogGold(par2World, (double)((float)i + 0.5F), (double)((float)j + 1.0F), (double)((float)k + 0.5F));
 					}
 					else
 					{

@@ -559,13 +559,13 @@ public class EntityWarthog extends EntityVehicle
 		return this.TurretTexture;
 	}
 	
-	public static final Model3DBase Damage0Model = new ModelWarthog();
+	public Model3DBase Damage0Model = new ModelWarthog();
 	public ResourceLocation Damage0Texture = new ResourceLocation(Halocraft.MODID+":textures/entities/WarthogModel.png");
-	public static final Model3DBase Damage1Model = new ModelWarthogDamage1();
+	public Model3DBase Damage1Model = new ModelWarthogDamage1();
 	public ResourceLocation Damage1Texture = new ResourceLocation(Halocraft.MODID+":textures/entities/WarthogModel_Damaged.png");
-	public static final Model3DBase Damage2Model = new ModelWarthogDamage2();
+	public Model3DBase Damage2Model = new ModelWarthogDamage2();
 	public ResourceLocation Damage2Texture = new ResourceLocation(Halocraft.MODID+":textures/entities/WarthogModel_Damaged_2.png");
-	public static final Model3DBase Damage3Model = new ModelWarthogDamage3();
+	public Model3DBase Damage3Model = new ModelWarthogDamage3();
 	public ResourceLocation Damage3Texture = new ResourceLocation(Halocraft.MODID+":textures/entities/WarthogModel_Damaged_3.png");
 
 	private Model3DBase model = this.Damage0Model;

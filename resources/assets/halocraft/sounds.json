@@ -227,6 +227,11 @@
         "category": "player",
         "sounds": ["entities/warthog/WarthogEngineIdle"]
     },
+	"entities.warthog.rvbhogmus":
+    {
+        "category": "record",
+        "sounds": [{"name":"entities/warthog/rvbhogmus", "stream": true}]
+    },
 	"entities.warthog.WarthogEnter":
     {
         "category": "player",
@@ -400,6 +405,18 @@
             "mob/grunt/GruntLiving17"
         ]
     },
+	"weapons.BruteShotBounce":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/BruteShotBounce1",
+			"weapons/BruteShotBounce2",
+			"weapons/BruteShotBounce3",
+			"weapons/BruteShotBounce4",
+			"weapons/BruteShotBounce5"
+		]
+    },
 	"weapons.EnergySwordEquip":
     {
         "category": "player",
@@ -478,6 +495,18 @@
 		[
 			"weapons/shoot/BeamRifleShoot1",
 			"weapons/shoot/BeamRifleShoot2"
+		]
+    },
+	"weapons.shoot.BruteShotShoot":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/shoot/BruteShotFire1",
+			"weapons/shoot/BruteShotFire2",
+			"weapons/shoot/BruteShotFire3",
+			"weapons/shoot/BruteShotFire4",
+			"weapons/shoot/BruteShotFire5"
 		]
     },
 	"weapons.shoot.CarbineShoot":
@@ -627,6 +656,16 @@
 			"weapons/reload/BattleRifleReload1",
 			"weapons/reload/BattleRifleReload2",
 			"weapons/reload/BattleRifleReload3"
+		]
+    },
+	"weapons.reload.BruteShotReload":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/reload/BruteShotReload1",
+			"weapons/reload/BruteShotReload2",
+			"weapons/reload/BruteShotReload3"
 		]
     },
 	"weapons.reload.CarbineReload":

@@ -35,15 +35,58 @@ public class MovingVehicleSoundLoop extends MovingSound
 			this.yPosF = (float)this.Vehicle.posY;
 			this.zPosF = (float)this.Vehicle.posZ;
 
-			if (this.Vehicle.riddenByEntity != null && this.Vehicle.enterSoundDelay <= 0)
+			if (this.Vehicle.riddenByEntity != null)
 			{
-				double vehicleSpeed = (double)MathHelper.sqrt_double(this.Vehicle.motionX * this.Vehicle.motionX + this.Vehicle.motionY * this.Vehicle.motionY + this.Vehicle.motionZ * this.Vehicle.motionZ);
-				this.volume = (float)vehicleSpeed * 0.9F * ((float)Math.abs(this.Vehicle.enterSoundDelay)/20F);
-				//System.out.println("High: "+this.volume);
+				if (this.volume < 1F)
+					this.volume += 0.02F;
 			}
 			else
 			{
-				this.volume = 0.0F;
+				if (this.volume > 0F)
+					this.volume -= 0.02F;
+			}
+		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public static class High extends MovingSound
+	{
+		private final EntityVehicle Vehicle;
+
+		public High(EntityVehicle vehicle, String sound)
+		{
+			super(new ResourceLocation(sound));
+			this.Vehicle = vehicle;
+			this.repeat = true;
+			this.field_147665_h = 0;
+			this.volume = 0.1F;
+		}
+
+		/**
+		 * Updates the JList with a new model.
+		 */
+		public void update()
+		{
+			if (this.Vehicle.isDead)
+			{
+				this.donePlaying = true;
+			}
+			else
+			{
+				this.xPosF = (float)this.Vehicle.posX;
+				this.yPosF = (float)this.Vehicle.posY;
+				this.zPosF = (float)this.Vehicle.posZ;
+
+				if (this.Vehicle.riddenByEntity != null && this.Vehicle.enterSoundDelay <= 0)
+				{
+					double vehicleSpeed = (double)MathHelper.sqrt_double(this.Vehicle.motionX * this.Vehicle.motionX + this.Vehicle.motionY * this.Vehicle.motionY + this.Vehicle.motionZ * this.Vehicle.motionZ);
+					this.volume = (float)vehicleSpeed * 0.9F * ((float)Math.abs(this.Vehicle.enterSoundDelay)/20F);
+					//System.out.println("High: "+this.volume);
+				}
+				else
+				{
+					this.volume = 0.0F;
+				}
 			}
 		}
 	}

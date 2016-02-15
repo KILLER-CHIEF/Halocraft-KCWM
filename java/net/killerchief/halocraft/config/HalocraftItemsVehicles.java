@@ -1,6 +1,10 @@
 package net.killerchief.halocraft.config;
 
+import net.killerchief.halocraft.EventHandler;
+import net.killerchief.halocraft.Halocraft;
 import net.killerchief.halocraft.items.ItemVehicle;
+import net.minecraft.client.Minecraft;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,6 +23,7 @@ public class HalocraftItemsVehicles {
 	public static Item ItemWarthogGauss;
 	public static Item ItemWarthogRocket;
 	public static Item ItemBanshee;
+	public static Item ItemWarthogGold;
 	
 	public static void load(Configuration config) {
 		ItemMongooseDefault = (new ItemVehicle("MongooseDefault", "MongooseDefaultItem", 0));
@@ -31,6 +36,15 @@ public class HalocraftItemsVehicles {
 		ItemWarthogGauss = (new ItemVehicle("WarthogGauss", "WarthogGauss", 7));
 		ItemWarthogRocket = (new ItemVehicle("WarthogRocket", "WarthogRocket", 8));
 		ItemBanshee = (new ItemVehicle("Banshee", "Banshee", 9));
+		CreativeTabs tab = null;
+		if (Halocraft.proxy.isSideClient()) {
+			for (String name : EventHandler.HcDevTeam) {
+				if (Minecraft.getMinecraft().getSession().getUsername().equals(name)) {
+					tab = Halocraft.InvTabHalocraft;
+				}
+			}
+		}
+		ItemWarthogGold = (new ItemVehicle("WarthogCivil", "WarthogCivil", 10, tab));
 	}
 	
 	public static void registerItems() {
@@ -44,6 +58,7 @@ public class HalocraftItemsVehicles {
 		GameRegistry.registerItem(ItemWarthogGauss, ItemWarthogGauss.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(ItemWarthogRocket, ItemWarthogRocket.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(ItemBanshee, ItemBanshee.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(ItemWarthogGold, ItemWarthogGold.getUnlocalizedName().substring(5));
 	}
 	
 	public static void addRecipes() {

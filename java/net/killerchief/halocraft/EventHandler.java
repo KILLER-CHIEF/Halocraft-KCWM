@@ -11,6 +11,7 @@ import net.killerchief.halocraft.entities.vehicles.EntityTurretSeat;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
 import net.killerchief.halocraft.items.ItemEnergySword;
 import net.killerchief.kcweaponmod.ItemWeapon;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -21,7 +22,9 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class EventHandler {
@@ -61,6 +64,41 @@ public class EventHandler {
 			}
 		}
 	}
+	
+	public static String[] HcDevTeam = new String[]{"KILLER_CHIEF", "Camo7", "FabulousMissLuna", "Hellcraftjz"};
+	int headCooldown = 0;
+	
+	@SubscribeEvent
+	public void playerEvent(PlayerEvent event)
+	{
+		EntityPlayer entityplayer = event.entityPlayer;
+
+		if (entityplayer != null && !entityplayer.isDead && Halocraft.proxy.isSideClient())
+		{
+			Minecraft mc = Minecraft.getMinecraft();
+			if (!mc.isGamePaused() && this.headCooldown-- <= 0)
+			{
+				this.headCooldown = 4;
+				for (String name : this.HcDevTeam) {
+					if (entityplayer.getDisplayName().equals(name))
+					{
+						if (!mc.getSession().getUsername().equals(name) || (mc.getSession().getUsername().equals(name) && mc.gameSettings.thirdPersonView != 0))// && entityplayer.posY % 1 != 0)
+						{
+							double yaw = Math.toRadians(entityplayer.rotationYawHead);
+							double pitch = Math.toRadians(entityplayer.rotationPitch);
+							double a = Math.sin(pitch)*0.6D*-Math.sin(yaw);
+							double c = Math.sin(pitch)*0.6D*Math.cos(yaw);
+							double b = Math.cos(pitch)/4D;
+							double x = entityplayer.posX+a+entityplayer.worldObj.rand.nextDouble()/2D-0.25D;
+							double z = entityplayer.posZ+c+entityplayer.worldObj.rand.nextDouble()/2D-0.25D;
+							double y = entityplayer.boundingBox.maxY+b-0.15D+entityplayer.worldObj.rand.nextDouble()/10D;
+							Halocraft.proxy.ParticleFX(3, entityplayer.worldObj, x, y, z, entityplayer.motionX/10D, entityplayer.motionY/10D, entityplayer.motionZ/10D);
+						}
+					}
+				}
+			}
+		}
+	}
 
 	private int stopAimingCoolDown = 0;
 
@@ -70,7 +108,7 @@ public class EventHandler {
 		if (event.entityLiving instanceof EntityPlayer)
 		{
 			EntityPlayer entityplayer = (EntityPlayer) event.entityLiving;
-
+			
 			if (Halocraft.proxy.isSideClient())
 			{
 				if (entityplayer.getHeldItem() != null && entityplayer.getHeldItem().getItem() instanceof ItemEnergySword)
@@ -178,7 +216,7 @@ public class EventHandler {
 			entityplayer.motionY += 0.17D;
 		}
 	}
-
+	
 	@SubscribeEvent
 	public void livingEvent(LivingEvent event)
 	{

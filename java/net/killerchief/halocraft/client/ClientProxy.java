@@ -23,6 +23,7 @@ import net.killerchief.halocraft.client.render.RenderWarthogBack;
 import net.killerchief.halocraft.config.HalocraftItems;
 import net.killerchief.halocraft.config.HalocraftItemsWeapons;
 import net.killerchief.halocraft.entities.EntityDeployableGravityLift;
+import net.killerchief.halocraft.entities.EntityFlameQuickFX;
 import net.killerchief.halocraft.entities.EntityGravityLiftFX;
 import net.killerchief.halocraft.entities.EntityLightBridgeFX;
 import net.killerchief.halocraft.entities.mobs.EntityEliteCarbine;
@@ -41,6 +42,7 @@ import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogBack;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogChainGun;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogGauss;
+import net.killerchief.halocraft.entities.vehicles.EntityWarthogGold;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogRocket;
 import net.killerchief.halocraft.entities.vehicles.MovingVehicleSoundLoop;
 import net.killerchief.halocraft.tileEntities.TileEntityGunHolder;
@@ -113,6 +115,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityWarthogChainGun.class, new RenderWarthog());
 		RenderingRegistry.registerEntityRenderingHandler(EntityWarthogGauss.class, new RenderWarthog());
 		RenderingRegistry.registerEntityRenderingHandler(EntityWarthogRocket.class, new RenderWarthog());
+		RenderingRegistry.registerEntityRenderingHandler(EntityWarthogGold.class, new RenderWarthog());
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityBanshee.class, new RenderBanshee());
 
@@ -143,6 +146,10 @@ public class ClientProxy extends CommonProxy {
 		{
 			effectR.addEffect(new EntityLightBridgeFX(worldObj, posX, posY, posZ, motionX, motionY, motionZ));
 		}
+		else if (type == 3)
+		{
+			effectR.addEffect(new EntityFlameQuickFX(worldObj, posX, posY, posZ, motionX, motionY, motionZ));
+		}
 	}
 
 	@Override
@@ -167,10 +174,12 @@ public class ClientProxy extends CommonProxy {
 		if (Minecraft.getMinecraft().getSoundHandler() != null && vehicle != null)
 		{
 			try {
-				if (soundHandlerType == 1)
+				if (soundHandlerType == 0)
+					Minecraft.getMinecraft().getSoundHandler().playSound(new MovingVehicleSoundLoop(vehicle, soundFile));
+				else if (soundHandlerType == 1)
 					Minecraft.getMinecraft().getSoundHandler().playSound(new MovingVehicleSoundLoop.Idle(vehicle, soundFile));
 				else if (soundHandlerType == 2)
-					Minecraft.getMinecraft().getSoundHandler().playSound(new MovingVehicleSoundLoop(vehicle, soundFile));
+					Minecraft.getMinecraft().getSoundHandler().playSound(new MovingVehicleSoundLoop.High(vehicle, soundFile));
 			} catch(Exception e) { return false; }
 			return true;
 		}

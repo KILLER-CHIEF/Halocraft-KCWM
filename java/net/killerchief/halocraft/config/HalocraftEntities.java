@@ -19,6 +19,7 @@ import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogBack;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogChainGun;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogGauss;
+import net.killerchief.halocraft.entities.vehicles.EntityWarthogGold;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogRocket;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -45,6 +46,7 @@ public class HalocraftEntities {
 		EntityRegistry.registerModEntity(EntityWarthogGauss.class, "WarthogGauss", 150, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityWarthogRocket.class, "WarthogRocket", 151, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityBanshee.class, "Banshee", 152, Halocraft.instance, 100, 1, true);
+		EntityRegistry.registerModEntity(EntityWarthogGold.class, "WarthogGold", 153, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityDeployableGravityLift.class, "DeployableGravityLift", 160, Halocraft.instance, 100, 1, true);
 
 		registerEggEntities();
