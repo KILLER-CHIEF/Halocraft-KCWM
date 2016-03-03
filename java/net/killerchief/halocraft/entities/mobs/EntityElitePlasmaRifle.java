@@ -32,7 +32,7 @@ public class EntityElitePlasmaRifle extends EntityEliteBase implements IRangedAt
 	@Override
 	public void attackEntityWithRangedAttack(EntityLivingBase target, float par2)
 	{
-		ItemWeaponProperties projProp = HalocraftItemsWeapons.EliteCarbine.Properties;
+		ItemWeaponProperties projProp = HalocraftItemsWeapons.ElitePlasmaRifle.Properties;
 
 		int BulletDamage = 1 + (int)(this.worldObj.difficultySetting.getDifficultyId() * 1.5);//Player's Gun Damage: 5
 		projProp.ProjImpactActArgs = new Object[]{InitHcWeapons.ImpactBlockObject, new Object[]{"ImpactEntity", new String[]{Integer.toString(BulletDamage), "0", "Die"}}};

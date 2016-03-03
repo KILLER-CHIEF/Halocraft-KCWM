@@ -1,5 +1,7 @@
 package net.killerchief.kcweaponmod;
 
+import java.util.List;
+
 import net.killerchief.halocraft.HalocraftUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -7,8 +9,13 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.settings.GameSettings;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.Item;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Vec3;
 import net.minecraftforge.client.GuiIngameForge;
 
 import org.lwjgl.opengl.GL11;
@@ -37,7 +44,7 @@ public class TickHandlerClient {
 			if (guiscreen != null)
 			{
 				this.onTickInGUI(mc, guiscreen);
-			} else {
+			} else if (!mc.isGamePaused()) {
 				this.onTickInGame(mc);
 
 				if (this.shootReloadCodeDelay <= 0)
@@ -76,10 +83,19 @@ public class TickHandlerClient {
 	{
 		//System.out.println("onTickInGUI");
 	}
+	
 
 	//onTickInGame
 	public static float Recoil = 0.0F;
 	public static float AntiRecoil = 0.0F;
+	
+	private int delayTracking = 0;
+	private Entity trackedLast = null;
+	private int trackLastDelay = 0;
+	
+	//client side indicator
+	public static Entity TrackingEntity = null;
+	public static Long TrackingEntityTime = System.currentTimeMillis();
 
 	private void onTickInGame(Minecraft minecraft)
 	{
@@ -93,7 +109,152 @@ public class TickHandlerClient {
 		if (!(!KCWeaponMod.RecoilInLocalSP && minecraft.isSingleplayer()))
 			minecraft.thePlayer.rotationPitch += AntiRecoil * 0.2F;
 		this.AntiRecoil *= 0.78F;
+		
+		
+		if (TrackingEntity != null && TrackingEntityTime < System.currentTimeMillis())
+		{
+			TrackingEntity = null;
+		}
+		
+		if (minecraft.thePlayer.inventory.getCurrentItem() != null && minecraft.inGameHasFocus)
+		{
+			Item currentItem = minecraft.thePlayer.inventory.getCurrentItem().getItem();
+			if (this.delayTracking-- <= 0)
+			{
+				this.delayTracking = 8;
+				if (!this.mc.thePlayer.isDead && currentItem instanceof InterfaceTracking && ((InterfaceTracking)currentItem).CanTrack())
+				{
+					InterfaceTracking itemTrack = (InterfaceTracking) currentItem;
+					Entity target = getObjectMouseOver(itemTrack.TrackDistance()).entityHit;
+					if (target != null)
+					{
+						if (target == this.trackedLast || itemTrack.TrackDelay() == 0)
+						{
+							if (itemTrack.TrackType() == 0 || (itemTrack.TrackType() == 1 && target instanceof EntityLiving) || (itemTrack.TrackType() == 2 && !(target instanceof EntityLiving)) || (itemTrack.TrackType() == 3 && !(target instanceof EntityLiving) && target.riddenByEntity != null) )
+							{
+								if (this.trackLastDelay >= itemTrack.TrackDelay())
+								{
+									//System.out.println("Tracking");
+									TrackingEntity = target;
+									TrackingEntityTime = System.currentTimeMillis() + 1000L;
+									KCWeaponMod.network.sendToServer(new PacketTargetEntity(target.getEntityId()));
+								}
+								else
+								{
+									this.trackLastDelay++;
+								}
+							}
+						}
+						else
+						{
+							this.trackedLast = target;
+							this.trackLastDelay = 0;
+						}
+					}
+					else
+					{
+						if (this.trackLastDelay > 0)
+						{
+							this.trackLastDelay--;
+						}
+					}
+				}
+			}
+		}
 	}
+	
+	/**
+     * Finds what block or object the mouse is over.
+	 * @return MovingObjectPosition
+     */
+    public static MovingObjectPosition getObjectMouseOver(double distance) //EntityRenderer.getMouseOver(partialTickTime)
+    {
+    	MovingObjectPosition objectMouseOver = null;
+    	float partialTickTime = 1F;
+    	if (mc.renderViewEntity != null)
+    	{
+    		if (mc.theWorld != null)
+    		{
+    			double d0 = distance;
+    			objectMouseOver = mc.renderViewEntity.rayTrace(d0, partialTickTime);
+    			double d1 = d0;
+    			Vec3 vec3 = mc.renderViewEntity.getPosition(partialTickTime);
+
+
+    			if (objectMouseOver != null)
+    			{
+    				d1 = objectMouseOver.hitVec.distanceTo(vec3);
+    			}
+
+    			Vec3 vec31 = mc.renderViewEntity.getLook(partialTickTime);
+    			Vec3 vec32 = vec3.addVector(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0);
+    			Entity pointedEntity = null;
+    			Vec3 vec33 = null;
+    			float f1 = 1.0F;
+    			List list = mc.theWorld.getEntitiesWithinAABBExcludingEntity(mc.renderViewEntity, mc.renderViewEntity.boundingBox.addCoord(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0).expand((double)f1, (double)f1, (double)f1));
+    			double d2 = d1;
+
+    			for (int i = 0; i < list.size(); ++i)
+    			{
+    				Entity entity = (Entity)list.get(i);
+
+    				if (entity.canBeCollidedWith())
+    				{
+    					float f2 = entity.getCollisionBorderSize();
+    					AxisAlignedBB axisalignedbb = entity.boundingBox.expand((double)f2, (double)f2, (double)f2);
+    					MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32);
+
+    					if (axisalignedbb.isVecInside(vec3))
+    					{
+    						if (0.0D < d2 || d2 == 0.0D)
+    						{
+    							pointedEntity = entity;
+    							vec33 = movingobjectposition == null ? vec3 : movingobjectposition.hitVec;
+    							d2 = 0.0D;
+    						}
+    					}
+    					else if (movingobjectposition != null)
+    					{
+    						double d3 = vec3.distanceTo(movingobjectposition.hitVec);
+
+    						if (d3 < d2 || d2 == 0.0D)
+    						{
+    							if (entity == mc.renderViewEntity.ridingEntity && !entity.canRiderInteract())
+    							{
+    								if (d2 == 0.0D)
+    								{
+    									pointedEntity = entity;
+    									vec33 = movingobjectposition.hitVec;
+    								}
+    							}
+    							else
+    							{
+    								pointedEntity = entity;
+    								vec33 = movingobjectposition.hitVec;
+    								d2 = d3;
+    							}
+    						}
+    					}
+    				}
+    			}
+
+    			if (pointedEntity != null && (d2 < d1 || objectMouseOver == null))
+    			{
+    				objectMouseOver = new MovingObjectPosition(pointedEntity, vec33);
+    			}
+    		}
+    	}
+    	if (objectMouseOver.entityHit != null)
+    	{
+    		//System.out.println(objectMouseOver.entityHit.posX);
+    		//System.out.println(objectMouseOver.entityHit);
+    	}
+    	else
+    	{
+    		//System.out.println(objectMouseOver.hitVec.xCoord);
+    	}
+    	return objectMouseOver;
+    }
 
 	//HandleShootingReloading
 	public static boolean IsReloading = false;
@@ -106,7 +267,7 @@ public class TickHandlerClient {
 	public int RightClickHeld = 0;
 	private int GunShootDelay = 0;
 	private int ChargePlasmaPistol = 0;
-
+	
 	private void HandleButtonInterface(Minecraft minecraft)
 	{
 		if (this.RightClickPressed == true && this.PrevRightClickPressed == false)
@@ -136,9 +297,12 @@ public class TickHandlerClient {
 			//System.out.println("Released");
 		}
 
+		
+		
 		if (minecraft.thePlayer.inventory.getCurrentItem() != null && minecraft.inGameHasFocus)
 		{
 			Item currentItem = minecraft.thePlayer.inventory.getCurrentItem().getItem();
+			
 			if (GunShootDelay > 0)
 			{
 				GunShootDelay--;

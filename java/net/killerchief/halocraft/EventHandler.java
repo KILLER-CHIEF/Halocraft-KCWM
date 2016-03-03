@@ -3,6 +3,7 @@ package net.killerchief.halocraft;
 import java.util.HashMap;
 
 import net.killerchief.halocraft.comm.packetHandlers.PacketOvershield;
+import net.killerchief.halocraft.config.HalocraftConfig;
 import net.killerchief.halocraft.config.HalocraftItems;
 import net.killerchief.halocraft.config.HalocraftItemsWeapons;
 import net.killerchief.halocraft.entities.vehicles.EntityBanshee;
@@ -65,7 +66,6 @@ public class EventHandler {
 		}
 	}
 	
-	public static String[] HcDevTeam = new String[]{"KILLER_CHIEF", "Camo7", "FabulousMissLuna", "Hellcraftjz"};
 	int headCooldown = 0;
 	
 	@SubscribeEvent
@@ -73,27 +73,25 @@ public class EventHandler {
 	{
 		EntityPlayer entityplayer = event.entityPlayer;
 
-		if (entityplayer != null && !entityplayer.isDead && Halocraft.proxy.isSideClient())
+		if (HalocraftConfig.ShowDevPerks && entityplayer != null && !entityplayer.isDead && Halocraft.proxy.isSideClient())
 		{
 			Minecraft mc = Minecraft.getMinecraft();
 			if (!mc.isGamePaused() && this.headCooldown-- <= 0)
 			{
 				this.headCooldown = 4;
-				for (String name : this.HcDevTeam) {
-					if (entityplayer.getDisplayName().equals(name))
+				if (HalocraftUtils.isHcDevTeamMember(entityplayer.getDisplayName()))
+				{
+					if (!mc.getSession().getUsername().equals(entityplayer.getDisplayName()) || (mc.getSession().getUsername().equals(entityplayer.getDisplayName()) && mc.gameSettings.thirdPersonView != 0))// && entityplayer.posY % 1 != 0)
 					{
-						if (!mc.getSession().getUsername().equals(name) || (mc.getSession().getUsername().equals(name) && mc.gameSettings.thirdPersonView != 0))// && entityplayer.posY % 1 != 0)
-						{
-							double yaw = Math.toRadians(entityplayer.rotationYawHead);
-							double pitch = Math.toRadians(entityplayer.rotationPitch);
-							double a = Math.sin(pitch)*0.6D*-Math.sin(yaw);
-							double c = Math.sin(pitch)*0.6D*Math.cos(yaw);
-							double b = Math.cos(pitch)/4D;
-							double x = entityplayer.posX+a+entityplayer.worldObj.rand.nextDouble()/2D-0.25D;
-							double z = entityplayer.posZ+c+entityplayer.worldObj.rand.nextDouble()/2D-0.25D;
-							double y = entityplayer.boundingBox.maxY+b-0.15D+entityplayer.worldObj.rand.nextDouble()/10D;
-							Halocraft.proxy.ParticleFX(3, entityplayer.worldObj, x, y, z, entityplayer.motionX/10D, entityplayer.motionY/10D, entityplayer.motionZ/10D);
-						}
+						double yaw = Math.toRadians(entityplayer.rotationYawHead);
+						double pitch = Math.toRadians(entityplayer.rotationPitch);
+						double a = Math.sin(pitch)*0.6D*-Math.sin(yaw);
+						double c = Math.sin(pitch)*0.6D*Math.cos(yaw);
+						double b = Math.cos(pitch)/4D;
+						double x = entityplayer.posX+a+entityplayer.worldObj.rand.nextDouble()/2D-0.25D;
+						double z = entityplayer.posZ+c+entityplayer.worldObj.rand.nextDouble()/2D-0.25D;
+						double y = entityplayer.boundingBox.maxY+b-0.15D+entityplayer.worldObj.rand.nextDouble()/10D;
+						Halocraft.proxy.ParticleFX(3, entityplayer.worldObj, x, y, z, entityplayer.motionX/10D, entityplayer.motionY/10D, entityplayer.motionZ/10D);
 					}
 				}
 			}
@@ -340,101 +338,6 @@ public class EventHandler {
 			}
 		}
 	}
-
-	//FIXME: remove?
-	//Not the original (HalocraftHelper)
-	/*public static boolean isPlayerWearingArmor23(EntityPlayer player, int armorType, boolean helmet, boolean body, boolean legs, boolean boots)
-	{
-		boolean notfail = true;
-		if (player.inventory != null && player.inventory.armorInventory != null)
-		{
-			if (helmet && notfail)
-			{
-				if (player.inventory.armorInventory[3] == null)
-					notfail = false;
-				else
-					if (armorType == 0) {
-						if (!(player.inventory.armorInventory[3].getItem() == HalocraftItemsArmor.ReconHelmet || player.inventory.armorInventory[3].getItem() == HalocraftItemsArmor.MarkVIHelmetGreen || player.inventory.armorInventory[3].getItem() == HalocraftItemsArmor.MarkVHelmetBlack || player.inventory.armorInventory[3].getItem() == HalocraftItemsArmor.MarkVHelmetGreen || player.inventory.armorInventory[3].getItem() == HalocraftItemsArmor.MarkVHelmetBlue || player.inventory.armorInventory[3].getItem() == HalocraftItemsArmor.MarkVHelmetRed))
-							notfail = false;
-					}
-					else if (armorType == 1) {
-						if (!(player.inventory.armorInventory[3].getItem() == HalocraftItemsArmor.ODSTHelmet))
-							notfail = false;
-					}
-					else if (armorType == 2) {
-						if (!(player.inventory.armorInventory[3].getItem() == HalocraftItemsArmor.MarineHelmet))
-							notfail = false;
-					}
-					else {
-						notfail = false;
-					}
-			}
-			if (body && notfail)
-			{
-				if (player.inventory.armorInventory[2] == null)
-					notfail = false;
-				else
-					if (armorType == 0) {
-						if (!(player.inventory.armorInventory[2].getItem() == HalocraftItemsArmor.ReconBody || player.inventory.armorInventory[2].getItem() == HalocraftItemsArmor.MarkVIBodyGreen || player.inventory.armorInventory[2].getItem() == HalocraftItemsArmor.MarkVBodyBlack || player.inventory.armorInventory[2].getItem() == HalocraftItemsArmor.MarkVBodyGreen || player.inventory.armorInventory[2].getItem() == HalocraftItemsArmor.MarkVBodyBlue || player.inventory.armorInventory[2].getItem() == HalocraftItemsArmor.MarkVBodyRed))
-							notfail = false;
-					}
-					else if (armorType == 1) {
-						if (!(player.inventory.armorInventory[2].getItem() == HalocraftItemsArmor.ODSTBody))
-							notfail = false;
-					}
-					else if (armorType == 2) {
-						if (!(player.inventory.armorInventory[2].getItem() == HalocraftItemsArmor.MarineBody))
-							notfail = false;
-					}
-					else {
-						notfail = false;
-					}
-			}
-			if (legs && notfail)
-			{
-				if (player.inventory.armorInventory[1] == null)
-					notfail = false;
-				else
-					if (armorType == 0) {
-						if (!(player.inventory.armorInventory[1].getItem() == HalocraftItemsArmor.ReconLegs || player.inventory.armorInventory[1].getItem() == HalocraftItemsArmor.MarkVILegsGreen || player.inventory.armorInventory[1].getItem() == HalocraftItemsArmor.MarkVLegsBlack || player.inventory.armorInventory[1].getItem() == HalocraftItemsArmor.MarkVLegsGreen || player.inventory.armorInventory[1].getItem() == HalocraftItemsArmor.MarkVLegsBlue || player.inventory.armorInventory[1].getItem() == HalocraftItemsArmor.MarkVLegsRed))
-							notfail = false;
-					}
-					else if (armorType == 1) {
-						if (!(player.inventory.armorInventory[1].getItem() == HalocraftItemsArmor.ODSTLegs))
-							notfail = false;
-					}
-					else if (armorType == 2) {
-						if (!(player.inventory.armorInventory[1].getItem() == HalocraftItemsArmor.MarineLegs))
-							notfail = false;
-					}
-					else {
-						notfail = false;
-					}
-			}
-			if (boots && notfail)
-			{
-				if (player.inventory.armorInventory[0] == null)
-					notfail = false;
-				else
-					if (armorType == 0) {
-						if (!(player.inventory.armorInventory[0].getItem() == HalocraftItemsArmor.ReconBoots || player.inventory.armorInventory[0].getItem() == HalocraftItemsArmor.MarkVIBootsGreen || player.inventory.armorInventory[0].getItem() == HalocraftItemsArmor.MarkVBootsBlack || player.inventory.armorInventory[0].getItem() == HalocraftItemsArmor.MarkVBootsGreen || player.inventory.armorInventory[0].getItem() == HalocraftItemsArmor.MarkVBootsBlue || player.inventory.armorInventory[0].getItem() == HalocraftItemsArmor.MarkVBootsRed))
-							notfail = false;
-					}
-					else if (armorType == 1) {
-						if (!(player.inventory.armorInventory[0].getItem() == HalocraftItemsArmor.ODSTBoots))
-							notfail = false;
-					}
-					else if (armorType == 2) {
-						if (!(player.inventory.armorInventory[0].getItem() == HalocraftItemsArmor.MarineBoots))
-							notfail = false;
-					}
-					else {
-						notfail = false;
-					}
-			}
-		}
-		return notfail;
-	}*/
 
 	/*@SubscribeEvent
     public void onConfigChanged(OnConfigChangedEvent event)

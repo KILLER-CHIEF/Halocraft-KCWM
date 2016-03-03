@@ -4,6 +4,7 @@ import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
@@ -38,9 +39,18 @@ public class TickHandler {
 
 	public static HashMap<EntityPlayer, Integer> ShootDelayMap = new HashMap();
 	public static HashMap<EntityPlayer, Integer> ReloadDelayMap = new HashMap();
+	public static HashMap<EntityPlayer, Object[]> EntityTargetingMap = new HashMap();
 
 	static void performShootAndReload()
 	{
+		for (Entry<EntityPlayer, Object[]> entry : TickHandler.EntityTargetingMap.entrySet())
+		{
+			if ((Long)entry.getValue()[0] < System.currentTimeMillis())
+			{
+				TickHandler.EntityTargetingMap.remove(entry.getKey());
+				//System.out.println("Removed");
+			}
+		}
 		for (Entry<EntityPlayer, Integer> entry : TickHandler.ShootDelayMap.entrySet())
 		{
 			if (entry.getValue() > 0)

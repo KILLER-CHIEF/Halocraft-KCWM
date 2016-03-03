@@ -30,11 +30,11 @@ public class Model3DArmor extends ModelBiped
 	public ModelRendererTurbo[] leftBootModel;
 	public ModelRendererTurbo[] rightBootModel;
 	
-	public ModelRendererTurbo[] bodyModelLights;
-	public ModelRendererTurbo[] leftArmModelLights;
-	public ModelRendererTurbo[] rightArmModelLights;
+	public ModelRendererTurbo[] headLightsModel;
+	public ModelRendererTurbo[] bodyLightsModel;
+	public ModelRendererTurbo[] leftArmLightsModel;
+	public ModelRendererTurbo[] rightArmLightsModel;
 	public ModelRendererTurbo[] visorModel;
-	public ModelRendererTurbo[] helmetModelLights;//TODO
 	
 	private int width;
 	private int height;
@@ -51,9 +51,10 @@ public class Model3DArmor extends ModelBiped
 		flip(this.leftBootModel);
 		flip(this.rightBootModel);
 		
-		flip(this.bodyModelLights);
-		flip(this.leftArmModelLights);
-		flip(this.rightArmModelLights);
+		flip(this.headLightsModel);
+		flip(this.bodyLightsModel);
+		flip(this.leftArmLightsModel);
+		flip(this.rightArmLightsModel);
 		flip(this.visorModel);
 	}
 
@@ -354,9 +355,9 @@ public class Model3DArmor extends ModelBiped
 		float x = OpenGlHelper.lastBrightnessX;
 		float y = OpenGlHelper.lastBrightnessY;
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
-		if (this.bodyModelLights != null)
+		if (this.headLightsModel != null)
 		{
-			for (ModelRendererTurbo part : this.bodyModelLights)
+			for (ModelRendererTurbo part : this.headLightsModel)
 			{
 				if (part != null)
 				{
@@ -364,9 +365,9 @@ public class Model3DArmor extends ModelBiped
 				}
 			}
 		}
-		if (this.leftArmModelLights != null)
+		if (this.bodyLightsModel != null)
 		{
-			for (ModelRendererTurbo part : this.leftArmModelLights)
+			for (ModelRendererTurbo part : this.bodyLightsModel)
 			{
 				if (part != null)
 				{
@@ -374,9 +375,19 @@ public class Model3DArmor extends ModelBiped
 				}
 			}
 		}
-		if (this.rightArmModelLights != null)
+		if (this.leftArmLightsModel != null)
 		{
-			for (ModelRendererTurbo part : this.rightArmModelLights)
+			for (ModelRendererTurbo part : this.leftArmLightsModel)
+			{
+				if (part != null)
+				{
+					part.render(par7);
+				}
+			}
+		}
+		if (this.rightArmLightsModel != null)
+		{
+			for (ModelRendererTurbo part : this.rightArmLightsModel)
 			{
 				if (part != null)
 				{
@@ -547,10 +558,21 @@ public class Model3DArmor extends ModelBiped
 				part.rotationPointZ = -this.bipedRightLeg.rotationPointZ+0.1F;
 			}
 		}
-		
-		if (this.bodyModelLights != null)
+		if (this.headLightsModel != null)
 		{
-			for (ModelRendererTurbo part : this.bodyModelLights)
+			for (ModelRendererTurbo part : this.headLightsModel)
+			{
+				part.rotateAngleX = this.bipedHead.rotateAngleX;
+				part.rotateAngleY = -this.bipedHead.rotateAngleY;
+				part.rotateAngleZ = -this.bipedHead.rotateAngleZ;
+				part.rotationPointX = this.bipedHead.rotationPointX;
+				part.rotationPointY = -this.bipedHead.rotationPointY+1.5F;//+1
+				part.rotationPointZ = -this.bipedHead.rotationPointZ;
+			}
+		}
+		if (this.bodyLightsModel != null)
+		{
+			for (ModelRendererTurbo part : this.bodyLightsModel)
 			{
 				part.rotateAngleX = this.bipedBody.rotateAngleX;
 				part.rotateAngleY = -this.bipedBody.rotateAngleY;
@@ -560,9 +582,9 @@ public class Model3DArmor extends ModelBiped
 				part.rotationPointZ = -this.bipedBody.rotationPointZ+0.05F;//-0.05
 			}
 		}
-		if (this.leftArmModelLights != null)
+		if (this.leftArmLightsModel != null)
 		{
-			for (ModelRendererTurbo part : this.leftArmModelLights)
+			for (ModelRendererTurbo part : this.leftArmLightsModel)
 			{
 				part.rotateAngleX = this.bipedLeftArm.rotateAngleX;
 				part.rotateAngleY = -this.bipedLeftArm.rotateAngleY;
@@ -572,9 +594,9 @@ public class Model3DArmor extends ModelBiped
 				//part.rotationPointZ = -this.bipedLeftArm.rotationPointZ;
 			}
 		}
-		if (this.rightArmModelLights != null)
+		if (this.rightArmLightsModel != null)
 		{
-			for (ModelRendererTurbo part : this.rightArmModelLights)
+			for (ModelRendererTurbo part : this.rightArmLightsModel)
 			{
 				part.rotateAngleX = this.bipedRightArm.rotateAngleX;
 				part.rotateAngleY = -this.bipedRightArm.rotateAngleY;

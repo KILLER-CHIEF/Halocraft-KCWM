@@ -12,7 +12,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemWeapon extends Item implements InterfaceZoomReticle {
+public class ItemWeapon extends Item implements InterfaceZoomReticle, InterfaceTracking {
 	
 	public ItemWeaponProperties Properties;
 	private boolean loweredweapon = false;
@@ -149,6 +149,31 @@ public class ItemWeapon extends Item implements InterfaceZoomReticle {
 	@Override
 	public int[] ReticleProperties() {
 		return this.Properties.ReticleProperties;
+	}
+
+	@Override
+	public boolean CanTrack() {
+		return this.Properties.TrackSensitivity > 0F;
+	}
+
+	@Override
+	public float TrackSensitivity() {
+		return this.Properties.TrackSensitivity;
+	}
+
+	@Override
+	public int TrackDelay() {
+		return this.Properties.TrackLastDelay;
+	}
+	
+	@Override
+	public int TrackType() {
+		return this.Properties.TrackType;
+	}
+	
+	@Override
+	public int TrackDistance() {
+		return this.Properties.TrackDistance;
 	}
 
 }

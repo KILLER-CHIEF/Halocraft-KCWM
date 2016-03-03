@@ -84,6 +84,18 @@ public class KCUtils {
 		return false;*/
 	}
 	
+	public static boolean fireProjectile(World world, double posx, double posy, double posz, float yaw, float pitch, EntityLivingBase thrower, int propID)
+	{
+		world.spawnEntityInWorld(new EntityProjectile(world, posx, posy, posz, yaw, pitch, thrower, propID));
+		return true;
+	}
+	
+	public static boolean fireProjectile(World world, double posx, double posy, double posz, double motionx, double motiony, double motionz, EntityLivingBase thrower, int propID)
+	{
+		world.spawnEntityInWorld(new EntityProjectile(world, posx, posy, posz, motionx, motiony, motionz, thrower, propID));
+		return true;
+	}
+	
 	public static boolean fireProjectile(World world, EntityLivingBase thrower, int propID, double varX, double varY, double varZ, float speed, float accuracy)
 	{
 		Entity projectile = new EntityProjectile(world, thrower, propID);

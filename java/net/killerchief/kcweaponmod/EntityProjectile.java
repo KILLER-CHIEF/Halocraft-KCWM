@@ -15,6 +15,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.item.Item;
 
 public class EntityProjectile extends Entity implements IProjectile
 {
@@ -39,7 +40,7 @@ public class EntityProjectile extends Entity implements IProjectile
 	private double prevTrackingDistance = 0D;
 	public int Fuse = 0;
 	public int EncounteredEntities = 0;
-	public Entity trackEntity = null;
+	//public Entity trackEntity = null;
 
 	//Variables that are set in constructors. Does NOT need to have NBT!
 	public float Gravity = 0.0F;
@@ -78,10 +79,9 @@ public class EntityProjectile extends Entity implements IProjectile
 	public EntityProjectile(World world, EntityLivingBase shooter, EntityLivingBase target, int propertiesID)
 	{
 		super(world);
+		this.thrower = shooter;
 		if (this.initProperties(propertiesID, KCWeaponMod.weapons.length))
 		{
-			this.thrower = shooter;
-
 			this.posY = shooter.posY + (double)shooter.getEyeHeight() - 0.10000000149011612D;
 			double d0 = target.posX - shooter.posX;
 			double d1 = target.boundingBox.minY + (double)(target.height / 3.0F) - this.posY;
@@ -109,9 +109,9 @@ public class EntityProjectile extends Entity implements IProjectile
 	public EntityProjectile(World world, EntityLivingBase thrower, int propertiesID)
 	{
 		this(world);
+		this.thrower = thrower;
 		if (this.initProperties(propertiesID, KCWeaponMod.weapons.length))
 		{
-			this.thrower = thrower;
 			this.setLocationAndAngles(thrower.posX, thrower.posY + (double)thrower.getEyeHeight(), thrower.posZ, thrower.rotationYaw, thrower.rotationPitch);
 			this.posX -= (double)(MathHelper.cos(this.rotationYaw / 180.0F * (float)Math.PI) * 0.34F) + (MathHelper.sin(this.rotationYaw / 180.0F * (float)Math.PI) * 0.7F * Math.abs((MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI) * 1F)));
 			this.posY -= 0.10000000149011612D + (double)(MathHelper.sin(this.rotationPitch / 180.0F * (float)Math.PI) * 1.1F);
@@ -132,20 +132,39 @@ public class EntityProjectile extends Entity implements IProjectile
 	public EntityProjectile(World world, EntityLivingBase thrower, int propertiesID, Entity trackEntity)
 	{
 		this(world, thrower, propertiesID);
-		this.trackEntity = trackEntity;
+		this.setTrackEntityID(trackEntity.getEntityId());
 	}
 
 	public EntityProjectile(World world, double posx, double posy, double posz, EntityLivingBase thrower, int propertiesID)
 	{
 		this(world);
+		this.thrower = thrower;
 		if (this.initProperties(propertiesID, KCWeaponMod.weapons.length))
 		{
-			this.thrower = thrower;
 			this.setLocationAndAngles(posx, posy, posz, thrower.rotationYaw, thrower.rotationPitch);
 			float f = 0.4F;
-			this.motionX = (double)(-MathHelper.sin(this.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI) * f);
-			this.motionZ = (double)(MathHelper.cos(this.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI) * f);
-			this.motionY = (double)(-MathHelper.sin(this.rotationPitch / 180.0F * (float)Math.PI) * f);
+			this.motionX = (double)(-MathHelper.sin(thrower.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(thrower.rotationPitch / 180.0F * (float)Math.PI) * f);
+			this.motionZ = (double)(MathHelper.cos(thrower.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(thrower.rotationPitch / 180.0F * (float)Math.PI) * f);
+			this.motionY = (double)(-MathHelper.sin(thrower.rotationPitch / 180.0F * (float)Math.PI) * f);
+			this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, properties.ProjectileSpeed, properties.Accuracy);
+		}
+		else
+		{
+			this.setDead();
+		}
+	}
+	
+	public EntityProjectile(World world, double posx, double posy, double posz, float yaw, float pitch, EntityLivingBase thrower, int propertiesID)
+	{
+		this(world);
+		this.thrower = thrower;
+		if (this.initProperties(propertiesID, KCWeaponMod.weapons.length))
+		{
+			this.setLocationAndAngles(posx, posy, posz, yaw, pitch);
+			float f = 0.4F;
+			this.motionX = (double)(-MathHelper.sin(yaw / 180.0F * (float)Math.PI) * MathHelper.cos(pitch / 180.0F * (float)Math.PI) * f);
+			this.motionZ = (double)(MathHelper.cos(yaw / 180.0F * (float)Math.PI) * MathHelper.cos(pitch / 180.0F * (float)Math.PI) * f);
+			this.motionY = (double)(-MathHelper.sin(pitch / 180.0F * (float)Math.PI) * f);
 			this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, properties.ProjectileSpeed, properties.Accuracy);
 		}
 		else
@@ -200,6 +219,16 @@ public class EntityProjectile extends Entity implements IProjectile
 		this.ProjectileDragInWater = this.properties.ProjectileDragInWater;
 		this.Glows = this.properties.ProjectileGlows;
 		this.TrackSensitivity = this.properties.TrackSensitivity;
+		if (this.thrower != null && this.properties.TrackSensitivity > 0F && TickHandler.EntityTargetingMap.containsKey(this.thrower))
+		{
+			if ((Item)TickHandler.EntityTargetingMap.get(this.thrower)[2] == this.thrower.getHeldItem().getItem())
+			{
+				int id = (Integer)TickHandler.EntityTargetingMap.get(this.thrower)[1];
+				Entity entity = this.worldObj.getEntityByID(id);
+				if (entity != null && !entity.isDead && entity.getDistance(this.thrower.posX, this.thrower.posY, this.thrower.posZ) <= (this.properties.TrackDistance*1.1))
+					this.setTrackEntityID(id);
+			}
+		}
 		return true;
 	}
 
@@ -230,6 +259,7 @@ public class EntityProjectile extends Entity implements IProjectile
 	{
 		this.dataWatcher.addObject(16, -1);//PropertiesID
 		this.dataWatcher.addObject(18, -1);//PastWeaponArrayLength
+		this.dataWatcher.addObject(19, -1);//trackEntity
 	}
 
 	public void setPropertiesID(int propertiesID)
@@ -251,6 +281,21 @@ public class EntityProjectile extends Entity implements IProjectile
 	public int getPastWeaponArrayLength()
 	{
 		return this.dataWatcher.getWatchableObjectInt(18);
+	}
+	
+	public void setTrackEntityID(int entityID)
+	{
+		this.dataWatcher.updateObject(19, entityID);
+	}
+	
+	public int getTrackEntityID()
+	{
+		return this.dataWatcher.getWatchableObjectInt(19);
+	}
+
+	public Entity getTrackEntity()
+	{
+		return this.worldObj.getEntityByID(this.dataWatcher.getWatchableObjectInt(19));
 	}
 
 	/**
@@ -332,7 +377,7 @@ public class EntityProjectile extends Entity implements IProjectile
 		par1NBTTagCompound.setDouble("zSeOffset", this.zSeOffset);
 		par1NBTTagCompound.setInteger("EncounteredEntities", this.EncounteredEntities);
 		par1NBTTagCompound.setInteger("Fuse", this.Fuse);
-		par1NBTTagCompound.setInteger("trackEntity", this.trackEntity != null ? this.trackEntity.getEntityId() : 0);
+		par1NBTTagCompound.setInteger("trackEntity", this.getTrackEntity() != null ? this.getTrackEntityID() : 0);
 
 		//par1NBTTagCompound.setShort("xTile", (short)this.xTile);
 		//par1NBTTagCompound.setShort("yTile", (short)this.yTile);
@@ -374,7 +419,7 @@ public class EntityProjectile extends Entity implements IProjectile
 		this.zSeOffset = par1NBTTagCompound.getDouble("zSeOffset");
 		this.EncounteredEntities = par1NBTTagCompound.getInteger("EncounteredEntities");
 		this.Fuse = par1NBTTagCompound.getInteger("Fuse");
-		this.trackEntity = this.worldObj.getEntityByID(par1NBTTagCompound.getInteger("trackEntity"));
+		this.setTrackEntityID(par1NBTTagCompound.getInteger("trackEntity"));
 
 		//this.xTile = par1NBTTagCompound.getShort("xTile");
 		//this.yTile = par1NBTTagCompound.getShort("yTile");
@@ -458,9 +503,9 @@ public class EntityProjectile extends Entity implements IProjectile
 					this.ticksInWater = 0;
 				}
 
-				if (this.trackEntity != null && !this.trackEntity.isDead)
+				if (this.getTrackEntity() != null && !this.getTrackEntity().isDead)
 				{
-					double distance = this.getDistanceSqToEntity(this.trackEntity)/2;
+					double distance = this.getDistanceSqToEntity(this.getTrackEntity())/2;
 					float sens = this.TrackSensitivity;
 					if (distance > this.prevTrackingDistance)
 					{
@@ -477,11 +522,11 @@ public class EntityProjectile extends Entity implements IProjectile
 					this.motionY *= 1/speed;
 					this.motionZ *= 1/speed;
 					//if (Math.abs(this.motionX) < 2)
-					this.motionX -= (this.posX - this.trackEntity.posX) * Math.abs(this.posX - this.trackEntity.posX) * (sens / distance) * 1.2;
+					this.motionX -= (this.posX - this.getTrackEntity().posX) * Math.abs(this.posX - this.getTrackEntity().posX) * (sens / distance) * 1.2;
 					//if (Math.abs(this.motionY) < 2)
-					this.motionY -= (this.posY - this.trackEntity.posY) * Math.abs(this.posY - this.trackEntity.posY) * (sens / distance) * 1.2;
+					this.motionY -= (this.posY - this.getTrackEntity().posY) * Math.abs(this.posY - this.getTrackEntity().posY) * (sens / distance) * 1.2;
 					//if (Math.abs(this.motionZ) < 2)
-					this.motionZ -= (this.posZ - this.trackEntity.posZ) * Math.abs(this.posZ - this.trackEntity.posZ) * (sens / distance) * 1.2;
+					this.motionZ -= (this.posZ - this.getTrackEntity().posZ) * Math.abs(this.posZ - this.getTrackEntity().posZ) * (sens / distance) * 1.2;
 				}
 
 				/*if (this.inGround)

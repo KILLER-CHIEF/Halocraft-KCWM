@@ -3,10 +3,6 @@ package net.killerchief.halocraft.entities.vehicles;
 import net.killerchief.halocraft.Halocraft;
 import net.killerchief.halocraft.TickHandler;
 import net.killerchief.halocraft.client.models.Model3DBase;
-import net.killerchief.halocraft.client.models.vehicles.ModelGhost;
-import net.killerchief.halocraft.client.models.vehicles.ModelGhostDamage1;
-import net.killerchief.halocraft.client.models.vehicles.ModelGhostDamage2;
-import net.killerchief.halocraft.client.models.vehicles.ModelGhostDamage3;
 import net.killerchief.halocraft.client.models.vehicles.ModelWarthog;
 import net.killerchief.halocraft.client.models.vehicles.ModelWarthogDamage1;
 import net.killerchief.halocraft.client.models.vehicles.ModelWarthogDamage2;
@@ -185,7 +181,7 @@ public class EntityWarthog extends EntityVehicle
 				return false;
 			}*/
 		}
-		
+
 		if (this.riddenByEntity == null && (this.seatShotgun != null && this.entityonecloser(par1EntityPlayer, this, this.seatShotgun)))
 		{
 			if (!this.worldObj.isRemote)
@@ -406,6 +402,13 @@ public class EntityWarthog extends EntityVehicle
 			float j = this.rotationYaw > i ? i - this.rotationYaw : i - (this.rotationYaw + 360F);
 			this.yawPointer = (float) (Math.abs(j) > 180F ? 360F + j : j);
 			//System.out.println("P: "+this.yawPointer+"\n");
+			int reverse = this.fwdVelocity >= 0 ? 1 : -1;
+			if (this.isMovingLeft()) {
+				this.yawPointer -= 60F * reverse;
+			}
+			if (this.isMovingRight()) {
+				this.yawPointer += 60F * reverse;
+			}
 
 			if (TickHandler.ForwardMap.containsKey(this.riddenByEntity) && TickHandler.BackwardMap.containsKey(this.riddenByEntity) && TickHandler.LeftMap.containsKey(this.riddenByEntity) && TickHandler.RightMap.containsKey(this.riddenByEntity))
 			{
@@ -451,7 +454,7 @@ public class EntityWarthog extends EntityVehicle
 
 		this.motionX += -Math.sin(Math.toRadians(this.rotationYaw))*this.fwdVelocity;
 		this.motionZ += Math.cos(Math.toRadians(this.rotationYaw))*this.fwdVelocity;
-		
+
 		this.fwdVelocity *= this.onGround ? this.frictionFactor : 0.99F;
 		if (this.fwdVelocity < 0.01D && this.fwdVelocity > -0.01D) {
 			this.fwdVelocity = 0;
@@ -527,7 +530,7 @@ public class EntityWarthog extends EntityVehicle
 	{
 		return (float)Math.toRadians(-this.rotatePassengerFrame);
 	}
-	
+
 	private void handleDyingEffects()
 	{
 		//if(riddenByEntity!=null) worldObj.spawnParticle("smoke", posX, posY-0.15, posZ, 0, 0, 0);
@@ -547,7 +550,7 @@ public class EntityWarthog extends EntityVehicle
 			}
 		}
 	}
-	
+
 	public ModelWarthogTurretChainGun TurretModel = null;
 	public ResourceLocation TurretTexture = null;
 	public ModelWarthogTurretChainGun getTurretModel()
@@ -558,7 +561,7 @@ public class EntityWarthog extends EntityVehicle
 	{
 		return this.TurretTexture;
 	}
-	
+
 	public Model3DBase Damage0Model = new ModelWarthog();
 	public ResourceLocation Damage0Texture = new ResourceLocation(Halocraft.MODID+":textures/entities/WarthogModel.png");
 	public Model3DBase Damage1Model = new ModelWarthogDamage1();
@@ -603,7 +606,7 @@ public class EntityWarthog extends EntityVehicle
 			this.model = this.Damage0Model;
 			this.texture = this.Damage0Texture;
 		}
-		
+
 		if (Minecraft.getMinecraft().inGameHasFocus)
 		{
 			this.rotateWheelSpeed += Math.sqrt((motionX * motionX) + (motionZ * motionZ)) * Math.signum(this.getFwdVelocity()) * 1.4F;

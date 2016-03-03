@@ -232,15 +232,8 @@ public abstract class EntityEliteBase extends EntityHalocraftMob {
 
 		case 1:
 		{
-			int chance = rand.nextInt(4);
-			if (chance == 0)
-				this.entityDropItem(new ItemStack(HalocraftItemsArmor.MarkVHelmetBlack, 1, (int)(HalocraftItemsArmor.MarkVHelmetBlack.getMaxDamage()/(1 + this.rand.nextDouble()/2))), 0F);
-			else if (chance == 1)
-				this.entityDropItem(new ItemStack(HalocraftItemsArmor.MarkVHelmetGreen, 1, (int)(HalocraftItemsArmor.MarkVHelmetGreen.getMaxDamage()/(1 + this.rand.nextDouble()/2))), 0F);
-			else if (chance == 2)
-				this.entityDropItem(new ItemStack(HalocraftItemsArmor.MarkVHelmetBlue, 1, (int)(HalocraftItemsArmor.MarkVHelmetBlue.getMaxDamage()/(1 + this.rand.nextDouble()/2))), 0F);
-			else if (chance == 3)
-				this.entityDropItem(new ItemStack(HalocraftItemsArmor.MarkVHelmetRed, 1, (int)(HalocraftItemsArmor.MarkVHelmetRed.getMaxDamage()/(1 + this.rand.nextDouble()/2))), 0F);
+			Item item = HalocraftItemsArmor.MarkVSeries.get(rand.nextInt(16)*4);
+			this.entityDropItem(new ItemStack(item, 1, (int)(item.getMaxDamage()/(1 + this.rand.nextDouble()/2))), 0F);
 			break;
 		}
 		case 2:

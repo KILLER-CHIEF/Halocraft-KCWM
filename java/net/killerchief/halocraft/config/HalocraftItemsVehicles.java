@@ -2,6 +2,7 @@ package net.killerchief.halocraft.config;
 
 import net.killerchief.halocraft.EventHandler;
 import net.killerchief.halocraft.Halocraft;
+import net.killerchief.halocraft.HalocraftUtils;
 import net.killerchief.halocraft.items.ItemVehicle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
@@ -37,12 +38,8 @@ public class HalocraftItemsVehicles {
 		ItemWarthogRocket = (new ItemVehicle("WarthogRocket", "WarthogRocket", 8));
 		ItemBanshee = (new ItemVehicle("Banshee", "Banshee", 9));
 		CreativeTabs tab = null;
-		if (Halocraft.proxy.isSideClient()) {
-			for (String name : EventHandler.HcDevTeam) {
-				if (Minecraft.getMinecraft().getSession().getUsername().equals(name)) {
-					tab = Halocraft.InvTabHalocraft;
-				}
-			}
+		if (Halocraft.proxy.isSideClient() && HalocraftUtils.isHcDevTeamMember(Minecraft.getMinecraft().getSession().getUsername())) {
+			tab = Halocraft.InvTabHalocraft;
 		}
 		ItemWarthogGold = (new ItemVehicle("WarthogCivil", "WarthogCivil", 10, tab));
 	}

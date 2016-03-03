@@ -6,7 +6,6 @@ import net.killerchief.halocraft.config.HalocraftItemsWeapons;
 import net.killerchief.halocraft.entities.vehicles.EntityBanshee;
 import net.killerchief.halocraft.entities.vehicles.EntityGhost;
 import net.killerchief.halocraft.entities.vehicles.EntityTurretSeat;
-import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogChainGun;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogGauss;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogRocket;
@@ -20,21 +19,21 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketVehicleShoot implements IMessage {
 
-	private float Recoil = 0F;
-	
+	private float RecoilOrPitchOffset = 0F;
+
 	public PacketVehicleShoot() { }
-	public PacketVehicleShoot(float recoil) {
-		this.Recoil = recoil;
+	public PacketVehicleShoot(float recoilorpitchoffset) {
+		this.RecoilOrPitchOffset = recoilorpitchoffset;
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf){
-		buf.writeFloat(this.Recoil);
+		buf.writeFloat(this.RecoilOrPitchOffset);
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf){
-		this.Recoil = buf.readFloat();
+		this.RecoilOrPitchOffset = buf.readFloat();
 	}
 
 	public static class Handler implements IMessageHandler<PacketVehicleShoot, IMessage>
@@ -44,13 +43,16 @@ public class PacketVehicleShoot implements IMessage {
 		{
 			if (ctx.side.isClient() && Minecraft.getMinecraft().thePlayer.ridingEntity != null)
 			{
-				TickHandlerClient.Recoil += message.Recoil;
+				TickHandlerClient.Recoil += message.RecoilOrPitchOffset;
 			}
 			else if (ctx.side.isServer())
 			{
 				EntityPlayerMP player = ctx.getServerHandler().playerEntity;
 				if (player != null && player.ridingEntity != null)
 				{
+					float yaw = player.rotationYaw;
+					float pitch = player.rotationPitch + message.RecoilOrPitchOffset;
+
 					if (player.ridingEntity instanceof EntityGhost)
 					{
 						EntityGhost vehicle = (EntityGhost)player.ridingEntity;
@@ -62,7 +64,8 @@ public class PacketVehicleShoot implements IMessage {
 
 							double xOffset = -Math.sin(Math.toRadians(vehicle.rotationYaw)) * 2.2D * (vehicle.speed * 0.1 > 1D ? 1.1D : 1D);
 							double zOffset = Math.cos(Math.toRadians(vehicle.rotationYaw)) * 2.2D * (vehicle.speed * 0.1 > 1D ? 1.1D : 1D);
-							KCUtils.fireProjectile(player.worldObj, vehicle.posX + xOffset, vehicle.posY + 0.5D, vehicle.posZ + zOffset, player, HalocraftItemsWeapons.GhostPlasmaBolt.Properties.ID);
+
+							KCUtils.fireProjectile(player.worldObj, vehicle.posX + xOffset, vehicle.posY + 0.5D, vehicle.posZ + zOffset, yaw, pitch, player, HalocraftItemsWeapons.GhostPlasmaBolt.Properties.ID);
 						}
 					}
 					else if (player.ridingEntity instanceof EntityBanshee)
@@ -77,7 +80,7 @@ public class PacketVehicleShoot implements IMessage {
 							double xOffset = -Math.sin(Math.toRadians(vehicle.rotationYaw)) * 3.2D * (vehicle.speed * 0.1 > 1D ? 1.1D : 1D);
 							double zOffset = Math.cos(Math.toRadians(vehicle.rotationYaw)) * 3.2D * (vehicle.speed * 0.1 > 1D ? 1.1D : 1D);
 							double yOffset = -Math.toRadians(vehicle.rotationPitch) * 1.5D;
-							KCUtils.fireProjectile(player.worldObj, vehicle.posX + xOffset, vehicle.posY + 0.5D + yOffset, vehicle.posZ + zOffset, player, HalocraftItemsWeapons.GhostPlasmaBolt.Properties.ID);
+							KCUtils.fireProjectile(player.worldObj, vehicle.posX + xOffset, vehicle.posY + 0.5D + yOffset, vehicle.posZ + zOffset, yaw, pitch, player, HalocraftItemsWeapons.GhostPlasmaBolt.Properties.ID);
 						}
 					}
 					else if (player.ridingEntity instanceof EntityTurretSeat)
@@ -95,7 +98,7 @@ public class PacketVehicleShoot implements IMessage {
 
 									double xOffset = -Math.sin(Math.toRadians(player.rotationYaw)) * 0.5D;
 									double zOffset = Math.cos(Math.toRadians(player.rotationYaw)) * 0.5D;
-									KCUtils.fireProjectile(player.worldObj, turret.posX + xOffset, turret.posY + 1.0D, turret.posZ + zOffset, player, HalocraftItemsWeapons.ChainGunBullet.Properties.ID);
+									KCUtils.fireProjectile(player.worldObj, turret.posX + xOffset, turret.posY + 1.0D, turret.posZ + zOffset, yaw, pitch, player, HalocraftItemsWeapons.ChainGunBullet.Properties.ID);
 								}
 							}
 							else if(turret.parentBody instanceof EntityWarthogGauss)
@@ -108,7 +111,7 @@ public class PacketVehicleShoot implements IMessage {
 
 									double xOffset = -Math.sin(Math.toRadians(player.rotationYaw)) * 0.5D;
 									double zOffset = Math.cos(Math.toRadians(player.rotationYaw)) * 0.5D;
-									KCUtils.fireProjectile(player.worldObj, turret.posX + xOffset, turret.posY + 1.0D, turret.posZ + zOffset, player, HalocraftItemsWeapons.GaussSlug.Properties.ID);
+									KCUtils.fireProjectile(player.worldObj, turret.posX + xOffset, turret.posY + 1.0D, turret.posZ + zOffset, yaw, pitch, player, HalocraftItemsWeapons.GaussSlug.Properties.ID);
 								}
 							}
 							else if(turret.parentBody instanceof EntityWarthogRocket)
@@ -121,7 +124,7 @@ public class PacketVehicleShoot implements IMessage {
 
 									double xOffset = -Math.sin(Math.toRadians(player.rotationYaw)) * 0.5D;
 									double zOffset = Math.cos(Math.toRadians(player.rotationYaw)) * 0.5D;
-									KCUtils.fireProjectile(player.worldObj, turret.posX + xOffset, turret.posY + 1.0D, turret.posZ + zOffset, player, HalocraftItemsWeapons.RocketLauncher.Properties.ID);
+									KCUtils.fireProjectile(player.worldObj, turret.posX + xOffset, turret.posY + 1.0D, turret.posZ + zOffset, yaw, pitch, player, HalocraftItemsWeapons.RocketLauncher.Properties.ID);
 								}
 							}
 						}

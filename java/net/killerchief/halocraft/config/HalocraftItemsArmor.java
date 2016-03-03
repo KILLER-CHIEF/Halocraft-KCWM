@@ -1,5 +1,7 @@
 package net.killerchief.halocraft.config;
 
+import java.util.ArrayList;
+
 import net.killerchief.halocraft.Halocraft;
 import net.killerchief.halocraft.inventory.RecipeShapelessDamagedConvert;
 import net.killerchief.halocraft.items.HalocraftItem;
@@ -20,39 +22,30 @@ public class HalocraftItemsArmor {
 	public static Item BodyUnderArmor;
 	public static Item LegsUnderArmor;
 	public static Item BootsUnderArmor;
-	public static Item MarkVHelmetBlack;
-	public static Item MarkVHelmetGreen;
-	public static Item MarkVHelmetBlue;
-	public static Item MarkVHelmetRed;
-	public static Item MarkVBodyBlack;
-	public static Item MarkVBodyGreen;
-	public static Item MarkVBodyBlue;
-	public static Item MarkVBodyRed;
-	public static Item MarkVLegsBlack;
-	public static Item MarkVLegsGreen;
-	public static Item MarkVLegsBlue;
-	public static Item MarkVLegsRed;
-	public static Item MarkVBootsBlack;
-	public static Item MarkVBootsGreen;
-	public static Item MarkVBootsBlue;
-	public static Item MarkVBootsRed;
-	public static Item ODSTHelmet;
-	public static Item ODSTBody;
-	public static Item ODSTLegs;
-	public static Item ODSTBoots;
 	public static Item MarineHelmet;
 	public static Item MarineBody;
 	public static Item MarineLegs;
 	public static Item MarineBoots;
-	public static Item MarkVIHelmetGreen;
-	public static Item MarkVIBodyGreen;
-	public static Item MarkVILegsGreen;
-	public static Item MarkVIBootsGreen;
-	public static Item ReconHelmet;
-	public static Item ReconBody;
-	public static Item ReconLegs;
-	public static Item ReconBoots;
+	public static Item ODSTHelmet;
+	public static Item ODSTBody;
+	public static Item ODSTLegs;
+	public static Item ODSTBoots;
 	
+	public static String[] ColorList = new String[]{"Black", "Red", "Green", "Brown", "LightBlue", "Blue", "Purple", "Cyan", "Silver", "Gray", "Pink", "Lime", "Yellow", "Magenta", "Orange", "White"};
+	
+	public static ArrayList<Item> MarkVSeries = new ArrayList<Item>();
+	public static ArrayList<Item> MarkVISeries = new ArrayList<Item>();
+	public static ArrayList<Item> CQBSeries = new ArrayList<Item>();
+	public static ArrayList<Item> EODSeries = new ArrayList<Item>();
+	public static ArrayList<Item> EVASeries = new ArrayList<Item>();
+	public static ArrayList<Item> HayabusaSeries = new ArrayList<Item>();
+	public static ArrayList<Item> ReconSeries = new ArrayList<Item>();
+	public static ArrayList<Item> RogueSeries = new ArrayList<Item>();
+	public static ArrayList<Item> ScoutSeries = new ArrayList<Item>();
+	public static ArrayList<Item> SecuritySeries = new ArrayList<Item>();
+	
+	public static ArrayList<Item>[] ArmorSeries = new ArrayList[]{MarkVSeries, MarkVISeries, CQBSeries, EODSeries, EVASeries, HayabusaSeries, ReconSeries, RogueSeries, ScoutSeries, SecuritySeries};
+		
 	public static void load(Configuration config) {
 		ArmorMaterial MARINE = new EnumHelper().addArmorMaterial("Marine", 20,  new int[]{3, 7, 5, 3}, 9);
 		
@@ -60,38 +53,89 @@ public class HalocraftItemsArmor {
 		BodyUnderArmor = new HalocraftItem("BodyUnderArmor", "BodyUnderArmor").setMaxStackSize(1);
 		LegsUnderArmor = new HalocraftItem("LegsUnderArmor", "LegsUnderArmor").setMaxStackSize(1);
 		BootsUnderArmor = new HalocraftItem("BootsUnderArmor", "BootsUnderArmor").setMaxStackSize(1);
-		MarkVHelmetBlack = new ItemCustomArmor("MarkVHelmetBlack", "MarkVHelmetBlack", 1, Halocraft.MODID+":textures/armor/MarkVBlack.png", 0, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkV"), true, Halocraft.MODID+":textures/overlays/MarkVHelmetZoomOverlay.png");
-		MarkVBodyBlack = new ItemCustomArmor("MarkVBodyBlack", "MarkVBodyBlack", 1, Halocraft.MODID+":textures/armor/MarkVBlack.png", 1, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkV"));
-		MarkVLegsBlack = new ItemCustomArmor("MarkVLegsBlack", "MarkVLegsBlack", 1, Halocraft.MODID+":textures/armor/MarkVBlack.png", 2, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkV"));
-		MarkVBootsBlack = new ItemCustomArmor("MarkVBootsBlack", "MarkVBootsBlack", 1, Halocraft.MODID+":textures/armor/MarkVBlack.png", 3, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkV"));
-		MarkVHelmetGreen = new ItemCustomArmor("MarkVHelmetGreen", "MarkVHelmetGreen", 1, Halocraft.MODID+":textures/armor/MarkVGreen.png", 0, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkV"), true, Halocraft.MODID+":textures/overlays/MarkVHelmetZoomOverlay.png");
-		MarkVBodyGreen = new ItemCustomArmor("MarkVBodyGreen", "MarkVBodyGreen", 1, Halocraft.MODID+":textures/armor/MarkVGreen.png", 1, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkV"));
-		MarkVLegsGreen = new ItemCustomArmor("MarkVLegsGreen", "MarkVLegsGreen", 1, Halocraft.MODID+":textures/armor/MarkVGreen.png", 2, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkV"));
-		MarkVBootsGreen = new ItemCustomArmor("MarkVBootsGreen", "MarkVBootsGreen", 1, Halocraft.MODID+":textures/armor/MarkVGreen.png", 3, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkV"));
-		MarkVHelmetBlue = new ItemCustomArmor("MarkVHelmetBlue", "MarkVHelmetBlue", 1, Halocraft.MODID+":textures/armor/MarkVBlue.png", 0, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkV"), true, Halocraft.MODID+":textures/overlays/MarkVHelmetZoomOverlay.png");
-		MarkVBodyBlue = new ItemCustomArmor("MarkVBodyBlue", "MarkVBodyBlue", 1, Halocraft.MODID+":textures/armor/MarkVBlue.png", 1, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkV"));
-		MarkVLegsBlue = new ItemCustomArmor("MarkVLegsBlue", "MarkVLegsBlue", 1, Halocraft.MODID+":textures/armor/MarkVBlue.png", 2, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkV"));
-		MarkVBootsBlue = new ItemCustomArmor("MarkVBootsBlue", "MarkVBootsBlue", 1, Halocraft.MODID+":textures/armor/MarkVBlue.png", 3, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkV"));
-		MarkVHelmetRed = new ItemCustomArmor("MarkVHelmetRed", "MarkVHelmetRed", 1, Halocraft.MODID+":textures/armor/MarkVRed.png", 0, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkV"), true, Halocraft.MODID+":textures/overlays/MarkVHelmetZoomOverlay.png");
-		MarkVBodyRed = new ItemCustomArmor("MarkVBodyRed", "MarkVBodyRed", 1, Halocraft.MODID+":textures/armor/MarkVRed.png", 1, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkV"));
-		MarkVLegsRed = new ItemCustomArmor("MarkVLegsRed", "MarkVLegsRed", 1, Halocraft.MODID+":textures/armor/MarkVRed.png", 2, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkV"));
-		MarkVBootsRed = new ItemCustomArmor("MarkVBootsRed", "MarkVBootsRed", 1, Halocraft.MODID+":textures/armor/MarkVRed.png", 3, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkV"));
-		ODSTHelmet = new ItemCustomArmor("ODSTHelmet", "ODSTHelmet", 0, Halocraft.MODID+":textures/armor/ODST.png", 0, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("ODST"), true, Halocraft.MODID+":textures/overlays/ODSTHelmetZoomOverlay.png");
-		ODSTBody = new ItemCustomArmor("ODSTBody", "ODSTBody", 0, Halocraft.MODID+":textures/armor/ODST.png", 1, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("ODST"));
-		ODSTLegs = new ItemCustomArmor("ODSTLegs", "ODSTLegs", 0, Halocraft.MODID+":textures/armor/ODST.png", 2, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("ODST"));
-		ODSTBoots = new ItemCustomArmor("ODSTBoots", "ODSTBoots", 0, Halocraft.MODID+":textures/armor/ODST.png", 3, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("ODST"));
-		MarineHelmet = new ItemCustomArmor("MarineHelmet", "MarineHelmet", 0, Halocraft.MODID+":textures/armor/Marine.png", 0, MARINE, Halocraft.proxy.addArmor("Marine"));
-		MarineBody = new ItemCustomArmor("MarineBody", "MarineBody", 0, Halocraft.MODID+":textures/armor/Marine.png", 1, MARINE, Halocraft.proxy.addArmor("Marine"));
-		MarineLegs = new ItemCustomArmor("MarineLegs", "MarineLegs", 0, Halocraft.MODID+":textures/armor/Marine.png", 2, MARINE, Halocraft.proxy.addArmor("Marine"));
-		MarineBoots = new ItemCustomArmor("MarineBoots", "MarineBoots", 0, Halocraft.MODID+":textures/armor/Marine.png", 3, MARINE, Halocraft.proxy.addArmor("Marine"));
-		MarkVIHelmetGreen = new ItemCustomArmor("MarkVIHelmetGreen", "MarkVIHelmetGreen", 0, Halocraft.MODID+":textures/armor/MarkVIGreen.png", 0, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkVI"), true, Halocraft.MODID+":textures/overlays/MarkVIHelmetZoomOverlay.png");
-		MarkVIBodyGreen = new ItemCustomArmor("MarkVIBodyGreen", "MarkVIBodyGreen", 0, Halocraft.MODID+":textures/armor/MarkVIGreen.png", 1, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkVI"));
-		MarkVILegsGreen = new ItemCustomArmor("MarkVILegsGreen", "MarkVILegsGreen", 0, Halocraft.MODID+":textures/armor/MarkVIGreen.png", 2, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkVI"));
-		MarkVIBootsGreen = new ItemCustomArmor("MarkVIBootsGreen", "MarkVIBootsGreen", 0, Halocraft.MODID+":textures/armor/MarkVIGreen.png", 3, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkVI"));
-		ReconHelmet = new ItemCustomArmor("ReconHelmet", "ReconHelmet", 0, Halocraft.MODID+":textures/armor/Recon.png", 0, ArmorMaterial.IRON, Halocraft.proxy.addArmor("Recon"), true, Halocraft.MODID+":textures/overlays/ReconHelmetZoomOverlay.png");
-		ReconBody = new ItemCustomArmor("ReconBody", "ReconBody", 0, Halocraft.MODID+":textures/armor/Recon.png", 1, ArmorMaterial.IRON, Halocraft.proxy.addArmor("Recon"));
-		ReconLegs = new ItemCustomArmor("ReconLegs", "ReconLegs", 0, Halocraft.MODID+":textures/armor/Recon.png", 2, ArmorMaterial.IRON, Halocraft.proxy.addArmor("Recon"));
-		ReconBoots = new ItemCustomArmor("ReconBoots", "ReconBoots", 0, Halocraft.MODID+":textures/armor/Recon.png", 3, ArmorMaterial.IRON, Halocraft.proxy.addArmor("Recon"));
+		MarineHelmet = new ItemCustomArmor("MarineHelmet", "MarineHelmet", "None", Halocraft.MODID+":textures/armor/Marine.png", 0, MARINE, Halocraft.proxy.addArmor("Marine"));
+		MarineBody = new ItemCustomArmor("MarineBody", "MarineBody", "None", Halocraft.MODID+":textures/armor/Marine.png", 1, MARINE, Halocraft.proxy.addArmor("Marine"));
+		MarineLegs = new ItemCustomArmor("MarineLegs", "MarineLegs", "None", Halocraft.MODID+":textures/armor/Marine.png", 2, MARINE, Halocraft.proxy.addArmor("Marine"));
+		MarineBoots = new ItemCustomArmor("MarineBoots", "MarineBoots", "None", Halocraft.MODID+":textures/armor/Marine.png", 3, MARINE, Halocraft.proxy.addArmor("Marine"));
+		ODSTHelmet = new ItemCustomArmor("ODSTHelmet", "ODSTHelmet", "None", Halocraft.MODID+":textures/armor/ODST.png", 0, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("ODST"), "ODSTHelmetOverlay", "ODSTHelmetZoomOverlay");
+		ODSTBody = new ItemCustomArmor("ODSTBody", "ODSTBody", "None", Halocraft.MODID+":textures/armor/ODST.png", 1, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("ODST"));
+		ODSTLegs = new ItemCustomArmor("ODSTLegs", "ODSTLegs", "None", Halocraft.MODID+":textures/armor/ODST.png", 2, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("ODST"));
+		ODSTBoots = new ItemCustomArmor("ODSTBoots", "ODSTBoots", "None", Halocraft.MODID+":textures/armor/ODST.png", 3, ArmorMaterial.DIAMOND, Halocraft.proxy.addArmor("ODST"));
+		
+		for (String color : ColorList) {
+			MarkVSeries.add( new ItemCustomArmor("MarkVHelmet"+color, "MarkVHelmet"+color, "MarkV", Halocraft.MODID+":textures/armor/skins/SkinArmorMarkV"+color+".png", 0, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkV"), "MarkVHelmetOverlay", "MarkVHelmetZoomOverlay") );
+			MarkVSeries.add( new ItemCustomArmor("MarkVBody"+color, "MarkVBody"+color, "MarkV", Halocraft.MODID+":textures/armor/skins/SkinArmorMarkV"+color+".png", 1, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkV")) );
+			MarkVSeries.add( new ItemCustomArmor("MarkVLegs"+color, "MarkVLegs"+color, "MarkV", Halocraft.MODID+":textures/armor/skins/SkinArmorMarkV"+color+".png", 2, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkV")) );
+			MarkVSeries.add( new ItemCustomArmor("MarkVBoots"+color, "MarkVBoots"+color, "MarkV", Halocraft.MODID+":textures/armor/skins/SkinArmorMarkV"+color+".png", 3, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkV")) );
+		}
+		for (String color : ColorList) {
+			MarkVISeries.add( new ItemCustomArmor("MarkVIHelmet"+color, "MarkVIHelmet"+color, "MarkVI", Halocraft.MODID+":textures/armor/skins/SkinArmorMarkVI"+color+".png", 0, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkVI"), "MarkVIHelmetOverlay", "MarkVIHelmetZoomOverlay") );
+			MarkVISeries.add( new ItemCustomArmor("MarkVIBody"+color, "SecurityBody"+color, "MarkVI", Halocraft.MODID+":textures/armor/skins/SkinArmorMarkVI"+color+".png", 1, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkVI")) );
+			MarkVISeries.add( new ItemCustomArmor("MarkVILegs"+color, "MarkVILegs"+color, "MarkVI", Halocraft.MODID+":textures/armor/skins/SkinArmorMarkVI"+color+".png", 2, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkVI")) );
+			MarkVISeries.add( new ItemCustomArmor("MarkVIBoots"+color, "MarkVIBoots"+color, "MarkVI", Halocraft.MODID+":textures/armor/skins/SkinArmorMarkVI"+color+".png", 3, ArmorMaterial.IRON, Halocraft.proxy.addArmor("MarkVI")) );
+		}
+		for (String color : ColorList) {
+			CQBSeries.add( new ItemCustomArmor("CQBHelmet"+color, "CQBHelmet"+color, "CQB", Halocraft.MODID+":textures/armor/skins/SkinArmorCQB"+color+".png", 0, ArmorMaterial.IRON, Halocraft.proxy.addArmor("CQB"), "CQBHelmetOverlay", "CQBHelmetZoomOverlay") );
+			CQBSeries.add( new ItemCustomArmor("CQBBody"+color, "CQBBody"+color, "CQB", Halocraft.MODID+":textures/armor/skins/SkinArmorCQB"+color+".png", 1, ArmorMaterial.IRON, Halocraft.proxy.addArmor("CQB")) );
+			CQBSeries.add(null);
+			CQBSeries.add(null);
+		}
+		for (String color : ColorList) {
+			EODSeries.add( new ItemCustomArmor("EODHelmet"+color, "EODHelmet"+color, "EOD", Halocraft.MODID+":textures/armor/skins/SkinArmorEOD"+color+".png", 0, ArmorMaterial.IRON, Halocraft.proxy.addArmor("EOD"), "EODHelmetOverlay", "EODHelmetZoomOverlay") );
+			EODSeries.add( new ItemCustomArmor("EODBody"+color, "EODBody"+color, "EOD", Halocraft.MODID+":textures/armor/skins/SkinArmorEOD"+color+".png", 1, ArmorMaterial.IRON, Halocraft.proxy.addArmor("EOD")) );
+			EODSeries.add(null);
+			EODSeries.add(null);
+		}
+		for (String color : ColorList) {
+			EVASeries.add( new ItemCustomArmor("EVAHelmet"+color, "EVAHelmet"+color, "EVA", Halocraft.MODID+":textures/armor/skins/SkinArmorEVA"+color+".png", 0, ArmorMaterial.IRON, Halocraft.proxy.addArmor("EVA"), "EVAHelmetOverlay", "EVAHelmetZoomOverlay") );
+			EVASeries.add( new ItemCustomArmor("EVABody"+color, "EVABody"+color, "EVA", Halocraft.MODID+":textures/armor/skins/SkinArmorEVA"+color+".png", 1, ArmorMaterial.IRON, Halocraft.proxy.addArmor("EVA")) );
+			EVASeries.add(null);
+			EVASeries.add(null);
+		}
+		for (String color : ColorList) {
+			HayabusaSeries.add( new ItemCustomArmor("HayabusaHelmet"+color, "HayabusaHelmet"+color, "Hayabusa", Halocraft.MODID+":textures/armor/skins/SkinArmorHayabusa"+color+".png", 0, ArmorMaterial.IRON, Halocraft.proxy.addArmor("Hayabusa"), "HayabusaHelmetOverlay", "HayabusaHelmetZoomOverlay") );
+			HayabusaSeries.add( new ItemCustomArmor("HayabusaBody"+color, "HayabusaBody"+color, "Hayabusa", Halocraft.MODID+":textures/armor/skins/SkinArmorHayabusa"+color+".png", 1, ArmorMaterial.IRON, Halocraft.proxy.addArmor("Hayabusa")) );
+			HayabusaSeries.add(null);
+			HayabusaSeries.add(null);
+		}
+		for (String color : ColorList) {
+			ReconSeries.add( new ItemCustomArmor("ReconHelmet"+color, "ReconHelmet"+color, "Recon", Halocraft.MODID+":textures/armor/skins/SkinArmorRecon"+color+".png", 0, ArmorMaterial.IRON, Halocraft.proxy.addArmor("Recon"), "ReconHelmetOverlay", "ReconHelmetZoomOverlay") );
+			ReconSeries.add( new ItemCustomArmor("ReconBody"+color, "ReconBody"+color, "Recon", Halocraft.MODID+":textures/armor/skins/SkinArmorRecon"+color+".png", 1, ArmorMaterial.IRON, Halocraft.proxy.addArmor("Recon")) );
+			ReconSeries.add(null);
+			ReconSeries.add(null);
+		}
+		for (String color : ColorList) {
+			RogueSeries.add( new ItemCustomArmor("RogueHelmet"+color, "RogueHelmet"+color, "Rogue", Halocraft.MODID+":textures/armor/skins/SkinArmorRogue"+color+".png", 0, ArmorMaterial.IRON, Halocraft.proxy.addArmor("Rogue"), "RogueHelmetOverlay", "RogueHelmetZoomOverlay") );
+			RogueSeries.add(null);
+			RogueSeries.add(null);
+			RogueSeries.add(null);
+		}
+		for (String color : ColorList) {
+			ScoutSeries.add( new ItemCustomArmor("ScoutHelmet"+color, "ScoutHelmet"+color, "Scout", Halocraft.MODID+":textures/armor/skins/SkinArmorScout"+color+".png", 0, ArmorMaterial.IRON, Halocraft.proxy.addArmor("Scout"), "ScoutHelmetOverlay", "ScoutHelmetZoomOverlay") );
+			ScoutSeries.add( new ItemCustomArmor("ScoutBody"+color, "ScoutBody"+color, "Scout", Halocraft.MODID+":textures/armor/skins/SkinArmorScout"+color+".png", 1, ArmorMaterial.IRON, Halocraft.proxy.addArmor("Scout")) );
+			ScoutSeries.add(null);
+			ScoutSeries.add(null);
+		}
+		for (String color : ColorList) {
+			SecuritySeries.add( new ItemCustomArmor("SecurityHelmet"+color, "SecurityHelmet"+color, "Security", Halocraft.MODID+":textures/armor/skins/SkinArmorSecurity"+color+".png", 0, ArmorMaterial.IRON, Halocraft.proxy.addArmor("Security"), "SecurityHelmetOverlay", "SecurityHelmetZoomOverlay") );
+			SecuritySeries.add( new ItemCustomArmor("SecurityBody"+color, "SecurityBody"+color, "Security", Halocraft.MODID+":textures/armor/skins/SkinArmorSecurity"+color+".png", 1, ArmorMaterial.IRON, Halocraft.proxy.addArmor("Security")) );
+			SecuritySeries.add(null);
+			SecuritySeries.add(null);
+		}
+	}
+	
+	public static boolean IsSpartanArmorPiece(Item item, int ArmorPieceType)
+	{
+		if (item instanceof ItemCustomArmor)
+		{
+			for (ArrayList series : ArmorSeries) {
+				if (series.contains(item))
+				{
+					return series.indexOf(item) % 4 == ArmorPieceType;
+				}
+			}
+		}
+		return false;
 	}
 	
 	public static void registerItems() {
@@ -99,38 +143,44 @@ public class HalocraftItemsArmor {
 		GameRegistry.registerItem(BodyUnderArmor, BodyUnderArmor.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(LegsUnderArmor, LegsUnderArmor.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(BootsUnderArmor, BootsUnderArmor.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(MarkVHelmetBlack, MarkVHelmetBlack.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(MarkVBodyBlack, MarkVBodyBlack.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(MarkVLegsBlack, MarkVLegsBlack.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(MarkVBootsBlack, MarkVBootsBlack.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(MarkVHelmetGreen, MarkVHelmetGreen.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(MarkVBodyGreen, MarkVBodyGreen.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(MarkVLegsGreen, MarkVLegsGreen.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(MarkVBootsGreen, MarkVBootsGreen.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(MarkVHelmetBlue, MarkVHelmetBlue.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(MarkVBodyBlue, MarkVBodyBlue.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(MarkVLegsBlue, MarkVLegsBlue.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(MarkVBootsBlue, MarkVBootsBlue.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(MarkVHelmetRed, MarkVHelmetRed.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(MarkVBodyRed, MarkVBodyRed.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(MarkVLegsRed, MarkVLegsRed.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(MarkVBootsRed, MarkVBootsRed.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(ODSTHelmet, ODSTHelmet.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(ODSTBody, ODSTBody.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(ODSTLegs, ODSTLegs.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(ODSTBoots, ODSTBoots.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(MarineHelmet, MarineHelmet.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(MarineBody, MarineBody.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(MarineLegs, MarineLegs.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(MarineBoots, MarineBoots.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(MarkVIHelmetGreen, MarkVIHelmetGreen.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(MarkVIBodyGreen, MarkVIBodyGreen.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(MarkVILegsGreen, MarkVILegsGreen.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(MarkVIBootsGreen, MarkVIBootsGreen.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(ReconHelmet, ReconHelmet.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(ReconBody, ReconBody.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(ReconLegs, ReconLegs.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(ReconBoots, ReconBoots.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(ODSTHelmet, ODSTHelmet.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(ODSTBody, ODSTBody.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(ODSTLegs, ODSTLegs.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(ODSTBoots, ODSTBoots.getUnlocalizedName().substring(5));
+		
+		for (ArrayList<Item> series : ArmorSeries) {
+			for (Item item : series) {
+				if (item != null)
+					GameRegistry.registerItem(item, item.getUnlocalizedName().substring(5));
+			}
+		}
+		/*
+		System.out.print("\nStart\n");
+		for (ArrayList<Item> series : ArmorSeries) {
+			for (Item item : series) {
+				if (item != null)
+				{
+					GameRegistry.registerItem(item, item.getUnlocalizedName().substring(5));
+					String name = item.getUnlocalizedName().substring(15);
+					for (String color : ColorList)
+					{
+						if (name.contains(color))
+						{
+							name = name.replace(color, " "+color);
+							break;
+						}
+					}
+					name = name.replace("Helmet", " Helmet").replace("Body", " Body").replace("Legs", " Legs").replace("Boots", " Boots").replace("V", " V").replace("E VA", "EVA").replace("LightBlue", "Light Blue");
+					System.out.print(item.getUnlocalizedName()+".name="+name+"\n");
+				}
+			}
+		}
+		System.out.print("\nFin");
+		System.out.println("Finish");*/
 	}
 	
 	public static void addRecipes() {
@@ -146,38 +196,6 @@ public class HalocraftItemsArmor {
 		GameRegistry.addRecipe(new ItemStack(BootsUnderArmor, 1), new Object[] {
 			"X X", "X X", Character.valueOf('X'), HalocraftItems.EnhancedFibre
 		});
-		GameRegistry.addRecipe(new ItemStack(MarkVHelmetBlack, 1), new Object[] {
-			"XUX", "XVX", " X ", Character.valueOf('X'), HalocraftItems.MultiLayeredAlloy, Character.valueOf('U'), HalocraftItemsArmor.HelmetUnderArmor, 
-			Character.valueOf('V'), Blocks.glass_pane
-		});
-		GameRegistry.addRecipe(new ItemStack(MarkVBodyBlack, 1), new Object[] {
-			"XUX", "XSX", "XPX", Character.valueOf('X'), HalocraftItems.MultiLayeredAlloy, Character.valueOf('U'), HalocraftItemsArmor.BodyUnderArmor, 
-			Character.valueOf('S'), HalocraftItems.ShieldProjector, Character.valueOf('P'), HalocraftItems.UNSCPowerGenerator
-		});
-		GameRegistry.addRecipe(new ItemStack(MarkVLegsBlack, 1), new Object[] {
-			"XXX", "XUX", "X X", Character.valueOf('X'), HalocraftItems.MultiLayeredAlloy, Character.valueOf('U'), HalocraftItemsArmor.LegsUnderArmor
-		});
-		GameRegistry.addRecipe(new ItemStack(MarkVBootsBlack, 1), new Object[] {
-			"X X", "XUX", Character.valueOf('X'), HalocraftItems.MultiLayeredAlloy, Character.valueOf('U'), HalocraftItemsArmor.BootsUnderArmor
-		});
-		
-		Item[] ArmourMarkV = {MarkVHelmetBlack, MarkVBodyBlack, MarkVLegsBlack, MarkVBootsBlack, 
-				MarkVHelmetGreen, MarkVBodyGreen, MarkVLegsGreen, MarkVBootsGreen, 
-				MarkVHelmetBlue, MarkVBodyBlue, MarkVLegsBlue, MarkVBootsBlue, 
-				MarkVHelmetRed, MarkVBodyRed, MarkVLegsRed, MarkVBootsRed};
-		
-		for (int i = 0; i < ArmourMarkV.length/4; i++) {
-			for (int j = 0; j < ArmourMarkV.length; j++) {
-				if (j == i*4) {
-					j += 4;
-					if (j >= ArmourMarkV.length)
-						break;
-				}
-				int[] dye = {0,2,4,1};
-				GameRegistry.addRecipe(new RecipeShapelessDamagedConvert(new ItemStack(ArmourMarkV[(i*4)+(j%4)], 1), new ItemStack(ArmourMarkV[j], 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Items.dye, 1, dye[i]), new ItemStack(Items.dye, 1, dye[i]), new ItemStack(Items.dye, 1, dye[i]), new ItemStack(Items.dye, 1, dye[i])));
-			}
-		}
-
 		GameRegistry.addRecipe(new ItemStack(MarineHelmet, 1), new Object[] {
 			"ITI", "TMT", Character.valueOf('I'), Items.iron_ingot, Character.valueOf('T'), HalocraftItems.TitaniumIngot, Character.valueOf('M'), HalocraftItems.Microchip
 		});
@@ -203,5 +221,67 @@ public class HalocraftItemsArmor {
 		GameRegistry.addRecipe(new ItemStack(ODSTBoots, 1), new Object[] {
 			"T T", "C C", Character.valueOf('T'), HalocraftItems.TitaniumIngot, Character.valueOf('C'), HalocraftItems.CeramicComposite
 		});
+		
+		//MarkVHelmetBlack
+		GameRegistry.addRecipe(new ItemStack(MarkVSeries.get(0), 1), new Object[] {
+			"XUX", "XVX", " X ", Character.valueOf('X'), HalocraftItems.MultiLayeredAlloy, Character.valueOf('U'), HalocraftItemsArmor.HelmetUnderArmor, 
+			Character.valueOf('V'), Blocks.glass_pane
+		});
+		//MarkVBodyBlack
+		GameRegistry.addRecipe(new ItemStack(MarkVSeries.get(1), 1), new Object[] {
+			"XUX", "XSX", "XPX", Character.valueOf('X'), HalocraftItems.MultiLayeredAlloy, Character.valueOf('U'), HalocraftItemsArmor.BodyUnderArmor, 
+			Character.valueOf('S'), HalocraftItems.ShieldProjector, Character.valueOf('P'), HalocraftItems.UNSCPowerGenerator
+		});
+		//MarkVLegsBlack
+		GameRegistry.addRecipe(new ItemStack(MarkVSeries.get(2), 1), new Object[] {
+			"XXX", "XUX", "X X", Character.valueOf('X'), HalocraftItems.MultiLayeredAlloy, Character.valueOf('U'), HalocraftItemsArmor.LegsUnderArmor
+		});
+		//MarkVBootsBlack
+		GameRegistry.addRecipe(new ItemStack(MarkVSeries.get(3), 1), new Object[] {
+			"X X", "XUX", Character.valueOf('X'), HalocraftItems.MultiLayeredAlloy, Character.valueOf('U'), HalocraftItemsArmor.BootsUnderArmor
+		});
+		
+		//ArmorSeriesColourCraftingRecipes(MarkVSeries, new int[]{0,2,4,1});
+		
+		for (ArrayList series : ArmorSeries) {
+			ArmorSeriesColourCraftingRecipes(series);
+		}
+		
+	}
+	
+	private static void ArmorSeriesColourCraftingRecipes(ArrayList<Item> list)
+	{
+		for (int i = 0; i < list.size()/4; i++) {
+			for (int j = 0; j < list.size(); j++) {
+				if (j == i*4) {
+					j += 4;
+					if (j >= list.size())
+						break;
+				}
+				Item itemA = list.get((i*4)+(j%4));
+				Item itemB = list.get(j);
+				if (itemA != null && itemB != null)
+					GameRegistry.addRecipe(new RecipeShapelessDamagedConvert(new ItemStack(itemA, 1), new ItemStack(itemB, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Items.dye, 1, i), new ItemStack(Items.dye, 1, i), new ItemStack(Items.dye, 1, i), new ItemStack(Items.dye, 1, i)));
+			}
+		}
+	}
+	
+	private static void ArmorSeriesColourCraftingRecipes(ArrayList<Item> list, int[] dyes)
+	{
+		//{"black", "red", "green", "brown", "blue", "purple", "cyan", "silver", "gray", "pink", "lime", "yellow", "lightBlue", "magenta", "orange", "white"};
+		//int[] dye = {0,2,4,1};
+		for (int i = 0; i < list.size()/4; i++) {
+			for (int j = 0; j < list.size(); j++) {
+				if (j == i*4) {
+					j += 4;
+					if (j >= list.size())
+						break;
+				}
+				Item itemA = list.get((i*4)+(j%4));
+				Item itemB = list.get(j);
+				if (itemA != null && itemB != null)
+					GameRegistry.addRecipe(new RecipeShapelessDamagedConvert(new ItemStack(itemA, 1), new ItemStack(itemB, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Items.dye, 1, dyes[i]), new ItemStack(Items.dye, 1, dyes[i]), new ItemStack(Items.dye, 1, dyes[i]), new ItemStack(Items.dye, 1, dyes[i])));
+			}
+		}
 	}
 }

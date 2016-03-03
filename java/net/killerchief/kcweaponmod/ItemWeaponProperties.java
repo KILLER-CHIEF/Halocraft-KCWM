@@ -66,7 +66,7 @@ public class ItemWeaponProperties {
 	public ItemStack AmmoType = null;
 	/** The size of the weapons magazine. (Only active if AmmoFeedsFromInventory is false) */
 	public int MagazineSize = 0;
-	/** Whether the ItemStack will decrease when the weapon is used. (Overrides AmmoFeedsFromInventory, MagazineSize and AmmoType) */ //FIXME:?
+	/** Whether the ItemStack will decrease when the weapon is used. (Overrides AmmoFeedsFromInventory, MagazineSize and AmmoType) */
 	public boolean ItemStackDecreaseOnUse = false;
 	/** How large the ItemStack's stack size can grow to. (Only active if ItemStackDecreaseOnUse is true) */
 	public int ItemStackMaxStackSize = 16;
@@ -78,6 +78,12 @@ public class ItemWeaponProperties {
 	public float BurstAccuracyDecrease = 0.6F;
 	/** How many projectiles are launched on shooting action. */
 	public int SingleShotProjectileCount = 1;
+	/** How long it takes to target an entity. */
+	public int TrackLastDelay = 0;
+	/** What kind of entity the weapon targets. 0 is all Entities, 1 is Living, 2 is anything not living, 3 is anything not living but has a rider. */
+	public int TrackType = 0;
+	/** How far away a target can be tracked. */
+	public int TrackDistance = 30;
 	
 	/** The projectile entity's render properties. 0#ArrowRenderTexture, 1#2DRenderTexture, 2#ModelTexture#ModelClass, 3#LargeArrowRenderTexture */
 	public String ProjectileRenderProperties = "0#"+KCWeaponMod.MODID+":textures/entities/Default/DefaultProjectileRender.png";

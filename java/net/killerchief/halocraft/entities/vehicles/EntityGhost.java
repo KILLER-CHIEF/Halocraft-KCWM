@@ -186,7 +186,8 @@ public class EntityGhost extends EntityVehicle
 			if (this.riddenByEntity instanceof EntityLivingBase)
 			{
 				((EntityLivingBase)this.riddenByEntity).renderYawOffset = this.rotationYaw;
-				//((EntityLivingBase)this.riddenByEntity).cameraPitch = -10F;
+				if (Halocraft.proxy.isSideClient() && Minecraft.getMinecraft().gameSettings.thirdPersonView == 1)
+					((EntityLivingBase)this.riddenByEntity).cameraPitch = -10F;
 			}
 		}
 	}

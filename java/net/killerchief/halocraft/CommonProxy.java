@@ -18,7 +18,7 @@ public class CommonProxy {
         return 0;
     }
 	
-	public Model3DArmor armor3DType(int t)
+	public Model3DArmor armor3DType(String type)
     {
         return null;
     }
@@ -31,8 +31,6 @@ public class CommonProxy {
 	}
 	
 	public void ParticleFX(int type, World par1World, double posX, double posY, double posZ, double motionX, double motionY, double motionZ) {}
-
-	public boolean initializeVehicleLoopingSounds(EntityVehicle vehicle, String soundRun, String soundIdle) { return false; }
 
 	public boolean initVehicleLoopSounds(EntityVehicle vehicle, int soundHandlerType, String soundFile) { return false; }
 	

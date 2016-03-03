@@ -47,7 +47,7 @@ public class KCWeaponMod {
 
 	public static final String MODID = "kcweaponmod";
 	public static final String NAME = "KC's Weapon Mod";
-	public static final String VERSION = "0.1.3.05";
+	public static final String VERSION = "0.1.3.07";
 
 	public static String getVersion() { return VERSION; }
 
@@ -372,7 +372,13 @@ public class KCWeaponMod {
 											properties.BurstAccuracyDecrease = !w.equals("") ? Float.parseFloat(w) : properties.BurstAccuracyDecrease;
 											String x = getTagElementString(eElement, "singleshotprojectilecount");
 											properties.SingleShotProjectileCount = !x.equals("") ? Integer.parseInt(x) : properties.SingleShotProjectileCount;
-
+											String xa = getTagElementString(eElement, "tracklastdelay");
+											properties.TrackLastDelay = !xa.equals("") ? Integer.parseInt(xa) : properties.TrackLastDelay;
+											String xb = getTagElementString(eElement, "tracktype");
+											properties.TrackType = !xb.equals("") ? Integer.parseInt(xb) : properties.TrackType;
+											String xc = getTagElementString(eElement, "trackdistance");
+											properties.TrackDistance = !xc.equals("") ? Integer.parseInt(xc) : properties.TrackDistance;
+											
 											String y = getTagElementString(eElement, "projectilerenderproperties");
 											properties.ProjectileRenderProperties = !y.equals("") ? y : properties.ProjectileRenderProperties;
 											String z = getTagElementString(eElement, "projectilespeed");

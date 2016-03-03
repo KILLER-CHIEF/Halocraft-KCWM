@@ -3,11 +3,21 @@ package net.killerchief.halocraft.client;
 import net.killerchief.halocraft.CommonProxy;
 import net.killerchief.halocraft.Halocraft;
 import net.killerchief.halocraft.client.models.Model3DArmor;
+import net.killerchief.halocraft.client.models.armor.ModelArmorCQB;
+import net.killerchief.halocraft.client.models.armor.ModelArmorEOD;
+import net.killerchief.halocraft.client.models.armor.ModelArmorEVA;
+import net.killerchief.halocraft.client.models.armor.ModelArmorHayabusa;
 import net.killerchief.halocraft.client.models.armor.ModelArmorMarkV;
+import net.killerchief.halocraft.client.models.armor.ModelArmorMarkVI;
+import net.killerchief.halocraft.client.models.armor.ModelArmorRecon;
+import net.killerchief.halocraft.client.models.armor.ModelArmorRogue;
+import net.killerchief.halocraft.client.models.armor.ModelArmorScout;
+import net.killerchief.halocraft.client.models.armor.ModelArmorSecurity;
 import net.killerchief.halocraft.client.models.guns.ModelEnergySword;
 import net.killerchief.halocraft.client.models.mobs.ModelElite;
 import net.killerchief.halocraft.client.models.mobs.ModelGrunt;
 import net.killerchief.halocraft.client.render.RenderBanshee;
+import net.killerchief.halocraft.client.render.RenderClientTargeter;
 import net.killerchief.halocraft.client.render.RenderEliteGun;
 import net.killerchief.halocraft.client.render.RenderEliteSword;
 import net.killerchief.halocraft.client.render.RenderGhost;
@@ -22,6 +32,7 @@ import net.killerchief.halocraft.client.render.RenderWarthog;
 import net.killerchief.halocraft.client.render.RenderWarthogBack;
 import net.killerchief.halocraft.config.HalocraftItems;
 import net.killerchief.halocraft.config.HalocraftItemsWeapons;
+import net.killerchief.halocraft.entities.EntityClientTargeter;
 import net.killerchief.halocraft.entities.EntityDeployableGravityLift;
 import net.killerchief.halocraft.entities.EntityFlameQuickFX;
 import net.killerchief.halocraft.entities.EntityGravityLiftFX;
@@ -73,12 +84,33 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public Model3DArmor armor3DType(int t)
+	public Model3DArmor armor3DType(String type)
 	{
-		if (t == 1)
-			return new ModelArmorMarkV();
-		else
+		if (type == null)
 			return null;
+		
+		if (type.equalsIgnoreCase("markv"))
+			return new ModelArmorMarkV();
+		else if (type.equalsIgnoreCase("markvi"))
+			return new ModelArmorMarkVI();
+		else if (type.equalsIgnoreCase("cqb"))
+			return new ModelArmorCQB();
+		else if (type.equalsIgnoreCase("eod"))
+			return new ModelArmorEOD();
+		else if (type.equalsIgnoreCase("eva"))
+			return new ModelArmorEVA();
+		else if (type.equalsIgnoreCase("hayabusa"))
+			return new ModelArmorHayabusa();
+		else if (type.equalsIgnoreCase("recon"))
+			return new ModelArmorRecon();
+		else if (type.equalsIgnoreCase("rogue"))
+			return new ModelArmorRogue();
+		else if (type.equalsIgnoreCase("scout"))
+			return new ModelArmorScout();
+		else if (type.equalsIgnoreCase("security"))
+			return new ModelArmorSecurity();
+		
+		return null;
 	}
 
 	@Override
@@ -96,7 +128,6 @@ public class ClientProxy extends CommonProxy {
 		//FIXME: Add New Gun Models
 		//MinecraftForgeClient.registerItemRenderer(KCWeaponMod.weapons[HalocraftItemsWeapons.ModMapOffset+19], (IItemRenderer)new RenderGun(new ModelSentinelBeam(), Halocraft.MODID+":textures/guns/SkinSentinelBeamMajor.png", false));
 		//MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.AssaultRifle, (IItemRenderer)new RenderGun(new ModelGravityHammer(), Halocraft.MODID+":textures/guns/SkinBruteHammer.png", false));
-		//MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Carbine, (IItemRenderer)new RenderGun(new ModelBruteShot(), Halocraft.MODID+":textures/guns/SkinBruteShot.png", false));
 		//MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.RocketLauncher, (IItemRenderer)new RenderGun(new ModelFuelRodCannon(), Halocraft.MODID+":textures/guns/SkinFuelRodGun.png", false));
 		//MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.Magnum, (IItemRenderer)new RenderGun(new ModelSentinelBeam(), Halocraft.MODID+":textures/guns/SkinSentinelBeam.png", false));
 		//MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.SniperRifle, (IItemRenderer)new RenderGun(new ModelSpartanLaser(), Halocraft.MODID+":textures/guns/SkinSpartanLaser.png", false));
@@ -126,6 +157,8 @@ public class ClientProxy extends CommonProxy {
 		//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCovSupplyCase.class, new RenderCovSupplyCase());
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLightBridgeExt.class, new RenderLightBridgeExt());
+		
+		RenderingRegistry.registerEntityRenderingHandler(EntityClientTargeter.class, new RenderClientTargeter());
 	}
 
 	@Override
@@ -152,22 +185,6 @@ public class ClientProxy extends CommonProxy {
 		}
 	}
 
-	@Override
-	public boolean initializeVehicleLoopingSounds(EntityVehicle vehicle, String soundIdle, String soundRun)
-	{
-		if (Minecraft.getMinecraft().getSoundHandler() != null && vehicle != null)
-		{
-			try {
-				if (soundIdle != null)
-					Minecraft.getMinecraft().getSoundHandler().playSound(new MovingVehicleSoundLoop.Idle(vehicle, soundIdle));
-				if (soundRun != null)
-					Minecraft.getMinecraft().getSoundHandler().playSound(new MovingVehicleSoundLoop(vehicle, soundRun));
-			} catch(Exception e) { return false; }
-			return true;
-		}
-		return false;
-	}
-	
 	@Override
 	public boolean initVehicleLoopSounds(EntityVehicle vehicle, int soundHandlerType, String soundFile)
 	{

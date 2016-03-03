@@ -473,6 +473,20 @@
         "category": "player",
         "sounds": ["weapons/SpikeGrenadeThrow1"]
     },
+	"weapons.TrackingLocked":
+    {
+        "category": "player",
+        "sounds": ["weapons/TrackingLocked"]
+    },
+	"weapons.TrackingLocking":
+    {
+        "category": "player",
+		"sounds":
+		[
+			"weapons/TrackingLocking1",
+			"weapons/TrackingLocking2"
+		]
+    },
 	"weapons.shoot.AssaultRifleShoot":
     {
         "category": "player",

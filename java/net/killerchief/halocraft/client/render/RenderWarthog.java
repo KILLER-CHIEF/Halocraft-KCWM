@@ -49,7 +49,7 @@ public class RenderWarthog extends Render
 			entity.getTurretModel().renderSomeParts(false, 0.0625F);
 			GL11.glTranslatef(0F, 0.5F, 0.85F);
 			if (entity.seatGunner != null && entity.seatGunner.riddenByEntity != null)
-				GL11.glRotatef(entity.seatGunner.riddenByEntity.rotationPitch, 1F, 0F, 0F);//entity.getWheelTurnAngle()*150
+				GL11.glRotatef(entity.seatGunner.riddenByEntity.rotationPitch + entity.seatGunner.pitchOffset, 1F, 0F, 0F);//entity.getWheelTurnAngle()*150
 			GL11.glTranslatef(0F, -0.45F, -0.85F);
 			entity.getTurretModel().renderSomeParts(true, 0.0625F);
 		}

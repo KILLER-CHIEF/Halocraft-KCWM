@@ -1,6 +1,7 @@
 package net.killerchief.halocraft.config;
 
 import net.killerchief.halocraft.Halocraft;
+import net.killerchief.halocraft.entities.EntityClientTargeter;
 import net.killerchief.halocraft.entities.EntityDeployableGravityLift;
 import net.killerchief.halocraft.entities.mobs.EntityEliteCarbine;
 import net.killerchief.halocraft.entities.mobs.EntityElitePlasmaRifle;
@@ -48,6 +49,8 @@ public class HalocraftEntities {
 		EntityRegistry.registerModEntity(EntityBanshee.class, "Banshee", 152, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityWarthogGold.class, "WarthogGold", 153, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityDeployableGravityLift.class, "DeployableGravityLift", 160, Halocraft.instance, 100, 1, true);
+		
+		EntityRegistry.registerModEntity(EntityClientTargeter.class, "ClientTargeter", 161, Halocraft.instance, 100, 1, true);
 
 		registerEggEntities();
 	}

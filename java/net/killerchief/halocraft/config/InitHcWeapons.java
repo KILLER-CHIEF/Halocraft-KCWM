@@ -3,6 +3,7 @@ package net.killerchief.halocraft.config;
 import java.util.ArrayList;
 
 import net.killerchief.halocraft.Halocraft;
+import net.killerchief.halocraft.HalocraftUtils;
 import net.killerchief.halocraft.client.models.guns.ModelAssaultRifle;
 import net.killerchief.halocraft.client.models.guns.ModelBattleRifle;
 import net.killerchief.halocraft.client.models.guns.ModelBeamRifle;
@@ -26,6 +27,8 @@ import net.killerchief.kcweaponmod.ItemWeaponModel;
 import net.killerchief.kcweaponmod.ItemWeaponProperties;
 import net.killerchief.kcweaponmod.KCWeaponMod;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -34,6 +37,11 @@ public class InitHcWeapons {
 	
 	public static void DefineAndSendWeapons()
 	{
+		CreativeTabs tab = null;
+		if (Halocraft.proxy.isSideClient() && HalocraftUtils.isHcDevTeamMember(Minecraft.getMinecraft().getSession().getUsername())) {
+			tab = KCWeaponMod.InventoryTab;
+		}
+		
 		ArrayList<ItemWeapon> weapons = new ArrayList<ItemWeapon>();
 		
 		//BattleRifle
@@ -80,8 +88,6 @@ public class InitHcWeapons {
 		BattleRifle.ProjectileImpactProperties = "*ImpactBlock(tallgrass+vine, glass+leaves+glass_pane+yellow_flower+red_flower+brown_mushroom+red_mushroom+reeds+deadbush+waterlily+flower_pot+cocoa+double_plant+stained_glass+stained_glass_pane, Die), ImpactEntity(4, 0, Die)";
 		BattleRifle.ProjectileDragInAir = 0.99F;
 		BattleRifle.ProjectileDragInWater = 0.5F;
-		
-		//BattleRifle.TrackSensitivity = 0;
 		
 		weapons.add(new ItemWeapon(BattleRifle));
 		
@@ -131,8 +137,6 @@ public class InitHcWeapons {
 		DMR.ProjectileDragInAir = 0.99F;
 		DMR.ProjectileDragInWater = 0.5F;
 		
-		//DMR.TrackSensitivity = 0;
-		
 		weapons.add(new ItemWeapon(DMR));
 		
 		
@@ -180,8 +184,6 @@ public class InitHcWeapons {
 		AssaultRifle.ProjectileImpactProperties = "*ImpactBlock(tallgrass+vine, glass+leaves+glass_pane+yellow_flower+red_flower+brown_mushroom+red_mushroom+reeds+deadbush+waterlily+flower_pot+cocoa+double_plant+stained_glass+stained_glass_pane, Die), ImpactEntity(3, 0, Die)";
 		AssaultRifle.ProjectileDragInAir = 0.99F;
 		AssaultRifle.ProjectileDragInWater = 0.5F;
-		
-		//AssaultRifle.TrackSensitivity = 0;
 		
 		weapons.add(new ItemWeapon(AssaultRifle));
 		
@@ -231,8 +233,6 @@ public class InitHcWeapons {
 		Shotgun.ProjectileDragInAir = 0.96F;
 		Shotgun.ProjectileDragInWater = 0.1F;
 		
-		//Shotgun.TrackSensitivity = 0;
-		
 		weapons.add(new ItemWeapon(Shotgun));
 		
 		
@@ -280,8 +280,6 @@ public class InitHcWeapons {
 		SniperRifle.ProjectileImpactProperties = "*ImpactBlock(tallgrass+vine, glass+leaves+glass_pane+yellow_flower+red_flower+brown_mushroom+red_mushroom+reeds+deadbush+waterlily+flower_pot+cocoa+double_plant+stained_glass+stained_glass_pane, Die), ImpactEntity(30, 0, Die)";
 		SniperRifle.ProjectileDragInAir = 0.99F;
 		SniperRifle.ProjectileDragInWater = 0.5F;
-		
-		//SniperRifle.TrackSensitivity = 0;
 		
 		weapons.add(new ItemWeapon(SniperRifle));
 		
@@ -331,8 +329,6 @@ public class InitHcWeapons {
 		Magnum.ProjectileDragInAir = 0.99F;
 		Magnum.ProjectileDragInWater = 0.5F;
 		
-		//Magnum.TrackSensitivity = 0;
-		
 		weapons.add(new ItemWeapon(Magnum));
 		
 		
@@ -381,8 +377,6 @@ public class InitHcWeapons {
 		SMG.ProjectileDragInAir = 0.99F;
 		SMG.ProjectileDragInWater = 0.5F;
 		
-		//SMG.TrackSensitivity = 0;
-		
 		weapons.add(new ItemWeapon(SMG));
 		
 		
@@ -418,6 +412,10 @@ public class InitHcWeapons {
 		RocketLauncher.ShootBurstCount = 1;
 		//RocketLauncher.BurstAccuracyDecrease = 0.6F;
 		RocketLauncher.SingleShotProjectileCount = 1;
+		
+		RocketLauncher.TrackLastDelay = 4;
+		RocketLauncher.TrackType = 3;
+		RocketLauncher.TrackDistance = 50;
 		
 		RocketLauncher.ProjectileRenderProperties = Halocraft.MODID+":textures/entities/RocketRender.png";
 		RocketLauncher.ProjectileGlows = true;
@@ -481,8 +479,6 @@ public class InitHcWeapons {
 		Carbine.ProjectileDragInAir = 0.99F;
 		Carbine.ProjectileDragInWater = 0.5F;
 		
-		//Carbine.TrackSensitivity = 0;
-		
 		weapons.add(new ItemWeapon(Carbine));
 		
 		
@@ -530,8 +526,6 @@ public class InitHcWeapons {
 		PlasmaRifle.ProjectileImpactProperties = "*ImpactBlock(tallgrass+vine, glass+leaves+glass_pane+yellow_flower+red_flower+brown_mushroom+red_mushroom+reeds+deadbush+waterlily+flower_pot+cocoa+double_plant+stained_glass+stained_glass_pane, Die), ImpactEntity(4, 0, Die)";
 		PlasmaRifle.ProjectileDragInAir = 0.99F;
 		PlasmaRifle.ProjectileDragInWater = 0.5F;
-		
-		//PlasmaRifle.TrackSensitivity = 0;
 		
 		weapons.add(new ItemWeapon(PlasmaRifle));
 		
@@ -581,8 +575,6 @@ public class InitHcWeapons {
 		PlasmaPistol.ProjectileDragInAir = 0.99F;
 		PlasmaPistol.ProjectileDragInWater = 0.5F;
 		
-		//PlasmaPistol.TrackSensitivity = 0;
-		
 		weapons.add(new ItemWeapon(PlasmaPistol));
 		
 		
@@ -619,6 +611,8 @@ public class InitHcWeapons {
 		//Needler.BurstAccuracyDecrease = 0.6F;
 		Needler.SingleShotProjectileCount = 1;
 		
+		Needler.TrackType = 1;
+		
 		Needler.ProjectileRenderProperties = Halocraft.MODID+":textures/entities/NeedleRender.png";
 		Needler.ProjectileGlows = true;
 		
@@ -631,7 +625,7 @@ public class InitHcWeapons {
 		Needler.ProjectileDragInAir = 0.99F;
 		Needler.ProjectileDragInWater = 0.5F;
 		
-		//Needler.TrackSensitivity = 0;
+		Needler.TrackSensitivity = 0.05F;
 		
 		weapons.add(new ItemWeapon(Needler));
 		
@@ -681,8 +675,6 @@ public class InitHcWeapons {
 		BeamRifle.ProjectileDragInAir = 0.99F;
 		BeamRifle.ProjectileDragInWater = 0.5F;
 		
-		//BeamRifle.TrackSensitivity = 0;
-		
 		weapons.add(new ItemWeapon(BeamRifle));
 		
 		
@@ -731,8 +723,6 @@ public class InitHcWeapons {
 		Flamethrower.ProjectileDragInAir = 0.96F;
 		Flamethrower.ProjectileDragInWater = 0.1F;
 		
-		//Flamethrower.TrackSensitivity = 0;
-		
 		weapons.add(new ItemWeapon(Flamethrower));
 		
 		
@@ -780,8 +770,6 @@ public class InitHcWeapons {
 		Spiker.ProjectileImpactProperties = "*ImpactBlock(tallgrass+vine, glass+leaves+glass_pane+yellow_flower+red_flower+brown_mushroom+red_mushroom+reeds+deadbush+waterlily+flower_pot+cocoa+double_plant+stained_glass+stained_glass_pane, Die), Bounce(0.97, 1, ExceededMaxEncounteredEntities(2, Die)), ImpactEntity(5, 0, Die)";
 		Spiker.ProjectileDragInAir = 0.99F;
 		Spiker.ProjectileDragInWater = 0.5F;
-		
-		//Spiker.TrackSensitivity = 0;
 		
 		//BounceFactor = 0.97D;
 		//RicochetFactor = 1D;
@@ -835,8 +823,6 @@ public class InitHcWeapons {
 		Mauler.ProjectileDragInAir = 0.96F;
 		Mauler.ProjectileDragInWater = 0.1F;
 		
-		//Mauler.TrackSensitivity = 0;
-		
 		weapons.add(new ItemWeapon(Mauler));
 		
 		
@@ -886,8 +872,6 @@ public class InitHcWeapons {
 		FragGrenade.ProjectileDragInAir = 0.99F;
 		FragGrenade.ProjectileDragInWater = 0.5F;
 		
-		FragGrenade.TrackSensitivity = 0;
-		
 		weapons.add(new ItemWeapon(FragGrenade));
 		
 		
@@ -935,8 +919,6 @@ public class InitHcWeapons {
 		PlasmaGrenade.ProjectileImpactProperties = "Bounce(0.1, -1, callTags(PlaySound(1,"+Halocraft.MODID+":weapons.FragBounceStone"+",null), StartFuse(30, null))), StickEntity(PlaySound(0,"+Halocraft.MODID+":weapons.PlasmaGrenadeStick"+", ImpactEntity(1, 0, callTags(PlaySound(1,"+Halocraft.MODID+":weapons.FragBounceStone"+",null), StartFuse(30, null)))))";
 		PlasmaGrenade.ProjectileDragInAir = 0.99F;
 		PlasmaGrenade.ProjectileDragInWater = 0.5F;
-		
-		PlasmaGrenade.TrackSensitivity = 0;
 		
 		weapons.add(new ItemWeapon(PlasmaGrenade));
 		
@@ -986,8 +968,6 @@ public class InitHcWeapons {
 		FirebombGrenade.ProjectileDragInAir = 0.98F;
 		FirebombGrenade.ProjectileDragInWater = 0.5F;
 		
-		FirebombGrenade.TrackSensitivity = 0;
-		
 		weapons.add(new ItemWeapon(FirebombGrenade));
 		
 		
@@ -1015,7 +995,7 @@ public class InitHcWeapons {
 		SentinelBeam.Name = Halocraft.MODID+".SentinelBeam";
 		SentinelBeam.Texture = Halocraft.MODID + ":NullX";
 		SentinelBeam.WeaponModel = new ItemWeaponModel(new ModelSentinelBeam(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinSentinelBeamMajor.png"));
-		SentinelBeam.InventoryTab = null;
+		SentinelBeam.InventoryTab = tab;
 		SentinelBeam.IsAutomaticOrHasSecondaryShoot = true;
 		SentinelBeam.IsZoomable = false;
 		//SentinelBeam.ZoomMultiplier = new int[]{2};
@@ -1214,8 +1194,6 @@ public class InitHcWeapons {
 		BruteShot.ProjectileImpactProperties = "Bounce(0.97, 1.2, StartFuse(10, PlaySound(1,"+Halocraft.MODID+":weapons.BruteShotBounce"+", ExceededMaxEncounteredEntities(1, Explode(2, Die)) ))), ImpactEntity(8, 0, Explode(2, Die))";
 		BruteShot.ProjectileDragInAir = 0.999F;
 		BruteShot.ProjectileDragInWater = 0.5F;
-
-		//BruteShot.TrackSensitivity = 0;
 
 		weapons.add(new ItemWeapon(BruteShot));
 		

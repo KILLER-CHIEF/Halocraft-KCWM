@@ -210,15 +210,8 @@ public class EntityGruntBase extends EntityHalocraftMob {
 
 		case 1:
 		{
-			int chance = rand.nextInt(4);
-			if (chance == 0)
-				this.entityDropItem(new ItemStack(HalocraftItemsArmor.MarkVBootsBlack, 1, (int)(HalocraftItemsArmor.MarkVBootsBlack.getMaxDamage()/(1 + this.rand.nextDouble()/2))), 0F);
-			else if (chance == 1)
-				this.entityDropItem(new ItemStack(HalocraftItemsArmor.MarkVBootsGreen, 1, (int)(HalocraftItemsArmor.MarkVBootsGreen.getMaxDamage()/(1 + this.rand.nextDouble()/2))), 0F);
-			else if (chance == 2)
-				this.entityDropItem(new ItemStack(HalocraftItemsArmor.MarkVBootsBlue, 1, (int)(HalocraftItemsArmor.MarkVBootsBlue.getMaxDamage()/(1 + this.rand.nextDouble()/2))), 0F);
-			else if (chance == 3)
-				this.entityDropItem(new ItemStack(HalocraftItemsArmor.MarkVBootsRed, 1, (int)(HalocraftItemsArmor.MarkVBootsRed.getMaxDamage()/(1 + this.rand.nextDouble()/2))), 0F);
+			Item item = HalocraftItemsArmor.MarkVSeries.get(rand.nextInt(16)*4 + 3);
+			this.entityDropItem(new ItemStack(item, 1, (int)(item.getMaxDamage()/(1 + this.rand.nextDouble()/2))), 0F);
 			break;
 		}
 		case 2:

@@ -7,6 +7,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
 public class EntityTurretSeat extends EntityPassengerSeat {
+	
+	public static float pitchOffset = 0F;
 
 	public EntityTurretSeat(World par1World) {
 		super(par1World);
@@ -30,13 +32,12 @@ public class EntityTurretSeat extends EntityPassengerSeat {
 				} else if (entity.rotationPitch < -50F) {
 					entity.rotationPitch = -50F;
 				}
-				/*if (Halocraft.proxy.isSideClient())
-				{
-					if (Minecraft.getMinecraft().gameSettings.thirdPersonView == 1)
-					{
-						//entity.cameraPitch = -15F;
-					}
-				}*/
+				if (Halocraft.proxy.isSideClient() && Minecraft.getMinecraft().gameSettings.thirdPersonView == 1) {
+					pitchOffset = -10F;
+					((EntityLivingBase)this.riddenByEntity).cameraPitch = pitchOffset;
+				}
+				else
+					pitchOffset = 0F;
 			}
 		}
 	}

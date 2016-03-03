@@ -8,6 +8,7 @@ import net.killerchief.halocraft.comm.PacketRegistry;
 import net.killerchief.halocraft.commands.CommandFillGunHolder;
 import net.killerchief.halocraft.commands.CommandSpawnEntity;
 import net.killerchief.halocraft.config.HalocraftConfig;
+import net.killerchief.halocraft.config.HalocraftItemsArmor;
 import net.killerchief.halocraft.config.HalocraftItemsWeapons;
 import net.killerchief.halocraft.config.InitHcWeapons;
 import net.killerchief.halocraft.worldGen.WorldGenerator;
@@ -34,7 +35,7 @@ public class Halocraft {
 
 	public static final String MODID = "halocraft";
 	public static final String NAME = "Halocraft";
-	public static final String VERSION = "0.7.4.05";
+	public static final String VERSION = "0.7.4.07";
 
 	/** The instance of this mod that Forge uses.*/
 	@Instance(Halocraft.MODID)
@@ -44,13 +45,12 @@ public class Halocraft {
 	public static CommonProxy proxy;
 
 	public static CreativeTabs InvTabHalocraft = new InventoryTab(MODID);
+	public static CreativeTabs InvTabHalocraftArmor = new InventoryTab(MODID+"armor", 1);
 
 	public static SimpleNetworkWrapper network;
 
 	public static Configuration config;
 	public static String configPath;
-
-	public static File modDirectory;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
@@ -60,7 +60,8 @@ public class Halocraft {
 		configPath = event.getModConfigurationDirectory()+"/"+Halocraft.MODID+"_"+Halocraft.VERSION+".cfg";
 		config = new Configuration(new File(configPath));
 		config.load();
-		modDirectory = new File(event.getModConfigurationDirectory().getParent());//Does this actually work? Where does it point to?
+		//File modDirectory2 = new File(event.getModConfigurationDirectory().getAbsolutePath());
+		//C:\....\forge-1.7.10-10.13.4.1558-1.7.10-src\eclipse\config
 
 		HalocraftConfig.loadConfig(config); //handles registry
 

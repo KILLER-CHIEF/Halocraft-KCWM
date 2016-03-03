@@ -213,7 +213,8 @@ public class EntityBanshee extends EntityVehicle
 			if (this.riddenByEntity instanceof EntityLivingBase)
 			{
 				((EntityLivingBase)this.riddenByEntity).renderYawOffset = this.rotationYaw;
-				//((EntityLivingBase)this.riddenByEntity).cameraPitch = -10F;
+				if (Halocraft.proxy.isSideClient() && Minecraft.getMinecraft().gameSettings.thirdPersonView == 1)
+					((EntityLivingBase)this.riddenByEntity).cameraPitch = -20F;
 			}
 		}
 	}
@@ -327,8 +328,15 @@ public class EntityBanshee extends EntityVehicle
 			float j = this.rotationYaw > i ? i - this.rotationYaw : i - (this.rotationYaw + 360F);
 			this.yawPointer = (float) (Math.abs(j) > 180F ? 360F + j : j);
 			//System.out.println("P: "+this.yawPointer+"\n");
+			int reverse = this.fwdVelocity >= 0 ? 1 : -1;
+			if (this.isMovingLeft()) {
+				this.yawPointer -= 60F * reverse;
+			}
+			if (this.isMovingRight()) {
+				this.yawPointer += 60F * reverse;
+			}
 			
-			this.pitchPointer = this.riddenByEntity.rotationPitch - this.rotationPitch;
+			this.pitchPointer = this.riddenByEntity.rotationPitch - this.rotationPitch - 20F;
 
 			if (TickHandler.ForwardMap.containsKey(this.riddenByEntity) && TickHandler.BackwardMap.containsKey(this.riddenByEntity) && TickHandler.LeftMap.containsKey(this.riddenByEntity) && TickHandler.RightMap.containsKey(this.riddenByEntity))
 			{

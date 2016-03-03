@@ -3,27 +3,33 @@ package net.killerchief.halocraft;
 import java.util.List;
 
 import net.killerchief.halocraft.config.HalocraftItemsArmor;
-import net.killerchief.halocraft.config.HalocraftItemsWeapons;
-import net.killerchief.kcweaponmod.ItemWeapon;
-import net.killerchief.kcweaponmod.KCWeaponMod;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.PlayerCapabilities;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 
 public class HalocraftUtils {
-	
+
+	public static String[] HcDevTeam = new String[]{"KILLER_CHIEF", "Camo7", "FabulousMissLuna", "Hellcraftjz"};
+
+	public static boolean isHcDevTeamMember(String name)
+	{
+		for (String member : HalocraftUtils.HcDevTeam) {
+			if (name.equals(member))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public static boolean ErrorMoveSpeedMP = false;
 	public static boolean ErrorButtonList = false;
 	public static boolean ErrorItemInUse = false;
 	public static boolean ErrorItemInUseCount = false;
-	
+
 	public static void MoveSpeedMP(EntityPlayer player, float moveSpeed)
 	{
 		if (!ErrorMoveSpeedMP)
@@ -37,7 +43,7 @@ public class HalocraftUtils {
 			}
 		}
 	}
-	
+
 	public static List getButtonList(GuiScreen currentScreen)
 	{
 		if (!ErrorButtonList)
@@ -52,7 +58,7 @@ public class HalocraftUtils {
 		}
 		return null;
 	}
-	
+
 	public static void setItemInUse(EntityPlayer entityplayer, ItemStack value)
 	{
 		if (!ErrorItemInUse)
@@ -66,7 +72,7 @@ public class HalocraftUtils {
 			}
 		}
 	}
-	
+
 	public static void setItemInUseCount(EntityPlayer entityplayer, int value)
 	{
 		if (!ErrorItemInUseCount)
@@ -80,32 +86,8 @@ public class HalocraftUtils {
 			}
 		}
 	}
-	
-	/*public static boolean isPlayerHoldingGun(Minecraft minecraft, boolean all, boolean zoom)//OBSOLETE
-	{
-		if (minecraft.thePlayer.inventory != null)
-		{
-			if (minecraft.thePlayer.inventory.getCurrentItem() == null)
-				return false;
-			Item currentItem = minecraft.thePlayer.inventory.getCurrentItem().getItem();
-			if (all)
-			{//TOD: Remove kc weapon reference for sentinelbeam
-				if (currentItem == KCWeaponMod.weapons[HalocraftItemsWeapons.ModMapOffset+19] || currentItem == HalocraftItemsWeapons.BattleRifle || currentItem == HalocraftItemsWeapons.DMR || currentItem == HalocraftItemsWeapons.SniperRifle || currentItem == HalocraftItemsWeapons.Magnum || currentItem == HalocraftItemsWeapons.RocketLauncher || currentItem == HalocraftItemsWeapons.Carbine || currentItem == HalocraftItemsWeapons.BeamRifle || currentItem == HalocraftItemsWeapons.AssaultRifle || currentItem == HalocraftItemsWeapons.Shotgun || currentItem == HalocraftItemsWeapons.SMG || currentItem == HalocraftItemsWeapons.PlasmaRifle || currentItem == HalocraftItemsWeapons.PlasmaPistol || currentItem == HalocraftItemsWeapons.Needler || currentItem == HalocraftItemsWeapons.Flamethrower || currentItem == HalocraftItemsWeapons.EnergySword || currentItem == HalocraftItemsWeapons.Spiker || currentItem == HalocraftItemsWeapons.Mauler)
-				{
-					return true;
-				}
-			}
-			if (zoom)
-			{
-				if(currentItem instanceof ItemWeapon && ((ItemWeapon)currentItem).Properties.IsZoomable)
-				{
-					return true;
-				}
-			}
-		}
-		return false;
-	}*/
-	
+
+
 	/**
 	 * This is designed for the client part of the game, i would make it ClientOnly but, i'd prefer not to as of yet.
 	 * This is used.
@@ -122,7 +104,7 @@ public class HalocraftUtils {
 		EntityPlayer player = minecraft.thePlayer.inventory.player;
 		return isPlayerWearingArmor(player, armorType, helmet, body, legs, boots);
 	}
-	
+
 	/**
 	 * This is the main one.
 	 * @param player instance
@@ -144,7 +126,7 @@ public class HalocraftUtils {
 					notfail = false;
 				else
 					if (armorType == 0) {
-						if (!(player.inventory.armorInventory[3].getItem() == HalocraftItemsArmor.ReconHelmet || player.inventory.armorInventory[3].getItem() == HalocraftItemsArmor.MarkVIHelmetGreen || player.inventory.armorInventory[3].getItem() == HalocraftItemsArmor.MarkVHelmetBlack || player.inventory.armorInventory[3].getItem() == HalocraftItemsArmor.MarkVHelmetGreen || player.inventory.armorInventory[3].getItem() == HalocraftItemsArmor.MarkVHelmetBlue || player.inventory.armorInventory[3].getItem() == HalocraftItemsArmor.MarkVHelmetRed))
+						if (!(HalocraftItemsArmor.IsSpartanArmorPiece(player.inventory.armorInventory[3].getItem(), 0)) && !(player.inventory.armorInventory[3].getItem() == HalocraftItemsArmor.ODSTHelmet))
 							notfail = false;
 					}
 					else if (armorType == 1) {
@@ -165,7 +147,7 @@ public class HalocraftUtils {
 					notfail = false;
 				else
 					if (armorType == 0) {
-						if (!(player.inventory.armorInventory[2].getItem() == HalocraftItemsArmor.ReconBody || player.inventory.armorInventory[2].getItem() == HalocraftItemsArmor.MarkVIBodyGreen || player.inventory.armorInventory[2].getItem() == HalocraftItemsArmor.MarkVBodyBlack || player.inventory.armorInventory[2].getItem() == HalocraftItemsArmor.MarkVBodyGreen || player.inventory.armorInventory[2].getItem() == HalocraftItemsArmor.MarkVBodyBlue || player.inventory.armorInventory[2].getItem() == HalocraftItemsArmor.MarkVBodyRed))
+						if (!(HalocraftItemsArmor.IsSpartanArmorPiece(player.inventory.armorInventory[2].getItem(), 1)))
 							notfail = false;
 					}
 					else if (armorType == 1) {
@@ -186,7 +168,7 @@ public class HalocraftUtils {
 					notfail = false;
 				else
 					if (armorType == 0) {
-						if (!(player.inventory.armorInventory[1].getItem() == HalocraftItemsArmor.ReconLegs || player.inventory.armorInventory[1].getItem() == HalocraftItemsArmor.MarkVILegsGreen || player.inventory.armorInventory[1].getItem() == HalocraftItemsArmor.MarkVLegsBlack || player.inventory.armorInventory[1].getItem() == HalocraftItemsArmor.MarkVLegsGreen || player.inventory.armorInventory[1].getItem() == HalocraftItemsArmor.MarkVLegsBlue || player.inventory.armorInventory[1].getItem() == HalocraftItemsArmor.MarkVLegsRed))
+						if (!(HalocraftItemsArmor.IsSpartanArmorPiece(player.inventory.armorInventory[1].getItem(), 2)))
 							notfail = false;
 					}
 					else if (armorType == 1) {
@@ -207,7 +189,7 @@ public class HalocraftUtils {
 					notfail = false;
 				else
 					if (armorType == 0) {
-						if (!(player.inventory.armorInventory[0].getItem() == HalocraftItemsArmor.ReconBoots || player.inventory.armorInventory[0].getItem() == HalocraftItemsArmor.MarkVIBootsGreen || player.inventory.armorInventory[0].getItem() == HalocraftItemsArmor.MarkVBootsBlack || player.inventory.armorInventory[0].getItem() == HalocraftItemsArmor.MarkVBootsGreen || player.inventory.armorInventory[0].getItem() == HalocraftItemsArmor.MarkVBootsBlue || player.inventory.armorInventory[0].getItem() == HalocraftItemsArmor.MarkVBootsRed))
+						if (!(HalocraftItemsArmor.IsSpartanArmorPiece(player.inventory.armorInventory[0].getItem(), 3)))
 							notfail = false;
 					}
 					else if (armorType == 1) {

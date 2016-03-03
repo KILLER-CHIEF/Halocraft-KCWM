@@ -28,6 +28,7 @@ import net.killerchief.halocraft.config.HalocraftConfig;
 import net.killerchief.halocraft.config.HalocraftItems;
 import net.killerchief.halocraft.config.HalocraftItemsArmor;
 import net.killerchief.halocraft.config.HalocraftItemsWeapons;
+import net.killerchief.halocraft.entities.EntityClientTargeter;
 import net.killerchief.halocraft.entities.vehicles.EntityBanshee;
 import net.killerchief.halocraft.entities.vehicles.EntityGhost;
 import net.killerchief.halocraft.entities.vehicles.EntityMongoose;
@@ -37,9 +38,12 @@ import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogChainGun;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogGauss;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogRocket;
+import net.killerchief.halocraft.items.ItemCustomArmor;
+import net.killerchief.kcweaponmod.InterfaceTracking;
 import net.killerchief.kcweaponmod.InterfaceZoomReticle;
 import net.killerchief.kcweaponmod.ItemWeapon;
 import net.killerchief.kcweaponmod.KCWeaponMod;
+import net.killerchief.kcweaponmod.PacketTargetEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -48,14 +52,21 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.multiplayer.ServerAddress;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.NetworkManager;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Vec3;
 import net.minecraftforge.client.GuiIngameForge;
 
 import org.lwjgl.input.Keyboard;
@@ -87,7 +98,8 @@ public class TickHandlerClient {
 			if (guiscreen != null)
 			{
 				this.onTickInGUI(mc, guiscreen);
-			} else {
+			} else if (!mc.isGamePaused()) {
+				this.rocketLauncherTracking(mc);
 				this.onTickInGame(mc);
 
 				TickHandler.CommonTickEnd();
@@ -121,6 +133,8 @@ public class TickHandlerClient {
 			if (mc.thePlayer != null)//This is Client Only
 			{
 				this.onRenderTick(mc);
+				
+				this.renderRocketTargeter(mc);
 
 				this.HandleButtonInterface(mc);
 				this.HandleZoomingReticle(mc);
@@ -357,6 +371,79 @@ public class TickHandlerClient {
 	public void onTickInGUI(Minecraft minecraft, GuiScreen guiscreen)
 	{
 		//System.out.println("onTickInGUI");
+	}
+	
+	private int delayTracking = 0;
+	private Entity trackedLast = null;
+	private int trackLastDelay = 0;
+	private boolean RocketTracking = false;
+	
+	private EntityClientTargeter Targeter = null;
+	private int TargetLockedBeepDelay = 0;
+	
+	private void rocketLauncherTracking(Minecraft minecraft)
+	{
+		if (net.killerchief.kcweaponmod.TickHandlerClient.TrackingEntity != null && mc.thePlayer.getHeldItem() != null && mc.thePlayer.getHeldItem().getItem() == HalocraftItemsWeapons.RocketLauncher && !(net.killerchief.kcweaponmod.TickHandlerClient.TrackingEntity instanceof EntityLiving) && net.killerchief.kcweaponmod.TickHandlerClient.TrackingEntity.riddenByEntity != null)
+		{
+			if (Targeter == null)
+			{
+				Entity target = net.killerchief.kcweaponmod.TickHandlerClient.TrackingEntity;
+				Targeter = new EntityClientTargeter(this.mc.theWorld, target, target.posX, target.posY, target.posZ);
+				mc.theWorld.spawnEntityInWorld(Targeter);
+			}
+			Targeter.Target = net.killerchief.kcweaponmod.TickHandlerClient.TrackingEntity;
+			if (TargetLockedBeepDelay <= 0)
+			{
+				TargetLockedBeepDelay = 20;
+				mc.thePlayer.playSound(Halocraft.MODID+":weapons.TrackingLocked", 1.0F, 1.0F);
+			}
+		}
+		else
+		{
+			if (Targeter != null)
+			{
+				Targeter.setDead();
+				Targeter = null;
+			}
+		}
+		if (TargetLockedBeepDelay > 0 && minecraft.inGameHasFocus)
+		{
+			TargetLockedBeepDelay--;
+		}
+		
+		if (minecraft.thePlayer.inventory.getCurrentItem() != null && minecraft.inGameHasFocus)
+		{
+			Item currentItem = minecraft.thePlayer.inventory.getCurrentItem().getItem();
+			if (this.delayTracking-- <= 0)
+			{
+				this.delayTracking = 8;
+				if (net.killerchief.kcweaponmod.TickHandlerClient.TrackingEntity == null && !this.mc.thePlayer.isDead && currentItem == HalocraftItemsWeapons.RocketLauncher)
+				{
+					InterfaceTracking itemTrack = (InterfaceTracking) currentItem;
+					Entity target = net.killerchief.kcweaponmod.TickHandlerClient.getObjectMouseOver(50D).entityHit;
+					if (target != null && !(target instanceof EntityLiving) && target.riddenByEntity != null)
+					{
+						this.RocketTracking = true;
+						this.trackLastDelay = 7;
+						mc.thePlayer.playSound(Halocraft.MODID+":weapons.TrackingLocking", 1.0F, 1.0F);
+					}
+				}
+			}
+		}
+		if (this.trackLastDelay > 0 && minecraft.inGameHasFocus)
+			this.trackLastDelay--;
+		if (this.RocketTracking && this.trackLastDelay <= 0 )
+		{
+			this.RocketTracking = false;
+		}
+	}
+	
+	private void renderRocketTargeter(Minecraft minecraft)
+	{
+		if (this.RocketTracking && minecraft.inGameHasFocus && minecraft.gameSettings.thirdPersonView == 0)
+		{
+			GunReticle(1.0F, RLReticle, 51, 193, 49, 47, 24, 23);
+		}
 	}
 
 	private void onTickInGame(Minecraft minecraft)
@@ -606,11 +693,6 @@ public class TickHandlerClient {
 	//RenderShield/Mag/Ammo
 
 
-	private static final ResourceLocation RLArmourMVVisor = new ResourceLocation(Halocraft.MODID+":textures/overlays/MarkVHelmetOverlay.png");
-	private static final ResourceLocation RLArmourMVIVisor = new ResourceLocation(Halocraft.MODID+":textures/overlays/MarkVIHelmetOverlay.png");
-	private static final ResourceLocation RLArmourODSTVisor = new ResourceLocation(Halocraft.MODID+":textures/overlays/ODSTHelmetOverlay.png");
-	private static final ResourceLocation RLArmourReconVisor = new ResourceLocation(Halocraft.MODID+":textures/overlays/ReconHelmetOverlay.png");
-	//private static final ResourceLocation RLArmourMVVisorZoom = new ResourceLocation(Halocraft.MODID+":textures/overlays/MarkVHelmetZoomOverlay.png");
 	private static final ResourceLocation RLReticle = new ResourceLocation(Halocraft.MODID+":textures/overlays/Reticle.png");
 
 	private static final ResourceLocation RLHud1 = new ResourceLocation(Halocraft.MODID+":textures/overlays/Hud1.png");
@@ -636,7 +718,9 @@ public class TickHandlerClient {
 			}
 		}*/
 	}
-
+	
+	
+	
 	private void HandleButtonInterface(Minecraft minecraft)
 	{
 		if (this.LeftClickPressed == true && this.PrevLeftClickPressed == false)
@@ -655,7 +739,7 @@ public class TickHandlerClient {
 		{
 			this.LeftClickPressed = false;
 		}
-
+		
 		if (minecraft.inGameHasFocus && this.LeftClickPressed)//this.RightClickPressed
 		{
 			if (this.VehicleShootDelay > 0)
@@ -668,32 +752,40 @@ public class TickHandlerClient {
 				{
 					if (this.mc.thePlayer.ridingEntity instanceof EntityGhost)
 					{
-						Halocraft.network.sendToServer(new PacketVehicleShoot());
+						float pitchOffset = 0F;
+						if (this.mc.gameSettings.thirdPersonView == 1) {
+							pitchOffset = -10F;
+						}
+						Halocraft.network.sendToServer(new PacketVehicleShoot(pitchOffset));
 						this.VehicleShootDelay = 2;
 					}
 					else if (this.mc.thePlayer.ridingEntity instanceof EntityBanshee)
 					{
-						Halocraft.network.sendToServer(new PacketVehicleShoot());
+						float pitchOffset = 0F;
+						if (this.mc.gameSettings.thirdPersonView == 1) {
+							pitchOffset = -20F;
+						}
+						Halocraft.network.sendToServer(new PacketVehicleShoot(pitchOffset));
 						this.VehicleShootDelay = 2;
 					}
 					else if (this.mc.thePlayer.ridingEntity instanceof EntityTurretSeat)
 					{
-						EntityPassengerSeat turret = (EntityPassengerSeat)this.mc.thePlayer.ridingEntity;
+						EntityTurretSeat turret = (EntityTurretSeat)this.mc.thePlayer.ridingEntity;
 						if (turret.parentBody != null)
 						{
 							if (turret.parentBody instanceof EntityWarthogChainGun)
 							{
-								Halocraft.network.sendToServer(new PacketVehicleShoot());
+								Halocraft.network.sendToServer(new PacketVehicleShoot(turret.pitchOffset));
 								this.VehicleShootDelay = 2;
 							}
 							else if (turret.parentBody instanceof EntityWarthogGauss)
 							{
-								Halocraft.network.sendToServer(new PacketVehicleShoot());
+								Halocraft.network.sendToServer(new PacketVehicleShoot(turret.pitchOffset));
 								this.VehicleShootDelay = 5;
 							}
 							else if (turret.parentBody instanceof EntityWarthogRocket)
 							{
-								Halocraft.network.sendToServer(new PacketVehicleShoot());
+								Halocraft.network.sendToServer(new PacketVehicleShoot(turret.pitchOffset));
 								this.VehicleShootDelay = 5;
 							}
 						}
@@ -824,21 +916,9 @@ public class TickHandlerClient {
 			if (!net.killerchief.kcweaponmod.TickHandlerClient.IsZooming() && minecraft.thePlayer.inventory.armorInventory != null && minecraft.thePlayer.inventory.armorInventory[3] != null)
 			{
 				Item item = minecraft.thePlayer.inventory.armorInventory[3].getItem();
-				if (item == HalocraftItemsArmor.MarkVHelmetBlack || item == HalocraftItemsArmor.MarkVHelmetGreen || item == HalocraftItemsArmor.MarkVHelmetBlue || item == HalocraftItemsArmor.MarkVHelmetRed)
+				if (item instanceof ItemCustomArmor && ((ItemCustomArmor)item).VisorHudTexture != null)
 				{
-					RenderHelmetVisor(1.0F, RLArmourMVVisor);
-				}
-				else if (item == HalocraftItemsArmor.MarkVIHelmetGreen)
-				{
-					RenderHelmetVisor(1.0F, RLArmourMVIVisor);
-				}
-				else if (item == HalocraftItemsArmor.ReconHelmet)
-				{
-					RenderHelmetVisor(1.0F, RLArmourReconVisor);
-				}
-				else if (item == HalocraftItemsArmor.ODSTHelmet)
-				{
-					RenderHelmetVisor(1.0F, RLArmourODSTVisor);
+					RenderHelmetVisor(1.0F, ((ItemCustomArmor)item).VisorHudTexture);
 				}
 			}
 		}

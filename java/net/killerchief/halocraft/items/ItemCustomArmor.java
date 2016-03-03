@@ -19,12 +19,12 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ItemCustomArmor extends net.minecraft.item.ItemArmor implements InterfaceZoomReticle {
 
 	private String Texture;
-	private boolean IsZoomable = false;
-	private String ZoomTexture = null;
+	public ResourceLocation VisorHudTexture = null;
+	private ResourceLocation ZoomTexture = null;
 	private Model3DArmor ArmorModel;
 	private String ArmorTex;
 
-	public ItemCustomArmor(String name, String texture, int armorModel, String armorTex, int armorType, ArmorMaterial par2EnumArmorMaterial, int renderIndex)
+	public ItemCustomArmor(String name, String texture, String armorModel, String armorTex, int armorType, ArmorMaterial par2EnumArmorMaterial, int renderIndex)
 	{
 		super(par2EnumArmorMaterial, renderIndex, armorType);
 		this.setUnlocalizedName(Halocraft.MODID + "." + name);
@@ -32,14 +32,14 @@ public class ItemCustomArmor extends net.minecraft.item.ItemArmor implements Int
 		this.ArmorModel = Halocraft.proxy.armor3DType(armorModel);
 		//this.ArmorModel = armorModel;
 		this.ArmorTex = armorTex;
-		this.setCreativeTab(Halocraft.InvTabHalocraft);
+		this.setCreativeTab(Halocraft.InvTabHalocraftArmor);
 	}
 
-	public ItemCustomArmor(String name, String texture, int armorModel, String armorTex, int armorType, ArmorMaterial par2EnumArmorMaterial, int renderIndex, boolean iszoomable, String zoomtexture)
+	public ItemCustomArmor(String name, String texture, String armorModel, String armorTex, int armorType, ArmorMaterial par2EnumArmorMaterial, int renderIndex, String visorhudtexture, String zoomtexture)
 	{
 		this(name, texture, armorModel, armorTex, armorType, par2EnumArmorMaterial, renderIndex);
-		this.IsZoomable = iszoomable;
-		this.ZoomTexture = zoomtexture;
+		this.VisorHudTexture = new ResourceLocation(Halocraft.MODID+":textures/armor/overlays/"+visorhudtexture+".png");
+		this.ZoomTexture = new ResourceLocation(Halocraft.MODID+":textures/armor/overlays/"+zoomtexture+".png");
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class ItemCustomArmor extends net.minecraft.item.ItemArmor implements Int
 	@Override
 	public void registerIcons(IIconRegister iiconregister)
 	{
-		this.itemIcon = iiconregister.registerIcon(Halocraft.MODID + ":" + this.Texture);
+		this.itemIcon = iiconregister.registerIcon(Halocraft.MODID + ":armor/" + this.Texture);
 	}
 
 	/**
@@ -143,19 +143,23 @@ public class ItemCustomArmor extends net.minecraft.item.ItemArmor implements Int
 					{
 						part.showModel = armorSlot == 3;
 					}
-				
-				if (armorModel.bodyModelLights != null)
-					for (ModelRendererTurbo part : armorModel.bodyModelLights)
+				if (armorModel.headLightsModel != null)
+					for (ModelRendererTurbo part : armorModel.headLightsModel)
+					{
+						part.showModel = armorSlot == 0;
+					}
+				if (armorModel.bodyLightsModel != null)
+					for (ModelRendererTurbo part : armorModel.bodyLightsModel)
 					{
 						part.showModel = armorSlot == 1;
 					}
-				if (armorModel.leftArmModelLights != null)
-					for (ModelRendererTurbo part : armorModel.leftArmModelLights)
+				if (armorModel.leftArmLightsModel != null)
+					for (ModelRendererTurbo part : armorModel.leftArmLightsModel)
 					{
 						part.showModel = armorSlot == 1;
 					}
-				if (armorModel.rightArmModelLights != null)
-					for (ModelRendererTurbo part : armorModel.rightArmModelLights)
+				if (armorModel.rightArmLightsModel != null)
+					for (ModelRendererTurbo part : armorModel.rightArmLightsModel)
 					{
 						part.showModel = armorSlot == 1;
 					}
@@ -172,7 +176,7 @@ public class ItemCustomArmor extends net.minecraft.item.ItemArmor implements Int
 					EntityPlayer player = (EntityPlayer)entityLiving;
 					armorModel.heldItemRight = player.getCurrentEquippedItem() != null ? (player.getItemInUseCount() > 0 && player.getCurrentEquippedItem().getItemUseAction() == EnumAction.block ? 3 : 1) : 0;
 					//armorModel.aimedBow = ((EntityPlayer)entityLiving).getItemInUseDuration() > 2;
-					armorModel.aimedBow = player.getItemInUseCount() > 0 && player.getCurrentEquippedItem().getItemUseAction() == EnumAction.bow;
+					armorModel.aimedBow = player.getCurrentEquippedItem() != null && player.getItemInUseCount() > 0 && player.getCurrentEquippedItem().getItemUseAction() == EnumAction.bow;
 				}
 				return armorModel;
 			}
@@ -182,7 +186,7 @@ public class ItemCustomArmor extends net.minecraft.item.ItemArmor implements Int
 
 	@Override
 	public boolean IsZoomable() {
-		return this.IsZoomable;
+		return this.ZoomTexture != null;
 	}
 
 	@Override
@@ -192,7 +196,7 @@ public class ItemCustomArmor extends net.minecraft.item.ItemArmor implements Int
 
 	@Override
 	public ResourceLocation ZoomTexture() {
-		return new ResourceLocation(this.ZoomTexture);
+		return this.ZoomTexture;
 	}
 
 	@Override

@@ -417,25 +417,18 @@ public class ModelArmorMarkV extends Model3DArmor
 
 
 
-		leftArmModelLights = new ModelRendererTurbo[1];
-		leftArmModelLights[0] = new ModelRendererTurbo(this, 3, 0, textureX, textureY); // LEFTarm05
+		leftArmLightsModel = new ModelRendererTurbo[1];
+		leftArmLightsModel[0] = new ModelRendererTurbo(this, 3, 0, textureX, textureY); // LEFTarm05
 
-		leftArmModelLights[0].addBox(6.01F, 0F, -0.97F, 0, 1, 2, 0F); // Import LEFTarm05
-		leftArmModelLights[0].setRotationPoint(4F, 0F, 0F);
+		leftArmLightsModel[0].addBox(6.01F, 0F, -0.97F, 0, 1, 2, 0F); // Import LEFTarm05
+		leftArmLightsModel[0].setRotationPoint(4F, 0F, 0F);
 
-		rightArmModelLights = new ModelRendererTurbo[1];
-		rightArmModelLights[0] = new ModelRendererTurbo(this, 3, 0, textureX, textureY); // RIGHTarm05
+		rightArmLightsModel = new ModelRendererTurbo[1];
+		rightArmLightsModel[0] = new ModelRendererTurbo(this, 3, 0, textureX, textureY); // RIGHTarm05
 
-		rightArmModelLights[0].addBox(-6.01F, -0.5F, -1.03F, 0, 1, 2, 0F); // Import RIGHTarm05
-		rightArmModelLights[0].setRotationPoint(-4F, 0.5F, 0F);
+		rightArmLightsModel[0].addBox(-6.01F, -0.5F, -1.03F, 0, 1, 2, 0F); // Import RIGHTarm05
+		rightArmLightsModel[0].setRotationPoint(-4F, 0.5F, 0F);
 
-
-
-		bodyModelLights = new ModelRendererTurbo[1];
-		bodyModelLights[0] = new ModelRendererTurbo(this, 0, 0, textureX, textureY); // body17
-
-		bodyModelLights[0].addShapeBox(0.43F, 4F, -4.51F, 2, 1, 0, 0F, 0F, 0F, 0F, -0.5F, 0F, 0F, -0.5F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -0.5F, 0F, 0F, -0.5F, 0F, 0F, 0F, 0F, 0F); // Import body17
-		bodyModelLights[0].setRotationPoint(0F, -2F, 0F);
 
 		rightBootModel = new ModelRendererTurbo[1];
 		rightBootModel[0] = new ModelRendererTurbo(this, 39, 79, textureX, textureY); // RIGHTboot1
@@ -445,6 +438,43 @@ public class ModelArmorMarkV extends Model3DArmor
 		rightBootModel[0].setRotationPoint(0F, 10.5F, 0F);
 
 
+		headLightsModel = new ModelRendererTurbo[2];
+		headLightsModel [0] = new ModelRendererTurbo(this, 98, 12, textureX, textureY); // Box 0
+		headLightsModel [1] = new ModelRendererTurbo(this, 98, 12, textureX, textureY); // Box 1
+
+		headLightsModel [0].addShapeBox(4.6F, -4.6F, -2.1F, 4, 4, 0, 0F, 0F, 0F, 0F, -3F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, -3F, 0F, -3F, -3F, 0F, -3F, -3F, 0F, 0F, -3F, 0F); // Box 0
+		headLightsModel [0].setRotationPoint(0F, -1.5F, 0F);
+
+		headLightsModel [1].addShapeBox(4.6F, -3.4F, -2.1F, 4, 4, 0, 0F, 0F, 0F, 0F, -3F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, -3F, 0F, -3F, -3F, 0F, -3F, -3F, 0F, 0F, -3F, 0F); // Box 1
+		headLightsModel [1].setRotationPoint(0F, -1.5F, 0F);
+
+
+		bodyLightsModel = new ModelRendererTurbo[5];
+		bodyLightsModel [0] = new ModelRendererTurbo(this, 54, 112, textureX, textureY); // Box 2
+		bodyLightsModel [1] = new ModelRendererTurbo(this, 54, 112, textureX, textureY); // Box 3
+		bodyLightsModel [2] = new ModelRendererTurbo(this, 54, 112, textureX, textureY); // Box 4
+		bodyLightsModel [3] = new ModelRendererTurbo(this, 54, 112, textureX, textureY); // Box 5
+
+		bodyLightsModel [0].addBox(3.6F, 5.5F, 3.5F, 0, 1, 1, 0F); // Box 2
+		bodyLightsModel [0].setRotationPoint(0F, -2F, 0F);
+
+		bodyLightsModel [1].addBox(4.6F, 2F, 3.5F, 0, 1, 1, 0F); // Box 3
+		bodyLightsModel [1].setRotationPoint(0F, -2F, 0F);
+
+		bodyLightsModel [2].addBox(-4.6F, 2F, 3.5F, 0, 1, 1, 0F); // Box 4
+		bodyLightsModel [2].setRotationPoint(0F, -2F, 0F);
+
+		bodyLightsModel [3].addBox(-3.6F, 5.5F, 3.5F, 0, 1, 1, 0F); // Box 5
+		bodyLightsModel [3].setRotationPoint(0F, -2F, 0F);
+		
+		bodyLightsModel[4] = new ModelRendererTurbo(this, 0, 0, textureX, textureY); // body17
+
+		bodyLightsModel[4].addShapeBox(0.43F, 4F, -4.51F, 2, 1, 0, 0F, 0F, 0F, 0F, -0.5F, 0F, 0F, -0.5F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -0.5F, 0F, 0F, -0.5F, 0F, 0F, 0F, 0F, 0F); // Import body17
+		bodyLightsModel[4].setRotationPoint(0F, -2F, 0F);
+		
+		
+		
+		
 
 		visorModel = new ModelRendererTurbo[1];
 		visorModel[0] = new ModelRendererTurbo(this, 0, 194, 357, 204); // Head6
