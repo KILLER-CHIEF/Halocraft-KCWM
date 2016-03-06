@@ -30,12 +30,12 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid=Halocraft.MODID, name=Halocraft.NAME, version=Halocraft.VERSION, dependencies="required-after:kcweaponmod@[0.1.3,);", guiFactory="net.killerchief.halocraft.client.gui.ConfigGuiHandler")
+@Mod(modid=Halocraft.MODID, name=Halocraft.NAME, version=Halocraft.VERSION, dependencies="required-after:kcweaponmod@[0.1.4,);", guiFactory="net.killerchief.halocraft.client.gui.ConfigGuiHandler")
 public class Halocraft {
 
 	public static final String MODID = "halocraft";
 	public static final String NAME = "Halocraft";
-	public static final String VERSION = "0.7.4.07";
+	public static final String VERSION = "0.7.5";
 
 	/** The instance of this mod that Forge uses.*/
 	@Instance(Halocraft.MODID)

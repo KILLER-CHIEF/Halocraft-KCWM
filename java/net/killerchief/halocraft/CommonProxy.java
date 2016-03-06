@@ -18,6 +18,11 @@ public class CommonProxy {
         return 0;
     }
 	
+	public String getClientUsername()
+	{
+		return "";
+	}
+	
 	public Model3DArmor armor3DType(String type)
     {
         return null;

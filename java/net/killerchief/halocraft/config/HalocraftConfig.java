@@ -1,6 +1,7 @@
 package net.killerchief.halocraft.config;
 
 import static net.minecraftforge.oredict.RecipeSorter.Category.SHAPELESS;
+import net.killerchief.halocraft.Halocraft;
 import net.killerchief.halocraft.HalocraftUtils;
 import net.killerchief.halocraft.entities.mobs.EntityEliteCarbine;
 import net.killerchief.halocraft.entities.mobs.EntityElitePlasmaRifle;
@@ -60,7 +61,7 @@ public class HalocraftConfig {
 		HUDXOffset = config.get("render", "HUD X Axis Offset from Anchored Point", 10).getInt();
 		HUDYOffset = config.get("render", "HUD Y Axis Offset from Anchored Point", 10).getInt();
 		UseGrenade3DModels = config.get("render", "Use Grenade 3D Models", true).setRequiresMcRestart(true).getBoolean(true);
-		if (HalocraftUtils.isHcDevTeamMember(Minecraft.getMinecraft().getSession().getUsername()))
+		if (Halocraft.proxy.isSideClient() && HalocraftUtils.isHcDevTeamMember(Minecraft.getMinecraft().getSession().getUsername()))
 		{
 			ShowDevPerks = config.get("general", "Show Dev Perks", true).getBoolean(true);
 		}

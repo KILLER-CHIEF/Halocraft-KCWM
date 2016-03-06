@@ -3,6 +3,7 @@ package net.killerchief.halocraft.items;
 import java.util.List;
 
 import net.killerchief.halocraft.Halocraft;
+import net.killerchief.halocraft.HalocraftUtils;
 import net.killerchief.halocraft.entities.vehicles.EntityBanshee;
 import net.killerchief.halocraft.entities.vehicles.EntityGhost;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseBlue;
@@ -150,16 +151,16 @@ public class ItemVehicle extends HalocraftItem {
 					}
 					else if (this.Type == 10)
 					{
-						if (this.getCreativeTab() == null)
+						if (HalocraftUtils.isHcDevTeamMember(par3EntityPlayer.getDisplayName()))
+							vehicle = new EntityWarthogGold(par2World, (double)((float)i + 0.5F), (double)((float)j + 1.0F), (double)((float)k + 0.5F));
+						else
 						{
-							if (Halocraft.proxy.isSideClient() && par2World.isRemote)
+							if (!par2World.isRemote)
 							{
-								Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("I'm sorry, Dave. I'm afraid I can't do that."));
+								par3EntityPlayer.addChatMessage(new ChatComponentText("I'm sorry, Dave. I'm afraid I can't do that."));
 							}
 							vehicle = new EntityWarthog(par2World, (double)((float)i + 0.5F), (double)((float)j + 1.0F), (double)((float)k + 0.5F));
 						}
-						else
-							vehicle = new EntityWarthogGold(par2World, (double)((float)i + 0.5F), (double)((float)j + 1.0F), (double)((float)k + 0.5F));
 					}
 					else
 					{

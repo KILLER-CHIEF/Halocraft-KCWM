@@ -82,6 +82,12 @@ public class ClientProxy extends CommonProxy {
 	{
 		return RenderingRegistry.addNewArmourRendererPrefix(armor);
 	}
+	
+	@Override
+	public String getClientUsername()
+	{
+		return Minecraft.getMinecraft().getSession().getUsername();
+	}
 
 	@Override
 	public Model3DArmor armor3DType(String type)

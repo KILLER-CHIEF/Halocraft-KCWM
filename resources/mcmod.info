@@ -1,10 +1,10 @@
 [
 {
   "modid": "halocraft",
-  "name": "Halocraft v0.7.4",
-  "description": "Halocraft v0.7.4 for Minecraft 1.7.10, (KCWM Weap v1.1). This mod adds many Halo Guns, Grenades, Mobs, and many other Items, Blocks and Entities such as the Mongoose, Ghost, Warthog, Elites, Grunts and various World Gen Structures. Read the 'Legal Notice' text document inside the zip for the terms and conditions over this pack's use.",
+  "name": "Halocraft v0.7.5",
+  "description": "Halocraft v0.7.5 for Minecraft 1.7.10, (KCWM Weap v1.2). This mod adds many Halo Guns, Grenades, Mobs, and many other Items, Blocks and Entities such as the Mongoose, Ghost, Warthog, Banshee, Elites, Grunts and various World Gen Structures. Read the 'Legal Notice' text document inside the zip for the terms and conditions over this pack's use.",
   "version": "MC 1.7.10",
-  "mcversion": "v0.7.4",
+  "mcversion": "v0.7.5",
   "url": "http://halocraft.killerchief.net/",
   "updateUrl": "",
   "authorList": ["Killer Chief"],
