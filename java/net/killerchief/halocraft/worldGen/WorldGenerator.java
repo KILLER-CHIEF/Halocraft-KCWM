@@ -24,13 +24,14 @@ public class WorldGenerator implements IWorldGenerator
 
 	private void generateSurface(World world, Random random, int blockX, int blockZ) 
 	{
-		for (int k = 0; k < 8; k++)
-		{
-			int RandPosX = blockX + random.nextInt(16);
-			int RandPosY = random.nextInt(60);
-			int RandPosZ = blockZ + random.nextInt(16);
-			(new WorldGenMinable(HalocraftBlocks.TitaniumOre, 8)).generate(world, random, RandPosX, RandPosY, RandPosZ);
-		}
+		if (world.getWorldInfo().getTerrainType() != WorldType.FLAT || (world.getWorldInfo().getTerrainType() == WorldType.FLAT && world.getWorldInfo().getGeneratorOptions().toLowerCase().contains("decoration")))
+			for (int k = 0; k < 8; k++)
+			{
+				int RandPosX = blockX + random.nextInt(16);
+				int RandPosY = random.nextInt(60);
+				int RandPosZ = blockZ + random.nextInt(16);
+				(new WorldGenMinable(HalocraftBlocks.TitaniumOre, 8)).generate(world, random, RandPosX, RandPosY, RandPosZ);
+			}
 
 		for (int k = 0; k < (world.getWorldInfo().getTerrainType() == WorldType.FLAT ? HalocraftConfig.CrashedPelicanSpawnRate/20 : HalocraftConfig.CrashedPelicanSpawnRate); k++)//200
 		{
