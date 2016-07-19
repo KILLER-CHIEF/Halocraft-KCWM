@@ -6,6 +6,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.killerchief.halocraft.Halocraft;
 import net.killerchief.halocraft.config.HalocraftItemsWeapons;
+import net.killerchief.kcweaponmod.KCWeaponMod;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -22,7 +23,7 @@ public class ItemSwordHilt extends HalocraftItem {
 	private int weaponDamage;
 
 	public ItemSwordHilt(String name, String texture) {
-		super(name, texture);
+		super(name, texture, KCWeaponMod.InventoryTab);
 		this.setMaxDamage(25);
 		this.maxStackSize = 1;
 		this.weaponDamage = 1;

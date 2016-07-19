@@ -5,6 +5,7 @@ import java.util.List;
 import net.killerchief.halocraft.Halocraft;
 import net.killerchief.halocraft.HalocraftUtils;
 import net.killerchief.halocraft.entities.vehicles.EntityBanshee;
+import net.killerchief.halocraft.entities.vehicles.EntityBansheeHeretic;
 import net.killerchief.halocraft.entities.vehicles.EntityGhost;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseBlue;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseDefault;
@@ -33,7 +34,7 @@ public class ItemVehicle extends HalocraftItem {
 	private int Type;
 
 	public ItemVehicle(String name, String texture, int type) {
-		super(name, texture);
+		super(name, texture, Halocraft.InvTabHalocraftEntities);
 		this.maxStackSize = 1;
 		this.Type = type;
 	}
@@ -161,6 +162,10 @@ public class ItemVehicle extends HalocraftItem {
 							}
 							vehicle = new EntityWarthog(par2World, (double)((float)i + 0.5F), (double)((float)j + 1.0F), (double)((float)k + 0.5F));
 						}
+					}
+					else if (this.Type == 11)
+					{
+						vehicle = new EntityBansheeHeretic(par2World, (double)((float)i + 0.5F), (double)((float)j + 1.0F), (double)((float)k + 0.5F));
 					}
 					else
 					{

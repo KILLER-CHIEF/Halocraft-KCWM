@@ -1,5 +1,6 @@
 package net.killerchief.halocraft.items;
 
+import net.killerchief.halocraft.Halocraft;
 import net.killerchief.halocraft.entities.EntityDeployableGravityLift;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -10,7 +11,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ItemDeployableGravityLift extends HalocraftItem {
 
 	public ItemDeployableGravityLift(String name, String texture) {
-		super(name, texture);
+		super(name, texture, Halocraft.InvTabHalocraftEntities);
 		this.maxStackSize = 4;
 	}
 
