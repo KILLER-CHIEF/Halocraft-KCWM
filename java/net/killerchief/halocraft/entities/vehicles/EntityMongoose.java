@@ -81,6 +81,11 @@ public abstract class EntityMongoose extends EntityVehicle
 	protected int getBeginLoopSoundDelay() {
 		return 10;
 	}
+	
+	@Override
+	protected boolean getSoundOnYMotion() {
+		return false;
+	}
 
 	/**
 	 * Returns the Y offset from the entity's position for any entity riding this one.

@@ -86,6 +86,11 @@ public class EntityGhost extends EntityVehicle
 	protected int getBeginLoopSoundDelay() {
 		return 10;
 	}
+	
+	@Override
+	protected boolean getSoundOnYMotion() {
+		return false;
+	}
 
 	/** Gets whether the entity is moving left.*/
 	private Boolean isMovingLeft()

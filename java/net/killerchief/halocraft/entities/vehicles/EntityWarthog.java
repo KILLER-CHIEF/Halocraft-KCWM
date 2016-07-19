@@ -96,6 +96,11 @@ public class EntityWarthog extends EntityVehicle
 	protected int getBeginLoopSoundDelay() {
 		return 14;
 	}
+	
+	@Override
+	protected boolean getSoundOnYMotion() {
+		return false;
+	}
 
 	/** Gets whether the entity is moving left.*/
 	private Boolean isMovingLeft()

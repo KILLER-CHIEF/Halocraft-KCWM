@@ -30,6 +30,7 @@ public abstract class EntityVehicle extends Entity
 	protected abstract String[] getSoundLoopIdle();
 	protected abstract String[] getSoundEnter();
 	protected abstract String[] getSoundExit();
+	protected abstract boolean getSoundOnYMotion();
 
 	public static final int maxHurtResistantTime = 10;
 	public double speed = 0D;
