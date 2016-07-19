@@ -4,17 +4,13 @@ import net.killerchief.halocraft.Halocraft;
 import net.killerchief.halocraft.TickHandler;
 import net.killerchief.halocraft.client.models.Model3DBase;
 import net.killerchief.halocraft.client.models.vehicles.ModelBansheeBase;
+import net.killerchief.halocraft.client.models.vehicles.ModelBansheeBaseDamaged1;
 import net.killerchief.halocraft.client.models.vehicles.ModelBansheeTop;
-import net.killerchief.halocraft.client.models.vehicles.ModelWarthog;
-import net.killerchief.halocraft.client.models.vehicles.ModelWarthogDamage1;
-import net.killerchief.halocraft.client.models.vehicles.ModelWarthogDamage2;
-import net.killerchief.halocraft.client.models.vehicles.ModelWarthogDamage3;
 import net.killerchief.halocraft.config.HalocraftItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
@@ -91,6 +87,11 @@ public class EntityBanshee extends EntityVehicle
 	@Override
 	protected int getBeginLoopSoundDelay() {
 		return 10;
+	}
+	
+	@Override
+	protected boolean getSoundOnYMotion() {
+		return true;
 	}
 
 	/**
@@ -491,11 +492,23 @@ public class EntityBanshee extends EntityVehicle
 	}
 	
 	public Model3DBase ModelBase0 = new ModelBansheeBase();
-	public ResourceLocation TextureBase0 = new ResourceLocation(Halocraft.MODID+":textures/entities/SkinBanshee.png");
-	public ResourceLocation TextureBaseOn0 = new ResourceLocation(Halocraft.MODID+":textures/entities/SkinBansheeOn.png");
+	public ResourceLocation TextureBase0 = new ResourceLocation(Halocraft.MODID+":textures/entities/banshee/SkinBanshee.png");
+	public ResourceLocation TextureBaseOn0 = new ResourceLocation(Halocraft.MODID+":textures/entities/banshee/SkinBansheeOn.png");
 	public Model3DBase ModelTop0 = new ModelBansheeTop();
-	public ResourceLocation TextureTop0 = new ResourceLocation(Halocraft.MODID+":textures/entities/SkinBansheeTop.png");
+	public ResourceLocation TextureTop0 = new ResourceLocation(Halocraft.MODID+":textures/entities/banshee/SkinBansheeTop.png");
+	
+	public Model3DBase ModelBase1 = new ModelBansheeBaseDamaged1();
+	public ResourceLocation TextureBase1 = new ResourceLocation(Halocraft.MODID+":textures/entities/banshee/SkinBansheeDamaged1.png");
+	public ResourceLocation TextureBaseOn1 = new ResourceLocation(Halocraft.MODID+":textures/entities/banshee/SkinBansheeDamaged1On.png");
+	public Model3DBase ModelTop1 = ModelTop0;
+	public ResourceLocation TextureTop1 = new ResourceLocation(Halocraft.MODID+":textures/entities/banshee/SkinBansheeTopDamaged1.png");
 
+	public Model3DBase ModelBase2 = ModelBase1;
+	public ResourceLocation TextureBase2 = new ResourceLocation(Halocraft.MODID+":textures/entities/banshee/SkinBansheeDamaged2.png");
+	public ResourceLocation TextureBaseOn2 = new ResourceLocation(Halocraft.MODID+":textures/entities/banshee/SkinBansheeDamaged2On.png");
+	public Model3DBase ModelTop2 = ModelTop0;
+	public ResourceLocation TextureTop2 = new ResourceLocation(Halocraft.MODID+":textures/entities/banshee/SkinBansheeTopDamaged2.png");
+	
 	private Model3DBase modelBase = this.ModelBase0;
 	private ResourceLocation textureBase = this.TextureBase0;
 	private Model3DBase modelTop = this.ModelTop0;
@@ -521,6 +534,37 @@ public class EntityBanshee extends EntityVehicle
 	public float topRotationProgress = 1F;
 	
 	private void updateModel2() {
+		if (this.getHealth() <= 30)
+		{
+			this.modelBase = this.ModelBase2;
+			if (this.riddenByEntity == null)
+				this.textureBase = this.TextureBase2;
+			else
+				this.textureBase = this.TextureBaseOn2;
+			this.modelTop = this.ModelTop2;
+			this.textureTop = this.TextureTop2;
+		}
+		else if (this.getHealth() <= 60)
+		{
+			this.modelBase = this.ModelBase1;
+			if (this.riddenByEntity == null)
+				this.textureBase = this.TextureBase1;
+			else
+				this.textureBase = this.TextureBaseOn1;
+			this.modelTop = this.ModelTop1;
+			this.textureTop = this.TextureTop1;
+		}
+		else
+		{
+			this.modelBase = this.ModelBase0;
+			if (this.riddenByEntity == null)
+				this.textureBase = this.TextureBase0;
+			else
+				this.textureBase = this.TextureBaseOn0;
+			this.modelTop = this.ModelTop0;
+			this.textureTop = this.TextureTop0;
+		}
+		
 		if (this.riddenByEntity == null)
 		{
 			if (this.topRotationProgress < 1F)
@@ -543,5 +587,4 @@ public class EntityBanshee extends EntityVehicle
 	public String getEntityTexture() {
 		return null;
 	}
-	
 }

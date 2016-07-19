@@ -24,6 +24,7 @@ public class HalocraftItemsVehicles {
 	public static Item ItemWarthogGauss;
 	public static Item ItemWarthogRocket;
 	public static Item ItemBanshee;
+	public static Item ItemBansheeHeretic;
 	public static Item ItemWarthogGold;
 	
 	public static void load(Configuration config) {
@@ -37,9 +38,10 @@ public class HalocraftItemsVehicles {
 		ItemWarthogGauss = (new ItemVehicle("WarthogGauss", "WarthogGauss", 7));
 		ItemWarthogRocket = (new ItemVehicle("WarthogRocket", "WarthogRocket", 8));
 		ItemBanshee = (new ItemVehicle("Banshee", "Banshee", 9));
+		ItemBansheeHeretic = (new ItemVehicle("BansheeHeretic", "BansheeHeretic", 11));
 		CreativeTabs tab = null;
 		if (Halocraft.proxy.isSideClient() && HalocraftUtils.isHcDevTeamMember(Minecraft.getMinecraft().getSession().getUsername())) {
-			tab = Halocraft.InvTabHalocraft;
+			tab = Halocraft.InvTabHalocraftEntities;
 		}
 		ItemWarthogGold = (new ItemVehicle("WarthogCivil", "WarthogCivil", 10, tab));
 	}
@@ -55,6 +57,7 @@ public class HalocraftItemsVehicles {
 		GameRegistry.registerItem(ItemWarthogGauss, ItemWarthogGauss.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(ItemWarthogRocket, ItemWarthogRocket.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(ItemBanshee, ItemBanshee.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(ItemBansheeHeretic, ItemBansheeHeretic.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(ItemWarthogGold, ItemWarthogGold.getUnlocalizedName().substring(5));
 	}
 	
