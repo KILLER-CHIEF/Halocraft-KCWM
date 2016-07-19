@@ -12,7 +12,7 @@ import cpw.mods.fml.common.ObfuscationReflectionHelper;
 
 public class HalocraftUtils {
 
-	public static String[] HcDevTeam = new String[]{"KILLER_CHIEF", "Camo7", "FabulousMissLuna", "Hellcraftjz"};
+	public static String[] HcDevTeam = new String[]{"KILLER_CHIEF", "GlitchyScripts", "Camo7", "FabulousMissLuna", "Hellcraftjz"};
 
 	public static boolean isHcDevTeamMember(String name)
 	{
