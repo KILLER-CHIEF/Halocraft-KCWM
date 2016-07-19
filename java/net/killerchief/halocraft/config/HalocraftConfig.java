@@ -38,6 +38,7 @@ public class HalocraftConfig {
 	public static int HUDYOffset;
 	public static boolean UseGrenade3DModels;
 	public static boolean ShowDevPerks = true;
+	public static boolean DisplayPseudoVisorReflection;
 	
 	public static void DoSettingsConfiguration(Configuration config)
 	{
@@ -65,6 +66,7 @@ public class HalocraftConfig {
 		{
 			ShowDevPerks = config.get("general", "Show Dev Perks", true).getBoolean(true);
 		}
+		DisplayPseudoVisorReflection = config.get("render", "Display Pseudo Visor Reflection (is buggy for some)", false).getBoolean(true);
 		
 		config.save();
 	}

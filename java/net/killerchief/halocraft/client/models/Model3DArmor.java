@@ -3,6 +3,7 @@ package net.killerchief.halocraft.client.models;
 import net.killerchief.halocraft.Halocraft;
 import net.killerchief.halocraft.client.models.armor.ModelArmorLights;
 import net.killerchief.halocraft.client.models.armor.ModelArmorVisor;
+import net.killerchief.halocraft.config.HalocraftConfig;
 import net.killerchief.turbomodelthingy.ModelRendererTurbo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
@@ -35,9 +36,11 @@ public class Model3DArmor extends ModelBiped
 	public ModelRendererTurbo[] leftArmLightsModel;
 	public ModelRendererTurbo[] rightArmLightsModel;
 	public ModelRendererTurbo[] visorModel;
+	public ModelRendererTurbo[] visor2Model;
+	public ModelRendererTurbo[] cubemapModel;
 	
-	private int width;
-	private int height;
+	//private int width;
+	//private int height;
 	private static ResourceLocation SacrificialGraphicBackground;
 	
 	public void flipAll()
@@ -56,9 +59,12 @@ public class Model3DArmor extends ModelBiped
 		flip(this.leftArmLightsModel);
 		flip(this.rightArmLightsModel);
 		flip(this.visorModel);
+		flip(this.visor2Model);
+		flip(this.cubemapModel);
 	}
 
 	private static ResourceLocation[] titlePanoramaPaths = new ResourceLocation[] {new ResourceLocation(Halocraft.MODID+":textures/armor/visorbg/panorama_0.png"), new ResourceLocation(Halocraft.MODID+":textures/armor/visorbg/panorama_1.png"), new ResourceLocation(Halocraft.MODID+":textures/armor/visorbg/panorama_2.png"), new ResourceLocation(Halocraft.MODID+":textures/armor/visorbg/panorama_3.png"), new ResourceLocation(Halocraft.MODID+":textures/armor/visorbg/panorama_4.png"), new ResourceLocation(Halocraft.MODID+":textures/armor/visorbg/panorama_5.png"), new ResourceLocation(Halocraft.MODID+":textures/armor/HelmetShader.png")};
+	private static ResourceLocation visor2 = new ResourceLocation(Halocraft.MODID+":textures/armor/HelmetShader2.png");
 
 	/**
 	 * Draws the main menu panorama
@@ -264,9 +270,9 @@ public class Model3DArmor extends ModelBiped
 	 * Sets the models various rotation angles then renders the model.
 	 */
 	@Override
-	public void render(Entity tileentity, float par2, float par3, float par4, float par5, float par6, float par7)
+	public void render(Entity entity, float par2, float par3, float par4, float par5, float par6, float par7)
 	{
-		this.setRotationAngles(par2, par3, par4, par5, par6, par7, tileentity);
+		this.setRotationAngles(par2, par3, par4, par5, par6, par7, entity);
 		GL11.glPushMatrix();
 		GL11.glRotatef(180F, 1, 0, 0);
 		GL11.glTranslated(0.0F, -0.1F, 0F);
@@ -397,15 +403,17 @@ public class Model3DArmor extends ModelBiped
 		}
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, x, y);
 		GL11.glEnable(GL11.GL_LIGHTING);
+		
 		if (this.visorModel != null)
 		{
-			if (true)//this instanceof ModelArmorVisor)
+			if (HalocraftConfig.DisplayPseudoVisorReflection)//this instanceof ModelArmorVisor)
 			{
-				this.width = Minecraft.getMinecraft().displayWidth;
-				this.height = Minecraft.getMinecraft().displayHeight;
-				GL11.glDisable(GL11.GL_ALPHA_TEST);
-				this.renderSkybox(tileentity.getRotationYawHead(), -tileentity.rotationPitch);
-				GL11.glEnable(GL11.GL_ALPHA_TEST);
+				//this.width = Minecraft.getMinecraft().displayWidth;
+				//this.height = Minecraft.getMinecraft().displayHeight;
+				
+//				GL11.glDisable(GL11.GL_ALPHA_TEST);
+				this.renderSkybox(entity.getRotationYawHead(), -entity.rotationPitch);
+//				GL11.glEnable(GL11.GL_ALPHA_TEST);
 				
 				
 				//GL11.glEnable(GL11.GL_LIGHTING);
@@ -436,6 +444,11 @@ public class Model3DArmor extends ModelBiped
 				flip(this.visorModel);*/
 				
 			}
+			else {
+				//GL11.glTranslated(0.0F, 0.28F, 0F);
+				//Minecraft.getMinecraft().renderEngine.bindTexture(titlePanoramaPaths[6]);
+				Minecraft.getMinecraft().renderEngine.bindTexture(visor2);
+			}
 			for (ModelRendererTurbo part : this.visorModel)
 			{
 				if (part != null)
@@ -445,12 +458,181 @@ public class Model3DArmor extends ModelBiped
 			}
 		}
 		
-		/*if (!(this instanceof ModelArmorLights || this instanceof ModelArmorVisor))
+		int pretex = GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D);
+		
+		if (this.cubemapModel != null && !entity.isInvisible())
 		{
-			new ModelArmorLights().render(tileentity, par2, par3, par4, par5, par6, par7);
-			new ModelArmorVisor().render(tileentity, par2, par3, par4, par5, par6, par7);
-		}*/
+			if (HalocraftConfig.DisplayPseudoVisorReflection)
+				bindCubemapRender(entity);
+			
+			for (ModelRendererTurbo part : this.cubemapModel)
+			{
+				if (part != null)
+				{
+					part.render(par7);
+				}
+			}
+		}
+		
+		if (this.visor2Model != null)
+		{
+			if (HalocraftConfig.DisplayPseudoVisorReflection)//this instanceof ModelArmorVisor)
+			{
+				GL11.glBindTexture(GL11.GL_TEXTURE_2D, pretex);
+
+				GL11.glEnable(GL11.GL_BLEND);
+				GL11.glDepthMask(false);
+				GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+				GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.8F);
+			}
+			for (ModelRendererTurbo part : this.visor2Model)
+			{
+				if (part != null)
+				{
+					part.render(par7);
+				}
+			}
+			if (HalocraftConfig.DisplayPseudoVisorReflection)//this instanceof ModelArmorVisor)
+			{
+				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1F);
+				GL11.glDepthMask(true);
+				GL11.glDisable(GL11.GL_BLEND);
+			}
+		}
+		
 		GL11.glPopMatrix();
+	}
+	
+	private void bindCubemapRender(Entity entity)
+	{
+		GL11.glDisable(GL11.GL_ALPHA_TEST);
+		
+		Minecraft.getMinecraft().getFramebuffer().unbindFramebuffer();
+		GL11.glViewport(0, 0, 128, 128);
+		
+		
+		float yaw = entity.getRotationYawHead();
+		float pitch = -entity.rotationPitch;
+		
+		Tessellator tessellator = Tessellator.instance;
+		GL11.glMatrixMode(GL11.GL_PROJECTION);
+		GL11.glPushMatrix();
+		GL11.glLoadIdentity();
+		Project.gluPerspective(120.0F, 1.0F, 0.05F, 10.0F);
+		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+		GL11.glPushMatrix();
+		GL11.glLoadIdentity();
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glRotatef(180.0F, 1.0F, 0.0F, 0.0F);
+		GL11.glScalef(1F, -1F, 1F);
+		//GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glDisable(GL11.GL_ALPHA_TEST);
+		GL11.glDisable(GL11.GL_CULL_FACE);
+		GL11.glDepthMask(false);
+		OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+		
+		GL11.glDisable(GL11.GL_LIGHTING);
+
+		byte b0 = 8;
+
+		for (int k = 0; k < b0 * b0; ++k)
+		{
+			GL11.glPushMatrix();
+			
+			GL11.glRotatef(yaw, 0.0F, 1.0F, 0.0F);
+			float s1 = yaw/360;
+			float s2 = s1-(int)s1;
+			float s3 = s2*2F*(float)Math.PI;
+            GL11.glRotatef(-MathHelper.cos(s3)*pitch, 1.0F, 0.0F, 0.0F);
+            GL11.glRotatef(-MathHelper.sin(s3)*pitch, 0.0F, 0.0F, 1.0F);
+            
+			float f4 = 0.0F;
+			for (int l = 0; l < 6; ++l)
+			{
+				GL11.glPushMatrix();
+
+				if (l == 1)
+				{
+					GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
+				}
+
+				if (l == 2)
+				{
+					GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
+				}
+
+				if (l == 3)
+				{
+					GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
+				}
+
+				if (l == 4)
+				{
+					GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
+				}
+
+				if (l == 5)
+				{
+					GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
+				}
+
+				Minecraft.getMinecraft().renderEngine.bindTexture(titlePanoramaPaths[l]);
+				tessellator.startDrawingQuads();
+				tessellator.setColorRGBA_I(16777215, 255 / (k + 1));
+				//float f4 = 0.0F;
+				tessellator.addVertexWithUV(-1.0D, -1.0D, 1.0D, (double)(0.0F + f4), (double)(0.0F + f4));
+				tessellator.addVertexWithUV(1.0D, -1.0D, 1.0D, (double)(1.0F - f4), (double)(0.0F + f4));
+				tessellator.addVertexWithUV(1.0D, 1.0D, 1.0D, (double)(1.0F - f4), (double)(1.0F - f4));
+				tessellator.addVertexWithUV(-1.0D, 1.0D, 1.0D, (double)(0.0F + f4), (double)(1.0F - f4));
+				tessellator.draw();
+				GL11.glPopMatrix();
+			}
+			GL11.glPopMatrix();
+			
+//			Minecraft.getMinecraft().renderEngine.bindTexture(titlePanoramaPaths[6]);
+//			//GL11.glEnable(GL11.GL_BLEND);
+//			//GL11.glDepthMask(false);
+//			//GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+//			//GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.5F);
+//			GL11.glTranslated(0.0F, 0.28F, 0F);//Fix offset
+//			Tessellator tessellator2 = Tessellator.instance;
+//			tessellator2.startDrawingQuads();
+//			float f42 = 0.0F;
+//			double z = 0.58F;
+//			tessellator2.addVertexWithUV(-1.0D, -1.0D, z, (double)(0.0F + f42), (double)(0.0F + f42));
+//			tessellator2.addVertexWithUV(1.0D, -1.0D, z, (double)(1.0F - f42), (double)(0.0F + f42));
+//			tessellator2.addVertexWithUV(1.0D, 1.0D, z, (double)(1.0F - f42), (double)(1.0F - f42));
+//			tessellator2.addVertexWithUV(-1.0D, 1.0D, z, (double)(0.0F + f42), (double)(1.0F - f42));
+//			tessellator2.draw();
+//			GL11.glTranslated(0.0F, -0.28F, 0F);//Fix offset back
+			
+			//GL11.glColorMask(true, true, true, false);
+		}
+
+		tessellator.setTranslation(0.0D, 0.0D, 0.0D);
+		GL11.glColorMask(true, true, true, true);
+		GL11.glMatrixMode(GL11.GL_PROJECTION);
+		GL11.glPopMatrix();
+		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+		GL11.glPopMatrix();
+		GL11.glDepthMask(true);
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glEnable(GL11.GL_LIGHTING);
+		
+		
+		if (SacrificialGraphicBackground == null)
+			SacrificialGraphicBackground = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation("background", new DynamicTexture(256, 256));
+		Minecraft.getMinecraft().renderEngine.bindTexture(SacrificialGraphicBackground);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
+		GL11.glCopyTexSubImage2D(GL11.GL_TEXTURE_2D, 0, 0, 0, 0, 0, 256, 256);
+		
+		
+		Minecraft.getMinecraft().getFramebuffer().bindFramebuffer(true);
+		
+		GL11.glEnable(GL11.GL_ALPHA_TEST);
 	}
 
 	/**
@@ -609,6 +791,30 @@ public class Model3DArmor extends ModelBiped
 		if (this.visorModel != null)
 		{
 			for (ModelRendererTurbo part : this.visorModel)
+			{
+				part.rotateAngleX = this.bipedHead.rotateAngleX;
+				part.rotateAngleY = -this.bipedHead.rotateAngleY;
+				part.rotateAngleZ = -this.bipedHead.rotateAngleZ;
+				part.rotationPointX = this.bipedHead.rotationPointX;
+				part.rotationPointY = -this.bipedHead.rotationPointY+1.5F;//+1
+				part.rotationPointZ = -this.bipedHead.rotationPointZ;
+			}
+		}
+		if (this.visor2Model != null)
+		{
+			for (ModelRendererTurbo part : this.visor2Model)
+			{
+				part.rotateAngleX = this.bipedHead.rotateAngleX;
+				part.rotateAngleY = -this.bipedHead.rotateAngleY;
+				part.rotateAngleZ = -this.bipedHead.rotateAngleZ;
+				part.rotationPointX = this.bipedHead.rotationPointX;
+				part.rotationPointY = -this.bipedHead.rotationPointY+1.5F;//+1
+				part.rotationPointZ = -this.bipedHead.rotationPointZ;
+			}
+		}
+		if (this.cubemapModel != null)
+		{
+			for (ModelRendererTurbo part : this.cubemapModel)
 			{
 				part.rotateAngleX = this.bipedHead.rotateAngleX;
 				part.rotateAngleY = -this.bipedHead.rotateAngleY;

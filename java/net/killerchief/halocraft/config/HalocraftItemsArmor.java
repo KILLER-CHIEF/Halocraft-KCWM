@@ -138,6 +138,22 @@ public class HalocraftItemsArmor {
 		return false;
 	}
 	
+	public static ArrayList<Item>[] ArmorSeriesV = new ArrayList[]{MarkVSeries};
+	
+	public static boolean IsSpartanArmorPieceMarkV(Item item, int ArmorPieceType)
+	{
+		if (item instanceof ItemCustomArmor)
+		{
+			for (ArrayList series : ArmorSeriesV) {
+				if (series.contains(item))
+				{
+					return series.indexOf(item) % 4 == ArmorPieceType;
+				}
+			}
+		}
+		return false;
+	}
+	
 	public static void registerItems() {
 		GameRegistry.registerItem(HelmetUnderArmor, HelmetUnderArmor.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(BodyUnderArmor, BodyUnderArmor.getUnlocalizedName().substring(5));
@@ -246,7 +262,6 @@ public class HalocraftItemsArmor {
 		for (ArrayList series : ArmorSeries) {
 			ArmorSeriesColourCraftingRecipes(series);
 		}
-		
 	}
 	
 	private static void ArmorSeriesColourCraftingRecipes(ArrayList<Item> list)
@@ -260,8 +275,9 @@ public class HalocraftItemsArmor {
 				}
 				Item itemA = list.get((i*4)+(j%4));
 				Item itemB = list.get(j);
-				if (itemA != null && itemB != null)
+				if (itemA != null && itemB != null) {
 					GameRegistry.addRecipe(new RecipeShapelessDamagedConvert(new ItemStack(itemA, 1), new ItemStack(itemB, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Items.dye, 1, i), new ItemStack(Items.dye, 1, i), new ItemStack(Items.dye, 1, i), new ItemStack(Items.dye, 1, i)));
+				}
 			}
 		}
 	}

@@ -168,6 +168,16 @@ public class ItemCustomArmor extends net.minecraft.item.ItemArmor implements Int
 					{
 						part.showModel = armorSlot == 0;
 					}
+				if (armorModel.visor2Model != null)
+					for (ModelRendererTurbo part : armorModel.visor2Model)
+					{
+						part.showModel = armorSlot == 0;
+					}
+				if (armorModel.cubemapModel != null)
+					for (ModelRendererTurbo part : armorModel.cubemapModel)
+					{
+						part.showModel = armorSlot == 0;
+					}
 				
 				armorModel.isSneak = entityLiving.isSneaking();
 				armorModel.isRiding = entityLiving.isRiding();

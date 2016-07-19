@@ -14,85 +14,6 @@ public class ModelArmorMarkVI extends Model3DArmor
 
 	public ModelArmorMarkVI()
 	{
-		headModel = new ModelRendererTurbo[19];
-		headModel[0] = new ModelRendererTurbo(this, 41, 6, textureX, textureY); // Import NoPartSelected
-		headModel[1] = new ModelRendererTurbo(this, 0, 180, textureX, textureY); // Import NoPartSelected
-		headModel[2] = new ModelRendererTurbo(this, 146, 7, textureX, textureY); // Import NoPartSelected
-		headModel[3] = new ModelRendererTurbo(this, 140, 7, textureX, textureY); // Import NoPartSelected
-		headModel[4] = new ModelRendererTurbo(this, 98, 7, textureX, textureY); // Import NoPartSelected
-		headModel[5] = new ModelRendererTurbo(this, 137, 19, textureX, textureY); // Import NoPartSelected
-		headModel[6] = new ModelRendererTurbo(this, 138, 23, textureX, textureY); // Import NoPartSelected
-		headModel[7] = new ModelRendererTurbo(this, 135, 12, textureX, textureY); // Import NoPartSelected
-		headModel[8] = new ModelRendererTurbo(this, 148, 19, textureX, textureY); // Import NoPartSelected
-		headModel[9] = new ModelRendererTurbo(this, 146, 12, textureX, textureY); // Import NoPartSelected
-		headModel[10] = new ModelRendererTurbo(this, 148, 27, textureX, textureY); // Import NoPartSelected
-		headModel[11] = new ModelRendererTurbo(this, 156, 12, textureX, textureY); // Import NoPartSelected
-		headModel[12] = new ModelRendererTurbo(this, 156, 19, textureX, textureY); // Import NoPartSelected
-		headModel[13] = new ModelRendererTurbo(this, 156, 27, textureX, textureY); // Import NoPartSelected
-		headModel[14] = new ModelRendererTurbo(this, 98, 7, textureX, textureY); // Import NoPartSelected
-		headModel[15] = new ModelRendererTurbo(this, 164, 12, textureX, textureY); // Import NoPartSelected
-		headModel[16] = new ModelRendererTurbo(this, 164, 23, textureX, textureY); // Import NoPartSelected
-		headModel[17] = new ModelRendererTurbo(this, 163, 19, textureX, textureY); // Import NoPartSelected
-		headModel[18] = new ModelRendererTurbo(this, 140, 7, textureX, textureY); // Import NoPartSelected
-
-		headModel[0].addShapeBox(-4.5F, -9F, -4.5F, 9, 9, 9, 0F, 0.2F, 0.5F, 0.2F, 0.2F, 0.5F, 0.2F, 0.2F, 0.5F, 0.5F, 0.2F, 0.5F, 0.5F, 0.2F, 0.2F, 0.2F, 0.2F, 0.2F, 0.2F, 0.2F, 0.2F, 0.5F, 0.2F, 0.2F, 0.5F); // Import NoPartSelected
-		headModel[0].setRotationPoint(0F, -1.5F, 0F);
-
-		headModel[1].addShapeBox(-4.5F, -7.4F, -4.5F, 112, 40, 32, 0F, 0.1F, 0.3F, 0.1F, -102.9F, 0.3F, 0.1F, -102.8F, 0.3F, -27.8F, 0.2F, 0.3F, -27.8F, 0.1F, -34.2F, 0.1F, -102.9F, -34.2F, 0.1F, -102.8F, -34.2F, -27.8F, 0.2F, -34.2F, -27.8F); // Import NoPartSelected
-		headModel[1].setRotationPoint(0F, -1.5F, 0F);
-
-		headModel[2].addShapeBox(-4.4F, -7.5F, 5F, 9, 3, 1, 0F, 0.4F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0.4F, 0F, 0F, 0.4F, 0.6F, 0F, 0F, 0.6F, 0F, 0F, 0F, 0F, 0.4F, 0F, 0F); // Import NoPartSelected
-		headModel[2].setRotationPoint(0F, -1.5F, 0F);
-
-		headModel[3].addShapeBox(4.6F, -6.5F, 0F, 1, 4, 0, 0F, 0F, 0F, 1F, -0.5F, 0F, 0F, -0.5F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Import NoPartSelected
-		headModel[3].setRotationPoint(0F, -1.5F, 0F);
-
-		headModel[4].addShapeBox(-5.8F, -2.5F, -2F, 1, 2, 2, 0F, 0F, 0F, 0F, 0F, 0.5F, 0F, 0F, 0.5F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0.5F, 0F, 0F, 0.5F, 0F, 0F, 0F, 0F); // Import NoPartSelected
-		headModel[4].setRotationPoint(0F, -1.5F, 0F);
-
-		headModel[5].addShapeBox(-3.4F, -7.5F, -6.7F, 2, 1, 2, 0F, 0F, 0F, 0.3F, 0F, 0F, 0.3F, 0F, 0.5F, 0F, 0F, 0.5F, 0F, 0F, 0F, 0.3F, 0F, 0F, 0.3F, 0F, 0F, 0F, 0F, 0F, 0F); // Import NoPartSelected
-		headModel[5].setRotationPoint(0F, -1.5F, 0F);
-
-		headModel[6].addShapeBox(-4.4F, -7.5F, -6.7F, 1, 1, 2, 0F, 0F, 0F, 0F, 0F, 0F, 0.3F, 0F, 0.5F, 0F, 1F, 0.2F, 0F, 0F, 0F, 0F, 0F, 0F, 0.3F, 0F, 0F, 0F, 1F, 0F, 0F); // Import NoPartSelected
-		headModel[6].setRotationPoint(0F, -1.5F, 0F);
-
-		headModel[7].addShapeBox(-5.8F, -7.5F, -4.7F, 1, 1, 4, 0F, -0.5F, 0.2F, 0F, 0F, 0.4F, 0F, 0F, 0.5F, 0.7F, -0.5F, 0F, 0.7F, -0.5F, 0F, 0F, 0F, 0F, 0F, 0F, 0.5F, 0.7F, -0.5F, 0F, 0.7F); // Import NoPartSelected
-		headModel[7].setRotationPoint(0F, -1.5F, 0F);
-
-		headModel[8].addShapeBox(-5.8F, -7.5F, 0F, 1, 5, 2, 0F, -0.5F, 0F, 0F, 0F, 0.5F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Import NoPartSelected
-		headModel[8].setRotationPoint(0F, -1.5F, 0F);
-
-		headModel[9].addShapeBox(-5.8F, -7.5F, 2F, 1, 3, 3, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 2F, 0F, 0F, 2.5F, 0F, 0F, 0F, 1F, 0F, 0F, 0F); // Import NoPartSelected
-		headModel[9].setRotationPoint(0F, -1.5F, 0F);
-
-		headModel[10].addShapeBox(-5.8F, -2.5F, 0F, 1, 2, 2, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0.5F, 0F, 0F, -1.5F, 0F, 0F, -2F, 0F); // Import NoPartSelected
-		headModel[10].setRotationPoint(0F, -1.5F, 0F);
-
-		headModel[11].addShapeBox(4.6F, -7.5F, 2F, 1, 3, 3, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 2.5F, 0F, 0F, 2F, 0F, 0F, 0F, 0F, 0F, 0F, 1F); // Import NoPartSelected
-		headModel[11].setRotationPoint(0F, -1.5F, 0F);
-
-		headModel[12].addShapeBox(4.6F, -7.5F, 0F, 1, 5, 2, 0F, 0F, 0.5F, 0F, -0.5F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Import NoPartSelected
-		headModel[12].setRotationPoint(0F, -1.5F, 0F);
-
-		headModel[13].addShapeBox(4.6F, -2.5F, 0F, 1, 2, 2, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0.5F, 0F, 0F, 0F, 0F, 0F, -2F, 0F, 0F, -1.5F, 0F); // Import NoPartSelected
-		headModel[13].setRotationPoint(0F, -1.5F, 0F);
-
-		headModel[14].addShapeBox(4.6F, -2.5F, -2F, 1, 2, 2, 0F, 0F, 0.5F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0.5F, 0F, 0F, 0.5F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0.5F, 0F); // Import NoPartSelected
-		headModel[14].setRotationPoint(0F, -1.5F, 0F);
-
-		headModel[15].addShapeBox(4.6F, -7.5F, -4.7F, 1, 1, 4, 0F, 0F, 0.4F, 0F, -0.5F, 0.2F, 0F, -0.5F, 0F, 0.7F, 0F, 0.5F, 0.7F, 0F, 0F, 0F, -0.5F, 0F, 0F, -0.5F, 0F, 0.7F, 0F, 0.5F, 0.7F); // Import NoPartSelected
-		headModel[15].setRotationPoint(0F, -1.5F, 0F);
-
-		headModel[16].addShapeBox(3.2F, -7.5F, -6.7F, 1, 1, 2, 0F, 0F, 0F, 0.3F, 0F, 0F, 0F, 1F, 0.2F, 0F, 0F, 0.5F, 0F, 0F, 0F, 0.3F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 0F); // Import NoPartSelected
-		headModel[16].setRotationPoint(0F, -1.5F, 0F);
-
-		headModel[17].addShapeBox(1.2F, -7.5F, -6.7F, 2, 1, 2, 0F, 0F, 0F, 0.3F, 0F, 0F, 0.3F, 0F, 0.5F, 0F, 0F, 0.5F, 0F, 0F, 0F, 0.3F, 0F, 0F, 0.3F, 0F, 0F, 0F, 0F, 0F, 0F); // Import NoPartSelected
-		headModel[17].setRotationPoint(0F, -1.5F, 0F);
-
-		headModel[18].addShapeBox(-5.8F, -6.5F, 0F, 1, 4, 0, 0F, -0.5F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, -0.5F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F); // Import NoPartSelected
-		headModel[18].setRotationPoint(0F, -1.5F, 0F);
-
-
 		bodyModel = new ModelRendererTurbo[11];
 		bodyModel[0] = new ModelRendererTurbo(this, 54, 95, textureX, textureY); // Body
 		bodyModel[1] = new ModelRendererTurbo(this, 69, 95, textureX, textureY); // Body
@@ -272,6 +193,111 @@ public class ModelArmorMarkVI extends Model3DArmor
 
 		headLightsModel [3].addShapeBox(-5.8F, -1.4F, -2.1F, 4, 4, 0, 0F,0F, 0F, 0F, -3F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, -3F, 0F, -3F, -3F, 0F, -3F, -3F, 0F, 0F, -3F, 0F); // Lights Head
 		headLightsModel [3].setRotationPoint(0F, -1.5F, 0F);
+		
+		
+		headModel = new ModelRendererTurbo[22];
+		headModel[0] = new ModelRendererTurbo(this, 41, 6, textureX, textureY); // Import ImportNoPartSelected
+		headModel[1] = new ModelRendererTurbo(this, 146, 7, textureX, textureY); // Import ImportNoPartSelected
+		headModel[2] = new ModelRendererTurbo(this, 140, 7, textureX, textureY); // Import ImportNoPartSelected
+		headModel[3] = new ModelRendererTurbo(this, 98, 7, textureX, textureY); // Import ImportNoPartSelected
+		headModel[4] = new ModelRendererTurbo(this, 137, 19, textureX, textureY); // Import ImportNoPartSelected
+		headModel[5] = new ModelRendererTurbo(this, 138, 23, textureX, textureY); // Import ImportNoPartSelected
+		headModel[6] = new ModelRendererTurbo(this, 135, 12, textureX, textureY); // Import ImportNoPartSelected
+		headModel[7] = new ModelRendererTurbo(this, 148, 19, textureX, textureY); // Import ImportNoPartSelected
+		headModel[8] = new ModelRendererTurbo(this, 146, 12, textureX, textureY); // Import ImportNoPartSelected
+		headModel[9] = new ModelRendererTurbo(this, 148, 27, textureX, textureY); // Import ImportNoPartSelected
+		headModel[10] = new ModelRendererTurbo(this, 156, 12, textureX, textureY); // Import ImportNoPartSelected
+		headModel[11] = new ModelRendererTurbo(this, 156, 19, textureX, textureY); // Import ImportNoPartSelected
+		headModel[12] = new ModelRendererTurbo(this, 156, 27, textureX, textureY); // Import ImportNoPartSelected
+		headModel[13] = new ModelRendererTurbo(this, 98, 7, textureX, textureY); // Import ImportNoPartSelected
+		headModel[14] = new ModelRendererTurbo(this, 164, 12, textureX, textureY); // Import ImportNoPartSelected
+		headModel[15] = new ModelRendererTurbo(this, 164, 23, textureX, textureY); // Import ImportNoPartSelected
+		headModel[16] = new ModelRendererTurbo(this, 163, 19, textureX, textureY); // Import ImportNoPartSelected
+		headModel[17] = new ModelRendererTurbo(this, 140, 7, textureX, textureY); // Import ImportNoPartSelected
+		headModel[18] = new ModelRendererTurbo(this, 98, 12, textureX, textureY); // Import LightsHead
+		headModel[19] = new ModelRendererTurbo(this, 98, 12, textureX, textureY); // Import LightsHead
+		headModel[20] = new ModelRendererTurbo(this, 98, 12, textureX, textureY); // Import LightsHead
+		headModel[21] = new ModelRendererTurbo(this, 98, 12, textureX, textureY); // Import LightsHead
+
+		headModel[0].addShapeBox(-4.5F, -9F, -4.5F, 9, 9, 9, 0F, 0.2F, 0.5F, 0.2F, 0.2F, 0.5F, 0.2F, 0.2F, 0.5F, 0.5F, 0.2F, 0.5F, 0.5F, 0.2F, 0.2F, 0.2F, 0.2F, 0.2F, 0.2F, 0.2F, 0.2F, 0.5F, 0.2F, 0.2F, 0.5F); // Import ImportNoPartSelected
+		headModel[0].setRotationPoint(0F, -1.5F, 0F);
+
+		headModel[1].addShapeBox(-4.4F, -7.5F, 5F, 9, 3, 1, 0F, 0.4F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0.4F, 0F, 0F, 0.4F, 0.6F, 0F, 0F, 0.6F, 0F, 0F, 0F, 0F, 0.4F, 0F, 0F); // Import ImportNoPartSelected
+		headModel[1].setRotationPoint(0F, -1.5F, 0F);
+
+		headModel[2].addShapeBox(4.6F, -6.5F, 0F, 1, 4, 0, 0F, 0F, 0F, 1F, -0.5F, 0F, 0F, -0.5F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Import ImportNoPartSelected
+		headModel[2].setRotationPoint(0F, -1.5F, 0F);
+
+		headModel[3].addShapeBox(-5.8F, -2.5F, -2F, 1, 2, 2, 0F, 0F, 0F, 0F, 0F, 0.5F, 0F, 0F, 0.5F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0.5F, 0F, 0F, 0.5F, 0F, 0F, 0F, 0F); // Import ImportNoPartSelected
+		headModel[3].setRotationPoint(0F, -1.5F, 0F);
+
+		headModel[4].addShapeBox(-3.4F, -7.5F, -6.7F, 2, 1, 2, 0F, 0F, 0F, 0.3F, 0F, 0F, 0.3F, 0F, 0.5F, 0F, 0F, 0.5F, 0F, 0F, 0F, 0.3F, 0F, 0F, 0.3F, 0F, 0F, 0F, 0F, 0F, 0F); // Import ImportNoPartSelected
+		headModel[4].setRotationPoint(0F, -1.5F, 0F);
+
+		headModel[5].addShapeBox(-4.4F, -7.5F, -6.7F, 1, 1, 2, 0F, 0F, 0F, 0F, 0F, 0F, 0.3F, 0F, 0.5F, 0F, 1F, 0.2F, 0F, 0F, 0F, 0F, 0F, 0F, 0.3F, 0F, 0F, 0F, 1F, 0F, 0F); // Import ImportNoPartSelected
+		headModel[5].setRotationPoint(0F, -1.5F, 0F);
+
+		headModel[6].addShapeBox(-5.8F, -7.5F, -4.7F, 1, 1, 4, 0F, -0.5F, 0.2F, 0F, 0F, 0.4F, 0F, 0F, 0.5F, 0.7F, -0.5F, 0F, 0.7F, -0.5F, 0F, 0F, 0F, 0F, 0F, 0F, 0.5F, 0.7F, -0.5F, 0F, 0.7F); // Import ImportNoPartSelected
+		headModel[6].setRotationPoint(0F, -1.5F, 0F);
+
+		headModel[7].addShapeBox(-5.8F, -7.5F, 0F, 1, 5, 2, 0F, -0.5F, 0F, 0F, 0F, 0.5F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Import ImportNoPartSelected
+		headModel[7].setRotationPoint(0F, -1.5F, 0F);
+
+		headModel[8].addShapeBox(-5.8F, -7.5F, 2F, 1, 3, 3, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 2F, 0F, 0F, 2.5F, 0F, 0F, 0F, 1F, 0F, 0F, 0F); // Import ImportNoPartSelected
+		headModel[8].setRotationPoint(0F, -1.5F, 0F);
+
+		headModel[9].addShapeBox(-5.8F, -2.5F, 0F, 1, 2, 2, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0.5F, 0F, 0F, -1.5F, 0F, 0F, -2F, 0F); // Import ImportNoPartSelected
+		headModel[9].setRotationPoint(0F, -1.5F, 0F);
+
+		headModel[10].addShapeBox(4.6F, -7.5F, 2F, 1, 3, 3, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 2.5F, 0F, 0F, 2F, 0F, 0F, 0F, 0F, 0F, 0F, 1F); // Import ImportNoPartSelected
+		headModel[10].setRotationPoint(0F, -1.5F, 0F);
+
+		headModel[11].addShapeBox(4.6F, -7.5F, 0F, 1, 5, 2, 0F, 0F, 0.5F, 0F, -0.5F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Import ImportNoPartSelected
+		headModel[11].setRotationPoint(0F, -1.5F, 0F);
+
+		headModel[12].addShapeBox(4.6F, -2.5F, 0F, 1, 2, 2, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0.5F, 0F, 0F, 0F, 0F, 0F, -2F, 0F, 0F, -1.5F, 0F); // Import ImportNoPartSelected
+		headModel[12].setRotationPoint(0F, -1.5F, 0F);
+
+		headModel[13].addShapeBox(4.6F, -2.5F, -2F, 1, 2, 2, 0F, 0F, 0.5F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0.5F, 0F, 0F, 0.5F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0.5F, 0F); // Import ImportNoPartSelected
+		headModel[13].setRotationPoint(0F, -1.5F, 0F);
+
+		headModel[14].addShapeBox(4.6F, -7.5F, -4.7F, 1, 1, 4, 0F, 0F, 0.4F, 0F, -0.5F, 0.2F, 0F, -0.5F, 0F, 0.7F, 0F, 0.5F, 0.7F, 0F, 0F, 0F, -0.5F, 0F, 0F, -0.5F, 0F, 0.7F, 0F, 0.5F, 0.7F); // Import ImportNoPartSelected
+		headModel[14].setRotationPoint(0F, -1.5F, 0F);
+
+		headModel[15].addShapeBox(3.2F, -7.5F, -6.7F, 1, 1, 2, 0F, 0F, 0F, 0.3F, 0F, 0F, 0F, 1F, 0.2F, 0F, 0F, 0.5F, 0F, 0F, 0F, 0.3F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 0F); // Import ImportNoPartSelected
+		headModel[15].setRotationPoint(0F, -1.5F, 0F);
+
+		headModel[16].addShapeBox(1.2F, -7.5F, -6.7F, 2, 1, 2, 0F, 0F, 0F, 0.3F, 0F, 0F, 0.3F, 0F, 0.5F, 0F, 0F, 0.5F, 0F, 0F, 0F, 0.3F, 0F, 0F, 0.3F, 0F, 0F, 0F, 0F, 0F, 0F); // Import ImportNoPartSelected
+		headModel[16].setRotationPoint(0F, -1.5F, 0F);
+
+		headModel[17].addShapeBox(-5.8F, -6.5F, 0F, 1, 4, 0, 0F, -0.5F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, -0.5F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 0F); // Import ImportNoPartSelected
+		headModel[17].setRotationPoint(0F, -1.5F, 0F);
+
+		headModel[18].addShapeBox(4.6F, -2.6F, -2.1F, 4, 4, 0, 0F, 0F, 0F, 0F, -3F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, -3F, 0F, -3F, -3F, 0F, -3F, -3F, 0F, 0F, -3F, 0F); // Import LightsHead
+		headModel[18].setRotationPoint(0F, -1.5F, 0F);
+
+		headModel[19].addShapeBox(4.6F, -1.4F, -2.1F, 4, 4, 0, 0F, 0F, 0F, 0F, -3F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, -3F, 0F, -3F, -3F, 0F, -3F, -3F, 0F, 0F, -3F, 0F); // Import LightsHead
+		headModel[19].setRotationPoint(0F, -1.5F, 0F);
+
+		headModel[20].addShapeBox(-5.8F, -2.6F, -2.1F, 4, 4, 0, 0F, 0F, 0F, 0F, -3F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, -3F, 0F, -3F, -3F, 0F, -3F, -3F, 0F, 0F, -3F, 0F); // Import LightsHead
+		headModel[20].setRotationPoint(0F, -1.5F, 0F);
+
+		headModel[21].addShapeBox(-5.8F, -1.4F, -2.1F, 4, 4, 0, 0F, 0F, 0F, 0F, -3F, 0F, 0F, -3F, 0F, 0F, 0F, 0F, 0F, 0F, -3F, 0F, -3F, -3F, 0F, -3F, -3F, 0F, 0F, -3F, 0F); // Import LightsHead
+		headModel[21].setRotationPoint(0F, -1.5F, 0F);
+
+
+		cubemapModel = new ModelRendererTurbo[1];
+		cubemapModel [0] = new ModelRendererTurbo(this, 0, 194, 357, 204); // Cube
+
+		cubemapModel [0].addShapeBox(-4.5F, -7.4F, -4.5F, 112, 40, 32, 0F, 0F, 0.2F, 0F, -103F, 0.2F, 0F, -103F, 0.2F, -27.8F, 0F, 0.2F, -27.7F, 0F, -34.1F, 0F, -103F, -34.1F, 0F, -102.9F, -34.1F, -27.7F, 0.1F, -34.1F, -27.7F); // Cube
+		cubemapModel [0].setRotationPoint(0F, -1.5F, 0F);
+
+
+		visor2Model = new ModelRendererTurbo[1];
+		visor2Model [0] = new ModelRendererTurbo(this, 0, 180, textureX, textureY); // Import ImportNoPartSelected
+
+		visor2Model [0].addShapeBox(-4.5F, -7.4F, -4.5F, 112, 40, 32, 0F, 0.1F, 0.3F, 0.1F, -102.9F, 0.3F, 0.1F, -102.8F, 0.3F, -27.8F, 0.2F, 0.3F, -27.8F, 0.1F, -34.2F, 0.1F, -102.9F, -34.2F, 0.1F, -102.8F, -34.2F, -27.8F, 0.2F, -34.2F, -27.8F); // Import ImportNoPartSelected
+		visor2Model [0].setRotationPoint(0F, -1.5F, 0F);
 
 		//translateAll(0F, 0F, 0F);
 
