@@ -66,65 +66,13 @@ public class ProjectileProperties {
 		if (input != null && input.length >= 2 & input[0] instanceof String && input[1] instanceof String)
 		{
 			Object[] output = new Object[3];
-			output[0] = GetBlocksFromString(((String)input[0]).split("\\+"));//ignoreBlocks
-			output[1] = GetBlocksFromString(((String)input[1]).split("\\+"));//destroyBlocks
+			output[0] = KCUtils.GetBlocksFromString(((String)input[0]).split("\\+"));//ignoreBlocks
+			output[1] = KCUtils.GetBlocksFromString(((String)input[1]).split("\\+"));//destroyBlocks
 			output[2] = input[2];
 			return output;
 		}
 		System.err.println("ERROR: \"initImpactBlock\" input arguments are not valid! \n"+input);
 		return input;
-	}
-
-	public static Block[] GetBlocksFromString(String[] input)
-	{
-		List<Block> blocks = new ArrayList<Block>();
-		for (Object arg : input)
-		{
-			String[] block = arg.toString().split(":");
-			if (block.length == 1)
-			{
-				Block b = Block.getBlockFromName(block[0]);
-				if (b != null)
-					blocks.add(b);
-				else
-					System.err.println("ERROR: Failed to find block with name: "+block[0]);
-			}
-			else if (block.length > 1)
-			{
-				Block b = GameRegistry.findBlock(block[0], block[1]);
-				if (b != null)
-					blocks.add(b);
-				else
-					System.err.println("ERROR: Failed to find block with name: "+block[0]+":"+block[1]);
-			}
-		}
-		return blocks.toArray(new Block[blocks.size()]);
-	}
-
-	public static Item[] GetItemsFromString(String[] input)
-	{
-		List<Item> items = new ArrayList<Item>();
-		for (Object arg : input)
-		{
-			String[] item = arg.toString().split(":");
-			if (item.length == 1)
-			{
-				Item i = GameRegistry.findItem("minecraft", item[0]);
-				if (i != null)
-					items.add(i);
-				else
-					System.err.println("ERROR: Failed to find item with name: "+item[0]);
-			}
-			else if (item.length > 1)
-			{
-				Item i = GameRegistry.findItem(item[0], item[1]);
-				if (i != null)
-					items.add(i);
-				else
-					System.err.println("ERROR: Failed to find item with name: "+item[0]+":"+item[1]);
-			}
-		}
-		return items.toArray(new Item[items.size()]);
 	}
 
 	/** Takes 3 Object arguments: 1=What blocks to ignore, 2=What blocks to destroy, 3=What to do when destroyed a block */

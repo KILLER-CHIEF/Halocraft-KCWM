@@ -2,19 +2,29 @@ package net.killerchief.kcweaponmod;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -40,6 +50,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid=KCWeaponMod.MODID, name=KCWeaponMod.NAME, version=KCWeaponMod.VERSION, guiFactory="net.killerchief.kcweaponmod.GuiConfigurationHandler")
@@ -47,11 +58,11 @@ public class KCWeaponMod {
 
 	public static final String MODID = "kcweaponmod";
 	public static final String NAME = "KC's Weapon Mod";
-	public static final String VERSION = "0.1.4";
+	public static final String VERSION = "0.1.4.05";
 
 	public static String getVersion() { return VERSION; }
 
-	public static final String WeaponFileVersion = "1.2";
+	public static final String WeaponFileVersion = "1.3";
 
 	/** The instance of this mod that Forge uses.*/
 	@Instance(KCWeaponMod.MODID)
@@ -86,11 +97,15 @@ public class KCWeaponMod {
 
 	public static boolean ExplosionBlockDamage;
 	public static boolean RecoilInLocalSP;
+	public static boolean ConvertCodeToXML;
+	public static boolean ConvertXMLToCode;
 
 	public static void DoSettingsConfiguration(Configuration config)
 	{
 		ExplosionBlockDamage = config.get("general", "Enable Explosion Block Damage", true).getBoolean(true);
 		RecoilInLocalSP = config.get("general", "Weapon Recoil In Local SP", true).getBoolean(true);
+		ConvertCodeToXML = config.get("advanced", "Adv. Convert Code to XML Format", false).getBoolean(true);
+		ConvertXMLToCode = config.get("advanced", "Adv. Convert XML to Code Format", false).getBoolean(true);
 
 		config.save();
 	}
@@ -143,15 +158,22 @@ public class KCWeaponMod {
 	{
 		DisableReticleRequests.remove(modid);
 	}
-
-	public static boolean registerModItems(String modid, String weaponVerison, ItemWeapon[] modWeapons)
+	
+	public static boolean registerModItems(String modid, String weaponVersion, ItemWeapon[] modWeapons)
 	{
 		if (!allowModRegistration)
 		{
 			System.err.println("The invoking mod of ID \""+modid+"\" is too late to register its weapons! (Weapons should be registered during FMLPreInitializationEvent)");
 			return false;
 		}
-		if (!weaponVerison.trim().equals(WeaponFileVersion))
+		if (ConvertCodeToXML) {
+			if (KCWMConvert.convertToXML(modid, weaponVersion, modWeapons)) {
+				System.out.println("Successfully converted all weapons in \""+modid+"\" to .XML format!");
+			} else {
+				System.err.println("ERROR: \""+modid+"\" Weapons Were NOT Converted to .XML format!");
+			}
+		}
+		if (!weaponVersion.trim().equals(WeaponFileVersion))
 		{
 			System.err.println("The invoking mod of ID \""+modid+"\" weapon version is different to the version intended for this mod's version!");
 			return false;
@@ -236,173 +258,186 @@ public class KCWeaponMod {
 
 										if (!eElement.getAttribute("name").equals(""))
 										{
-											System.out.println("Loading Weapon: "+eElement.getAttribute("name"));
-											properties.Name = eElement.getAttribute("name");
-											String a = getTagElementString(eElement, "texture");
-											properties.Texture = !a.equals("") ? a : properties.Texture;
-											String ma = getTagElementString(eElement, "modelclass");
-											String mb = getTagElementString(eElement, "modeltexture");
-											if (KCWeaponMod.proxy.isSideClient() && !ma.equals("") && !mb.equals(""))
-											{
-												ModelBase modelClass = null;
-												try {
-													modelClass = (ModelBase)Class.forName(ma).newInstance();
-												} catch (ClassNotFoundException e) {
-													System.err.println("Class not found exception: "+ma);
-													e.printStackTrace();
-												} catch (InstantiationException e) {
-													System.err.println("Cannot create a new instance to call the class: \""+ma);
-													e.printStackTrace();
-												} catch (IllegalAccessException e) {
-													System.err.println("The method \""+ma+"\" cannot be accessed!");
-													e.printStackTrace();
-												}
-												if (modelClass != null)
+											try {
+												System.out.println("Loading Weapon: "+eElement.getAttribute("name"));
+												properties.Name = eElement.getAttribute("name");
+												String aaa = getTagElementString(eElement, "registeritem");
+												properties.RegisterItem = !aaa.equals("") ? Boolean.parseBoolean(aaa) : properties.RegisterItem;
+												String a = getTagElementString(eElement, "texture");
+												properties.Texture = !a.equals("") ? a : properties.Texture;
+												String ma = getTagElementString(eElement, "modelclass");
+												String mb = getTagElementString(eElement, "modeltexture");
+												if (KCWeaponMod.proxy.isSideClient() && !ma.equals("") && !mb.equals(""))
 												{
-													ItemWeaponModel model = new ItemWeaponModel(modelClass, new ResourceLocation(mb));
-													String mc = getTagElementString(eElement, "modelnochangeonsprint");
-													model.NoChngOnSprint = !mc.equals("") ? Boolean.parseBoolean(mc) : model.NoChngOnSprint;
-													String md = getTagElementString(eElement, "modelglows");
-													model.Glows = !md.equals("") ? Boolean.parseBoolean(md) : model.Glows;
-													
-													String[] m1 = getTagElementString(eElement, "tpscale").split(",");
-													if (m1.length == 3) { model.TPScale(Float.parseFloat(m1[0]), Float.parseFloat(m1[1]), Float.parseFloat(m1[2])); }
-													String[] m2 = getTagElementString(eElement, "tptrans").split(",");
-													if (m2.length == 3) { model.TPTrans(Float.parseFloat(m2[0]), Float.parseFloat(m2[1]), Float.parseFloat(m2[2])); }
-													String[] m3 = getTagElementString(eElement, "tprotate").split(",");
-													if (m3.length == 3) { model.TPRotate(Float.parseFloat(m3[0]), Float.parseFloat(m3[1]), Float.parseFloat(m3[2])); }
-													String[] m4 = getTagElementString(eElement, "tpsprinttrans").split(",");
-													if (m4.length == 3) { model.TPSprintTrans(Float.parseFloat(m4[0]), Float.parseFloat(m4[1]), Float.parseFloat(m4[2])); }
-													String[] m5 = getTagElementString(eElement, "tpsprintrotate").split(",");
-													if (m5.length == 3) { model.TPSprintRotate(Float.parseFloat(m5[0]), Float.parseFloat(m5[1]), Float.parseFloat(m5[2])); }
-													String[] m6 = getTagElementString(eElement, "fpscale").split(",");
-													if (m6.length == 3) { model.FPScale(Float.parseFloat(m6[0]), Float.parseFloat(m6[1]), Float.parseFloat(m6[2])); }
-													String[] m7 = getTagElementString(eElement, "fptrans").split(",");
-													if (m7.length == 3) { model.FPTrans(Float.parseFloat(m7[0]), Float.parseFloat(m7[1]), Float.parseFloat(m7[2])); }
-													String[] m8 = getTagElementString(eElement, "fprotate").split(",");
-													if (m8.length == 3) { model.FPRotate(Float.parseFloat(m8[0]), Float.parseFloat(m8[1]), Float.parseFloat(m8[2])); }
-													String[] m9 = getTagElementString(eElement, "fpsprinttrans").split(",");
-													if (m9.length == 3) { model.FPSprintTrans(Float.parseFloat(m9[0]), Float.parseFloat(m9[1]), Float.parseFloat(m9[2])); }
-													String[] m10 = getTagElementString(eElement, "fpsprintrotate").split(",");
-													if (m10.length == 3) { model.FPSprintRotate(Float.parseFloat(m10[0]), Float.parseFloat(m10[1]), Float.parseFloat(m10[2])); }
-													
-													properties.WeaponModel = model;
-												}
-												
-											}
-											String cb = getTagElementString(eElement, "aimitem");
-											properties.AimItem = !cb.equals("") ? Boolean.parseBoolean(cb) : properties.AimItem;
-											if (KCWeaponMod.proxy.isSideClient()) {
-												properties.InventoryTab = properties.InventoryTab;
-												String ca = getTagElementString(eElement, "inventorytab");
-												for (CreativeTabs i : InventoryTab.creativeTabArray) {
-													//System.out.println(i.getTabLabel());
-													if (i.getTabLabel().equalsIgnoreCase(ca)) {
-														//System.out.println("found it: "+i.getTabLabel());
-														properties.InventoryTab = i;
-														break;
+													ModelBase modelClass = null;
+													try {
+														modelClass = (ModelBase)Class.forName(ma).newInstance();
+													} catch (ClassNotFoundException e) {
+														System.err.println("Class not found exception: "+ma);
+														e.printStackTrace();
+													} catch (InstantiationException e) {
+														System.err.println("Cannot create a new instance to call the class: \""+ma);
+														e.printStackTrace();
+													} catch (IllegalAccessException e) {
+														System.err.println("The method \""+ma+"\" cannot be accessed!");
+														e.printStackTrace();
 													}
+													if (modelClass != null)
+													{
+														ItemWeaponModel model = new ItemWeaponModel(modelClass, new ResourceLocation(mb));
+														String mc = getTagElementString(eElement, "modelnochangeonsprint");
+														model.NoChngOnSprint = !mc.equals("") ? Boolean.parseBoolean(mc) : model.NoChngOnSprint;
+														String md = getTagElementString(eElement, "modelglows");
+														model.Glows = !md.equals("") ? Boolean.parseBoolean(md) : model.Glows;
+														
+														String[] m1 = getTagElementString(eElement, "modeltpscale").split(",");
+														if (m1.length == 3) { model.TPScale(Float.parseFloat(m1[0]), Float.parseFloat(m1[1]), Float.parseFloat(m1[2])); }
+														String[] m2 = getTagElementString(eElement, "modeltptrans").split(",");
+														if (m2.length == 3) { model.TPTrans(Float.parseFloat(m2[0]), Float.parseFloat(m2[1]), Float.parseFloat(m2[2])); }
+														String[] m3 = getTagElementString(eElement, "modeltprotate").split(",");
+														if (m3.length == 3) { model.TPRotate(Float.parseFloat(m3[0]), Float.parseFloat(m3[1]), Float.parseFloat(m3[2])); }
+														String[] m4 = getTagElementString(eElement, "modeltpsprinttrans").split(",");
+														if (m4.length == 3) { model.TPSprintTrans(Float.parseFloat(m4[0]), Float.parseFloat(m4[1]), Float.parseFloat(m4[2])); }
+														String[] m5 = getTagElementString(eElement, "modeltpsprintrotate").split(",");
+														if (m5.length == 3) { model.TPSprintRotate(Float.parseFloat(m5[0]), Float.parseFloat(m5[1]), Float.parseFloat(m5[2])); }
+														String[] m6 = getTagElementString(eElement, "modelfpscale").split(",");
+														if (m6.length == 3) { model.FPScale(Float.parseFloat(m6[0]), Float.parseFloat(m6[1]), Float.parseFloat(m6[2])); }
+														String[] m7 = getTagElementString(eElement, "modelfptrans").split(",");
+														if (m7.length == 3) { model.FPTrans(Float.parseFloat(m7[0]), Float.parseFloat(m7[1]), Float.parseFloat(m7[2])); }
+														String[] m8 = getTagElementString(eElement, "modelfprotate").split(",");
+														if (m8.length == 3) { model.FPRotate(Float.parseFloat(m8[0]), Float.parseFloat(m8[1]), Float.parseFloat(m8[2])); }
+														String[] m9 = getTagElementString(eElement, "modelfpsprinttrans").split(",");
+														if (m9.length == 3) { model.FPSprintTrans(Float.parseFloat(m9[0]), Float.parseFloat(m9[1]), Float.parseFloat(m9[2])); }
+														String[] m10 = getTagElementString(eElement, "modelfpsprintrotate").split(",");
+														if (m10.length == 3) { model.FPSprintRotate(Float.parseFloat(m10[0]), Float.parseFloat(m10[1]), Float.parseFloat(m10[2])); }
+														
+														properties.WeaponModel = model;
+													}
+													
 												}
-											} else {
-												properties.InventoryTab = properties.InventoryTab;
-											}
-											String b = getTagElementString(eElement, "isautomaticorhassecondaryshoot");
-											properties.IsAutomaticOrHasSecondaryShoot = !b.equals("") ? Boolean.parseBoolean(b) : properties.IsAutomaticOrHasSecondaryShoot;
-											String c = getTagElementString(eElement, "iszoomable");
-											properties.IsZoomable = !c.equals("") ? Boolean.parseBoolean(c) : properties.IsZoomable;
-											String[] d = getTagElementString(eElement, "zoommultiplier").split("\\+");
-											int[] d1 = new int[d.length];
-											for (int d2 = 0; d2 < d.length; d2++) {d1[d2] = Integer.parseInt(d[d2]);}
-											properties.ZoomMultiplier = !d.equals("") ? d1 : properties.ZoomMultiplier;
-											String e = getTagElementString(eElement, "zoomtexture");
-											properties.ZoomTexture = !e.equals("") ? e : properties.ZoomTexture;
-											String za = getTagElementString(eElement, "hasreticle");
-											properties.HasReticle = !za.equals("") ? Boolean.parseBoolean(za) : properties.HasReticle;
-											String zb = getTagElementString(eElement, "reticletexture");
-											properties.ReticleTexture = !zb.equals("") ? zb : properties.ReticleTexture;
-											String zc = getTagElementString(eElement, "reticletransparency");
-											properties.ReticleTransparency = !zc.equals("") ? Float.parseFloat(zc) : properties.ReticleTransparency;
-											String[] zd = getTagElementString(eElement, "reticleproperties").split(",");
-											if (zd.length == 6) {
-												properties.ReticleProperties = new int[]{Integer.parseInt(zd[0]), Integer.parseInt(zd[1]), Integer.parseInt(zd[2]), Integer.parseInt(zd[3]), Integer.parseInt(zd[4]), Integer.parseInt(zd[5])};
-											}
-											String f = getTagElementString(eElement, "gunshootdelay");
-											properties.GunShootDelay = !f.equals("") ? Integer.parseInt(f) : properties.GunShootDelay;
-											String g = getTagElementString(eElement, "recoil");
-											properties.Recoil = !g.equals("") ? Float.parseFloat(g) : properties.Recoil;
-											String h = getTagElementString(eElement, "performonly1shootsound");
-											properties.PerformOnly1ShootSound = !h.equals("") ? Boolean.parseBoolean(h) : properties.PerformOnly1ShootSound;
-											String i = getTagElementString(eElement, "shootsound");
-											properties.ShootSound = !i.equals("") ? i : properties.ShootSound;
+												String cb = getTagElementString(eElement, "aimitem");
+												properties.AimItem = !cb.equals("") ? Boolean.parseBoolean(cb) : properties.AimItem;
+												if (KCWeaponMod.proxy.isSideClient()) {
+													properties.InventoryTab = properties.InventoryTab;
+													String ca = getTagElementString(eElement, "inventorytab");
+													for (CreativeTabs i : InventoryTab.creativeTabArray) {
+														//System.out.println(i.getTabLabel());
+														if (i.getTabLabel().equalsIgnoreCase(ca)) {
+															//System.out.println("found it: "+i.getTabLabel());
+															properties.InventoryTab = i;
+															break;
+														}
+													}
+												} else {
+													properties.InventoryTab = properties.InventoryTab;
+												}
+												String b = getTagElementString(eElement, "isautomaticorhassecondaryshoot");
+												properties.IsAutomaticOrHasSecondaryShoot = !b.equals("") ? Boolean.parseBoolean(b) : properties.IsAutomaticOrHasSecondaryShoot;
+												String c = getTagElementString(eElement, "iszoomable");
+												properties.IsZoomable = !c.equals("") ? Boolean.parseBoolean(c) : properties.IsZoomable;
+												String d = getTagElementString(eElement, "zoommultiplier");
+												int[] d1 = null;
+												if (!d.trim().equalsIgnoreCase("")) {
+													String[] darray = d.split(",");
+													d1 = new int[darray.length];
+													for (int d2 = 0; d2 < darray.length; d2++)
+														{d1[d2] = Integer.parseInt(darray[d2]);}
+												}
+												properties.ZoomMultiplier = d1 != null ? d1 : properties.ZoomMultiplier;
+												String e = getTagElementString(eElement, "zoomtexture");
+												properties.ZoomTexture = !e.equals("") ? e : properties.ZoomTexture;
+												String za = getTagElementString(eElement, "hasreticle");
+												properties.HasReticle = !za.equals("") ? Boolean.parseBoolean(za) : properties.HasReticle;
+												String zb = getTagElementString(eElement, "reticletexture");
+												properties.ReticleTexture = !zb.equals("") ? zb : properties.ReticleTexture;
+												String zc = getTagElementString(eElement, "reticletransparency");
+												properties.ReticleTransparency = !zc.equals("") ? Float.parseFloat(zc) : properties.ReticleTransparency;
+												String[] zd = getTagElementString(eElement, "reticleproperties").split(",");
+												if (zd.length == 6) {
+													properties.ReticleProperties = new int[]{Integer.parseInt(zd[0]), Integer.parseInt(zd[1]), Integer.parseInt(zd[2]), Integer.parseInt(zd[3]), Integer.parseInt(zd[4]), Integer.parseInt(zd[5])};
+												}
+												String f = getTagElementString(eElement, "gunshootdelay");
+												properties.GunShootDelay = !f.equals("") ? Integer.parseInt(f) : properties.GunShootDelay;
+												String g = getTagElementString(eElement, "recoil");
+												properties.Recoil = !g.equals("") ? Float.parseFloat(g) : properties.Recoil;
+												String h = getTagElementString(eElement, "performonly1shootsound");
+												properties.PerformOnly1ShootSound = !h.equals("") ? Boolean.parseBoolean(h) : properties.PerformOnly1ShootSound;
+												String i = getTagElementString(eElement, "shootsound");
+												properties.ShootSound = !i.equals("") ? i : properties.ShootSound;
 
-											String j = getTagElementString(eElement, "reloadtime");
-											properties.ReloadTime = !j.equals("") ? Integer.parseInt(j) : properties.ReloadTime;
-											String k = getTagElementString(eElement, "reloadsound");
-											properties.ReloadSound = !k.equals("") ? k : properties.ReloadSound;
-											String l = getTagElementString(eElement, "reloadmaxammoflow");
-											properties.ReloadMaxAmmoFlow = !l.equals("") ? Integer.parseInt(l) : properties.ReloadMaxAmmoFlow;
-											String m = getTagElementString(eElement, "reloadtimeloop");
-											properties.ReloadTimeLoop = !m.equals("") ? Integer.parseInt(m) : properties.ReloadTimeLoop;
-											String n = getTagElementString(eElement, "reloadsoundloop");
-											properties.ReloadSoundLoop = !n.equals("") ? n : properties.ReloadSoundLoop;
-											String o = getTagElementString(eElement, "reloadsoundexit");
-											properties.ReloadSoundExit = !o.equals("") ? o : properties.ReloadSoundExit;
-											String p = getTagElementString(eElement, "ammofeedsfrominventory");
-											properties.AmmoFeedsFromInventory = !p.equals("") ? Boolean.parseBoolean(p) : properties.AmmoFeedsFromInventory;
-											String q = getTagElementString(eElement, "ammotype");
-											if (!q.equals("")) {
-												Item[] q1 = ProjectileProperties.GetItemsFromString(new String[]{q});
-												Block[] q2 = ProjectileProperties.GetBlocksFromString(new String[]{q});
-												if (q1.length > 0)
-													properties.AmmoType = new ItemStack(q1[0]);
-												else if (q2.length > 0)
-													properties.AmmoType = new ItemStack(q2[0]);
-											}//properties.AmmoType = !q.equals("") && q1.length > 0 ? new ItemStack(q1[0]) : properties.AmmoType;
-											String r = getTagElementString(eElement, "magazinesize");
-											properties.MagazineSize = !r.equals("") ? Integer.parseInt(r) : properties.MagazineSize;
-											String s = getTagElementString(eElement, "itemstackdecreaseonuse");
-											properties.ItemStackDecreaseOnUse = !s.equals("") ? Boolean.parseBoolean(s) : properties.ItemStackDecreaseOnUse;
-											String t = getTagElementString(eElement, "itemstackmaxstacksize");
-											properties.ItemStackMaxStackSize = !t.equals("") ? Integer.parseInt(t) : properties.ItemStackMaxStackSize;
-											String u = getTagElementString(eElement, "requiredusespershot");
-											properties.RequiredUsesPerShot = !u.equals("") ? Integer.parseInt(u) : properties.RequiredUsesPerShot;
-											String v = getTagElementString(eElement, "shootburstcount");
-											properties.ShootBurstCount = !v.equals("") ? Integer.parseInt(v) : properties.ShootBurstCount;
-											String w = getTagElementString(eElement, "burstaccuracydecrease");
-											properties.BurstAccuracyDecrease = !w.equals("") ? Float.parseFloat(w) : properties.BurstAccuracyDecrease;
-											String x = getTagElementString(eElement, "singleshotprojectilecount");
-											properties.SingleShotProjectileCount = !x.equals("") ? Integer.parseInt(x) : properties.SingleShotProjectileCount;
-											String xa = getTagElementString(eElement, "tracklastdelay");
-											properties.TrackLastDelay = !xa.equals("") ? Integer.parseInt(xa) : properties.TrackLastDelay;
-											String xb = getTagElementString(eElement, "tracktype");
-											properties.TrackType = !xb.equals("") ? Integer.parseInt(xb) : properties.TrackType;
-											String xc = getTagElementString(eElement, "trackdistance");
-											properties.TrackDistance = !xc.equals("") ? Integer.parseInt(xc) : properties.TrackDistance;
-											
-											String y = getTagElementString(eElement, "projectilerenderproperties");
-											properties.ProjectileRenderProperties = !y.equals("") ? y : properties.ProjectileRenderProperties;
-											String z = getTagElementString(eElement, "projectilespeed");
-											properties.ProjectileSpeed = !z.equals("") ? Float.parseFloat(z) : properties.ProjectileSpeed;
-											String aa = getTagElementString(eElement, "accuracy");
-											properties.Accuracy = !aa.equals("") ? Float.parseFloat(aa) : properties.Accuracy;
-											String ab = getTagElementString(eElement, "gravity");
-											properties.Gravity = !ab.equals("") ? Float.parseFloat(ab) : properties.Gravity;
-											String ac = getTagElementString(eElement, "maxeffectiveticksalive");
-											properties.MaxEffectiveTicksAlive = !ac.equals("") ? Integer.parseInt(ac) : properties.MaxEffectiveTicksAlive;
-											properties.ProjectileLivingProperties = getTagElementString(eElement, "projectilelivingproperties");
-											properties.ProjectileImpactProperties = getTagElementString(eElement, "projectileimpactproperties");
-											properties.ProjectilePrematureEndOfLifeProperties = getTagElementString(eElement, "projectileprematureendoflifeproperties");
-											String ah = getTagElementString(eElement, "projectiledraginair");
-											properties.ProjectileDragInAir = !ah.equals("") ? Float.parseFloat(ah) : properties.ProjectileDragInAir;
-											String ai = getTagElementString(eElement, "projectiledraginwater");
-											properties.ProjectileDragInWater = !ai.equals("") ? Float.parseFloat(ai) : properties.ProjectileDragInWater;
-											String aj = getTagElementString(eElement, "projectileglows");
-											properties.ProjectileGlows = !aj.equals("") ? Boolean.parseBoolean(aj) : properties.ProjectileGlows;
-											String ak = getTagElementString(eElement, "tracksensitivity");
-											properties.TrackSensitivity = !ak.equals("") ? Float.parseFloat(ak) : properties.TrackSensitivity;
+												String j = getTagElementString(eElement, "reloadtime");
+												properties.ReloadTime = !j.equals("") ? Integer.parseInt(j) : properties.ReloadTime;
+												String k = getTagElementString(eElement, "reloadsound");
+												properties.ReloadSound = !k.equals("") ? k : properties.ReloadSound;
+												String l = getTagElementString(eElement, "reloadmaxammoflow");
+												properties.ReloadMaxAmmoFlow = !l.equals("") ? Integer.parseInt(l) : properties.ReloadMaxAmmoFlow;
+												String m = getTagElementString(eElement, "reloadtimeloop");
+												properties.ReloadTimeLoop = !m.equals("") ? Integer.parseInt(m) : properties.ReloadTimeLoop;
+												String n = getTagElementString(eElement, "reloadsoundloop");
+												properties.ReloadSoundLoop = !n.equals("") ? n : properties.ReloadSoundLoop;
+												String o = getTagElementString(eElement, "reloadsoundexit");
+												properties.ReloadSoundExit = !o.equals("") ? o : properties.ReloadSoundExit;
+												String p = getTagElementString(eElement, "ammofeedsfrominventory");
+												properties.AmmoFeedsFromInventory = !p.equals("") ? Boolean.parseBoolean(p) : properties.AmmoFeedsFromInventory;
+												String q = getTagElementString(eElement, "ammotype");
+												if (!q.equals("")) {
+													Item[] iorb = KCUtils.GetItemsFromString(new String[]{q});
+													if (iorb.length > 0)
+														properties.AmmoType = new ItemStack(iorb[0]);
+												}
+												String r = getTagElementString(eElement, "magazinesize");
+												properties.MagazineSize = !r.equals("") ? Integer.parseInt(r) : properties.MagazineSize;
+												String s = getTagElementString(eElement, "itemstackdecreaseonuse");
+												properties.ItemStackDecreaseOnUse = !s.equals("") ? Boolean.parseBoolean(s) : properties.ItemStackDecreaseOnUse;
+												String t = getTagElementString(eElement, "itemstackmaxstacksize");
+												properties.ItemStackMaxStackSize = !t.equals("") ? Integer.parseInt(t) : properties.ItemStackMaxStackSize;
+												String u = getTagElementString(eElement, "requiredusespershot");
+												properties.RequiredUsesPerShot = !u.equals("") ? Integer.parseInt(u) : properties.RequiredUsesPerShot;
+												String v = getTagElementString(eElement, "shootburstcount");
+												properties.ShootBurstCount = !v.equals("") ? Integer.parseInt(v) : properties.ShootBurstCount;
+												String w = getTagElementString(eElement, "burstaccuracydecrease");
+												properties.BurstAccuracyDecrease = !w.equals("") ? Float.parseFloat(w) : properties.BurstAccuracyDecrease;
+												String x = getTagElementString(eElement, "singleshotprojectilecount");
+												properties.SingleShotProjectileCount = !x.equals("") ? Integer.parseInt(x) : properties.SingleShotProjectileCount;
+												String xa = getTagElementString(eElement, "tracklastdelay");
+												properties.TrackLastDelay = !xa.equals("") ? Integer.parseInt(xa) : properties.TrackLastDelay;
+												String xb = getTagElementString(eElement, "tracktype");
+												properties.TrackType = !xb.equals("") ? Integer.parseInt(xb) : properties.TrackType;
+												String xc = getTagElementString(eElement, "trackdistance");
+												properties.TrackDistance = !xc.equals("") ? Integer.parseInt(xc) : properties.TrackDistance;
+												
+												String y = getTagElementString(eElement, "projectilerenderproperties");
+												properties.ProjectileRenderProperties = !y.equals("") ? y : properties.ProjectileRenderProperties;
+												String z = getTagElementString(eElement, "projectilespeed");
+												properties.ProjectileSpeed = !z.equals("") ? Float.parseFloat(z) : properties.ProjectileSpeed;
+												String aa = getTagElementString(eElement, "accuracy");
+												properties.Accuracy = !aa.equals("") ? Float.parseFloat(aa) : properties.Accuracy;
+												String ab = getTagElementString(eElement, "gravity");
+												properties.Gravity = !ab.equals("") ? Float.parseFloat(ab) : properties.Gravity;
+												String ac = getTagElementString(eElement, "maxeffectiveticksalive");
+												properties.MaxEffectiveTicksAlive = !ac.equals("") ? Integer.parseInt(ac) : properties.MaxEffectiveTicksAlive;
+												properties.ProjectileLivingProperties = getTagElementString(eElement, "projectilelivingproperties");
+												properties.ProjectileImpactProperties = getTagElementString(eElement, "projectileimpactproperties");
+												properties.ProjectilePrematureEndOfLifeProperties = getTagElementString(eElement, "projectileprematureendoflifeproperties");
+												String ah = getTagElementString(eElement, "projectiledraginair");
+												properties.ProjectileDragInAir = !ah.equals("") ? Float.parseFloat(ah) : properties.ProjectileDragInAir;
+												String ai = getTagElementString(eElement, "projectiledraginwater");
+												properties.ProjectileDragInWater = !ai.equals("") ? Float.parseFloat(ai) : properties.ProjectileDragInWater;
+												String aj = getTagElementString(eElement, "projectileglows");
+												properties.ProjectileGlows = !aj.equals("") ? Boolean.parseBoolean(aj) : properties.ProjectileGlows;
+												String ak = getTagElementString(eElement, "tracksensitivity");
+												properties.TrackSensitivity = !ak.equals("") ? Float.parseFloat(ak) : properties.TrackSensitivity;
 
-											newItems[newNum] = new ItemWeapon(properties);
-											newNum++;
+												newItems[newNum] = new ItemWeapon(properties);
+												newNum++;
+												
+											} catch(NumberFormatException e) {
+												System.err.println("ERROR: Unable to parse number under node "+index+": "+file.getAbsolutePath());
+												e.printStackTrace();
+											} catch(Exception e) {
+												System.err.println("ERROR: Unable to process weapon under node "+index+": "+file.getAbsolutePath());
+												e.printStackTrace();
+											}
 										}
 										else
 										{
@@ -410,7 +445,16 @@ public class KCWeaponMod {
 										}
 									}
 								}
-								modMap.put(file.getName().substring(0, file.getName().length()-4), weapons.length);
+								String xmlName = file.getName().substring(0, file.getName().length()-4);
+								modMap.put(xmlName, weapons.length);
+								
+								if (ConvertXMLToCode) {
+									if (KCWMConvert.convertToCode(xmlName, WeaponFileVersion, newItems)) {
+										System.out.println("Successfully converted all weapons in \""+xmlName+".XML\" to Code format!");
+									} else {
+										System.err.println("ERROR: \""+xmlName+".XML\" Weapons Were NOT Converted to Code format!");
+									}
+								}
 
 								ItemWeapon[] tempweapons = weapons;
 								weapons = new ItemWeapon[tempweapons.length+newNum];
@@ -443,6 +487,17 @@ public class KCWeaponMod {
 	public void load(FMLInitializationEvent event)
 	{
 		this.allowModRegistration = false;
+		
+		if (ConvertCodeToXML) {
+			ItemWeaponProperties altdefaultprop = new ItemWeaponProperties("Template.WeaponName");
+			altdefaultprop.WeaponModel = new ItemWeaponModel(null, null);
+			KCWMConvert.convertToXML("Template", WeaponFileVersion, new ItemWeapon[]{new ItemWeapon(altdefaultprop)}, true);
+		}
+		if (ConvertXMLToCode) {
+			ItemWeaponProperties altdefaultprop = new ItemWeaponProperties("Template.WeaponName");
+			altdefaultprop.WeaponModel = new ItemWeaponModel(null, null);
+			KCWMConvert.convertToCode("Template", WeaponFileVersion, new ItemWeapon[]{new ItemWeapon(altdefaultprop)}, true);
+		}
 
 		FMLCommonHandler.instance().bus().register(instance);//For Config File
 

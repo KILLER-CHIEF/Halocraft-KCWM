@@ -81,13 +81,6 @@ public class TickHandler {
 							if (!entry.getKey().capabilities.isCreativeMode)
 							{
 								int Amount = 0;
-								/*for(int i = 0; i <= entry.getKey().inventory.mainInventory.length; i++) { //TODO: Delete old
-								if(entry.getKey().inventory.getStackInSlot(i) != null) {
-									if(entry.getKey().inventory.getStackInSlot(i).getItem() == weapon.Properties.AmmoType.getItem()) {
-										Amount += entry.getKey().inventory.getStackInSlot(i).stackSize;
-									}
-								}
-							}*/
 								if (weapon.Properties.AmmoType != null) {
 									for (int i = 0; i < entry.getKey().inventory.mainInventory.length; ++i) {
 										if (entry.getKey().inventory.mainInventory[i] != null) {

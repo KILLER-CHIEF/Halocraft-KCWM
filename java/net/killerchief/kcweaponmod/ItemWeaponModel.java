@@ -4,30 +4,59 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.util.ResourceLocation;
 
 public class ItemWeaponModel {
-	
+
 	public ModelBase Model;
 	public ResourceLocation Texture;
 	public boolean NoChngOnSprint = false;
 	public boolean Glows = false;
-	
+
 	public ItemWeaponModel(ModelBase model, ResourceLocation texture)
 	{
 		this.Model = model;
 		this.Texture = texture;
 	}
-	
+
 	public ItemWeaponModel(ModelBase model, ResourceLocation texture, boolean noChngOnSprint)
 	{
 		this(model, texture);
 		this.NoChngOnSprint = noChngOnSprint;
 	}
-	
+
 	public ItemWeaponModel(ModelBase model, ResourceLocation texture, boolean noChngOnSprint, boolean glows)
 	{
 		this(model, texture, noChngOnSprint);
 		this.Glows = glows;
 	}
-	
+
+	@Override
+	public String toString() {
+		String Output = "Model> ";
+		if (this.Model != null) {
+			Output += this.Model.getClass().getName();
+		} else {
+			Output += "null";
+		}
+		Output += "  Texture> ";
+		if (this.Texture != null) {
+			Output += this.Texture.getResourceDomain()+":"+this.Texture.getResourcePath();
+		} else {
+			Output += "null";
+		}
+		Output += "  NoChangeOnSprint> "+this.NoChngOnSprint+
+				"  Glows> "+this.Glows+
+				"  TPScale> "+this.TPScaleX+","+this.TPScaleY+","+this.TPScaleZ+
+				"  TPTrans> "+this.TPTransX+","+this.TPTransY+","+this.TPTransZ+
+				"  TPRotate> "+this.TPRotateX+","+this.TPRotateY+","+this.TPRotateZ+
+				"  TPSprintTrans> "+this.TPSprintTransX+","+this.TPSprintTransY+","+this.TPSprintTransZ+
+				"  TPSprintRotate> "+this.TPSprintRotateX+","+this.TPSprintRotateY+","+this.TPSprintRotateZ+
+				"  FPScale> "+this.FPScaleX+","+this.FPScaleY+","+this.FPScaleZ+
+				"  FPTrans> "+this.FPTransX+","+this.FPTransY+","+this.FPTransZ+
+				"  FPRotate> "+this.FPRotateX+","+this.FPRotateY+","+this.FPRotateZ+
+				"  FPSprintTrans> "+this.FPSprintTransX+","+this.FPSprintTransY+","+this.FPSprintTransZ+
+				"  FPSprintRotate> "+this.FPSprintRotateX+","+this.FPSprintRotateY+","+this.FPSprintRotateZ;
+		return Output;
+	}
+
 	public float TPScaleX = 1F;
 	public float TPScaleY = 1F;
 	public float TPScaleZ = 1F;
@@ -43,7 +72,7 @@ public class ItemWeaponModel {
 	public float TPSprintRotateX = 0F;
 	public float TPSprintRotateY = 0F;
 	public float TPSprintRotateZ = 0F;
-	
+
 	public void TPScale(float x, float y, float z) {
 		this.TPScaleX = x;
 		this.TPScaleY = y;
@@ -69,7 +98,7 @@ public class ItemWeaponModel {
 		this.TPSprintRotateY = y;
 		this.TPSprintRotateZ = z;
 	}
-	
+
 	public float FPScaleX = 1F;
 	public float FPScaleY = 1F;
 	public float FPScaleZ = 1F;
@@ -85,7 +114,7 @@ public class ItemWeaponModel {
 	public float FPSprintRotateX = 0F;
 	public float FPSprintRotateY = 0F;
 	public float FPSprintRotateZ = 0F;
-	
+
 	public void FPScale(float x, float y, float z) {
 		this.FPScaleX = x;
 		this.FPScaleY = y;
@@ -111,5 +140,5 @@ public class ItemWeaponModel {
 		this.FPSprintRotateY = y;
 		this.FPSprintRotateZ = z;
 	}
-	
+
 }

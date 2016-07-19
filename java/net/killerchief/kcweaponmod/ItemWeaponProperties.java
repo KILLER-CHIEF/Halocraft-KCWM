@@ -1,16 +1,20 @@
 package net.killerchief.kcweaponmod;
 
+import java.util.ArrayList;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
 public class ItemWeaponProperties {
+	
+	protected static String[] Variables = new String[]{"RegisterItem","Texture", "WeaponModel","AimItem","InventoryTab","IsAutomaticOrHasSecondaryShoot","IsZoomable","ZoomMultiplier","ZoomTexture","HasReticle","ReticleTexture","ReticleTransparency","ReticleProperties","GunShootDelay","Recoil","PerformOnly1ShootSound","ShootSound","ReloadTime","ReloadSound","ReloadMaxAmmoFlow","ReloadTimeLoop","ReloadSoundLoop","ReloadSoundExit","AmmoFeedsFromInventory","AmmoType","MagazineSize","ItemStackDecreaseOnUse","ItemStackMaxStackSize","RequiredUsesPerShot","ShootBurstCount","BurstAccuracyDecrease","SingleShotProjectileCount","TrackLastDelay","TrackType","TrackDistance","ProjectileRenderProperties","ProjectileSpeed","Accuracy","Gravity","MaxEffectiveTicksAlive","ProjectileLivingProperties","ProjectileImpactProperties","ProjectilePrematureEndOfLifeProperties","ProjectileDragInAir","ProjectileDragInWater","ProjectileGlows","TrackSensitivity"};
 	
 	/** NOT TO BE SET IN CONFIG! This is handled by the mod. */
 	public int ID = -1;
 	/** Whether an item of this property set will appear ingame (false for vehicle projectiles). */
 	public boolean RegisterItem = true;
 	/** The unlocalized name of the weapon. */
-	public String Name;
+	public String Name = null;
 	/** The Texture used for the weapons item. */
 	public String Texture = KCWeaponMod.MODID + ":Default/DefaultItem";
 	/** The model rendered for the item in first person and third person. */
@@ -34,7 +38,7 @@ public class ItemWeaponProperties {
 	/** The transparency of the reticle texture displayed on screen. */
 	public float ReticleTransparency = 1.0F;
 	/** The co-ords of the reticle in the texture file: TopLeftX, TopLeftY, Width, Height, OffsetTopLeftOnScreenFromCentreX, OffsetTopLeftOnScreenFromCentreY. */
-	public int[] ReticleProperties = new int[]{0,0,20,20,10,10};
+	public int[] ReticleProperties = {0,0,20,20,10,10};
 	/** How long the delay is between being able to shoot again. */
 	public int GunShootDelay = 0;
 	/** How much recoil the player experiences per shot. (the final amount of experienced recoil is multiplied by this and ShootBurstCount) */
@@ -135,5 +139,9 @@ public class ItemWeaponProperties {
 	//public int MaxAllowedEncounteredEntities = 0;
 	
 	
-	public ItemWeaponProperties() {}
+	public ItemWeaponProperties(String name) {
+		this.Name = name;
+	}
+	
+	public ItemWeaponProperties() { }
 }

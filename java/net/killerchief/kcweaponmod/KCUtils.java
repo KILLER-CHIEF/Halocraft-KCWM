@@ -1,14 +1,21 @@
 package net.killerchief.kcweaponmod;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
@@ -357,31 +364,46 @@ public class KCUtils {
 
 	public static Object[] SendToTagInit(String name, Object[] data)
 	{
+		String classOfMethod = "net.killerchief.kcweaponmod.ProjectileProperties";
+		String methodName = name;
+		
+		if (name.contains("."))
+		{
+			int lastdot = name.lastIndexOf(".");
+			classOfMethod = name.substring(0, lastdot);
+			methodName = name.substring(lastdot+1);
+		}
+		
 		//System.out.println("Send to init");
 		try {
-			Object[] output = (Object[]) ProjectileProperties.class.getDeclaredMethod("init"+name, Object[].class).invoke(ProjectileProperties.class.newInstance(), new Object[]{data});
+			Class<?> clazz = Class.forName(classOfMethod);
+			Object[] output = (Object[]) clazz.getDeclaredMethod("init"+methodName, Object[].class).invoke(clazz.newInstance(), new Object[]{data});
+			//Object[] output = (Object[]) ProjectileProperties.class.getDeclaredMethod("init"+name, Object[].class).invoke(ProjectileProperties.class.newInstance(), new Object[]{data});
 			return new Object[]{name, output};
+		} catch (ClassNotFoundException e) {
+			System.err.println("The class \""+classOfMethod+"\" cannot be found!");
+			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			System.err.println("The method \""+"init"+name+"\" cannot be accessed!");
+			System.err.println("The method \""+"init"+methodName+"\" cannot be accessed!");
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
-			System.err.println("The method \""+"init"+name+"\" does not accept a single Object Array argument. It's parameters are incorrect!");
+			System.err.println("The method \""+"init"+methodName+"\" does not accept a single Object Array argument. It's parameters are incorrect!");
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
-			System.err.println("Invoke error for method: \""+"init"+name+"\".");
+			System.err.println("Invoke error for method: \""+"init"+methodName+"\".");
 			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
-			System.err.println("The method \""+"init"+name+"\" does not exist!");
+			System.err.println("The method \""+"init"+methodName+"\" does not exist!");
 			e.printStackTrace();
 		} catch (SecurityException e) {
-			System.err.println("This code doesn't have permission to access the method \""+"init"+name+"\"... How does that even happen? Is it private?");
+			System.err.println("This code doesn't have permission to access the method \""+"init"+methodName+"\"... How does that even happen? Is it private?");
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			System.err.println("Cannot create a new instance to call the method: \""+"init"+name+"\" with Object Array Argument.");
+			System.err.println("Cannot create a new instance to call the method: \""+"init"+methodName+"\" with Object Array Argument.");
 			e.printStackTrace();
 		}
 		KCWeaponMod.ProcessingObjectTagsErrored = true;
-		System.err.println("Sending Tag Data to Method \""+"init"+name+"\" Failed! Returning Unedited Data.");
+		System.err.println("Sending Tag Data to Method \""+classOfMethod+".init"+methodName+"\" Failed! Returning Unedited Data.");
 		return new Object[]{name, data};
 	}
 
@@ -455,5 +477,233 @@ public class KCUtils {
 		}
 		return ammoAvailable;
 	}
+	
+	/*public static Block[] GetBlocksFromString2(String[] input)
+	{
+		List<Block> blocks = new ArrayList<Block>();
+		for (Item item : GetItemsFromString(input)) {
+			Block b = Block.getBlockById(Item.getIdFromItem(item));
+			if (b != Blocks.air)
+				blocks.add(b);
+		}
+		return blocks.toArray(new Block[blocks.size()]);
+	}*/
+	
+	public static Block[] GetBlocksFromString(String[] input)
+	{
+		List<Block> items = new ArrayList<Block>();
+		for (String arg : input)
+		{
+			String[] item = arg.split(":");
+			if (item.length == 1)
+			{
+				Block i = GameRegistry.findBlock("minecraft", item[0]);
+				if (i != null)
+					items.add(i);
+				else {
+					String find = GetBlockItemRegistryName(item[0]);
+					if (find != null) {
+						String[] finding = find.split(":");
+						if (finding.length > 1) {
+							Block k = GameRegistry.findBlock(finding[0],finding[1]);
+							if (k != null) {
+								items.add(k);
+								continue;
+							}
+						}
+					}
+					
+					System.err.println("ERROR: Failed to find block with name: "+item[0]);
+				}
+			}
+			else if (item.length > 1)
+			{
+				Block i = GameRegistry.findBlock(item[0], item[1]);
+				if (i != null)
+					items.add(i);
+				else
+					System.err.println("ERROR: Failed to find block with name: "+item[0]+":"+item[1]);
+			}
+		}
+		return items.toArray(new Block[items.size()]);
+	}
+	
+	public static Item[] GetItemsFromString(String[] input)
+	{
+		List<Item> items = new ArrayList<Item>();
+		for (String arg : input)
+		{
+			String[] item = arg.split(":");
+			if (item.length == 1)
+			{
+				Item i = GameRegistry.findItem("minecraft", item[0]);
+				if (i != null)
+					items.add(i);
+				else {
+					String find = GetBlockItemRegistryName(item[0]);
+					if (find != null) {
+						String[] finding = find.split(":");
+						if (finding.length > 1) {
+							Item k = GameRegistry.findItem(finding[0],finding[1]);
+							if (k != null) {
+								items.add(k);
+								continue;
+							}
+						}
+					}
+					
+					System.err.println("ERROR: Failed to find item with name: "+item[0]);
+				}
+			}
+			else if (item.length > 1)
+			{
+				Item i = GameRegistry.findItem(item[0], item[1]);
+				if (i != null)
+					items.add(i);
+				else
+					System.err.println("ERROR: Failed to find item with name: "+item[0]+":"+item[1]);
+			}
+		}
+		return items.toArray(new Item[items.size()]);
+	}
+	
+	/*public static String GetNameIDFromUnlocalized(String unlocalized)
+	{
+		String block = GetBlockNameIDFromUnlocalized(unlocalized);
+		if (block == null)
+		{
+			String item = GetItemNameIDFromUnlocalized(unlocalized);
+			if (item == null)
+			{
+				return "UNLOCALIZED:"+unlocalized;
+			}
+			return item;
+		}
+		return block;
+	}*/
+	
+	public static String GetBlockItemRegistryName(Object obj)
+	{
+		String block = Block.blockRegistry.getNameForObject(obj);
+		if (block == null)
+		{
+			String item = Item.itemRegistry.getNameForObject(obj);
+			if (item == null)
+			{
+				return "("+obj.toString()+" - "+(obj instanceof Block ? ((Block)obj).getUnlocalizedName() : obj instanceof Item ? ((Item)obj).getUnlocalizedName() : "")+")";
+			}
+			return item;
+		}
+		return block;
+	}
+	
+	/*public static String GetBlockNameIDFromUnlocalized(String unlocalized)
+	{
+		String refined = unlocalized;
+		if (refined.startsWith("tile.")) {
+			refined = refined.substring(5);
+		}
+		
+		String guessModid = refined.split("\\.")[0]+":"+refined;
+		
+		if (Block.blockRegistry.containsKey(guessModid)) {
+			return guessModid;
+		}
+		
+		if (Block.blockRegistry.containsKey("minecraft:"+refined)) {
+			return "minecraft:"+refined;
+		}
+		
+		Set itemSet = Block.blockRegistry.getKeys();
+		List<String> listNames = new ArrayList<String>();
+		
+		for (Object object : itemSet) {
+			if (object.toString().contains(refined))
+				listNames.add(object.toString());
+		}
+		
+		if (listNames.size() > 0) {
+			String nameID = null;
+			if (listNames.size() == 1) {
+				nameID = listNames.get(0);
+			}
+			else {
+				int j = listNames.indexOf(guessModid);
+				if (j >= 0)
+				{
+					nameID = listNames.get(j);
+				}
+				else {
+					nameID = listNames.get(0);
+				}
+			}
+			if (nameID != null) {
+				return nameID;
+			}
+		}
+		return null;
+	}
+	
+	public static String GetItemNameIDFromUnlocalized(String unlocalized)
+	{
+		String refined = unlocalized;
+		if (refined.startsWith("item.") || refined.startsWith("tile.")) {
+			refined = refined.substring(5);
+		}
+		
+		String guessModid = refined.split("\\.")[0]+":"+refined;
+		
+		if (Item.itemRegistry.containsKey(guessModid)) {
+			return guessModid;
+		}
+		
+		Set itemSet = Item.itemRegistry.getKeys();
+		List<String> listNames = new ArrayList<String>();
+		
+		for (Object object : itemSet) {
+			if (object.toString().contains(refined))
+				listNames.add(object.toString());
+		}
+		
+		if (listNames.size() > 0) {
+			String nameID = null;
+			if (listNames.size() == 1) {
+				nameID = listNames.get(0);
+			}
+			else {
+				int j = listNames.indexOf(guessModid);
+				if (j >= 0)
+				{
+					nameID = listNames.get(j);
+				}
+				else {
+					nameID = listNames.get(0);
+				}
+			}
+			if (nameID != null) {
+				return nameID;
+			}
+		}
+		return null;
+	}*/
+	
+//	private static String ObjectFilter(Object f1, Object f2, List<String> output)
+//	{
+//		String out = f2.toString();
+//		if (f2 instanceof CreativeTabs) {
+//			//String b = ((CreativeTabs)object).getTranslatedTabLabel();
+//			out = ((CreativeTabs)f2).getTabLabel();
+//			//System.out.println("");
+//		}
+//		else if (f2 instanceof ItemWeaponModel) {
+//			out = null;
+//			
+//			output.add("\t\t<"+fieldName.toLowerCase()+">"+value+"</"+fieldName.toLowerCase()+">");
+//		}
+//		else if (f2 instanceof int[]) {
+//			System.out.println("tt");
+//		}
+//		return out;
+//	}
 
 }

@@ -1,5 +1,7 @@
 package net.killerchief.kcweaponmod;
 
+import org.lwjgl.opengl.GL11;
+
 import net.killerchief.turbomodelthingy.ModelRendererTurbo;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
@@ -62,6 +64,20 @@ public abstract class Model3DWeaponBase extends ModelBase {
 
 	protected void renderAllParts(float par7)
 	{
+		if (this.techneModel != null)
+		{
+			GL11.glPushMatrix();
+			GL11.glRotatef(180F, 1F, 0F, 0F);
+			for (ModelRenderer part : this.techneModel)
+			{
+				if (part != null)
+				{
+					part.render(par7);
+				}
+			}
+			GL11.glRotatef(-180F, 1F, 0F, 0F);
+			GL11.glPopMatrix();
+		}
 		if (this.bodyModel != null)
 		{
 			for (ModelRendererTurbo part : this.bodyModel)
@@ -85,16 +101,6 @@ public abstract class Model3DWeaponBase extends ModelBase {
 		if (this.backWheelModel != null)
 		{
 			for (ModelRendererTurbo part : this.backWheelModel)
-			{
-				if (part != null)
-				{
-					part.render(par7);
-				}
-			}
-		}
-		if (this.techneModel != null)
-		{
-			for (ModelRenderer part : this.techneModel)
 			{
 				if (part != null)
 				{
