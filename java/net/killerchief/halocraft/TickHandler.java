@@ -58,7 +58,7 @@ public class TickHandler {
 	public static HashMap<EntityPlayer, Integer> ShieldHealthMap = new HashMap();
 	public static HashMap<EntityPlayer, Boolean> ShieldRechargingMap = new HashMap();
 	public static HashMap<EntityPlayer, Integer> ShieldRechargeDelayMap = new HashMap();
-	public static final int ShieldMaxHealth = 50;
+	public static final int ShieldMaxHealth = 20;
 	
 	private static int slowRecharge = 0;
 

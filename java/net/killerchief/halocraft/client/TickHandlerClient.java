@@ -128,7 +128,7 @@ public class TickHandlerClient {
 		{
 			if (mc.currentScreen != null)
 			{
-				this.MainMenuTickHandler(mc);
+				//TODO: this.MainMenuTickHandler(mc);
 			}
 			if (mc.thePlayer != null)//This is Client Only
 			{
@@ -142,6 +142,8 @@ public class TickHandlerClient {
 			}
 		}
 	}
+	
+	//Broken server pinger vvvvvvvvvvvvvvvv
 
 	private static GuiScreen lastScreen;
 	private static boolean succeded = false;
@@ -347,6 +349,7 @@ public class TickHandlerClient {
 		})).channel(NioSocketChannel.class)).connect(serveraddress.getIP(), serveraddress.getPort());
 	}
 
+	//Broken server pinger ^^^^^^^^^^^^^^^^^
 
 	//Not the original (HalocraftUtils)
 	public static boolean isPlayerWearingArmor(EntityPlayer player, int armorType, boolean helmet, boolean body, boolean legs, boolean boots)
@@ -668,7 +671,6 @@ public class TickHandlerClient {
 
 	//HandleShields
 	public static int ShieldHealth = 0;
-	public static int DoubledShieldHealth = 0;
 	public static boolean IsRecharging = false;
 	private static int shieldBlink = 0;
 
@@ -695,6 +697,8 @@ public class TickHandlerClient {
 
 	private static final ResourceLocation RLReticle = new ResourceLocation(Halocraft.MODID+":textures/overlays/Reticle.png");
 
+	private static final ResourceLocation RLHudMarkVI = new ResourceLocation(Halocraft.MODID+":textures/overlays/HudMarkVI.png");
+	private static final ResourceLocation RLHudClassic = new ResourceLocation(Halocraft.MODID+":textures/overlays/HudClassic.png");
 	private static final ResourceLocation RLHud1 = new ResourceLocation(Halocraft.MODID+":textures/overlays/Hud1.png");
 	private static final ResourceLocation RLHud2 = new ResourceLocation(Halocraft.MODID+":textures/overlays/Hud2.png");
 
@@ -939,7 +943,7 @@ public class TickHandlerClient {
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, transparency);
 			GL11.glDisable(GL11.GL_ALPHA_TEST);
 			GL11.glDisable(GL11.GL_LIGHTING);
-			mc.getTextureManager().bindTexture(overlay);//FMLClientHandler.instance().getClient().renderEngine.bindTexture(OverlayOxygenTanks.guiTexture);
+			mc.getTextureManager().bindTexture(overlay);
 			Tessellator tessellator = Tessellator.instance;
 			tessellator.startDrawingQuads();
 			tessellator.addVertexWithUV((double)((i / 2 - posX) + 0), (double)((k / 2 - posY) + iBHeight), (double)0.0F, (double)(iBCoordX + 0) * 0.00390625F, (double)(iBCoordY + iBHeight) * 0.00390625F);
@@ -1042,83 +1046,258 @@ public class TickHandlerClient {
 			}
 		}
 	}
-
+	
 	private void RenderShield(Minecraft minecraft)
 	{
-		//ScaledResolution scaledresolution = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
-		int width = HUDRenderPos(true);//scaledresolution.getScaledWidth() - 160;
-		int height = HUDRenderPos(false);//10;
-		this.DoubledShieldHealth = this.ShieldHealth*2;
-
+		if (minecraft.thePlayer.inventory != null && minecraft.thePlayer.inventory.armorInventory != null && minecraft.thePlayer.inventory.armorInventory[3] != null && HalocraftItemsArmor.IsSpartanArmorPieceMarkV(minecraft.thePlayer.inventory.armorInventory[3].getItem(), 0))
+		{
+			RenderShieldClassic(minecraft);
+			return;
+		}
+		//x,y: 509, 76
+		// /2: 254, 38
+		ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+		int imageWidth = 509;
+		float scale = (float)scaledresolution.getScaledWidth()/777F;
+		int width = scaledresolution.getScaledWidth()/2 - (int)(((float)(imageWidth)*scale/2F));
+		int height = 0;//(int)(0.01F*scaledresolution.getScaledHeight());
+		float transparency = 0.8F;
+		
+		
 		if (!HalocraftUtils.isPlayerWearingArmor(minecraft, 0, false, true, true, true))
 		{
-			HelmetHud(0.8F, RLHud2, 1, 196, 150, 38, width, height);
+			//Red
+			HelmetHud512(transparency, scale, RLHudMarkVI, 2, 158, 509, 76, width, height);
 		}
 		else
 		{
-			if (this.DoubledShieldHealth > 0 && this.DoubledShieldHealth <= 5)
-			{
-				HelmetHud(0.8F, RLHud1, 1, 1, 150, 38, width, height);
-			}
-			else if (this.DoubledShieldHealth > 5 && this.DoubledShieldHealth <= 15)
-			{
-				HelmetHud(0.8F, RLHud1, 1, 40, 150, 38, width, height);
-			}
-			else if (this.DoubledShieldHealth > 15 && this.DoubledShieldHealth <= 25)
-			{
-				HelmetHud(0.8F, RLHud1, 1, 79, 150, 38, width, height);
-			}
-			else if (this.DoubledShieldHealth > 25 && this.DoubledShieldHealth <= 35)
-			{
-				HelmetHud(0.8F, RLHud1, 1, 118, 150, 38, width, height);
-			}
-			else if (this.DoubledShieldHealth > 35 && this.DoubledShieldHealth <= 45)
-			{
-				HelmetHud(0.8F, RLHud1, 1, 157, 150, 38, width, height);
-			}
-			else if (this.DoubledShieldHealth > 45 && this.DoubledShieldHealth <= 55)
-			{
-				HelmetHud(0.8F, RLHud1, 1, 196, 150, 38, width, height);
-			}
-			else if (this.DoubledShieldHealth > 55 && this.DoubledShieldHealth <= 65)
-			{
-				HelmetHud(0.8F, RLHud2, 1, 1, 150, 38, width, height);
-			}
-			else if (this.DoubledShieldHealth > 65 && this.DoubledShieldHealth <= 75)
-			{
-				HelmetHud(0.8F, RLHud2, 1, 40, 150, 38, width, height);
-			}
-			else if (this.DoubledShieldHealth > 75 && this.DoubledShieldHealth <= 85)
-			{
-				HelmetHud(0.8F, RLHud2, 1, 79, 150, 38, width, height);
-			}
-			else if (this.DoubledShieldHealth > 85 && this.DoubledShieldHealth <= 95)
-			{
-				HelmetHud(0.8F, RLHud2, 1, 118, 150, 38, width, height);
-			}
-			else if (this.DoubledShieldHealth > 95)
-			{
-				HelmetHud(0.8F, RLHud2, 1, 157, 150, 38, width, height);
-			}
-			else
+			if (this.ShieldHealth <= 0)
 			{
 				if (this.shieldBlink >= 0 && this.shieldBlink <= 10)
 				{
-					HelmetHud(0.8F, RLHud2, 1, 196, 150, 38, width, height);
+					//Red
+					HelmetHud512(transparency, scale, RLHudMarkVI, 2, 158, 509, 76, width, height);
 					if (this.shieldBlink == 0 && !mc.isGamePaused())
 						mc.thePlayer.playSound(Halocraft.MODID+":armour.ShieldLowBeep", 1.0F, 1.0F);
 					++this.shieldBlink;
 				}
 				else if (this.shieldBlink > 10 && this.shieldBlink <= 21)
 				{
-					HelmetHud(0.8F, RLHud1, 1, 1, 150, 38, width, height);
+					//Empty
+					HelmetHud512(transparency, scale, RLHudMarkVI, 2, 2, 509, 76, width, height);
 					if (this.shieldBlink == 11 && !mc.isGamePaused())
 						mc.thePlayer.playSound(Halocraft.MODID+":armour.ShieldLowBeep", 1.0F, 1.0F);
 					++this.shieldBlink;
 				}
 				else
 				{
-					HelmetHud(0.8F, RLHud2, 1, 196, 150, 38, width, height);
+					//Red
+					HelmetHud512(transparency, scale, RLHudMarkVI, 2, 158, 509, 76, width, height);
+					this.shieldBlink = 0;
+				}
+			}
+			else
+			{
+				
+				float progress = this.ShieldHealth / (float)(TickHandler.ShieldMaxHealth);
+				
+				int width2 = scaledresolution.getScaledWidth()/2 - (int)(((float)(286)*scale/2F));
+				
+				int thru = (int)(286*progress);
+				int width3 = scaledresolution.getScaledWidth()/2 - (int)(((float)(286)*scale/2F));
+				
+				
+				//Empty
+				HelmetHud512(transparency, scale, RLHudMarkVI, 112+thru, 2, 286-thru, 76, width3+(int)(thru*scale), height);
+				
+				//Full
+				HelmetHud512(transparency, scale, RLHudMarkVI, 112, 80, thru, 76, width2, height);
+				
+			}
+			
+			
+			//Empty
+			//HelmetHud512(transparency, RLHudRechargeBar, 2, 2, 509, 76, width, height);
+			
+			//Full
+			//HelmetHud512(transparency, RLHudRechargeBar, 2, 80, 509, 76, width, height);
+			
+			//Red
+			//HelmetHud512(transparency, RLHudRechargeBar, 2, 158, 509, 76, width, height);
+			
+		}
+	}
+	
+	private void RenderShieldClassic(Minecraft minecraft)
+	{
+		ResourceLocation RLHudClassic = new ResourceLocation(Halocraft.MODID+":textures/overlays/HudClassic5.png");
+		
+		ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+		int imageWidth = 150;
+		float scale = (float)scaledresolution.getScaledWidth()/500F;
+		//int width = HUDRenderPos(true) - (int)(((float)(imageWidth)*scale/2F));
+		//int height = HUDRenderPos(false);
+		int width = scaledresolution.getScaledWidth() - (int)(((float)(imageWidth+6)*scale));
+		int height = 4;//(int)(0.01F*scaledresolution.getScaledHeight());
+		float transparency = 0.8F;
+		
+		
+		if (!HalocraftUtils.isPlayerWearingArmor(minecraft, 0, false, true, true, true))
+		{
+			//Red
+			HelmetHud256(transparency, scale, RLHudClassic, 1, 157, 150, 38, width, height);
+		}
+		else
+		{
+			float progress = this.ShieldHealth / (float)(TickHandler.ShieldMaxHealth);
+			
+			if (this.ShieldHealth <= 0)
+			{
+				if (this.shieldBlink >= 0 && this.shieldBlink <= 10)
+				{
+					//Red
+					HelmetHud256(transparency, scale, RLHudClassic, 1, 157, 150, 38, width, height);
+					if (this.shieldBlink == 0 && !mc.isGamePaused())
+						mc.thePlayer.playSound(Halocraft.MODID+":armour.ShieldLowBeep", 1.0F, 1.0F);
+					++this.shieldBlink;
+				}
+				else if (this.shieldBlink > 10 && this.shieldBlink <= 21)
+				{
+					//Empty
+					HelmetHud256(transparency, scale, RLHudClassic, 1, 1, 150, 38, width, height);
+					if (this.shieldBlink == 11 && !mc.isGamePaused())
+						mc.thePlayer.playSound(Halocraft.MODID+":armour.ShieldLowBeep", 1.0F, 1.0F);
+					++this.shieldBlink;
+				}
+				else
+				{
+					//Red
+					HelmetHud256(transparency, scale, RLHudClassic, 1, 157, 150, 38, width, height);
+					this.shieldBlink = 0;
+				}
+			}
+//			else if (progress >= 1F)
+//			{
+//				//Full
+//				HelmetHud256(transparency, scale, RLHudClassic, 1, 118, 150, 38, width, height);
+//			}
+			else
+			{
+				int width2 = scaledresolution.getScaledWidth() - (int)(((float)(150+6)*scale));
+				int thru = (int)(127*progress);
+				
+				if (progress >= 1F)
+				{
+					//Full
+					HelmetHud256(transparency, scale, RLHudClassic, 1, 118, 150, 38, width, height);
+				}
+				else
+				{
+					//Empty Fill
+					HelmetHud256(transparency, scale, RLHudClassic, 1, 40, 150, 38, width, height);
+				}
+				
+				//Progress Bar
+				HelmetHud256(transparency, scale, RLHudClassic, 21, 86, thru, 29, width2+(int)(20*scale), height+(int)(6*scale));
+				
+			}
+			
+			
+			//Empty
+			//HelmetHud256(transparency, scale, RLHudClassic, 1, 1, 150, 38, width, height);
+			
+			//Empty Fill
+			//HelmetHud256(transparency, scale, RLHudClassic, 1, 40, 150, 38, width, height);
+			
+			//Progress Bar
+			//HelmetHud256(transparency, scale, RLHudClassic, 21, 84, 127, 30, width, height);
+			
+			//Full
+			//HelmetHud256(transparency, scale, RLHudClassic, 1, 118, 150, 38, width, height);
+			
+			//Red
+			//HelmetHud256(transparency, scale, RLHudClassic, 1, 157, 150, 38, width, height);
+		}
+	}
+
+	private void RenderShieldOld(Minecraft minecraft)
+	{
+		//ScaledResolution scaledresolution = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
+		int width = HUDRenderPos(true);//scaledresolution.getScaledWidth() - 160;
+		int height = HUDRenderPos(false);//10;
+		float transparency = 0.8F;
+		float scale = 1F;
+		int altShieldHealth = this.ShieldHealth*5;
+
+		if (!HalocraftUtils.isPlayerWearingArmor(minecraft, 0, false, true, true, true))
+		{
+			HelmetHud256(transparency, scale, RLHud2, 1, 196, 150, 38, width, height);
+		}
+		else
+		{
+			if (altShieldHealth > 0 && altShieldHealth <= 5)
+			{
+				HelmetHud256(transparency, scale, RLHud1, 1, 1, 150, 38, width, height);
+			}
+			else if (altShieldHealth > 5 && altShieldHealth <= 15)
+			{
+				HelmetHud256(transparency, scale, RLHud1, 1, 40, 150, 38, width, height);
+			}
+			else if (altShieldHealth > 15 && altShieldHealth <= 25)
+			{
+				HelmetHud256(transparency, scale, RLHud1, 1, 79, 150, 38, width, height);
+			}
+			else if (altShieldHealth > 25 && altShieldHealth <= 35)
+			{
+				HelmetHud256(transparency, scale, RLHud1, 1, 118, 150, 38, width, height);
+			}
+			else if (altShieldHealth > 35 && altShieldHealth <= 45)
+			{
+				HelmetHud256(transparency, scale, RLHud1, 1, 157, 150, 38, width, height);
+			}
+			else if (altShieldHealth > 45 && altShieldHealth <= 55)
+			{
+				HelmetHud256(transparency, scale, RLHud1, 1, 196, 150, 38, width, height);
+			}
+			else if (altShieldHealth > 55 && altShieldHealth <= 65)
+			{
+				HelmetHud256(transparency, scale, RLHud2, 1, 1, 150, 38, width, height);
+			}
+			else if (altShieldHealth > 65 && altShieldHealth <= 75)
+			{
+				HelmetHud256(transparency, scale, RLHud2, 1, 40, 150, 38, width, height);
+			}
+			else if (altShieldHealth > 75 && altShieldHealth <= 85)
+			{
+				HelmetHud256(transparency, scale, RLHud2, 1, 79, 150, 38, width, height);
+			}
+			else if (altShieldHealth > 85 && altShieldHealth <= 95)
+			{
+				HelmetHud256(transparency, scale, RLHud2, 1, 118, 150, 38, width, height);
+			}
+			else if (altShieldHealth > 95)
+			{
+				HelmetHud256(transparency, scale, RLHud2, 1, 157, 150, 38, width, height);
+			}
+			else
+			{
+				if (this.shieldBlink >= 0 && this.shieldBlink <= 10)
+				{
+					HelmetHud256(transparency, scale, RLHud2, 1, 196, 150, 38, width, height);
+					if (this.shieldBlink == 0 && !mc.isGamePaused())
+						mc.thePlayer.playSound(Halocraft.MODID+":armour.ShieldLowBeep", 1.0F, 1.0F);
+					++this.shieldBlink;
+				}
+				else if (this.shieldBlink > 10 && this.shieldBlink <= 21)
+				{
+					HelmetHud256(transparency, scale, RLHud1, 1, 1, 150, 38, width, height);
+					if (this.shieldBlink == 11 && !mc.isGamePaused())
+						mc.thePlayer.playSound(Halocraft.MODID+":armour.ShieldLowBeep", 1.0F, 1.0F);
+					++this.shieldBlink;
+				}
+				else
+				{
+					HelmetHud256(transparency, scale, RLHud2, 1, 196, 150, 38, width, height);
 					this.shieldBlink = 0;
 				}
 			}
@@ -1217,14 +1396,24 @@ public class TickHandlerClient {
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		}
 	}
+	
+	public static void HelmetHud256(float transparency, float scale, ResourceLocation overlay, int iBCoordX, int iBCoordY, int iBWidth, int iBHeight, int posX, int posY)
+	{
+		HelmetHud(transparency, scale, 0.00390625F, overlay, iBCoordX, iBCoordY, iBWidth, iBHeight, posX, posY);
+	}
+	
+	public static void HelmetHud512(float transparency, float scale, ResourceLocation overlay, int iBCoordX, int iBCoordY, int iBWidth, int iBHeight, int posX, int posY)
+	{
+		HelmetHud(transparency, scale, 0.00390625F /2F, overlay, iBCoordX, iBCoordY, iBWidth, iBHeight, posX, posY);
+	}
 
-	public static void HelmetHud(float transparency, ResourceLocation overlay, int iBCoordX, int iBCoordY, int iBWidth, int iBHeight, int posX, int posY)
+	public static void HelmetHud(float transparency, float scale, float textureScale, ResourceLocation overlay, int iBCoordX, int iBCoordY, int iBWidth, int iBHeight, int posX, int posY)
 	{
 		if (mc.inGameHasFocus && !mc.gameSettings.hideGUI)
 		{
 			ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-			//int i = scaledresolution.getScaledWidth();
-			//int k = scaledresolution.getScaledHeight();
+			int i = scaledresolution.getScaledWidth();
+			int k = scaledresolution.getScaledHeight();
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glDisable(GL11.GL_DEPTH_TEST);
 			GL11.glDepthMask(false);
@@ -1233,12 +1422,14 @@ public class TickHandlerClient {
 			GL11.glDisable(GL11.GL_ALPHA_TEST);
 			GL11.glDisable(GL11.GL_LIGHTING);
 			mc.getTextureManager().bindTexture(overlay);
+			//float textureScale = 0.00390625F /2F;// divide 2 cos its 512 not 256, why? idk.
+			//float scale = 0.5F;
 			Tessellator tessellator = Tessellator.instance;
 			tessellator.startDrawingQuads();
-			tessellator.addVertexWithUV((double)(posX + 0), (double)(posY + iBHeight), (double)0.0F, (double)(iBCoordX + 0) * 0.00390625F, (double)(iBCoordY + iBHeight) * 0.00390625F);
-			tessellator.addVertexWithUV((double)(posX + iBWidth), (double)(posY + iBHeight), (double)0.0F, (double)(iBCoordX + iBWidth) * 0.00390625F, (double)(iBCoordY + iBHeight) * 0.00390625F);
-			tessellator.addVertexWithUV((double)(posX + iBWidth), (double)(posY + 0), (double)0.0F, (double)(iBCoordX + iBWidth) * 0.00390625F, (double)(iBCoordY + 0) * 0.00390625F);
-			tessellator.addVertexWithUV((double)(posX + 0), (double)(posY + 0), (double)0.0F, (double)(iBCoordX + 0) * 0.00390625F, (double)(iBCoordY + 0) * 0.00390625F);
+			tessellator.addVertexWithUV((double)(posX + 0), (double)(posY + iBHeight*scale), (double)0F, (double)(iBCoordX + 0) * textureScale, (double)(iBCoordY + iBHeight) * textureScale);
+			tessellator.addVertexWithUV((double)(posX + iBWidth*scale), (double)(posY + iBHeight*scale), (double)0F, (double)(iBCoordX + iBWidth) * textureScale, (double)(iBCoordY + iBHeight) * textureScale);
+			tessellator.addVertexWithUV((double)(posX + iBWidth*scale), (double)(posY + 0), (double)0F, (double)(iBCoordX + iBWidth) * textureScale, (double)(iBCoordY + 0) * textureScale);
+			tessellator.addVertexWithUV((double)(posX + 0), (double)(posY + 0), (double)0F, (double)(iBCoordX + 0) * textureScale, (double)(iBCoordY + 0) * textureScale);
 			tessellator.draw();
 			GL11.glDepthMask(true);
 			GL11.glEnable(GL11.GL_DEPTH_TEST);
