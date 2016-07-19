@@ -247,6 +247,16 @@
         "category": "player",
         "sounds": ["items/PickupHealth"]
     },
+	"items.WeaponRackClose":
+    {
+        "category": "player",
+        "sounds": ["items/Weapon_Rack_Closed"]
+    },
+	"items.WeaponRackOpen":
+    {
+        "category": "player",
+        "sounds": ["items/Weapon_Rack_Open"]
+    },
 	"items.WrenchFix":
     {
         "category": "player",
@@ -416,6 +426,11 @@
 			"weapons/BruteShotBounce4",
 			"weapons/BruteShotBounce5"
 		]
+    },
+	"weapons.EnergySwordDeactivate":
+    {
+        "category": "player",
+        "sounds": ["weapons/EnergySwordDeactivate1"]
     },
 	"weapons.EnergySwordEquip":
     {

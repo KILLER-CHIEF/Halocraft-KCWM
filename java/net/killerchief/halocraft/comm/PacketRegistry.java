@@ -11,6 +11,7 @@ import net.killerchief.halocraft.comm.packetHandlers.PacketGunHolder;
 import net.killerchief.halocraft.comm.packetHandlers.PacketLandmine;
 import net.killerchief.halocraft.comm.packetHandlers.PacketLightBridge;
 import net.killerchief.halocraft.comm.packetHandlers.PacketOvershield;
+import net.killerchief.halocraft.comm.packetHandlers.PacketUnscWeaponRack;
 import net.killerchief.halocraft.comm.packetHandlers.PacketVehicleShoot;
 import cpw.mods.fml.relauncher.Side;
 
@@ -29,5 +30,6 @@ public class PacketRegistry {
 		Halocraft.network.registerMessage(PacketVehicleShoot.Handler.class, PacketVehicleShoot.class, id++, Side.CLIENT);
 		Halocraft.network.registerMessage(PacketGunHolder.Handler.class, PacketGunHolder.class, id++, Side.SERVER);
 		Halocraft.network.registerMessage(PacketLightBridge.Handler.class, PacketLightBridge.class, id++, Side.SERVER);
+		Halocraft.network.registerMessage(PacketUnscWeaponRack.Handler.class, PacketUnscWeaponRack.class, id++, Side.SERVER);
 	}
 }

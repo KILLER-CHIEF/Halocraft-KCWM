@@ -18,8 +18,11 @@ import net.killerchief.halocraft.client.models.mobs.ModelElite;
 import net.killerchief.halocraft.client.models.mobs.ModelGrunt;
 import net.killerchief.halocraft.client.render.RenderBanshee;
 import net.killerchief.halocraft.client.render.RenderClientTargeter;
+import net.killerchief.halocraft.client.render.RenderCovSupplyCase;
+import net.killerchief.halocraft.client.render.RenderDecalBlock;
 import net.killerchief.halocraft.client.render.RenderEliteGun;
 import net.killerchief.halocraft.client.render.RenderEliteSword;
+import net.killerchief.halocraft.client.render.RenderForeCtrlPanel;
 import net.killerchief.halocraft.client.render.RenderGhost;
 import net.killerchief.halocraft.client.render.RenderGruntPlasmaPistol;
 import net.killerchief.halocraft.client.render.RenderGunHolder;
@@ -28,6 +31,8 @@ import net.killerchief.halocraft.client.render.RenderLightBridgeExt;
 import net.killerchief.halocraft.client.render.RenderMongoose;
 import net.killerchief.halocraft.client.render.RenderProjectile;
 import net.killerchief.halocraft.client.render.RenderProjectile.EnumType;
+import net.killerchief.halocraft.client.render.RenderRechargeStation;
+import net.killerchief.halocraft.client.render.RenderUnscWeaponRack;
 import net.killerchief.halocraft.client.render.RenderWarthog;
 import net.killerchief.halocraft.client.render.RenderWarthogBack;
 import net.killerchief.halocraft.config.HalocraftItems;
@@ -43,6 +48,7 @@ import net.killerchief.halocraft.entities.mobs.EntityEliteSword;
 import net.killerchief.halocraft.entities.mobs.EntityGruntFlee;
 import net.killerchief.halocraft.entities.mobs.EntityGruntPlasmaPistol;
 import net.killerchief.halocraft.entities.vehicles.EntityBanshee;
+import net.killerchief.halocraft.entities.vehicles.EntityBansheeHeretic;
 import net.killerchief.halocraft.entities.vehicles.EntityGhost;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseBlue;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseDefault;
@@ -56,9 +62,14 @@ import net.killerchief.halocraft.entities.vehicles.EntityWarthogGauss;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogGold;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogRocket;
 import net.killerchief.halocraft.entities.vehicles.MovingVehicleSoundLoop;
+import net.killerchief.halocraft.tileEntities.TileEntityCovSupplyCase;
+import net.killerchief.halocraft.tileEntities.TileEntityForeCtrlPanel;
+import net.killerchief.halocraft.tileEntities.TileEntityForeSymbol;
 import net.killerchief.halocraft.tileEntities.TileEntityGunHolder;
 import net.killerchief.halocraft.tileEntities.TileEntityHealthPack;
 import net.killerchief.halocraft.tileEntities.TileEntityLightBridgeExt;
+import net.killerchief.halocraft.tileEntities.TileEntityRechargeStation;
+import net.killerchief.halocraft.tileEntities.TileEntityUnscWeaponRack;
 import net.killerchief.kcweaponmod.ItemWeaponModel;
 import net.killerchief.kcweaponmod.RenderWeapon;
 import net.minecraft.client.Minecraft;
@@ -144,27 +155,29 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityMongooseGreen.class, new RenderMongoose());
 		RenderingRegistry.registerEntityRenderingHandler(EntityMongooseBlue.class, new RenderMongoose());
 		RenderingRegistry.registerEntityRenderingHandler(EntityMongooseRed.class, new RenderMongoose());
-
 		RenderingRegistry.registerEntityRenderingHandler(EntityGhost.class, new RenderGhost());
-
 		RenderingRegistry.registerEntityRenderingHandler(EntityWarthog.class, new RenderWarthog());
 		RenderingRegistry.registerEntityRenderingHandler(EntityWarthogBack.class, new RenderWarthogBack());
 		RenderingRegistry.registerEntityRenderingHandler(EntityWarthogChainGun.class, new RenderWarthog());
 		RenderingRegistry.registerEntityRenderingHandler(EntityWarthogGauss.class, new RenderWarthog());
 		RenderingRegistry.registerEntityRenderingHandler(EntityWarthogRocket.class, new RenderWarthog());
 		RenderingRegistry.registerEntityRenderingHandler(EntityWarthogGold.class, new RenderWarthog());
-		
 		RenderingRegistry.registerEntityRenderingHandler(EntityBanshee.class, new RenderBanshee());
+		RenderingRegistry.registerEntityRenderingHandler(EntityBansheeHeretic.class, new RenderBanshee());
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityDeployableGravityLift.class, new RenderProjectile(EnumType.DeployableGravityLift61));
+		RenderingRegistry.registerEntityRenderingHandler(EntityClientTargeter.class, new RenderClientTargeter());
+		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHealthPack.class, new RenderHealthPack());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGunHolder.class, new RenderGunHolder());
-		//TODO: STRIPED - CovSupplyCase
-		//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCovSupplyCase.class, new RenderCovSupplyCase());
-
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLightBridgeExt.class, new RenderLightBridgeExt());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCovSupplyCase.class, new RenderCovSupplyCase());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityUnscWeaponRack.class, new RenderUnscWeaponRack());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRechargeStation.class, new RenderRechargeStation());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityForeSymbol.class, new RenderDecalBlock());
 		
-		RenderingRegistry.registerEntityRenderingHandler(EntityClientTargeter.class, new RenderClientTargeter());
+		//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityForeCtrlPanel.class, new RenderForeCtrlPanel());
+		
 	}
 
 	@Override

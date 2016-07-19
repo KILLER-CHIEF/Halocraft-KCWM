@@ -1,6 +1,7 @@
 package net.killerchief.halocraft.entities.mobs;
 
 import net.killerchief.halocraft.Halocraft;
+import net.killerchief.halocraft.config.HalocraftConfig;
 import net.killerchief.halocraft.config.HalocraftItems;
 import net.killerchief.halocraft.config.HalocraftItemsArmor;
 import net.killerchief.halocraft.config.HalocraftItemsWeapons;
@@ -26,6 +27,21 @@ public abstract class EntityEliteBase extends EntityHalocraftMob {
 	public EntityEliteBase(World par1World) {
 		super(par1World);
 	}
+	
+	@Override
+	public float getEyeHeight()
+    {
+        return this.height * 0.85F;
+    }
+	
+	/**
+     * Returns the Y Offset of this entity.
+     */
+	@Override
+    public double getYOffset()
+    {
+        return (double)this.yOffset;
+    }
 
 	protected void initAIRangedTasks(double movementSpeed, double runSpeed, EntityAIBase shootAttack)
 	{

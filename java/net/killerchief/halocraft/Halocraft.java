@@ -35,7 +35,7 @@ public class Halocraft {
 
 	public static final String MODID = "halocraft";
 	public static final String NAME = "Halocraft";
-	public static final String VERSION = "0.7.5";
+	public static final String VERSION = "0.7.5.05";
 
 	/** The instance of this mod that Forge uses.*/
 	@Instance(Halocraft.MODID)
@@ -45,7 +45,8 @@ public class Halocraft {
 	public static CommonProxy proxy;
 
 	public static CreativeTabs InvTabHalocraft = new InventoryTab(MODID);
-	public static CreativeTabs InvTabHalocraftArmor = new InventoryTab(MODID+"armor", 1);
+	public static CreativeTabs InvTabHalocraftEntities = new InventoryTab(MODID+"entities", 1);
+	public static CreativeTabs InvTabHalocraftArmor = new InventoryTab(MODID+"armor", 2);
 
 	public static SimpleNetworkWrapper network;
 

@@ -1,6 +1,7 @@
 # Creative Tabs
 itemGroup.halocraft=Halocraft
-itemGroup.halocraftarmor=Halocraft Armor
+itemGroup.halocraftentities=Halocraft Entities
+itemGroup.halocraftarmor=Halocraft Armour
 
 # Commands
 command.halocraft.commanderror=Command Error: 
@@ -118,6 +119,7 @@ item.halocraft.HumanDoorLockedItem.name=Human Door Locked
 item.halocraft.ItemBlockHealthPack.name=Health Pack Block
 item.halocraft.ItemDeployableGravityLift.name=(WIP) Deployable Gravity Lift
 item.halocraft.CeramicComposite.name=Ceramic Composite
+item.halocraft.CovArmorPlate.name=Covenant Armor Plate
 
 # Armor
 item.halocraft.HelmetUnderArmor.name=Helmet Under Armor
@@ -168,7 +170,8 @@ item.halocraft.WarthogChainGun.name=Warthog Chain Gun
 item.halocraft.WarthogGauss.name=Warthog Gauss
 item.halocraft.WarthogRocket.name=Warthog Rocket
 item.halocraft.Banshee.name=Banshee
-item.halocraft.WarthogCivil.name=§6Teh Golden §mTicket§r§6 Hog
+item.halocraft.BansheeHeretic.name=Heretic Banshee
+item.halocraft.WarthogCivil.name=§6The Golden Hog
 
 # ------------Blocks------------
 tile.halocraft.TitaniumOre.name=Titanium Ore
@@ -210,14 +213,40 @@ tile.halocraft.HumanDoorLockedBlock.name=Human Door Locked Block
 tile.halocraft.BlockHealthPack.name=Block Health Pack
 tile.halocraft.UNSCPlating.name=UNSC Plating
 tile.halocraft.RechargeStation.name=Recharge Station
-tile.halocraft.Landmine.name=Landmine
+tile.halocraft.LandmineActive.name=Landmine
+tile.halocraft.LandmineIdle.name=Landmine
 #tile.halocraft.HaloPortal.name=Halo Portal
 tile.halocraft.GunHolder.name=Gun Holder
-tile.halocraft.CovSupplyCaseBase.name=Covenant Supply Case
-tile.halocraft.CovSupplyCaseTop.name=Cov Supply Case Top
 tile.halocraft.LightBridgeGenActive.name=Light Bridge Generator
 tile.halocraft.LightBridgeGenIdle.name=Light Bridge Generator
 tile.halocraft.LightBridgeExt.name=Light Bridge Extension
+tile.halocraft.CovSupplyCaseBase.name=Covenant Supply Case
+tile.halocraft.CovSupplyCaseBaseClosed.name=Covenant Supply Case Closed
+tile.halocraft.CovSupplyCaseTop.name=Cov Supply Case Top
+tile.halocraft.UnscWeaponRackBase.name=UNSC Weapon Rack
+tile.halocraft.UnscWeaponRackTop.name=UNSC Weapon Rack Top
+
+tile.halocraft.ForeCtrlPanelIdle.name=Forerunner Control Panel Idle
+tile.halocraft.ForeCtrlPanelActive.name=Forerunner Control Panel Active
+
+tile.halocraft.DecalArrowWhite.name=White Arrow Decal
+tile.halocraft.DecalArrowBlue.name=Blue Arrow Decal
+tile.halocraft.DecalArrowRed.name=Red Arrow Decal
+
+tile.halocraft.DecalForeSymbol0.name=Forerunner Symbol 0
+tile.halocraft.DecalForeSymbol1.name=Forerunner Symbol 1
+tile.halocraft.DecalForeSymbol2.name=Forerunner Symbol 2
+tile.halocraft.DecalForeSymbol3.name=Forerunner Symbol 3
+tile.halocraft.DecalForeSymbol4.name=Forerunner Symbol 4
+tile.halocraft.DecalForeSymbol5.name=Forerunner Symbol 5
+tile.halocraft.DecalForeSymbol6.name=Forerunner Symbol 6
+tile.halocraft.DecalForeSymbol7.name=Forerunner Symbol 7
+tile.halocraft.DecalForeSymbol8.name=Forerunner Symbol 8
+tile.halocraft.DecalForeSymbol9.name=Forerunner Symbol 9
+tile.halocraft.DecalForeSymbol10.name=Forerunner Symbol 10
+tile.halocraft.DecalForeSymbol11.name=Forerunner Symbol 11
+tile.halocraft.DecalForeSymbol12.name=Forerunner Symbol 12
+tile.halocraft.DecalForeSymbol13.name=Forerunner Symbol 13
 
 # Entities
 entity.halocraft.EliteSword.name=an Elite wielding an Energy Sword

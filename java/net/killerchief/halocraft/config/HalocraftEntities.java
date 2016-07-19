@@ -9,6 +9,7 @@ import net.killerchief.halocraft.entities.mobs.EntityEliteSword;
 import net.killerchief.halocraft.entities.mobs.EntityGruntFlee;
 import net.killerchief.halocraft.entities.mobs.EntityGruntPlasmaPistol;
 import net.killerchief.halocraft.entities.vehicles.EntityBanshee;
+import net.killerchief.halocraft.entities.vehicles.EntityBansheeHeretic;
 import net.killerchief.halocraft.entities.vehicles.EntityGhost;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseBlue;
 import net.killerchief.halocraft.entities.vehicles.EntityMongooseDefault;
@@ -48,6 +49,7 @@ public class HalocraftEntities {
 		EntityRegistry.registerModEntity(EntityWarthogRocket.class, "WarthogRocket", 151, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityBanshee.class, "Banshee", 152, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityWarthogGold.class, "WarthogGold", 153, Halocraft.instance, 100, 1, true);
+		EntityRegistry.registerModEntity(EntityBansheeHeretic.class, "BansheeHeretic", 154, Halocraft.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityDeployableGravityLift.class, "DeployableGravityLift", 160, Halocraft.instance, 100, 1, true);
 		
 		EntityRegistry.registerModEntity(EntityClientTargeter.class, "ClientTargeter", 161, Halocraft.instance, 100, 1, true);

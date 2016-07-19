@@ -16,6 +16,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class HalocraftItems {
 	
@@ -59,6 +60,7 @@ public class HalocraftItems {
 	public static Item ItemDeployableGravityLift;
 	//public static Item GruntEggPlasmaPistol;
 	public static Item CeramicComposite;
+	public static Item CovArmorPlate;
 	
 	public static void load(Configuration configuration) {
 		TitaniumIngot = (new HalocraftItem("TitaniumIngot", "TitaniumIngot")).setMaxStackSize(64);
@@ -85,9 +87,9 @@ public class HalocraftItems {
 		Stimpack = (new ItemStimpack("Stimpack", "Stimpack")).setMaxStackSize(8);
 		ItemHealthPack = (new ItemHealthPack("ItemHealthPack", "ItemHealthPack")).setMaxStackSize(4);
 		EnhancedFibre = (new HalocraftItem("EnhancedFibre", "EnhancedFibre")).setMaxStackSize(16);
-		UNSCPowerGenerator = (new HalocraftItem("UNSCPowerGenerator", "UNSCPowerGenerator")).setMaxStackSize(1);
-		PlasmaPowerCore = (new HalocraftItem("PlasmaPowerCore", "PlasmaPowerCore")).setMaxDamage(400).setMaxStackSize(1);
-		ShieldProjector = (new HalocraftItem("ShieldProjector", "ShieldProjector")).setMaxStackSize(1);
+		UNSCPowerGenerator = (new HalocraftItem("UNSCPowerGenerator", "UNSCPowerGenerator")).setMaxStackSize(4);
+		PlasmaPowerCore = (new HalocraftItem("PlasmaPowerCore", "PlasmaPowerCore")).setMaxDamage(400).setMaxStackSize(4);
+		ShieldProjector = (new HalocraftItem("ShieldProjector", "ShieldProjector")).setMaxStackSize(4);
 		//EliteEggSword = (new HCItemEliteEgg(0)).setUnlocalizedName("EliteEggSword").setMaxStackSize(64);
 		//EliteEggCarbine = (new HCItemEliteEgg(1)).setUnlocalizedName("EliteEggCarbine").setMaxStackSize(64);
 		//EliteEggPlasmaRifle = (new HCItemEliteEgg(2)).setUnlocalizedName("EliteEggPlasmaRifle").setMaxStackSize(64);
@@ -101,10 +103,12 @@ public class HalocraftItems {
 		ItemDeployableGravityLift = (new ItemDeployableGravityLift("ItemDeployableGravityLift", "ItemGravityLift"));
 		CeramicComposite = (new HalocraftItem("CeramicComposite", "CeramicComposite")).setMaxStackSize(64);
 		//GruntEggPlasmaPistol = (new HCItemGruntEgg()).setUnlocalizedName("GruntEggPlasmaPistol").setMaxStackSize(64);
+		CovArmorPlate = (new HalocraftItem("CovArmorPlate", "CovArmorPlate")).setMaxStackSize(32);
 	}
 	
 	public static void registerItems() {
 		GameRegistry.registerItem(TitaniumIngot, TitaniumIngot.getUnlocalizedName().substring(5));
+		OreDictionary.registerOre("ingotTitanium", TitaniumIngot);
 		GameRegistry.registerItem(RubberGel, RubberGel.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(MultiLayeredAlloy, MultiLayeredAlloy.getUnlocalizedName().substring(5));
 		GameRegistry.registerItem(SwordHilt, SwordHilt.getUnlocalizedName().substring(5));
@@ -149,6 +153,7 @@ public class HalocraftItems {
 		GameRegistry.registerItem(CeramicComposite, CeramicComposite.getUnlocalizedName().substring(5));
 		//LanguageRegistry.instance().addNameForObject(GruntEggPlasmaPistol, "en_US", "Grunt Plasma Pistol Egg");
 		//GameRegistry.registerItem(GruntEggPlasmaPistol, GruntEggPlasmaPistol.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(CovArmorPlate, CovArmorPlate.getUnlocalizedName().substring(5));
 	}
 	
 	public static void addRecipes() {
@@ -244,6 +249,9 @@ public class HalocraftItems {
 		GameRegistry.addShapelessRecipe(new ItemStack(ItemBlockHealthPack, 1), new Object[] {ItemHealthPack, MetalRod, MetalRod});
 		GameRegistry.addRecipe(new ItemStack(CeramicComposite, 1), new Object[] {
 			"BCB", "TST", "BCB", Character.valueOf('B'), Items.clay_ball, Character.valueOf('C'), Items.coal, Character.valueOf('T'), TitaniumIngot, Character.valueOf('S'), Blocks.sand
+		});
+		GameRegistry.addRecipe(new ItemStack(CovArmorPlate, 1), new Object[] {
+			"PP", "PP", Character.valueOf('P'), PurpleMetalPlate
 		});
 	}
 }

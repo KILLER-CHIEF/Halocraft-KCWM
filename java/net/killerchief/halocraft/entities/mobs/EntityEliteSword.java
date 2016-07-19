@@ -93,11 +93,12 @@ public class EntityEliteSword extends EntityEliteBase
 			if (this.getAttackTarget() == null && this.attackTime <= 0 && this.getEquipmentInSlot(0) != null && this.getEquipmentInSlot(0).getItem() != null && this.getEquipmentInSlot(0).getItem() == HalocraftItemsWeapons.EnergySword)
 			{
 				this.setCurrentItemOrArmor(0, new ItemStack(HalocraftItems.SwordHilt));
+				this.playSound(Halocraft.MODID+":weapons.EnergySwordDeactivate", 0.8F, 1.0F);
 			}
 			else if (this.getAttackTarget() != null && this.getEquipmentInSlot(0) != null && this.getEquipmentInSlot(0).getItem() == HalocraftItems.SwordHilt)
 			{
 				this.setCurrentItemOrArmor(0, new ItemStack(HalocraftItemsWeapons.EnergySword));
-				this.playSound(Halocraft.MODID+":weapons.EnergySwordEquip", 0.4F, 1.0F);
+				this.playSound(Halocraft.MODID+":weapons.EnergySwordEquip", 0.3F, 1.0F);
 			}
 		}
 	}
