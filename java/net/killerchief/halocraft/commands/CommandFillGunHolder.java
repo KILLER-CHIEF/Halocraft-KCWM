@@ -197,8 +197,8 @@ public class CommandFillGunHolder implements ICommand {
 
 	@Override
 	public boolean canCommandSenderUseCommand(ICommandSender icommandsender)
-	{
-		return true;
+	{//RequiredPermissionLevel = 2
+		return icommandsender.canCommandSenderUseCommand(2, this.getCommandName());
 	}
 
 	@Override
