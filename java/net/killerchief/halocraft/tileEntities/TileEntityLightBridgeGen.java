@@ -306,7 +306,7 @@ public class TileEntityLightBridgeGen extends TileEntity implements IInventory {
 
 	@Override
 	public String getInventoryName() {
-		return "InventoryLightBridge";
+		return "container.halocraft.lightbridge";
 	}
 
 	@Override

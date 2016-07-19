@@ -15,12 +15,14 @@ import net.minecraft.tileentity.TileEntity;
 public class TileEntityGunHolder extends TileEntity implements IInventory {
 
 	public ItemStack ContainerItemStacks[];
+	public ItemStack ContainerRespawnItemStacks[];
 
 	public TileEntityGunHolder()
 	{
 		this.ContainerItemStacks = new ItemStack[5];
+		this.ContainerRespawnItemStacks = new ItemStack[5];
 	}
-	
+
 	public boolean hasSomethingChanged = true;
 
 	private int MountSwapSide = 0;
@@ -31,7 +33,9 @@ public class TileEntityGunHolder extends TileEntity implements IInventory {
 	private int TranslationXGun = 0;
 	private int TranslationYGun = 0;
 	private int TranslationZGun = 0;
-	
+	private int RespawnTime = 0;
+	private long RespawnAtTime = 0L;
+
 	public Model3DWeaponBase gunModel = null;
 
 	/**
@@ -50,6 +54,7 @@ public class TileEntityGunHolder extends TileEntity implements IInventory {
 		this.TranslationXGun = par1NBTTagCompound.getInteger("TranslationXGun");
 		this.TranslationYGun = par1NBTTagCompound.getInteger("TranslationYGun");
 		this.TranslationZGun = par1NBTTagCompound.getInteger("TranslationZGun");
+		this.RespawnTime = par1NBTTagCompound.getInteger("RespawnTime");
 
 		NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items", 10);
 		this.ContainerItemStacks = new ItemStack[getSizeInventory()];
@@ -61,6 +66,19 @@ public class TileEntityGunHolder extends TileEntity implements IInventory {
 			if (byte0 >= 0 && byte0 < this.ContainerItemStacks.length)
 			{
 				this.ContainerItemStacks[byte0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+			}
+		}
+
+		NBTTagList nbttaglistrespawn = par1NBTTagCompound.getTagList("RespawnItems", 10);
+		this.ContainerRespawnItemStacks = new ItemStack[getSizeInventory()];
+		for (int i = 0; i < nbttaglistrespawn.tagCount(); i++)
+		{
+			NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglistrespawn.getCompoundTagAt(i);
+			byte byte0 = nbttagcompound1.getByte("SlotRespawn");
+
+			if (byte0 >= 0 && byte0 < this.ContainerRespawnItemStacks.length)
+			{
+				this.ContainerRespawnItemStacks[byte0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
 			}
 		}
 	}
@@ -81,6 +99,7 @@ public class TileEntityGunHolder extends TileEntity implements IInventory {
 		par1NBTTagCompound.setInteger("TranslationXGun", this.TranslationXGun);
 		par1NBTTagCompound.setInteger("TranslationYGun", this.TranslationYGun);
 		par1NBTTagCompound.setInteger("TranslationZGun", this.TranslationZGun);
+		par1NBTTagCompound.setInteger("RespawnTime", this.RespawnTime);
 
 		NBTTagList nbttaglist = new NBTTagList();
 		for (int i = 0; i < this.ContainerItemStacks.length; i++)
@@ -94,8 +113,33 @@ public class TileEntityGunHolder extends TileEntity implements IInventory {
 			}
 		}
 		par1NBTTagCompound.setTag("Items", nbttaglist);
+
+		NBTTagList nbttaglistrespawn = new NBTTagList();
+		for (int i = 0; i < this.ContainerRespawnItemStacks.length; i++)
+		{
+			if (this.ContainerRespawnItemStacks[i] != null)
+			{
+				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+				nbttagcompound1.setByte("SlotRespawn", (byte)i);
+				this.ContainerRespawnItemStacks[i].writeToNBT(nbttagcompound1);
+				nbttaglistrespawn.appendTag(nbttagcompound1);
+			}
+		}
+		par1NBTTagCompound.setTag("RespawnItems", nbttaglistrespawn);
 	}
-	
+
+	private boolean stacksAreDifferent() {
+		for (int i = 0; i < ContainerItemStacks.length; i++) {
+			ItemStack itemStack1 = ContainerItemStacks[i];
+			ItemStack itemStack2 = ContainerRespawnItemStacks[i];
+			if ((itemStack1 == null && itemStack2 != null) || (itemStack1 != null && itemStack2 == null) || 
+					(itemStack1 != null && itemStack2 != null && (itemStack1.getItem() != itemStack2.getItem() || itemStack1.stackSize != itemStack2.stackSize || itemStack1.getItemDamage() != itemStack2.getItemDamage()))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	/**
 	 * Allows the entity to update its state. Overridden in most subclasses, e.g. the mob spawner uses this to count
 	 * ticks and creates a new spawn inside its implementation.
@@ -105,6 +149,32 @@ public class TileEntityGunHolder extends TileEntity implements IInventory {
 	{
 		if (!this.worldObj.isRemote)
 		{
+			if (this.RespawnTime <= 0) {
+				this.RespawnAtTime = 0L;
+			}
+			else if (this.RespawnAtTime <= 0L) {
+				if (stacksAreDifferent()) {
+					this.RespawnAtTime = System.currentTimeMillis() + (this.RespawnTime*1000L);
+				}
+			}
+			else if (this.RespawnAtTime <= System.currentTimeMillis()) {
+				this.RespawnAtTime = 0L;
+				for (int i = 0; i < this.ContainerItemStacks.length; i++) {
+					if ( (this.ContainerItemStacks[i] != null && this.ContainerRespawnItemStacks[i] == null) || ( this.ContainerItemStacks[i] != null && this.ContainerRespawnItemStacks[i] != null &&
+							!this.ContainerItemStacks[i].getItem().equals(this.ContainerRespawnItemStacks[i].getItem()) ) ) {
+						EntityItem item = new EntityItem(this.worldObj, this.xCoord + 0.5, this.yCoord + 0.5, this.zCoord + 0.5, this.ContainerItemStacks[i]);
+						item.delayBeforeCanPickup = 0;
+						this.worldObj.spawnEntityInWorld(item);
+					}
+				}
+				this.ContainerItemStacks = new ItemStack[this.ContainerItemStacks.length];
+				for (int i = 0; i < this.ContainerItemStacks.length; i++) {
+					if (this.ContainerRespawnItemStacks[i] != null)
+						this.ContainerItemStacks[i] = this.ContainerRespawnItemStacks[i].copy();
+				}
+				this.hasSomethingChanged = true;
+			}
+
 			if (this.hasSomethingChanged)
 			{
 				this.hasSomethingChanged = false;
@@ -169,7 +239,7 @@ public class TileEntityGunHolder extends TileEntity implements IInventory {
 				}
 			}
 		}
-		this.ContainerItemStacks = new ItemStack[5];
+		this.ContainerItemStacks = new ItemStack[this.ContainerItemStacks.length];
 	}
 
 	public void MountSwapSide(int side)
@@ -190,7 +260,7 @@ public class TileEntityGunHolder extends TileEntity implements IInventory {
 	}
 	public void MountRotate()
 	{
-		if (++this.MountRotate > 3)
+		if (++this.MountRotate > 4)
 		{
 			this.MountRotate = 0;
 		}
@@ -255,6 +325,23 @@ public class TileEntityGunHolder extends TileEntity implements IInventory {
 	public int getTranslationZGun()
 	{
 		return this.TranslationZGun;
+	}
+
+	public int getRespawnTime()
+	{
+		return this.RespawnTime;
+	}
+	public void incrementRespawnTime(int r)
+	{
+		this.RespawnTime += r;
+		if (this.RespawnTime < 0) {
+			this.RespawnTime = 0;
+		} else {
+			if (this.RespawnAtTime > 0L) {
+				this.RespawnAtTime += r*1000L;
+			}
+		}
+		this.hasSomethingChanged = true;
 	}
 
 	@Override
@@ -325,7 +412,7 @@ public class TileEntityGunHolder extends TileEntity implements IInventory {
 	@Override
 	public String getInventoryName()
 	{
-		return "container.gunholder";
+		return "container.halocraft.gunholder";
 	}
 
 	@Override

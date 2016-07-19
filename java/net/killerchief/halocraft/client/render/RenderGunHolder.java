@@ -44,50 +44,53 @@ public class RenderGunHolder extends TileEntitySpecialRenderer {
 
 	public void renderBlock(TileEntityGunHolder tileentity, double par2, double par4, double par6, float par8)
 	{
-		GL11.glPushMatrix();
-		GL11.glTranslatef((float)par2, (float)par4, (float)par6);
-		this.bindTexture(this.resourcelocationGunMount);
-		if (tileentity.getMountSide() == 1)
+		if (tileentity.getMountRotate() < 4)
 		{
-			GL11.glTranslated(0D, 1D, 1D);
-			GL11.glRotatef(180F, 1F, 0F, 0F);
+			GL11.glPushMatrix();
+			GL11.glTranslatef((float)par2, (float)par4, (float)par6);
+			this.bindTexture(this.resourcelocationGunMount);
+			if (tileentity.getMountSide() == 1)
+			{
+				GL11.glTranslated(0D, 1D, 1D);
+				GL11.glRotatef(180F, 1F, 0F, 0F);
+			}
+			else if (tileentity.getMountSide() == 2)
+			{
+				GL11.glTranslated(1D, 0D, 1D);
+				GL11.glRotatef(90F, 0F, 0F, 1F);
+				GL11.glRotatef(-90F, 1F, 0F, 0F);
+			}
+			else if (tileentity.getMountSide() == 3)
+			{
+				GL11.glRotatef(90F, 0F, 0F, 1F);
+				GL11.glRotatef(90F, 1F, 0F, 0F);
+			}
+			else if (tileentity.getMountSide() == 4)
+			{
+				GL11.glTranslated(1D, 0D, 0D);
+				GL11.glRotatef(90F, 0F, 0F, 1F);
+			}
+			else if (tileentity.getMountSide() == 5)
+			{
+				GL11.glTranslated(0D, 1D, 0D);
+				GL11.glRotatef(-90F, 0F, 0F, 1F);
+			}
+			GL11.glRotatef(tileentity.getMountRotate() * 90F, 0F, 1F, 0F);
+			if (tileentity.getMountRotate() == 1)
+			{
+				GL11.glTranslated(-1D, 0D, 0D);
+			}
+			else if (tileentity.getMountRotate() == 2)
+			{
+				GL11.glTranslated(-1D, 0D, -1D);
+			}
+			else if (tileentity.getMountRotate() == 3)
+			{
+				GL11.glTranslated(0D, 0D, -1D);
+			}
+			this.gunMount.render(tileentity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+			GL11.glPopMatrix();
 		}
-		else if (tileentity.getMountSide() == 2)
-		{
-			GL11.glTranslated(1D, 0D, 1D);
-			GL11.glRotatef(90F, 0F, 0F, 1F);
-			GL11.glRotatef(-90F, 1F, 0F, 0F);
-		}
-		else if (tileentity.getMountSide() == 3)
-		{
-			GL11.glRotatef(90F, 0F, 0F, 1F);
-			GL11.glRotatef(90F, 1F, 0F, 0F);
-		}
-		else if (tileentity.getMountSide() == 4)
-		{
-			GL11.glTranslated(1D, 0D, 0D);
-			GL11.glRotatef(90F, 0F, 0F, 1F);
-		}
-		else if (tileentity.getMountSide() == 5)
-		{
-			GL11.glTranslated(0D, 1D, 0D);
-			GL11.glRotatef(-90F, 0F, 0F, 1F);
-		}
-		GL11.glRotatef(tileentity.getMountRotate() * 90F, 0F, 1F, 0F);
-		if (tileentity.getMountRotate() == 1)
-		{
-			GL11.glTranslated(-1D, 0D, 0D);
-		}
-		else if (tileentity.getMountRotate() == 2)
-		{
-			GL11.glTranslated(-1D, 0D, -1D);
-		}
-		else if (tileentity.getMountRotate() == 3)
-		{
-			GL11.glTranslated(0D, 0D, -1D);
-		}
-		this.gunMount.render(tileentity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-		GL11.glPopMatrix();
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float)par2, (float)par4, (float)par6);
 		if (tileentity.getStackInSlot(0) != null && tileentity.getStackInSlot(0).getItem() != null)

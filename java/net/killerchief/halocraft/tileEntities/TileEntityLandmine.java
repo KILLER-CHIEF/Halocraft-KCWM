@@ -222,7 +222,7 @@ public class TileEntityLandmine extends TileEntity implements IInventory
 
 	@Override
 	public String getInventoryName() {
-		return "InventoryLandmine";
+		return "container.halocraft.landmine";
 	}
 
 	@Override

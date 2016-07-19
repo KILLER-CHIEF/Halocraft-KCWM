@@ -1,24 +1,34 @@
 package net.killerchief.halocraft.inventory;
 
-import net.killerchief.halocraft.tileEntities.TileEntityRechargeStation;
+import net.killerchief.halocraft.tileEntities.TileEntityUnscWeaponRack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerRechargeStation extends Container
+public class ContainerUnscWeaponRack extends Container
 {
-	private TileEntityRechargeStation tileentity;
+	private TileEntityUnscWeaponRack tileEntity;
 
-	public ContainerRechargeStation(InventoryPlayer inventoryplayer, TileEntityRechargeStation tileentityrechargestation)
+	public ContainerUnscWeaponRack(InventoryPlayer inventoryplayer, TileEntityUnscWeaponRack tileentity, boolean frontSide)
 	{
-		this.tileentity = tileentityrechargestation;
-		this.addSlotToContainer(new Slot(tileentityrechargestation, 0, 80, 56));
-		this.addSlotToContainer(new Slot(tileentityrechargestation, 1, 26, 18));
-		this.addSlotToContainer(new Slot(tileentityrechargestation, 2, 62, 18));
-		this.addSlotToContainer(new Slot(tileentityrechargestation, 3, 98, 18));
-		this.addSlotToContainer(new Slot(tileentityrechargestation, 4, 134, 18));
+		this.tileEntity = tileentity;
+
+		int iSlot = 0;
+		if (!frontSide)
+			iSlot = 8;
+		this.addSlotToContainer(new Slot(tileentity, 0+iSlot, 64, 31));
+		this.addSlotToContainer(new Slot(tileentity, 1+iSlot, 96, 31));
+
+		this.addSlotToContainer(new Slot(tileentity, 2+iSlot, 36, 17));
+		this.addSlotToContainer(new Slot(tileentity, 3+iSlot, 36, 35));
+		this.addSlotToContainer(new Slot(tileentity, 4+iSlot, 36, 53));
+
+		this.addSlotToContainer(new Slot(tileentity, 5+iSlot, 62, 58));
+		this.addSlotToContainer(new Slot(tileentity, 6+iSlot, 80, 58));
+		this.addSlotToContainer(new Slot(tileentity, 7+iSlot, 98, 58));
+
 
 		for (int i = 0; i < 3; i++)
 		{
@@ -48,14 +58,14 @@ public class ContainerRechargeStation extends Container
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
 
-			if (par2 < 5)
+			if (par2 < 16)
 			{
-				if (!this.mergeItemStack(itemstack1, 5, this.inventorySlots.size(), true))
+				if (!this.mergeItemStack(itemstack1, 16, this.inventorySlots.size(), true))
 				{
 					return null;
 				}
 			}
-			else if (!this.mergeItemStack(itemstack1, 0, 5, false))
+			else if (!this.mergeItemStack(itemstack1, 0, 16, false))
 			{
 				return null;
 			}
@@ -76,6 +86,7 @@ public class ContainerRechargeStation extends Container
 	@Override
 	public boolean canInteractWith(EntityPlayer entityplayer)
 	{
-		return tileentity.isUseableByPlayer(entityplayer);
+		return tileEntity.isUseableByPlayer(entityplayer);
 	}
+
 }

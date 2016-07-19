@@ -1,8 +1,5 @@
 package net.killerchief.halocraft.tileEntities;
 
-import net.killerchief.halocraft.config.HalocraftItems;
-import net.killerchief.halocraft.config.HalocraftItemsWeapons;
-import net.killerchief.kcweaponmod.ItemWeapon;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -14,13 +11,15 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityRechargeStation extends TileEntity implements IInventory {
+public class TileEntityUnscWeaponRack extends TileEntity implements IInventory {
 
 	public ItemStack ContainerItemStacks[];
+	private byte sideOpenState = 0;
+	public boolean hasSomethingChanged = true;
 
-	public TileEntityRechargeStation()
+	public TileEntityUnscWeaponRack()
 	{
-		this.ContainerItemStacks = new ItemStack[5];
+		this.ContainerItemStacks = new ItemStack[16];
 	}
 
 	/**
@@ -30,6 +29,8 @@ public class TileEntityRechargeStation extends TileEntity implements IInventory 
 	public void readFromNBT(NBTTagCompound par1NBTTagCompound)
 	{
 		super.readFromNBT(par1NBTTagCompound);
+
+		this.sideOpenState = par1NBTTagCompound.getByte("sideOpenState");
 
 		NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items", 10);
 		this.ContainerItemStacks = new ItemStack[getSizeInventory()];
@@ -52,6 +53,8 @@ public class TileEntityRechargeStation extends TileEntity implements IInventory 
 	public void writeToNBT(NBTTagCompound par1NBTTagCompound)
 	{
 		super.writeToNBT(par1NBTTagCompound);
+
+		par1NBTTagCompound.setByte("sideOpenState", this.sideOpenState);
 
 		NBTTagList nbttaglist = new NBTTagList();
 		for (int i = 0; i < this.ContainerItemStacks.length; i++)
@@ -76,43 +79,29 @@ public class TileEntityRechargeStation extends TileEntity implements IInventory 
 	@Override
 	public void updateEntity()
 	{
-		if (!this.worldObj.isRemote)
+		if (this.hasSomethingChanged)
 		{
-			if (this.tickNext < System.currentTimeMillis())
-			{
-				this.tickNext = System.currentTimeMillis() + 2000L;
-				for (int i = 1; i < ContainerItemStacks.length; i++) {
-					if (this.ContainerItemStacks[0] != null && this.ContainerItemStacks[0].getItem() == HalocraftItems.PlasmaPowerCore) {
-						if (this.ContainerItemStacks[i] != null)
-						{
-							if (this.ContainerItemStacks[i].getItem() == HalocraftItems.SwordHilt) {
-								if (this.ContainerItemStacks[i].isItemDamaged())
-								{
-									this.ContainerItemStacks[i].setItemDamage(this.ContainerItemStacks[i].getItemDamage()-1);
-									this.ContainerItemStacks[0].setItemDamage(this.ContainerItemStacks[0].getItemDamage()+1);
-									//break;
-								}
-							}
-							else if (this.ContainerItemStacks[i].getItem() instanceof ItemWeapon) {
-
-								ItemWeapon weapon = (ItemWeapon)this.ContainerItemStacks[i].getItem();
-								if (weapon.Properties.AmmoType == null)
-								{
-									//TODO: Recharge update do this
-									if (weapon == HalocraftItemsWeapons.Carbine || weapon == HalocraftItemsWeapons.BeamRifle || weapon == HalocraftItemsWeapons.PlasmaRifle || weapon == HalocraftItemsWeapons.PlasmaPistol || weapon == HalocraftItemsWeapons.Needler)
-										if (this.ContainerItemStacks[i].isItemDamaged())
-										{
-											this.ContainerItemStacks[i].setItemDamage(this.ContainerItemStacks[i].getItemDamage()-1);
-											this.ContainerItemStacks[0].setItemDamage(this.ContainerItemStacks[0].getItemDamage()+1);
-											//break;
-										}
-								}
-							}
-						}
-					}
-				}
-			}
+			this.hasSomethingChanged = false;
+			this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+			this.markDirty();
 		}
+	}
+
+	@Override
+	public Packet getDescriptionPacket() {
+		NBTTagCompound tagCompound = new NBTTagCompound();
+		this.writeToNBT(tagCompound);
+		return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 1, tagCompound);
+	}
+
+	@Override
+	public void onDataPacket(NetworkManager networkManager, S35PacketUpdateTileEntity packet) {
+		this.readFromNBT(packet.func_148857_g());
+		// example: update open GUI
+		//GuiScreen gui = FMLClientHandler.instance().getClient().currentScreen;
+		//if (gui != null && gui instanceof YourTileEntityGuiScreen) {
+		//   ((YourTileEntityGuiScreen) gui).updateFromTileEntityData();
+		//}
 	}
 
 	public void dropContents()
@@ -132,21 +121,17 @@ public class TileEntityRechargeStation extends TileEntity implements IInventory 
 		this.ContainerItemStacks = new ItemStack[this.ContainerItemStacks.length];
 	}
 
-	@Override
-	public Packet getDescriptionPacket() {
-		NBTTagCompound tagCompound = new NBTTagCompound();
-		this.writeToNBT(tagCompound);
-		return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 1, tagCompound);
+	public void setSideClosedState(boolean front, boolean closed) {
+		this.sideOpenState = (byte) ( (closed ? (front ? 1 : 2) : 0) + (isSideClosed(!front) ? (!front ? 1 : 2) : 0) );
+		this.hasSomethingChanged = true;
 	}
 
-	@Override
-	public void onDataPacket(NetworkManager networkManager, S35PacketUpdateTileEntity packet) {
-		this.readFromNBT(packet.func_148857_g());
-		// example: update open GUI
-		//GuiScreen gui = FMLClientHandler.instance().getClient().currentScreen;
-		//if (gui != null && gui instanceof YourTileEntityGuiScreen) {
-		//   ((YourTileEntityGuiScreen) gui).updateFromTileEntityData();
-		//}
+	public boolean isSideClosed(boolean front)
+	{
+		if (front) {
+			return this.sideOpenState == 1 || this.sideOpenState == 3;
+		}
+		return this.sideOpenState == 2 || this.sideOpenState == 3;
 	}
 
 	@Override
@@ -217,7 +202,7 @@ public class TileEntityRechargeStation extends TileEntity implements IInventory 
 	@Override
 	public String getInventoryName()
 	{
-		return "container.halocraft.rechargestation";
+		return "container.halocraft.unscweaponrack";
 	}
 
 	@Override
@@ -252,7 +237,18 @@ public class TileEntityRechargeStation extends TileEntity implements IInventory 
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack)
-	{
-		return true;
+	{//This is never called! :(
+		/*System.out.println("Check");
+		if (i == 0 || i == 2) {
+			if (itemstack != null && itemstack.getItem() == HalocraftItems.CovArmorPlate)
+				return true;
+			return false;
+		}
+		if (i == 1 || i == 3) {
+			if (itemstack != null && itemstack.getItem() == HalocraftItems.PlasmaPowerCore)
+				return true;
+			return false;
+		}*/
+		return false;
 	}
 }

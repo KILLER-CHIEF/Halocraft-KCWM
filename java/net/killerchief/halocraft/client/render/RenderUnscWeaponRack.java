@@ -1,10 +1,11 @@
 package net.killerchief.halocraft.client.render;
 
 import net.killerchief.halocraft.Halocraft;
-import net.killerchief.halocraft.client.models.items.ModelCovSupplyCase;
-import net.killerchief.halocraft.client.models.items.ModelCovSupplyCaseFullyOpen;
-import net.killerchief.halocraft.client.models.items.ModelCovSupplyCaseHalfOpen;
-import net.killerchief.halocraft.tileEntities.TileEntityCovSupplyCase;
+import net.killerchief.halocraft.client.models.items.ModelUnscWeaponRackClosed;
+import net.killerchief.halocraft.client.models.items.ModelUnscWeaponRackOpen;
+import net.killerchief.halocraft.client.models.items.ModelUnscWeaponRackOpenA;
+import net.killerchief.halocraft.client.models.items.ModelUnscWeaponRackOpenB;
+import net.killerchief.halocraft.tileEntities.TileEntityUnscWeaponRack;
 import net.killerchief.kcweaponmod.ItemWeapon;
 import net.killerchief.kcweaponmod.Model3DWeaponBase;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -19,65 +20,63 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderCovSupplyCase extends TileEntitySpecialRenderer {
+public class RenderUnscWeaponRack extends TileEntitySpecialRenderer {
 
-	private final ModelCovSupplyCase modelBlock1 = new ModelCovSupplyCase();
-	private final ModelCovSupplyCaseHalfOpen modelBlock2 = new ModelCovSupplyCaseHalfOpen();
-	private final ModelCovSupplyCaseFullyOpen modelBlock3 = new ModelCovSupplyCaseFullyOpen();
+	private final ModelUnscWeaponRackOpen modelBlock0 = new ModelUnscWeaponRackOpen();
+	private final ModelUnscWeaponRackOpenA modelBlock1 = new ModelUnscWeaponRackOpenA();
+	private final ModelUnscWeaponRackOpenB modelBlock2 = new ModelUnscWeaponRackOpenB();
+	private final ModelUnscWeaponRackClosed modelBlock3 = new ModelUnscWeaponRackClosed();
 
-	private static final ResourceLocation resourcelocation1 = new ResourceLocation(Halocraft.MODID+":textures/cmblocks/SupplyCase.png");
-	private static final ResourceLocation resourcelocation2 = new ResourceLocation(Halocraft.MODID+":textures/cmblocks/SupplyCaseInfected.png");
+	private static final ResourceLocation resourcelocation = new ResourceLocation(Halocraft.MODID+":textures/cmblocks/UnscWeaponRack.png");
 
-	public RenderCovSupplyCase() {}
+	public RenderUnscWeaponRack() {}
 
-	public void renderBlock(TileEntityCovSupplyCase tileentitycbe, double par2, double par4, double par6, float par8)
+	public void renderBlock(TileEntityUnscWeaponRack tileentitycbe, double par2, double par4, double par6, float par8)
 	{
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float)par2, (float)par4, (float)par6);
-		GL11.glScalef(-1.0F, -0.96F, 1.0F);
-		GL11.glTranslated(-0.5D, -0.96D, 0.5D);
+		GL11.glScalef(-0.99F, -1.0F, 0.99F);
+		GL11.glTranslated(-0.505D, -1D, 0.505D);
 		GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
-		GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
+		GL11.glRotatef(0.0F, 0.0F, 1.0F, 0.0F);
 		if (tileentitycbe.getBlockMetadata() == 0) {
 			GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
 		}
-		
-		this.bindTexture(resourcelocation1);
-		boolean front = !tileentitycbe.isSideClosed(true);
-		boolean back = !tileentitycbe.isSideClosed(false);
+
+		this.bindTexture(resourcelocation);
+		boolean front = tileentitycbe.isSideClosed(true);
+		boolean back = tileentitycbe.isSideClosed(false);
 		if (front && back)
 			this.modelBlock3.render(tileentitycbe, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 		else if (front && !back)
 			this.modelBlock2.render(tileentitycbe, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-		else if (!front && back) {
-			GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
-			this.modelBlock2.render(tileentitycbe, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-			GL11.glRotatef(-180.0F, 0.0F, 1.0F, 0.0F);
-		} else
+		else if (!front && back) 
 			this.modelBlock1.render(tileentitycbe, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-		
-		GL11.glScalef(0.4F, 0.4F, 0.4F);
-		for (int i : new int[]{4,5,12,13}) {
-			if (i==4) {
+		else
+			this.modelBlock0.render(tileentitycbe, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+
+		GL11.glScalef(0.3F, 0.3F, 0.3F);
+		GL11.glRotatef(180F, 0F, 1F, 0F);
+		for (int i : new int[]{0,1,8,9}) {
+			if (i==0) {
 				GL11.glRotatef(90F, 0F, 0F, 1F);
 				GL11.glRotatef(-90F, 0F, 1F, 0F);
-				GL11.glTranslatef(-0.6F, 1F, 0.3F);
+				GL11.glTranslatef(-0.06F, 1.5F, 0.0F);
 				GL11.glRotatef(4F, 1F, 0F, 0F);
-			} else if (i==5) {
+			} else if (i==1) {
 				GL11.glTranslatef(0.9F, 0F, 0F);
-			} else if (i==12) {
+			} else if (i==8) {
 				GL11.glRotatef(-8F, 1F, 0F, 0F);
 				GL11.glRotatef(180F, 0F, 0F, 1F);
-				GL11.glTranslatef(-0.3F, 2F, 0F);
-			} else if (i==13) {
+				GL11.glTranslatef(0.8F, 3F, 0F);
+			} else if (i==9) {
 				GL11.glTranslatef(0.9F, 0F, 0F);
 			}
-			if ( ( ((i == 4 || i == 5) && front) || ((i == 12 || i == 13) && back) ) && tileentitycbe.getStackInSlot(i) != null && tileentitycbe.getStackInSlot(i).getItem() != null)
+			if ( ( ((i == 0 || i == 1) && !front) || ((i == 8 || i == 9) && !back) ) && tileentitycbe.getStackInSlot(i) != null && tileentitycbe.getStackInSlot(i).getItem() != null)
 			{
-				
 				Model3DWeaponBase gunModel = null;
 				boolean glows = false;
-				
+
 				Item item = tileentitycbe.getStackInSlot(i).getItem();
 				if (item instanceof ItemWeapon && ((ItemWeapon)item).Properties.WeaponModel != null && ((ItemWeapon)item).Properties.WeaponModel.Model instanceof Model3DWeaponBase)
 				{
@@ -85,7 +84,7 @@ public class RenderCovSupplyCase extends TileEntitySpecialRenderer {
 					gunModel = (Model3DWeaponBase) ((ItemWeapon)item).Properties.WeaponModel.Model;
 					glows = ((ItemWeapon)item).Properties.WeaponModel.Glows;
 				}
-				
+
 				if (gunModel != null)
 				{
 					if (glows)
@@ -101,13 +100,13 @@ public class RenderCovSupplyCase extends TileEntitySpecialRenderer {
 				}
 			}
 		}
-		
+
 		GL11.glPopMatrix();
 	}
 
 	@Override
 	public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8)
 	{
-		renderBlock((TileEntityCovSupplyCase)par1TileEntity, par2, par4, par6, par8);
+		renderBlock((TileEntityUnscWeaponRack)par1TileEntity, par2, par4, par6, par8);
 	}
 }

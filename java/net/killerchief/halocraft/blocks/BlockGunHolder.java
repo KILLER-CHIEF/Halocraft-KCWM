@@ -73,11 +73,11 @@ public class BlockGunHolder extends BlockContainer
 	public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
 	{
 		TileEntityGunHolder entity = (TileEntityGunHolder)par1World.getTileEntity(par2, par3, par4);
-		if (par5EntityPlayer.getCurrentEquippedItem() != null && par5EntityPlayer.getCurrentEquippedItem().getItem() == HalocraftItems.Wrench)
+		if (par5EntityPlayer.isSneaking() || (par5EntityPlayer.getCurrentEquippedItem() != null && par5EntityPlayer.getCurrentEquippedItem().getItem() == HalocraftItems.Wrench) )
 		{
 			if (!par1World.isRemote)
 			{
-				FMLNetworkHandler.openGui(par5EntityPlayer, Halocraft.instance, 3, par1World, par2, par3, par4);
+				FMLNetworkHandler.openGui(par5EntityPlayer, Halocraft.instance, 9, par1World, par2, par3, par4);
 			}
 		}
 		else
@@ -104,7 +104,7 @@ public class BlockGunHolder extends BlockContainer
 	{
 		return 1;
 	}
-	
+
 	/**
 	 * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z, side, hitX, hitY, hitZ, block metadata
 	 */
@@ -117,7 +117,7 @@ public class BlockGunHolder extends BlockContainer
 		{
 			j1 = 1;
 		}
-		
+
 		if ((metadata == 0 || side == 2) && world.isSideSolid(posX, posY, posZ + 1, NORTH))
 		{
 			j1 = 2;
@@ -140,7 +140,7 @@ public class BlockGunHolder extends BlockContainer
 
 		return j1;
 	}
-	
+
 	/**
 	 * Lets the block know when one of its neighbor changes. Doesn't know which neighbor changed (coordinates passed are
 	 * their own) Args: x, y, z, neighbor Block
@@ -150,12 +150,12 @@ public class BlockGunHolder extends BlockContainer
 	{
 		int l = world.getBlockMetadata(posX, posY, posZ);
 		boolean flag = false;
-		
+
 		if (l == 0 && world.isSideSolid(posX, posY - 1, posZ, DOWN))
 		{
 			flag = true;
 		}
-		
+
 		if (l == 1 && world.isSideSolid(posX, posY + 1, posZ, UP))
 		{
 			flag = true;
@@ -189,7 +189,7 @@ public class BlockGunHolder extends BlockContainer
 
 		super.onNeighborBlockChange(world, posX, posY, posZ, neighbourBlock);
 	}
-	
+
 	/**
 	 * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
 	 * cleared to be reused)
@@ -230,13 +230,13 @@ public class BlockGunHolder extends BlockContainer
 			this.setBlockBounds(0F, 0F, 0F, 1F, 1.0F - k, 1F);
 			//this.setBlockBounds(0.0F, 0.0F, 1.0F - f, 1.0F, 1.0F, 1.0F);
 		}
-		
+
 		if (metadata == 1)
 		{
 			this.setBlockBounds(0F, 1.0F - k, 0F, 1F, 1F, 1F);
 			//this.setBlockBounds(0.0F, 0.0F, 1.0F - f, 1.0F, 1.0F, 1.0F);
 		}
-		
+
 		if (metadata == 2)
 		{
 			this.setBlockBounds(0F, 0F, 1.0F - k, 1F, 1F, 1.0F);

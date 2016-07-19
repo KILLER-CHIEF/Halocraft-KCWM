@@ -1,8 +1,12 @@
 package net.killerchief.halocraft.comm.packetHandlers;
 
 import io.netty.buffer.ByteBuf;
+import net.killerchief.halocraft.Halocraft;
 import net.killerchief.halocraft.tileEntities.TileEntityGunHolder;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentText;
+import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
@@ -60,6 +64,41 @@ public class PacketGunHolder implements IMessage {
 						else if (message.btnVal == 21)
 						{
 							tileentity.MountRotate();
+						}
+						else if (message.btnVal == 22)
+						{
+							FMLNetworkHandler.openGui(player, Halocraft.instance, 10, player.worldObj, message.X, message.Y, message.Z);
+						}
+						else if (message.btnVal >= 23 && message.btnVal <= 27) {
+							if (player.canCommandSenderUseCommand(2, "HCGunHolder")) {
+								if (message.btnVal == 23)
+								{
+									tileentity.ContainerRespawnItemStacks = new ItemStack[tileentity.ContainerItemStacks.length];
+									for (int i = 0; i < tileentity.ContainerItemStacks.length; i++) {
+										if (tileentity.ContainerItemStacks[i] != null)
+											tileentity.ContainerRespawnItemStacks[i] = tileentity.ContainerItemStacks[i].copy();
+									}
+									tileentity.hasSomethingChanged = true;
+								}
+								else if (message.btnVal == 24)
+								{
+									tileentity.incrementRespawnTime(1);
+								}
+								else if (message.btnVal == 25)
+								{
+									tileentity.incrementRespawnTime(20);
+								}
+								else if (message.btnVal == 26)
+								{
+									tileentity.incrementRespawnTime(-1);
+								}
+								else if (message.btnVal == 27)
+								{
+									tileentity.incrementRespawnTime(-20);
+								}
+							} else {
+								player.addChatMessage(new ChatComponentText("§4You do not have permission to use that part of the Gun Holder!"));
+							}
 						}
 						else if (message.btnVal == 1)
 						{

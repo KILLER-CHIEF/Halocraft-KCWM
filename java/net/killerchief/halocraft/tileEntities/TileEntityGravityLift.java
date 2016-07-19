@@ -273,7 +273,7 @@ public class TileEntityGravityLift extends TileEntity implements IInventory
 
 	@Override
 	public String getInventoryName() {
-		return "InventoryGravityLift";
+		return "container.halocraft.gravitylift";
 	}
 
 	@Override

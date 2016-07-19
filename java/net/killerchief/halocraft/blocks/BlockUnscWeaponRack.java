@@ -3,9 +3,9 @@ package net.killerchief.halocraft.blocks;
 import java.util.Random;
 
 import net.killerchief.halocraft.Halocraft;
+import net.killerchief.halocraft.comm.packetHandlers.PacketUnscWeaponRack;
 import net.killerchief.halocraft.config.HalocraftBlocks;
-import net.killerchief.halocraft.config.HalocraftItems;
-import net.killerchief.halocraft.tileEntities.TileEntityCovSupplyCase;
+import net.killerchief.halocraft.tileEntities.TileEntityUnscWeaponRack;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -24,12 +24,11 @@ import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockCovSupplyCase extends BlockContainer
+public class BlockUnscWeaponRack extends BlockContainer
 {
 	private boolean isBase = false;
-	private boolean isClosed = false;
 
-	public BlockCovSupplyCase(String name, boolean isbase) {
+	public BlockUnscWeaponRack(String name, boolean isbase) {
 		super(Material.iron);
 		this.setBlockName(Halocraft.MODID + "." + name);
 
@@ -40,11 +39,6 @@ public class BlockCovSupplyCase extends BlockContainer
 		else
 			this.setCreativeTab(null);
 	}
-	
-	public BlockCovSupplyCase(String name, boolean isbase, boolean setClosed) {
-		this(name, isbase);
-		this.isClosed = setClosed;
-	}
 
 	/**
 	 * When this method is called, your block should register all the icons it needs with the given IconRegister. This
@@ -54,13 +48,13 @@ public class BlockCovSupplyCase extends BlockContainer
 	@Override
 	public void registerBlockIcons(IIconRegister iiconregister)
 	{
-		this.blockIcon = iiconregister.registerIcon(Halocraft.MODID+":CovSupplyCase"+(!this.isClosed ? "Open" : ""));
+		this.blockIcon = iiconregister.registerIcon(Halocraft.MODID+":UnscWeaponRack");
 	}
-	
+
 	@Override
 	public TileEntity createNewTileEntity(World par1World, int par2)
 	{
-		return this.isBase ? new TileEntityCovSupplyCase() : null;
+		return this.isBase ? new TileEntityUnscWeaponRack() : null;
 	}
 
 	@Override
@@ -120,7 +114,7 @@ public class BlockCovSupplyCase extends BlockContainer
 	{
 		return this.isBase ? 1 : 0;
 	}
-	
+
 	/**
 	 * Gets an item for the block being called on. Args: world, x, y, z
 	 */
@@ -128,7 +122,7 @@ public class BlockCovSupplyCase extends BlockContainer
 	@Override
 	public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_)
 	{
-		return Item.getItemFromBlock(HalocraftBlocks.CovSupplyCaseBase);
+		return Item.getItemFromBlock(HalocraftBlocks.UnscWeaponRackBase);
 	}
 
 	/**
@@ -139,7 +133,7 @@ public class BlockCovSupplyCase extends BlockContainer
 	{
 		return this.isBase ? (world.getBlock(posX, posY + 1, posZ) == Blocks.air ? true : false) : false;
 	}
-	
+
 	/**
 	 * Called when the block is placed in the world.
 	 */
@@ -174,7 +168,7 @@ public class BlockCovSupplyCase extends BlockContainer
 		if (!this.isBase)
 		{
 			Block block = world.getBlock(posX, posY - 1, posZ);
-			if (block != null && block != HalocraftBlocks.CovSupplyCaseBase && block != HalocraftBlocks.CovSupplyCaseBaseClosed)
+			if (block != null && block != HalocraftBlocks.UnscWeaponRackBase)
 			{
 				world.setBlockToAir(posX, posY, posZ);
 			}
@@ -189,12 +183,7 @@ public class BlockCovSupplyCase extends BlockContainer
 	{
 		if (this.isBase)
 		{
-			world.setBlock(posX, posY + 1, posZ, HalocraftBlocks.CovSupplyCaseTop);
-			if (this.isClosed)
-			{
-				((TileEntityCovSupplyCase)world.getTileEntity(posX, posY, posZ)).setInventorySlotContents(0, new ItemStack(HalocraftItems.CovArmorPlate));
-				((TileEntityCovSupplyCase)world.getTileEntity(posX, posY, posZ)).setInventorySlotContents(2, new ItemStack(HalocraftItems.CovArmorPlate));
-			}
+			world.setBlock(posX, posY + 1, posZ, HalocraftBlocks.UnscWeaponRackTop);
 		}
 	}
 
@@ -207,8 +196,8 @@ public class BlockCovSupplyCase extends BlockContainer
 	public void breakBlock(World world, int posX, int posY, int posZ, Block block, int par6)
 	{
 		TileEntity entity = world.getTileEntity(posX, posY+(this.isBase ? 0 : -1), posZ);
-		if (entity != null && entity instanceof TileEntityCovSupplyCase)
-			((TileEntityCovSupplyCase)entity).dropContents();
+		if (entity != null && entity instanceof TileEntityUnscWeaponRack)
+			((TileEntityUnscWeaponRack)entity).dropContents();
 		if (this.isBase)
 		{
 			world.setBlockToAir(posX, posY + 1, posZ);
@@ -225,32 +214,40 @@ public class BlockCovSupplyCase extends BlockContainer
 	@Override
 	public boolean onBlockActivated(World world, int posX, int posY, int posZ, EntityPlayer entityPlayer, int side, float clickX, float clickY, float clickZ)
 	{
-		//System.out.println(side);
 		int meta = world.getBlockMetadata(posX, posY+(this.isBase ? 0 : -1), posZ);
-		//System.out.println(meta);
 
 		int id = 0;
-		if (entityPlayer.getCurrentEquippedItem() != null && entityPlayer.getCurrentEquippedItem().getItem() == HalocraftItems.Wrench)
-		{
-			//System.out.println("wrench");
-			if ((meta == 0 && side == 3) || (meta == 1 && side == 5))
-				id = 5;
-			else if ((meta == 0 && side == 2) || (meta == 1 && side == 4))
-				id = 6;
-		}
-		else
-		{
-			//System.out.println("not wrench");
-			if ((meta == 0 && side == 3) || (meta == 1 && side == 5))
-				id = 7;
-			else if ((meta == 0 && side == 2) || (meta == 1 && side == 4))
-				id = 8;
-		}
+
+		if ((meta == 0 && side == 3) || (meta == 1 && side == 5))
+			id = 11;
+		else if ((meta == 0 && side == 2) || (meta == 1 && side == 4))
+			id = 12;
+
 		if (id != 0)
 		{
-			if (!world.isRemote)
-				FMLNetworkHandler.openGui(entityPlayer, Halocraft.instance, id, world, posX, posY+(this.isBase ? 0 : -1), posZ);
-			return true;
+			TileEntity te = world.getTileEntity(posX, posY+(this.isBase ? 0 : -1), posZ);
+			if (te != null && te instanceof TileEntityUnscWeaponRack) {
+				TileEntityUnscWeaponRack tew = (TileEntityUnscWeaponRack)te;
+				if (tew.isSideClosed(id==11)) {
+					if (!world.isRemote) {
+						//System.out.println("Send Open");
+						Halocraft.network.sendToServer(new PacketUnscWeaponRack(tew.xCoord, tew.yCoord, tew.zCoord, (byte) (2+(id == 11 ? 1 : 2))));
+					}
+					return true;
+				}
+				else {
+					if (!this.isBase && clickY >= 0.7F) {
+						if (!world.isRemote) {
+							//System.out.println("Send Close");
+							Halocraft.network.sendToServer(new PacketUnscWeaponRack(tew.xCoord, tew.yCoord, tew.zCoord, (byte) (id == 11 ? 1 : 2)));
+						}
+						return true;
+					}
+					if (!world.isRemote)
+						FMLNetworkHandler.openGui(entityPlayer, Halocraft.instance, id, world, posX, posY+(this.isBase ? 0 : -1), posZ);
+					return true;
+				}
+			}
 		}
 
 		return false;
