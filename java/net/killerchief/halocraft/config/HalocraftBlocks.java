@@ -3,6 +3,8 @@ package net.killerchief.halocraft.config;
 import net.killerchief.halocraft.blocks.BlockBrokenComputer;
 import net.killerchief.halocraft.blocks.BlockComputer;
 import net.killerchief.halocraft.blocks.BlockCovSupplyCase;
+import net.killerchief.halocraft.blocks.BlockDecal;
+import net.killerchief.halocraft.blocks.BlockForeCtrlPanel;
 import net.killerchief.halocraft.blocks.BlockForerunnerStairs;
 import net.killerchief.halocraft.blocks.BlockGunHolder;
 import net.killerchief.halocraft.blocks.BlockHalfSlab;
@@ -18,8 +20,11 @@ import net.killerchief.halocraft.blocks.BlockPermanentGravityLiftExt;
 import net.killerchief.halocraft.blocks.BlockRechargeStation;
 import net.killerchief.halocraft.blocks.BlockSpreadlessGrass;
 import net.killerchief.halocraft.blocks.BlockTitaniumDoor;
+import net.killerchief.halocraft.blocks.BlockUnscWeaponRack;
 import net.killerchief.halocraft.blocks.HalocraftBlock;
 import net.killerchief.halocraft.tileEntities.TileEntityCovSupplyCase;
+import net.killerchief.halocraft.tileEntities.TileEntityForeCtrlPanel;
+import net.killerchief.halocraft.tileEntities.TileEntityForeSymbol;
 import net.killerchief.halocraft.tileEntities.TileEntityGravityLift;
 import net.killerchief.halocraft.tileEntities.TileEntityGunHolder;
 import net.killerchief.halocraft.tileEntities.TileEntityHealthPack;
@@ -27,6 +32,7 @@ import net.killerchief.halocraft.tileEntities.TileEntityLandmine;
 import net.killerchief.halocraft.tileEntities.TileEntityLightBridgeExt;
 import net.killerchief.halocraft.tileEntities.TileEntityLightBridgeGen;
 import net.killerchief.halocraft.tileEntities.TileEntityRechargeStation;
+import net.killerchief.halocraft.tileEntities.TileEntityUnscWeaponRack;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
@@ -34,6 +40,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class HalocraftBlocks {
@@ -81,13 +88,37 @@ public class HalocraftBlocks {
 	public static Block LandmineActive;
 	public static Block LandmineIdle;
 	public static Block GunHolder;
-	//TODO: STRIPED - CovSupplyCase
-	public static Block CovSupplyCaseBase;
-	public static Block CovSupplyCaseTop;
-	
 	public static Block LightBridgeExt;
 	public static Block LightBridgeGenActive;
 	public static Block LightBridgeGenIdle;
+	
+	public static Block CovSupplyCaseBase;
+	public static Block CovSupplyCaseBaseClosed;
+	public static Block CovSupplyCaseTop;
+	
+	public static Block UnscWeaponRackBase;
+	public static Block UnscWeaponRackTop;
+	
+	public static Block ForeCtrlPanelActive;
+	public static Block ForeCtrlPanelIdle;
+	
+	public static Block DecalArrowWhite;
+	public static Block DecalArrowBlue;
+	public static Block DecalArrowRed;
+	public static Block DecalForeSymbol0;
+	public static Block DecalForeSymbol1;
+	public static Block DecalForeSymbol2;
+	public static Block DecalForeSymbol3;
+	public static Block DecalForeSymbol4;
+	public static Block DecalForeSymbol5;
+	public static Block DecalForeSymbol6;
+	public static Block DecalForeSymbol7;
+	public static Block DecalForeSymbol8;
+	public static Block DecalForeSymbol9;
+	public static Block DecalForeSymbol10;
+	public static Block DecalForeSymbol11;
+	public static Block DecalForeSymbol12;
+	public static Block DecalForeSymbol13;
 
 	public static void load(Configuration configuration) {
 		TitaniumOre = (new HalocraftBlock("TitaniumOre", "TitaniumOre", Material.rock, 2)).setHardness(8F).setResistance(10F).setStepSound(Block.soundTypeStone);
@@ -104,7 +135,7 @@ public class HalocraftBlocks {
 		ForerunnerSymbol = (new HalocraftBlock("ForerunnerSymbol", Material.iron, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal).setLightLevel(0.5F);
 		ForerunnerFence = (new BlockMetalFence("ForerunnerFence", "ForerunnerMetal", Material.iron, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
 		ForerunnerStair = (new BlockForerunnerStairs("ForerunnerStair", ForerunnerMetal, 0)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
-		ForerunnerSlabBlock = (BlockSlab)(new BlockHalfSlab("ForerunnerSlabBlock", "ForerunnerMetal", Material.iron, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
+		ForerunnerSlabBlock = (BlockSlab) new BlockHalfSlab("ForerunnerSlabBlock", "ForerunnerMetal", Material.iron, 3).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
 		ForerunnerSlabLightBlock = (BlockSlab)(new BlockHalfSlab("ForerunnerSlabLightBlock", "ForerunnerLight", Material.iron, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal).setLightLevel(1.0F);
 		ForerunnerBlueMetal = (new HalocraftBlock("ForerunnerBlueMetal", Material.iron, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
 		ForerunnerBlueMetalLight = (new HalocraftBlock("ForerunnerBlueMetalLight", Material.iron, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal).setLightLevel(1.0F);
@@ -132,17 +163,44 @@ public class HalocraftBlocks {
 		LandmineActive = (new BlockLandmine("LandmineActive", true)).setHardness(0.0F).setResistance(0.0F).setStepSound(Block.soundTypeMetal);
 		LandmineIdle = (new BlockLandmine("LandmineIdle", false)).setHardness(2F).setResistance(2F).setStepSound(Block.soundTypeMetal);
 		GunHolder = (new BlockGunHolder(Material.circuits)).setHardness(2F).setResistance(2F).setStepSound(Block.soundTypeMetal);
-		//CovSupplyCaseBase = (new BlockCovSupplyCase("CovSupplyCaseBase", true)).setHardness(10F).setResistance(10F).setStepSound(Block.soundTypeMetal);
-		//CovSupplyCaseTop = (new BlockCovSupplyCase("CovSupplyCaseTop", false)).setHardness(10F).setResistance(10F).setStepSound(Block.soundTypeMetal);
-		
 		LightBridgeExt = new BlockLightBridgeExt("LightBridgeExt").setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
 		LightBridgeGenActive = (new BlockLightBridgeGen("LightBridgeGenActive", true)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
 		LightBridgeGenIdle = (new BlockLightBridgeGen("LightBridgeGenIdle", false)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
+		
+		CovSupplyCaseBase = (new BlockCovSupplyCase("CovSupplyCaseBase", true)).setHardness(10F).setResistance(10F).setStepSound(Block.soundTypeMetal);
+		CovSupplyCaseBaseClosed = (new BlockCovSupplyCase("CovSupplyCaseBaseClosed", true, true)).setHardness(10F).setResistance(10F).setStepSound(Block.soundTypeMetal);
+		CovSupplyCaseTop = (new BlockCovSupplyCase("CovSupplyCaseTop", false)).setHardness(10F).setResistance(10F).setStepSound(Block.soundTypeMetal);
+		
+		UnscWeaponRackBase = (new BlockUnscWeaponRack("UnscWeaponRackBase", true)).setHardness(10F).setResistance(10F).setStepSound(Block.soundTypeMetal);
+		UnscWeaponRackTop = (new BlockUnscWeaponRack("UnscWeaponRackTop", false)).setHardness(10F).setResistance(10F).setStepSound(Block.soundTypeMetal);
+		
+		//ForeCtrlPanelActive = (new BlockForeCtrlPanel("ForeCtrlPanelActive", true)).setHardness(8F).setResistance(10F).setStepSound(Block.soundTypeMetal);
+		//ForeCtrlPanelIdle = (new BlockForeCtrlPanel("ForeCtrlPanelIdle", false)).setHardness(8F).setResistance(10F).setStepSound(Block.soundTypeMetal);
+		
+		DecalArrowWhite = (new BlockDecal("DecalArrowWhite", "glyphs/Glyph14", Material.circuits, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
+		DecalArrowBlue = (new BlockDecal("DecalArrowBlue", "glyphs/Glyph15", Material.circuits, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
+		DecalArrowRed = (new BlockDecal("DecalArrowRed", "glyphs/Glyph16", Material.circuits, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
+		DecalForeSymbol0 = (new BlockDecal("DecalForeSymbol0", "glyphs/Glyph", Material.circuits, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
+		DecalForeSymbol1 = (new BlockDecal("DecalForeSymbol1", "glyphs/Glyph1", Material.circuits, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
+		DecalForeSymbol2 = (new BlockDecal("DecalForeSymbol2", "glyphs/Glyph2", Material.circuits, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
+		DecalForeSymbol3 = (new BlockDecal("DecalForeSymbol3", "glyphs/Glyph3", Material.circuits, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
+		DecalForeSymbol4 = (new BlockDecal("DecalForeSymbol4", "glyphs/Glyph4", Material.circuits, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
+		DecalForeSymbol5 = (new BlockDecal("DecalForeSymbol5", "glyphs/Glyph5", Material.circuits, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
+		DecalForeSymbol6 = (new BlockDecal("DecalForeSymbol6", "glyphs/Glyph6", Material.circuits, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
+		DecalForeSymbol7 = (new BlockDecal("DecalForeSymbol7", "glyphs/Glyph7", Material.circuits, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
+		DecalForeSymbol8 = (new BlockDecal("DecalForeSymbol8", "glyphs/Glyph8", Material.circuits, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
+		DecalForeSymbol9 = (new BlockDecal("DecalForeSymbol9", "glyphs/Glyph9", Material.circuits, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
+		DecalForeSymbol10 = (new BlockDecal("DecalForeSymbol10", "glyphs/Glyph10", Material.circuits, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
+		DecalForeSymbol11 = (new BlockDecal("DecalForeSymbol11", "glyphs/Glyph11", Material.circuits, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
+		DecalForeSymbol12 = (new BlockDecal("DecalForeSymbol12", "glyphs/Glyph12", Material.circuits, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
+		DecalForeSymbol13 = (new BlockDecal("DecalForeSymbol13", "glyphs/Glyph13", Material.circuits, 3)).setHardness(100F).setResistance(2000F).setStepSound(Block.soundTypeMetal);
 	}
 
 	public static void registerBlocks() {
 		GameRegistry.registerBlock(TitaniumOre, TitaniumOre.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(TitaniumBlock, TitaniumBlock.getUnlocalizedName().substring(5));
+		OreDictionary.registerOre("oreTitanium", TitaniumOre);
+		OreDictionary.registerOre("blockTitanium", TitaniumBlock);
 		GameRegistry.registerBlock(PermanentGravityLiftBaseActive, PermanentGravityLiftBaseActive.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(PermanentGravityLiftBaseIdle, PermanentGravityLiftBaseIdle.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(PermanentGravityLiftExt, PermanentGravityLiftExt.getUnlocalizedName().substring(5));
@@ -183,16 +241,38 @@ public class HalocraftBlocks {
 		GameRegistry.registerBlock(LandmineActive, LandmineActive.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(LandmineIdle, LandmineIdle.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(GunHolder, GunHolder.getUnlocalizedName().substring(5));
-		//GameRegistry.registerBlock(CovSupplyCaseBase, CovSupplyCaseBase.getUnlocalizedName().substring(5));
-		//GameRegistry.registerBlock(CovSupplyCaseTop, CovSupplyCaseTop.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(LightBridgeExt, LightBridgeExt.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(LightBridgeGenActive, LightBridgeGenActive.getUnlocalizedName().substring(5));
 		GameRegistry.registerBlock(LightBridgeGenIdle, LightBridgeGenIdle.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(CovSupplyCaseBase, CovSupplyCaseBase.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(CovSupplyCaseBaseClosed, CovSupplyCaseBaseClosed.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(CovSupplyCaseTop, CovSupplyCaseTop.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(UnscWeaponRackBase, UnscWeaponRackBase.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(UnscWeaponRackTop, UnscWeaponRackTop.getUnlocalizedName().substring(5));
+		//GameRegistry.registerBlock(ForeCtrlPanelActive, ForeCtrlPanelActive.getUnlocalizedName().substring(5));
+		//GameRegistry.registerBlock(ForeCtrlPanelIdle, ForeCtrlPanelIdle.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(DecalArrowWhite, DecalArrowWhite.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(DecalArrowBlue, DecalArrowBlue.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(DecalArrowRed, DecalArrowRed.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(DecalForeSymbol0, DecalForeSymbol0.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(DecalForeSymbol1, DecalForeSymbol1.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(DecalForeSymbol2, DecalForeSymbol2.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(DecalForeSymbol3, DecalForeSymbol3.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(DecalForeSymbol4, DecalForeSymbol4.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(DecalForeSymbol5, DecalForeSymbol5.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(DecalForeSymbol6, DecalForeSymbol6.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(DecalForeSymbol7, DecalForeSymbol7.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(DecalForeSymbol8, DecalForeSymbol8.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(DecalForeSymbol9, DecalForeSymbol9.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(DecalForeSymbol10, DecalForeSymbol10.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(DecalForeSymbol11, DecalForeSymbol11.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(DecalForeSymbol12, DecalForeSymbol12.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(DecalForeSymbol13, DecalForeSymbol13.getUnlocalizedName().substring(5));
 
 		registerTileEntities();
 	}
 
-	private static void registerTileEntities() { //ClientProxy: bindTileEntitySpecialRenderer
+	private static void registerTileEntities() { //net.killerchief.halocraft.client.ClientProxy: bindTileEntitySpecialRenderer
 		GameRegistry.registerTileEntity(BlockComputer.TileEntityComputer.class, "Halocraft.Computer");
 		GameRegistry.registerTileEntity(TileEntityGravityLift.class, "Halocraft.GravityLift");
 		GameRegistry.registerTileEntity(TileEntityHealthPack.class, "Halocraft.HealthPack");
@@ -200,8 +280,11 @@ public class HalocraftBlocks {
 		GameRegistry.registerTileEntity(TileEntityGunHolder.class, "Halocraft.GunHolder");
 		GameRegistry.registerTileEntity(TileEntityLandmine.class, "Halocraft.Landmine");
 		GameRegistry.registerTileEntity(TileEntityCovSupplyCase.class, "Halocraft.CovSupplyCase");
+		GameRegistry.registerTileEntity(TileEntityUnscWeaponRack.class, "Halocraft.UnscWeaponRack");
 		GameRegistry.registerTileEntity(TileEntityLightBridgeExt.class, "Halocraft.LightBridgeExt");
 		GameRegistry.registerTileEntity(TileEntityLightBridgeGen.class, "Halocraft.LightBridgeGen");
+		GameRegistry.registerTileEntity(TileEntityForeSymbol.class, "Halocraft.ForeSymbol");
+		//GameRegistry.registerTileEntity(TileEntityForeCtrlPanel.class, "Halocraft.ForeCtrlPanel");
 	}
 
 	public static void addRecipes() {
@@ -224,6 +307,12 @@ public class HalocraftBlocks {
 		});
 		GameRegistry.addRecipe(new ItemStack(RechargeStation, 1), new Object[] {
 			"III", "XOX", "III", Character.valueOf('I'), HalocraftItems.PurpleMetalPlate, Character.valueOf('X'), HalocraftItems.Microchip, Character.valueOf('O'), HalocraftItems.MetalRack
+		});
+		GameRegistry.addRecipe(new ItemStack(CovSupplyCaseBase, 1), new Object[] {
+			"I I", "PRP", "I I", Character.valueOf('R'), RechargeStation, Character.valueOf('I'), HalocraftItems.TitaniumIngot, Character.valueOf('P'), HalocraftItems.CovArmorPlate
+		});
+		GameRegistry.addRecipe(new ItemStack(CovSupplyCaseBaseClosed, 1), new Object[] {
+			"IPI", "PRP", "IPI", Character.valueOf('R'), RechargeStation, Character.valueOf('I'), HalocraftItems.TitaniumIngot, Character.valueOf('P'), HalocraftItems.CovArmorPlate
 		});
 	}
 }
