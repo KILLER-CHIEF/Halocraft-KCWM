@@ -45,8 +45,7 @@ public class InitHcWeapons {
 		ArrayList<ItemWeapon> weapons = new ArrayList<ItemWeapon>();
 		
 		//BattleRifle
-		ItemWeaponProperties BattleRifle = new ItemWeaponProperties();
-		BattleRifle.Name = Halocraft.MODID+".BattleRifle";
+		ItemWeaponProperties BattleRifle = new ItemWeaponProperties(Halocraft.MODID+".BattleRifle");
 		BattleRifle.Texture = Halocraft.MODID + ":BattleRifle";
 		BattleRifle.WeaponModel = new ItemWeaponModel(new ModelBattleRifle(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinBattleRifle.png"));
 		BattleRifle.IsAutomaticOrHasSecondaryShoot = false;
@@ -93,8 +92,7 @@ public class InitHcWeapons {
 		
 		
 		//DMR
-		ItemWeaponProperties DMR = new ItemWeaponProperties();
-		DMR.Name = Halocraft.MODID+".DMR";
+		ItemWeaponProperties DMR = new ItemWeaponProperties(Halocraft.MODID+".DMR");
 		DMR.Texture = Halocraft.MODID + ":DMR";
 		DMR.WeaponModel = new ItemWeaponModel(new ModelDMR(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinDMR.png"));
 		DMR.IsAutomaticOrHasSecondaryShoot = false;
@@ -141,8 +139,7 @@ public class InitHcWeapons {
 		
 		
 		//AssaultRifle
-		ItemWeaponProperties AssaultRifle = new ItemWeaponProperties();
-		AssaultRifle.Name = Halocraft.MODID+".AssaultRifle";
+		ItemWeaponProperties AssaultRifle = new ItemWeaponProperties(Halocraft.MODID+".AssaultRifle");
 		AssaultRifle.Texture = Halocraft.MODID + ":AssaultRifle";
 		AssaultRifle.WeaponModel = new ItemWeaponModel(new ModelAssaultRifle(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinAssaultRifle.png"));
 		AssaultRifle.IsAutomaticOrHasSecondaryShoot = true;
@@ -189,8 +186,7 @@ public class InitHcWeapons {
 		
 		
 		//Shotgun
-		ItemWeaponProperties Shotgun = new ItemWeaponProperties();
-		Shotgun.Name = Halocraft.MODID+".Shotgun";
+		ItemWeaponProperties Shotgun = new ItemWeaponProperties(Halocraft.MODID+".Shotgun");
 		Shotgun.Texture = Halocraft.MODID + ":Shotgun";
 		Shotgun.WeaponModel = new ItemWeaponModel(new ModelShotgun(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinShotgun.png"));
 		Shotgun.IsAutomaticOrHasSecondaryShoot = false;
@@ -237,8 +233,7 @@ public class InitHcWeapons {
 		
 		
 		//SniperRifle
-		ItemWeaponProperties SniperRifle = new ItemWeaponProperties();
-		SniperRifle.Name = Halocraft.MODID+".SniperRifle";
+		ItemWeaponProperties SniperRifle = new ItemWeaponProperties(Halocraft.MODID+".SniperRifle");
 		SniperRifle.Texture = Halocraft.MODID + ":SniperRifle";
 		SniperRifle.WeaponModel = new ItemWeaponModel(new ModelSniperRifle(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinSniperRifle.png"));
 		SniperRifle.IsAutomaticOrHasSecondaryShoot = false;
@@ -285,8 +280,7 @@ public class InitHcWeapons {
 		
 		
 		//Magnum
-		ItemWeaponProperties Magnum = new ItemWeaponProperties();
-		Magnum.Name = Halocraft.MODID+".Magnum";
+		ItemWeaponProperties Magnum = new ItemWeaponProperties(Halocraft.MODID+".Magnum");
 		Magnum.Texture = Halocraft.MODID + ":Magnum";
 		Magnum.WeaponModel = new ItemWeaponModel(new ModelMagnumM6G(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinMagnumM6G.png"));
 		Magnum.IsAutomaticOrHasSecondaryShoot = false;
@@ -333,8 +327,7 @@ public class InitHcWeapons {
 		
 		
 		//SMG
-		ItemWeaponProperties SMG = new ItemWeaponProperties();
-		SMG.Name = Halocraft.MODID+".SMG";
+		ItemWeaponProperties SMG = new ItemWeaponProperties(Halocraft.MODID+".SMG");
 		SMG.Texture = Halocraft.MODID + ":SMG";
 		SMG.WeaponModel = new ItemWeaponModel(new ModelSMGM7S(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinSMGM7.png"));
 		SMG.IsAutomaticOrHasSecondaryShoot = true;
@@ -381,8 +374,7 @@ public class InitHcWeapons {
 		
 		
 		//RocketLauncher
-		ItemWeaponProperties RocketLauncher = new ItemWeaponProperties();
-		RocketLauncher.Name = Halocraft.MODID+".RocketLauncher";
+		ItemWeaponProperties RocketLauncher = new ItemWeaponProperties(Halocraft.MODID+".RocketLauncher");
 		RocketLauncher.Texture = Halocraft.MODID + ":RocketLauncher";
 		RocketLauncher.WeaponModel = new ItemWeaponModel(new ModelRocketLauncher(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinRocketLauncher.png"));
 		RocketLauncher.IsAutomaticOrHasSecondaryShoot = false;
@@ -435,8 +427,7 @@ public class InitHcWeapons {
 		
 		
 		//Carbine
-		ItemWeaponProperties Carbine = new ItemWeaponProperties();
-		Carbine.Name = Halocraft.MODID+".Carbine";
+		ItemWeaponProperties Carbine = new ItemWeaponProperties(Halocraft.MODID+".Carbine");
 		Carbine.Texture = Halocraft.MODID + ":Carbine";
 		Carbine.WeaponModel = new ItemWeaponModel(new ModelCarbine(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinCarbine.png"));
 		Carbine.IsAutomaticOrHasSecondaryShoot = false;
@@ -483,8 +474,7 @@ public class InitHcWeapons {
 		
 		
 		//PlasmaRifle
-		ItemWeaponProperties PlasmaRifle = new ItemWeaponProperties();
-		PlasmaRifle.Name = Halocraft.MODID+".PlasmaRifle";
+		ItemWeaponProperties PlasmaRifle = new ItemWeaponProperties(Halocraft.MODID+".PlasmaRifle");
 		PlasmaRifle.Texture = Halocraft.MODID + ":PlasmaRifle";
 		PlasmaRifle.WeaponModel = new ItemWeaponModel(new ModelPlasmaRifle(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinPlasmaRifle.png"));
 		PlasmaRifle.IsAutomaticOrHasSecondaryShoot = true;
@@ -507,10 +497,10 @@ public class InitHcWeapons {
 		PlasmaRifle.ReloadSoundExit = "";
 		PlasmaRifle.AmmoFeedsFromInventory = false;
 		PlasmaRifle.AmmoType = null;//new ItemStack(HalocraftItemsWeapons.MediumRounds);
-		PlasmaRifle.MagazineSize = 70;
+		PlasmaRifle.MagazineSize = 200;
 		PlasmaRifle.ItemStackDecreaseOnUse = false;
 		PlasmaRifle.ItemStackMaxStackSize = 1;
-		PlasmaRifle.RequiredUsesPerShot = 1;
+		PlasmaRifle.RequiredUsesPerShot = 2;
 		PlasmaRifle.ShootBurstCount = 1;
 		//PlasmaRifle.BurstAccuracyDecrease = 0.6F;
 		PlasmaRifle.SingleShotProjectileCount = 1;
@@ -531,8 +521,7 @@ public class InitHcWeapons {
 		
 		
 		//PlasmaPistol
-		ItemWeaponProperties PlasmaPistol = new ItemWeaponProperties();
-		PlasmaPistol.Name = Halocraft.MODID+".PlasmaPistol";
+		ItemWeaponProperties PlasmaPistol = new ItemWeaponProperties(Halocraft.MODID+".PlasmaPistol");
 		PlasmaPistol.Texture = Halocraft.MODID + ":PlasmaPistol";
 		PlasmaPistol.WeaponModel = new ItemWeaponModel(new ModelPlasmaPistol(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinPlasmaPistol.png"));
 		PlasmaPistol.IsAutomaticOrHasSecondaryShoot = false;
@@ -555,10 +544,10 @@ public class InitHcWeapons {
 		PlasmaPistol.ReloadSoundExit = "";
 		PlasmaPistol.AmmoFeedsFromInventory = false;
 		PlasmaPistol.AmmoType = null;//new ItemStack(HalocraftItemsWeapons.MediumRounds);
-		PlasmaPistol.MagazineSize = 60;
+		PlasmaPistol.MagazineSize = 200;
 		PlasmaPistol.ItemStackDecreaseOnUse = false;
 		PlasmaPistol.ItemStackMaxStackSize = 1;
-		PlasmaPistol.RequiredUsesPerShot = 1;
+		PlasmaPistol.RequiredUsesPerShot = 2;
 		PlasmaPistol.ShootBurstCount = 1;
 		//PlasmaPistol.BurstAccuracyDecrease = 0.6F;
 		PlasmaPistol.SingleShotProjectileCount = 1;
@@ -579,8 +568,7 @@ public class InitHcWeapons {
 		
 		
 		//Needler
-		ItemWeaponProperties Needler = new ItemWeaponProperties();
-		Needler.Name = Halocraft.MODID+".Needler";
+		ItemWeaponProperties Needler = new ItemWeaponProperties(Halocraft.MODID+".Needler");
 		Needler.Texture = Halocraft.MODID + ":Needler";
 		Needler.WeaponModel = new ItemWeaponModel(new ModelNeedler(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinNeedler.png"));
 		Needler.IsAutomaticOrHasSecondaryShoot = true;
@@ -631,8 +619,7 @@ public class InitHcWeapons {
 		
 		
 		//BeamRifle
-		ItemWeaponProperties BeamRifle = new ItemWeaponProperties();
-		BeamRifle.Name = Halocraft.MODID+".BeamRifle";
+		ItemWeaponProperties BeamRifle = new ItemWeaponProperties(Halocraft.MODID+".BeamRifle");
 		BeamRifle.Texture = Halocraft.MODID + ":BeamRifle";
 		BeamRifle.WeaponModel = new ItemWeaponModel(new ModelBeamRifle(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinBeamRifle.png"));
 		BeamRifle.IsAutomaticOrHasSecondaryShoot = false;
@@ -655,10 +642,10 @@ public class InitHcWeapons {
 		BeamRifle.ReloadSoundExit = "";
 		BeamRifle.AmmoFeedsFromInventory = false;
 		BeamRifle.AmmoType = null;//new ItemStack(HalocraftItemsWeapons.LargeRounds);
-		BeamRifle.MagazineSize = 10;
+		BeamRifle.MagazineSize = 100;
 		BeamRifle.ItemStackDecreaseOnUse = false;
 		BeamRifle.ItemStackMaxStackSize = 1;
-		BeamRifle.RequiredUsesPerShot = 1;
+		BeamRifle.RequiredUsesPerShot = 6;
 		BeamRifle.ShootBurstCount = 1;
 		//BeamRifle.BurstAccuracyDecrease = 0.6F;
 		BeamRifle.SingleShotProjectileCount = 1;
@@ -679,8 +666,7 @@ public class InitHcWeapons {
 		
 		
 		//Flamethrower
-		ItemWeaponProperties Flamethrower = new ItemWeaponProperties();
-		Flamethrower.Name = Halocraft.MODID+".Flamethrower";
+		ItemWeaponProperties Flamethrower = new ItemWeaponProperties(Halocraft.MODID+".Flamethrower");
 		Flamethrower.Texture = Halocraft.MODID + ":Flamethrower";
 		Flamethrower.WeaponModel = new ItemWeaponModel(new ModelFlamethrower(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinFlamethrower.png"));
 		Flamethrower.IsAutomaticOrHasSecondaryShoot = true;
@@ -727,8 +713,7 @@ public class InitHcWeapons {
 		
 		
 		//Spiker
-		ItemWeaponProperties Spiker = new ItemWeaponProperties();
-		Spiker.Name = Halocraft.MODID+".Spiker";
+		ItemWeaponProperties Spiker = new ItemWeaponProperties(Halocraft.MODID+".Spiker");
 		Spiker.Texture = Halocraft.MODID + ":Spiker";
 		Spiker.WeaponModel = new ItemWeaponModel(new ModelSpiker(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinSpiker.png"));
 		Spiker.IsAutomaticOrHasSecondaryShoot = true;
@@ -779,8 +764,7 @@ public class InitHcWeapons {
 		
 		
 		//Mauler
-		ItemWeaponProperties Mauler = new ItemWeaponProperties();
-		Mauler.Name = Halocraft.MODID+".Mauler";
+		ItemWeaponProperties Mauler = new ItemWeaponProperties(Halocraft.MODID+".Mauler");
 		Mauler.Texture = Halocraft.MODID + ":Mauler";
 		Mauler.WeaponModel = new ItemWeaponModel(new ModelMauler(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinMauler.png"));
 		Mauler.IsAutomaticOrHasSecondaryShoot = false;
@@ -827,8 +811,7 @@ public class InitHcWeapons {
 		
 		
 		//FragGrenade
-		ItemWeaponProperties FragGrenade = new ItemWeaponProperties();
-		FragGrenade.Name = Halocraft.MODID+".FragGrenade";
+		ItemWeaponProperties FragGrenade = new ItemWeaponProperties(Halocraft.MODID+".FragGrenade");
 		FragGrenade.Texture = Halocraft.MODID + ":FragGrenade";
 		FragGrenade.AimItem = false;
 		FragGrenade.IsAutomaticOrHasSecondaryShoot = false;
@@ -876,8 +859,7 @@ public class InitHcWeapons {
 		
 		
 		//PlasmaGrenade
-		ItemWeaponProperties PlasmaGrenade = new ItemWeaponProperties();
-		PlasmaGrenade.Name = Halocraft.MODID+".PlasmaGrenade";
+		ItemWeaponProperties PlasmaGrenade = new ItemWeaponProperties(Halocraft.MODID+".PlasmaGrenade");
 		PlasmaGrenade.Texture = Halocraft.MODID + ":PlasmaGrenade";
 		PlasmaGrenade.AimItem = false;
 		PlasmaGrenade.IsAutomaticOrHasSecondaryShoot = false;
@@ -924,8 +906,7 @@ public class InitHcWeapons {
 		
 		
 		//FirebombGrenade
-		ItemWeaponProperties FirebombGrenade = new ItemWeaponProperties();
-		FirebombGrenade.Name = Halocraft.MODID+".FirebombGrenade";
+		ItemWeaponProperties FirebombGrenade = new ItemWeaponProperties(Halocraft.MODID+".FirebombGrenade");
 		FirebombGrenade.Texture = Halocraft.MODID + ":FirebombGrenade";
 		FirebombGrenade.AimItem = false;
 		FirebombGrenade.IsAutomaticOrHasSecondaryShoot = false;
@@ -972,8 +953,7 @@ public class InitHcWeapons {
 		
 		
 		//SpikeGrenade TODO
-		/*ItemWeaponProperties SpikeGrenade = new ItemWeaponProperties();
-		SpikeGrenade.Name = Halocraft.MODID+".SpikeGrenade";
+		/*ItemWeaponProperties SpikeGrenade = new ItemWeaponProperties(Halocraft.MODID+".SpikeGrenade");
 		SpikeGrenade.Texture = Halocraft.MODID + ":SpikeGrenade";
 		
 		/*this.GunDelay = 10;
@@ -991,8 +971,7 @@ public class InitHcWeapons {
 		
 		//weapons[19] = new ItemWeapon(SpikeGrenade);
 		
-		ItemWeaponProperties SentinelBeam = new ItemWeaponProperties();
-		SentinelBeam.Name = Halocraft.MODID+".SentinelBeam";
+		ItemWeaponProperties SentinelBeam = new ItemWeaponProperties(Halocraft.MODID+".SentinelBeam");
 		SentinelBeam.Texture = Halocraft.MODID + ":NullX";
 		SentinelBeam.WeaponModel = new ItemWeaponModel(new ModelSentinelBeam(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinSentinelBeamMajor.png"));
 		SentinelBeam.InventoryTab = tab;
@@ -1041,9 +1020,8 @@ public class InitHcWeapons {
 		
 		
 		//Ghost Plasma Bolts
-		ItemWeaponProperties GhostPlasmaBolts = new ItemWeaponProperties();
+		ItemWeaponProperties GhostPlasmaBolts = new ItemWeaponProperties(Halocraft.MODID+".Vehicle.GhostPlasmaBolts");
 		GhostPlasmaBolts.RegisterItem = false;
-		GhostPlasmaBolts.Name = Halocraft.MODID+".Vehicle.GhostPlasmaBolts";
 		GhostPlasmaBolts.ProjectileRenderProperties = Halocraft.MODID+":textures/entities/BluePlasmaRender.png";
 		GhostPlasmaBolts.ProjectileGlows = true;
 		GhostPlasmaBolts.ProjectileSpeed = 4F;
@@ -1051,6 +1029,7 @@ public class InitHcWeapons {
 		GhostPlasmaBolts.Gravity = 0.004F;
 		GhostPlasmaBolts.MaxEffectiveTicksAlive = 80;
 		GhostPlasmaBolts.ProjectileImpactProperties = "";
+		//Used as a test: GhostPlasmaBolts.ProjImpactActArgs = new Object[]{new Object[]{"net.killerchief.halocraft.config.NewWeaponTags.ParticleFXRocket", new Object[]{}}, new Object[]{"ImpactEntity", new Object[]{"6", "0", new Object[]{"Explode",new Object[]{"1",new Object[]{"Explode",new Object[]{"2",new Object[]{"Die"}}}}}}}, new Object[]{new Object[]{"Die"}}};
 		GhostPlasmaBolts.ProjImpactActArgs = new Object[]{ImpactBlockObject, new Object[]{"ImpactEntity", new String[]{"6", "0", "Die"}}};
 		GhostPlasmaBolts.ProjectileDragInAir = 0.99F;
 		GhostPlasmaBolts.ProjectileDragInWater = 0.5F;
@@ -1059,9 +1038,8 @@ public class InitHcWeapons {
 
 
 		//Warthog Turret
-		ItemWeaponProperties ChainGunBullet = new ItemWeaponProperties();
+		ItemWeaponProperties ChainGunBullet = new ItemWeaponProperties(Halocraft.MODID+".Vehicle.ChainGunBullet");
 		ChainGunBullet.RegisterItem = false;
-		ChainGunBullet.Name = Halocraft.MODID+".Vehicle.ChainGunBullet";
 		ChainGunBullet.ProjectileRenderProperties = Halocraft.MODID+":textures/entities/BulletRender.png";
 		ChainGunBullet.ProjectileGlows = false;
 		ChainGunBullet.ProjectileSpeed = 7F;
@@ -1078,9 +1056,8 @@ public class InitHcWeapons {
 		
 		
 		//Warthog Gauss Turret
-		ItemWeaponProperties GaussSlug = new ItemWeaponProperties();
+		ItemWeaponProperties GaussSlug = new ItemWeaponProperties(Halocraft.MODID+".Vehicle.GaussSlug");
 		GaussSlug.RegisterItem = false;
-		GaussSlug.Name = Halocraft.MODID+".Vehicle.GaussSlug";
 		GaussSlug.ProjectileRenderProperties = Halocraft.MODID+":textures/entities/BulletRender.png";
 		GaussSlug.ProjectileGlows = false;
 		GaussSlug.ProjectileSpeed = 7F;
@@ -1097,9 +1074,8 @@ public class InitHcWeapons {
 
 		
 		//Elite Carbine
-		ItemWeaponProperties EliteCarbine = new ItemWeaponProperties();
+		ItemWeaponProperties EliteCarbine = new ItemWeaponProperties(Halocraft.MODID+".Mob.EliteCarbine");
 		EliteCarbine.RegisterItem = false;
-		EliteCarbine.Name = Halocraft.MODID+".Mob.EliteCarbine";
 		EliteCarbine.ProjectileRenderProperties = Halocraft.MODID+":textures/entities/GreenPlasmaRender.png";
 		EliteCarbine.ProjectileGlows = true;
 		EliteCarbine.ProjectileSpeed = 8F;
@@ -1115,9 +1091,8 @@ public class InitHcWeapons {
 		
 
 		//Elite Plasma Rifle
-		ItemWeaponProperties ElitePlasmaRifle = new ItemWeaponProperties();
+		ItemWeaponProperties ElitePlasmaRifle = new ItemWeaponProperties(Halocraft.MODID+".Mob.ElitePlasmaRifle");
 		ElitePlasmaRifle.RegisterItem = false;
-		ElitePlasmaRifle.Name = Halocraft.MODID+".Mob.ElitePlasmaRifle";
 		ElitePlasmaRifle.ProjectileRenderProperties = Halocraft.MODID+":textures/entities/BluePlasmaRender.png";
 		ElitePlasmaRifle.ProjectileGlows = true;
 		ElitePlasmaRifle.ProjectileSpeed = 4F;
@@ -1133,9 +1108,8 @@ public class InitHcWeapons {
 		
 
 		//Grunt Plasma Pistol
-		ItemWeaponProperties GruntPlasmaPistol = new ItemWeaponProperties();
+		ItemWeaponProperties GruntPlasmaPistol = new ItemWeaponProperties(Halocraft.MODID+".Mob.GruntPlasmaPistol");
 		GruntPlasmaPistol.RegisterItem = false;
-		GruntPlasmaPistol.Name = Halocraft.MODID+".Mob.GruntPlasmaPistol";
 		GruntPlasmaPistol.ProjectileRenderProperties = Halocraft.MODID+":textures/entities/GreenPlasmaRender.png";
 		GruntPlasmaPistol.ProjectileGlows = true;
 		GruntPlasmaPistol.ProjectileSpeed = 2F;
@@ -1151,8 +1125,7 @@ public class InitHcWeapons {
 		
 		
 		//BruteShot
-		ItemWeaponProperties BruteShot = new ItemWeaponProperties();
-		BruteShot.Name = Halocraft.MODID+".BruteShot";
+		ItemWeaponProperties BruteShot = new ItemWeaponProperties(Halocraft.MODID+".BruteShot");
 		BruteShot.Texture = Halocraft.MODID + ":BruteShot";
 		BruteShot.WeaponModel = new ItemWeaponModel(new ModelBruteShot(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinBruteShot.png"));
 		BruteShot.IsAutomaticOrHasSecondaryShoot = false;
@@ -1198,7 +1171,7 @@ public class InitHcWeapons {
 		weapons.add(new ItemWeapon(BruteShot));
 		
 		
-		if (KCWeaponMod.registerModItems(Halocraft.MODID, "1.2", weapons.toArray(new ItemWeapon[weapons.size()])))
+		if (KCWeaponMod.registerModItems(Halocraft.MODID, "1.3", weapons.toArray(new ItemWeapon[weapons.size()])))
 		{
 			System.out.println("KCWeaponMod: Successfully Registered Halocraft Weapons");
 		}
