@@ -73,7 +73,7 @@ public class EventHandler {
 	{
 		EntityPlayer entityplayer = event.entityPlayer;
 
-		if (HalocraftConfig.ShowDevPerks && entityplayer != null && !entityplayer.isDead && Halocraft.proxy.isSideClient())
+		if (HalocraftConfig.ShowDevPerks && entityplayer != null && !entityplayer.isDead && !entityplayer.isInvisible() && Halocraft.proxy.isSideClient())
 		{
 			Minecraft mc = Minecraft.getMinecraft();
 			if (!mc.isGamePaused() && this.headCooldown-- <= 0)
@@ -237,6 +237,7 @@ public class EventHandler {
 					if (entityplayermp.inventory.mainInventory[i] != null && entityplayermp.inventory.mainInventory[i].getItem() == HalocraftItemsWeapons.EnergySword)
 					{
 						//System.out.println("Swapping");
+						entityplayermp.worldObj.playSoundAtEntity(entityplayermp, Halocraft.MODID+":weapons.EnergySwordDeactivate", 0.8F, 1.0F);
 						entityplayermp.inventory.setInventorySlotContents(i, new ItemStack(HalocraftItems.SwordHilt, 1, entityplayermp.inventory.getStackInSlot(i).getItemDamage()));
 					}
 				}
