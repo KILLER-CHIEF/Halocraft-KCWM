@@ -8,6 +8,7 @@ import net.killerchief.halocraft.client.models.vehicles.ModelBansheeBaseDamaged1
 import net.killerchief.halocraft.client.models.vehicles.ModelBansheeTop;
 import net.killerchief.halocraft.config.HalocraftItems;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -158,7 +159,7 @@ public class EntityBanshee extends EntityVehicle
 	{
 		return (float)this.dataWatcher.getWatchableObjectFloat(27);
 	}
-
+	
 	/**
 	 * First layer of player interaction
 	 */
@@ -195,11 +196,25 @@ public class EntityBanshee extends EntityVehicle
 				par1EntityPlayer.rotationYaw = this.rotationYaw;
 				par1EntityPlayer.rotationPitch = 10F;
 				par1EntityPlayer.mountEntity(this);
+				if (Halocraft.proxy.isSideClient() && par1EntityPlayer.getCommandSenderName().equals(Minecraft.getMinecraft().thePlayer.getCommandSenderName())) {
+					localPlayerViewStore = Minecraft.getMinecraft().gameSettings.thirdPersonView;
+					Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
+				}
 			}
 			return true;
 		}
 
 		return false;
+	}
+	
+	private int localPlayerViewStore = 0;
+	
+	@Override
+	public void dismounted(Entity entity) {
+		super.dismounted(entity);
+		if (Halocraft.proxy.isSideClient() && entity.getCommandSenderName().equals(Minecraft.getMinecraft().thePlayer.getCommandSenderName())) {
+			Minecraft.getMinecraft().gameSettings.thirdPersonView = localPlayerViewStore;
+		}
 	}
 
 	@Override

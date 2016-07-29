@@ -365,6 +365,10 @@ public abstract class EntityVehicle extends Entity
 			--this.hurtResistantTime;
 		}
 	}
+	
+	public void dismounted(Entity entity) {
+		
+	}
 
 	public void handleSoundEffects()
 	{
@@ -380,6 +384,7 @@ public abstract class EntityVehicle extends Entity
 		}
 		if (this.riddenByEntity == null && this.prevRiddenByEntity != null)
 		{
+			dismounted(this.prevRiddenByEntity);
 			this.prevRiddenByEntity = null;
 			if (this.getSoundExit() != null)
 			{
