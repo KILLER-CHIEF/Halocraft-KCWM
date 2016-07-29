@@ -1,9 +1,11 @@
 package net.killerchief.kcweaponmod;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
@@ -136,7 +138,25 @@ public class ProjectileProperties {
 		{
 			if (collidedObject.entityHit != null)
 			{
-				if (collidedObject.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(projectile, projectile.thrower), (projectile.ticksExisted >= projectile.MaxEffectiveTicksAlive ? (Integer.parseInt(args[0].toString())/2) : Integer.parseInt(args[0].toString()))))
+				//TODO: disable entity knock back on damage
+				//EntityLivingBase.attackEntityFrom has reference to the function knockBack that i want to disable.
+				/*if (collidedObject.entityHit instanceof EntityLivingBase) {
+					if (!collidedObject.entityHit.worldObj.isRemote && !collidedObject.entityHit.isEntityInvulnerable()) {
+						try {
+							Method m = EntityLivingBase.class.getDeclaredMethod("damageEntity", DamageSource.class, float.class);
+							m.setAccessible(true);
+							m.invoke(collidedObject.entityHit, DamageSource.causeThrownDamage(projectile, projectile.thrower), (projectile.ticksExisted >= projectile.MaxEffectiveTicksAlive ? (Integer.parseInt(args[0].toString())/2) : Integer.parseInt(args[0].toString())));
+							//((EntityLivingBase)collidedObject.entityHit).damageEntity(DamageSource.causeThrownDamage(projectile, projectile.thrower), (projectile.ticksExisted >= projectile.MaxEffectiveTicksAlive ? (Integer.parseInt(args[0].toString())/2) : Integer.parseInt(args[0].toString())));
+							
+							collidedObject.entityHit.worldObj.setEntityState(collidedObject.entityHit, (byte)2);
+							
+						} catch (Exception e) {
+							e.printStackTrace();
+							System.err.println("Error234");
+						}
+					}
+				}
+				else */if (collidedObject.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(projectile, projectile.thrower), (projectile.ticksExisted >= projectile.MaxEffectiveTicksAlive ? (Integer.parseInt(args[0].toString())/2) : Integer.parseInt(args[0].toString()))))
 				{
 					collidedObject.entityHit.hurtResistantTime = Integer.parseInt(args[1].toString());
 					collidedObject.entityHit.motionY -= 0.3;
