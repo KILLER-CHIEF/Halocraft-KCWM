@@ -2,7 +2,7 @@ package net.killerchief.kcweaponmod;
 
 import java.util.List;
 
-import net.killerchief.halocraft.HalocraftUtils;
+import net.killerchief.halocraft.Halocraft;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -11,7 +11,12 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.scoreboard.ScorePlayerTeam;
+import net.minecraft.scoreboard.Scoreboard;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
@@ -83,16 +88,16 @@ public class TickHandlerClient {
 	{
 		//System.out.println("onTickInGUI");
 	}
-	
+
 
 	//onTickInGame
 	public static float Recoil = 0.0F;
 	public static float AntiRecoil = 0.0F;
-	
+
 	private int delayTracking = 0;
 	private Entity trackedLast = null;
 	private int trackLastDelay = 0;
-	
+
 	//client side indicator
 	public static Entity TrackingEntity = null;
 	public static Long TrackingEntityTime = System.currentTimeMillis();
@@ -109,16 +114,17 @@ public class TickHandlerClient {
 		if (!(!KCWeaponMod.RecoilInLocalSP && minecraft.isSingleplayer()))
 			minecraft.thePlayer.rotationPitch += AntiRecoil * 0.2F;
 		this.AntiRecoil *= 0.78F;
-		
-		
+
+
 		if (TrackingEntity != null && TrackingEntityTime < System.currentTimeMillis())
 		{
 			TrackingEntity = null;
 		}
-		
+
 		if (minecraft.thePlayer.inventory.getCurrentItem() != null && minecraft.inGameHasFocus)
 		{
 			Item currentItem = minecraft.thePlayer.inventory.getCurrentItem().getItem();
+
 			if (this.delayTracking-- <= 0)
 			{
 				this.delayTracking = 8;
@@ -126,6 +132,9 @@ public class TickHandlerClient {
 				{
 					InterfaceTracking itemTrack = (InterfaceTracking) currentItem;
 					Entity target = getObjectMouseOver(itemTrack.TrackDistance()).entityHit;
+					if (target != null && target.isInvisible()) {
+						target = null;
+					}
 					if (target != null)
 					{
 						if (target == this.trackedLast || itemTrack.TrackDelay() == 0)
@@ -162,99 +171,99 @@ public class TickHandlerClient {
 			}
 		}
 	}
-	
+
 	/**
-     * Finds what block or object the mouse is over.
+	 * Finds what block or object the mouse is over.
 	 * @return MovingObjectPosition
-     */
-    public static MovingObjectPosition getObjectMouseOver(double distance) //EntityRenderer.getMouseOver(partialTickTime)
-    {
-    	MovingObjectPosition objectMouseOver = null;
-    	float partialTickTime = 1F;
-    	if (mc.renderViewEntity != null)
-    	{
-    		if (mc.theWorld != null)
-    		{
-    			double d0 = distance;
-    			objectMouseOver = mc.renderViewEntity.rayTrace(d0, partialTickTime);
-    			double d1 = d0;
-    			Vec3 vec3 = mc.renderViewEntity.getPosition(partialTickTime);
+	 */
+	public static MovingObjectPosition getObjectMouseOver(double distance) //EntityRenderer.getMouseOver(partialTickTime)
+	{
+		MovingObjectPosition objectMouseOver = null;
+		float partialTickTime = 1F;
+		if (mc.renderViewEntity != null)
+		{
+			if (mc.theWorld != null)
+			{
+				double d0 = distance;
+				objectMouseOver = mc.renderViewEntity.rayTrace(d0, partialTickTime);
+				double d1 = d0;
+				Vec3 vec3 = mc.renderViewEntity.getPosition(partialTickTime);
 
 
-    			if (objectMouseOver != null)
-    			{
-    				d1 = objectMouseOver.hitVec.distanceTo(vec3);
-    			}
+				if (objectMouseOver != null)
+				{
+					d1 = objectMouseOver.hitVec.distanceTo(vec3);
+				}
 
-    			Vec3 vec31 = mc.renderViewEntity.getLook(partialTickTime);
-    			Vec3 vec32 = vec3.addVector(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0);
-    			Entity pointedEntity = null;
-    			Vec3 vec33 = null;
-    			float f1 = 1.0F;
-    			List list = mc.theWorld.getEntitiesWithinAABBExcludingEntity(mc.renderViewEntity, mc.renderViewEntity.boundingBox.addCoord(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0).expand((double)f1, (double)f1, (double)f1));
-    			double d2 = d1;
+				Vec3 vec31 = mc.renderViewEntity.getLook(partialTickTime);
+				Vec3 vec32 = vec3.addVector(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0);
+				Entity pointedEntity = null;
+				Vec3 vec33 = null;
+				float f1 = 1.0F;
+				List list = mc.theWorld.getEntitiesWithinAABBExcludingEntity(mc.renderViewEntity, mc.renderViewEntity.boundingBox.addCoord(vec31.xCoord * d0, vec31.yCoord * d0, vec31.zCoord * d0).expand((double)f1, (double)f1, (double)f1));
+				double d2 = d1;
 
-    			for (int i = 0; i < list.size(); ++i)
-    			{
-    				Entity entity = (Entity)list.get(i);
+				for (int i = 0; i < list.size(); ++i)
+				{
+					Entity entity = (Entity)list.get(i);
 
-    				if (entity.canBeCollidedWith())
-    				{
-    					float f2 = entity.getCollisionBorderSize();
-    					AxisAlignedBB axisalignedbb = entity.boundingBox.expand((double)f2, (double)f2, (double)f2);
-    					MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32);
+					if (entity.canBeCollidedWith())
+					{
+						float f2 = entity.getCollisionBorderSize();
+						AxisAlignedBB axisalignedbb = entity.boundingBox.expand((double)f2, (double)f2, (double)f2);
+						MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32);
 
-    					if (axisalignedbb.isVecInside(vec3))
-    					{
-    						if (0.0D < d2 || d2 == 0.0D)
-    						{
-    							pointedEntity = entity;
-    							vec33 = movingobjectposition == null ? vec3 : movingobjectposition.hitVec;
-    							d2 = 0.0D;
-    						}
-    					}
-    					else if (movingobjectposition != null)
-    					{
-    						double d3 = vec3.distanceTo(movingobjectposition.hitVec);
+						if (axisalignedbb.isVecInside(vec3))
+						{
+							if (0.0D < d2 || d2 == 0.0D)
+							{
+								pointedEntity = entity;
+								vec33 = movingobjectposition == null ? vec3 : movingobjectposition.hitVec;
+								d2 = 0.0D;
+							}
+						}
+						else if (movingobjectposition != null)
+						{
+							double d3 = vec3.distanceTo(movingobjectposition.hitVec);
 
-    						if (d3 < d2 || d2 == 0.0D)
-    						{
-    							if (entity == mc.renderViewEntity.ridingEntity && !entity.canRiderInteract())
-    							{
-    								if (d2 == 0.0D)
-    								{
-    									pointedEntity = entity;
-    									vec33 = movingobjectposition.hitVec;
-    								}
-    							}
-    							else
-    							{
-    								pointedEntity = entity;
-    								vec33 = movingobjectposition.hitVec;
-    								d2 = d3;
-    							}
-    						}
-    					}
-    				}
-    			}
+							if (d3 < d2 || d2 == 0.0D)
+							{
+								if (entity == mc.renderViewEntity.ridingEntity && !entity.canRiderInteract())
+								{
+									if (d2 == 0.0D)
+									{
+										pointedEntity = entity;
+										vec33 = movingobjectposition.hitVec;
+									}
+								}
+								else
+								{
+									pointedEntity = entity;
+									vec33 = movingobjectposition.hitVec;
+									d2 = d3;
+								}
+							}
+						}
+					}
+				}
 
-    			if (pointedEntity != null && (d2 < d1 || objectMouseOver == null))
-    			{
-    				objectMouseOver = new MovingObjectPosition(pointedEntity, vec33);
-    			}
-    		}
-    	}
-    	if (objectMouseOver.entityHit != null)
-    	{
-    		//System.out.println(objectMouseOver.entityHit.posX);
-    		//System.out.println(objectMouseOver.entityHit);
-    	}
-    	else
-    	{
-    		//System.out.println(objectMouseOver.hitVec.xCoord);
-    	}
-    	return objectMouseOver;
-    }
+				if (pointedEntity != null && (d2 < d1 || objectMouseOver == null))
+				{
+					objectMouseOver = new MovingObjectPosition(pointedEntity, vec33);
+				}
+			}
+		}
+		if (objectMouseOver.entityHit != null)
+		{
+			//System.out.println(objectMouseOver.entityHit.posX);
+			//System.out.println(objectMouseOver.entityHit);
+		}
+		else
+		{
+			//System.out.println(objectMouseOver.hitVec.xCoord);
+		}
+		return objectMouseOver;
+	}
 
 	//HandleShootingReloading
 	public static boolean IsReloading = false;
@@ -267,7 +276,7 @@ public class TickHandlerClient {
 	public int RightClickHeld = 0;
 	private int GunShootDelay = 0;
 	private int ChargePlasmaPistol = 0;
-	
+
 	private void HandleButtonInterface(Minecraft minecraft)
 	{
 		if (this.RightClickPressed == true && this.PrevRightClickPressed == false)
@@ -297,12 +306,12 @@ public class TickHandlerClient {
 			//System.out.println("Released");
 		}
 
-		
-		
+
+
 		if (minecraft.thePlayer.inventory.getCurrentItem() != null && minecraft.inGameHasFocus)
 		{
 			Item currentItem = minecraft.thePlayer.inventory.getCurrentItem().getItem();
-			
+
 			if (GunShootDelay > 0)
 			{
 				GunShootDelay--;
@@ -417,10 +426,10 @@ public class TickHandlerClient {
 			}
 		}
 	}
-	
+
 	private static boolean rndrChChngd = false;
 	protected static boolean rndrngReticle = false;
-	
+
 	private void HandleReticle(Minecraft minecraft)
 	{
 		if (this.rndrChChngd && !this.rndrngReticle)
@@ -428,7 +437,7 @@ public class TickHandlerClient {
 			this.rndrChChngd = false;
 			GuiIngameForge.renderCrosshairs = true;
 		}
-		
+
 		this.rndrngReticle = false;
 		if(!KCWeaponMod.DisabledReticle() && minecraft.inGameHasFocus && minecraft.gameSettings.thirdPersonView == 0)
 		{
@@ -446,7 +455,16 @@ public class TickHandlerClient {
 							GuiIngameForge.renderCrosshairs = false;
 						}
 						this.rndrngReticle = true;
-						GunReticle(currentItem.ReticleTexture(), currentItem.ReticleTransparency(), rp[0], rp[1], rp[2], rp[3], rp[4], rp[5]);
+						double detectionRange = 50D;
+						if (currentItem instanceof ItemWeapon) {
+							detectionRange = ((ItemWeapon)currentItem).Properties.MaxEffectiveTicksAlive * ((ItemWeapon)currentItem).Properties.ProjectileSpeed;
+							detectionRange /= 4D;
+							if (detectionRange < 20D)
+								detectionRange = 20D;
+							if (detectionRange > 300D)
+								detectionRange = 300D;
+						}
+						GunReticle(currentItem.ReticleTexture(), detectionRange, currentItem.ReticleTransparency(), rp[0], rp[1], rp[2], rp[3], rp[4], rp[5]);
 					}
 				}
 				if (currentItem.IsZoomable() && this.IsZooming())
@@ -460,8 +478,8 @@ public class TickHandlerClient {
 			}
 		}
 	}
-	
-	public static void GunReticle(ResourceLocation overlay, float transparency, int iBCoordX, int iBCoordY, int iBWidth /* xOffset */, int iBHeight /* yOffset */, int posX, int posY)
+
+	public static void GunReticle(ResourceLocation overlay, double detectionRange, float transparency, int iBCoordX, int iBCoordY, int iBWidth /* xOffset */, int iBHeight /* yOffset */, int posX, int posY)
 	{
 		if (!mc.gameSettings.hideGUI)
 		{
@@ -473,10 +491,37 @@ public class TickHandlerClient {
 			GL11.glDisable(GL11.GL_DEPTH_TEST);
 			GL11.glDepthMask(false);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-			GL11.glColor4f(1.0F, 1.0F, 1.0F, transparency);
+			Entity e = getObjectMouseOver(detectionRange).entityHit;
+			boolean seeInvisible = false;
+			Scoreboard s2 = Minecraft.getMinecraft().theWorld.getScoreboard();
+			if (e != null && e instanceof EntityPlayer) {
+				ScorePlayerTeam local = s2.getPlayersTeam(Minecraft.getMinecraft().getSession().getUsername());
+				ScorePlayerTeam remote = s2.getPlayersTeam(((EntityPlayer)e).getDisplayName());
+				if (local != null && local.isSameTeam(remote)) {
+					//func_98297_h - canSeeFriendlyInvisibles - .func_98297_h()
+					if (local.func_98297_h())
+						seeInvisible = true;
+					GL11.glColor4f(0.0F, 1.0F, 0.0F, transparency);
+				} else if (remote == null){
+					GL11.glColor4f(0.0F, 0.0F, 1.0F, transparency);
+				} else {
+					GL11.glColor4f(1.0F, 0.0F, 0.0F, transparency);
+				}
+			} else if (e != null && e instanceof EntityMob) {
+				GL11.glColor4f(1.0F, 0.0F, 0.0F, transparency);
+			} else if (e != null) {
+				GL11.glColor4f(0.0F, 0.0F, 1.0F, transparency);
+			} else {
+				GL11.glColor4f(0.0F, 0.9F, 1F, transparency);
+				//GL11.glColor4f(0.0F, 1F, 0.6F, transparency);
+			}
+			if (e != null && e.isInvisible() && !seeInvisible) {
+				GL11.glColor4f(0.0F, 0.9F, 1F, transparency);
+			}
+			
+			mc.getTextureManager().bindTexture(overlay);
 			GL11.glDisable(GL11.GL_ALPHA_TEST);
 			GL11.glDisable(GL11.GL_LIGHTING);
-			mc.getTextureManager().bindTexture(overlay);
 			Tessellator tessellator = Tessellator.instance;
 			tessellator.startDrawingQuads();
 			tessellator.addVertexWithUV((double)((i / 2 - posX) + 0), (double)((k / 2 - posY) + iBHeight), (double)0.0F, (double)(iBCoordX + 0) * 0.00390625F, (double)(iBCoordY + iBHeight) * 0.00390625F);

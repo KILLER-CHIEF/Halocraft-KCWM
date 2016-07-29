@@ -25,6 +25,11 @@ public class ItemWeapon extends Item implements InterfaceZoomReticle, InterfaceT
 		this.maxStackSize = this.Properties.ItemStackDecreaseOnUse ? this.Properties.ItemStackMaxStackSize : 1;
 		this.setMaxDamage(this.Properties.MagazineSize);
 	}
+	
+	@Override
+	public String toString() {
+		return this.Properties.Name;
+	}
 
 	/**
 	 * When this method is called, your block should register all the icons it needs with the given IconRegister. This

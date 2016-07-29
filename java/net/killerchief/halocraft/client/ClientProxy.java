@@ -17,12 +17,12 @@ import net.killerchief.halocraft.client.models.guns.ModelEnergySword;
 import net.killerchief.halocraft.client.models.mobs.ModelElite;
 import net.killerchief.halocraft.client.models.mobs.ModelGrunt;
 import net.killerchief.halocraft.client.render.RenderBanshee;
+import net.killerchief.halocraft.client.render.RenderClientEntityArrowIndicator;
 import net.killerchief.halocraft.client.render.RenderClientTargeter;
 import net.killerchief.halocraft.client.render.RenderCovSupplyCase;
 import net.killerchief.halocraft.client.render.RenderDecalBlock;
 import net.killerchief.halocraft.client.render.RenderEliteGun;
 import net.killerchief.halocraft.client.render.RenderEliteSword;
-import net.killerchief.halocraft.client.render.RenderForeCtrlPanel;
 import net.killerchief.halocraft.client.render.RenderGhost;
 import net.killerchief.halocraft.client.render.RenderGruntPlasmaPistol;
 import net.killerchief.halocraft.client.render.RenderGunHolder;
@@ -37,6 +37,7 @@ import net.killerchief.halocraft.client.render.RenderWarthog;
 import net.killerchief.halocraft.client.render.RenderWarthogBack;
 import net.killerchief.halocraft.config.HalocraftItems;
 import net.killerchief.halocraft.config.HalocraftItemsWeapons;
+import net.killerchief.halocraft.entities.EntityClientEntityArrowIndicator;
 import net.killerchief.halocraft.entities.EntityClientTargeter;
 import net.killerchief.halocraft.entities.EntityDeployableGravityLift;
 import net.killerchief.halocraft.entities.EntityFlameQuickFX;
@@ -63,7 +64,6 @@ import net.killerchief.halocraft.entities.vehicles.EntityWarthogGold;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogRocket;
 import net.killerchief.halocraft.entities.vehicles.MovingVehicleSoundLoop;
 import net.killerchief.halocraft.tileEntities.TileEntityCovSupplyCase;
-import net.killerchief.halocraft.tileEntities.TileEntityForeCtrlPanel;
 import net.killerchief.halocraft.tileEntities.TileEntityForeSymbol;
 import net.killerchief.halocraft.tileEntities.TileEntityGunHolder;
 import net.killerchief.halocraft.tileEntities.TileEntityHealthPack;
@@ -93,7 +93,7 @@ public class ClientProxy extends CommonProxy {
 	{
 		return RenderingRegistry.addNewArmourRendererPrefix(armor);
 	}
-	
+
 	@Override
 	public String getClientUsername()
 	{
@@ -105,7 +105,7 @@ public class ClientProxy extends CommonProxy {
 	{
 		if (type == null)
 			return null;
-		
+
 		if (type.equalsIgnoreCase("markv"))
 			return new ModelArmorMarkV();
 		else if (type.equalsIgnoreCase("markvi"))
@@ -126,7 +126,7 @@ public class ClientProxy extends CommonProxy {
 			return new ModelArmorScout();
 		else if (type.equalsIgnoreCase("security"))
 			return new ModelArmorSecurity();
-		
+
 		return null;
 	}
 
@@ -167,7 +167,8 @@ public class ClientProxy extends CommonProxy {
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityDeployableGravityLift.class, new RenderProjectile(EnumType.DeployableGravityLift61));
 		RenderingRegistry.registerEntityRenderingHandler(EntityClientTargeter.class, new RenderClientTargeter());
-		
+		RenderingRegistry.registerEntityRenderingHandler(EntityClientEntityArrowIndicator.class, new RenderClientEntityArrowIndicator());
+
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHealthPack.class, new RenderHealthPack());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGunHolder.class, new RenderGunHolder());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLightBridgeExt.class, new RenderLightBridgeExt());
@@ -175,15 +176,21 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityUnscWeaponRack.class, new RenderUnscWeaponRack());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRechargeStation.class, new RenderRechargeStation());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityForeSymbol.class, new RenderDecalBlock());
-		
+
 		//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityForeCtrlPanel.class, new RenderForeCtrlPanel());
-		
+
 	}
 
 	@Override
 	public boolean isSideClient()
 	{
 		return true;
+	}
+
+	@Override
+	public World getClientWorld()
+	{
+		return Minecraft.getMinecraft().theWorld;
 	}
 
 	@Override

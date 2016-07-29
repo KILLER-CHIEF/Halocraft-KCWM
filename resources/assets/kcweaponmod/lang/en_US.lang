@@ -3,6 +3,10 @@
 key.categories.kcweaponmod=KC's Weapon Mod Controls
 key.kcwmreloadkey=Reload Key
 key.kcwmzoomkey=Zoom Key
+key.kcwmwmfprev=Weap Model Previous Field
+key.kcwmwmfnext=Weap Model Next Field
+key.kcwmwmfup=Weap Model Increment Field
+key.kcwmwmfdown=Weap Model Decrement Field
 
 # Creative Tabs
 itemGroup.kcweaponmod=KC's Weapon Mod

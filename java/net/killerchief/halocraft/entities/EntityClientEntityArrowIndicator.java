@@ -9,11 +9,11 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class EntityClientTargeter extends Entity {
+public class EntityClientEntityArrowIndicator extends Entity {
 
 	public Entity Target = null;
 
-	public EntityClientTargeter(World par1World)
+	public EntityClientEntityArrowIndicator(World par1World)
 	{
 		super(par1World);
 		this.setSize(0.0F, 0.0F);
@@ -21,7 +21,7 @@ public class EntityClientTargeter extends Entity {
 		this.renderDistanceWeight = 64D;
 	}
 
-	public EntityClientTargeter(World par1World, Entity target, double par2, double par4, double par6)
+	public EntityClientEntityArrowIndicator(World par1World, Entity target, double par2, double par4, double par6)
 	{
 		this(par1World);
 		this.setPosition(par2, par4 , par6);
@@ -118,9 +118,9 @@ public class EntityClientTargeter extends Entity {
 
 		//System.out.println(this.ticksExisted);
 
-		if (this.Target != null)// && this.Target.isEntityAlive())
+		if (this.Target != null && this.Target.isEntityAlive())
 		{
-			this.setLocationAndAngles(this.Target.posX, this.Target.posY-0.2D, this.Target.posZ, 0.0F, 0.0F);
+			this.setLocationAndAngles(this.Target.posX, this.Target.posY+this.Target.getEyeHeight()+0.0D, this.Target.posZ, 0.0F, 0.0F);
 		}
 		else
 		{

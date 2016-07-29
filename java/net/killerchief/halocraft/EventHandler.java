@@ -1,21 +1,26 @@
 package net.killerchief.halocraft;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import net.killerchief.halocraft.comm.packetHandlers.PacketOvershield;
 import net.killerchief.halocraft.config.HalocraftConfig;
 import net.killerchief.halocraft.config.HalocraftItems;
 import net.killerchief.halocraft.config.HalocraftItemsWeapons;
+import net.killerchief.halocraft.entities.EntityClientEntityArrowIndicator;
 import net.killerchief.halocraft.entities.vehicles.EntityBanshee;
 import net.killerchief.halocraft.entities.vehicles.EntityGhost;
 import net.killerchief.halocraft.entities.vehicles.EntityTurretSeat;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
 import net.killerchief.halocraft.items.ItemEnergySword;
-import net.killerchief.kcweaponmod.ItemWeapon;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.scoreboard.ScorePlayerTeam;
+import net.minecraft.scoreboard.Scoreboard;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -25,7 +30,6 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class EventHandler {
@@ -66,36 +70,82 @@ public class EventHandler {
 		}
 	}
 	
-	int headCooldown = 0;
+	private int headCooldown = 0;
+	
+	public static List<EntityClientEntityArrowIndicator> TeamArrowList = new ArrayList<EntityClientEntityArrowIndicator>();
 	
 	@SubscribeEvent
 	public void playerEvent(PlayerEvent event)
 	{
 		EntityPlayer entityplayer = event.entityPlayer;
-
-		if (HalocraftConfig.ShowDevPerks && entityplayer != null && !entityplayer.isDead && !entityplayer.isInvisible() && Halocraft.proxy.isSideClient())
-		{
-			Minecraft mc = Minecraft.getMinecraft();
-			if (!mc.isGamePaused() && this.headCooldown-- <= 0)
+		
+		if (Halocraft.proxy.isSideClient() && entityplayer != null) {
+			
+			if (Halocraft.proxy.getClientWorld() != null && entityplayer instanceof EntityOtherPlayerMP && entityplayer.isEntityAlive() && entityplayer.getCommandSenderName() != null) {
+				Scoreboard s2 = Halocraft.proxy.getClientWorld().getScoreboard();
+				ScorePlayerTeam local = s2.getPlayersTeam(Minecraft.getMinecraft().getSession().getUsername());
+				ScorePlayerTeam remote = s2.getPlayersTeam(entityplayer.getCommandSenderName());
+				if (local != null) {
+					boolean tracked = false;
+					int i = 0;
+					while (i < TeamArrowList.size()) {
+						EntityClientEntityArrowIndicator entity = TeamArrowList.get(i);
+						
+						if (entity == null || entity.isDead) {
+							TeamArrowList.remove(i);
+							continue;
+						}
+						if (entity.Target == entityplayer) {
+							if (!local.isSameTeam(remote))
+							{
+								entity.setDead();
+								TeamArrowList.remove(i);
+								continue;
+							}
+							tracked = true;
+							break;
+						}
+						i++;
+					}
+					if (!tracked && local.isSameTeam(remote)) {
+						EntityClientEntityArrowIndicator tracker = new EntityClientEntityArrowIndicator(Halocraft.proxy.getClientWorld(), entityplayer, entityplayer.posX, entityplayer.posY, entityplayer.posZ);
+						Halocraft.proxy.getClientWorld().spawnEntityInWorld(tracker);
+						TeamArrowList.add(tracker);
+					}
+				} else {
+					while (TeamArrowList.size() > 0) {
+						EntityClientEntityArrowIndicator entity = TeamArrowList.get(0);
+						entity.setDead();
+						TeamArrowList.remove(0);
+					}
+				}
+			}
+			
+			if (HalocraftConfig.ShowDevPerks && !entityplayer.isDead && !entityplayer.isInvisible())
 			{
-				this.headCooldown = 4;
-				if (HalocraftUtils.isHcDevTeamMember(entityplayer.getDisplayName()))
+				Minecraft mc = Minecraft.getMinecraft();
+				if (!mc.isGamePaused() && this.headCooldown-- <= 0)
 				{
-					if (!mc.getSession().getUsername().equals(entityplayer.getDisplayName()) || (mc.getSession().getUsername().equals(entityplayer.getDisplayName()) && mc.gameSettings.thirdPersonView != 0))// && entityplayer.posY % 1 != 0)
+					this.headCooldown = 4;
+					if (HalocraftUtils.isHcDevTeamMember(entityplayer.getDisplayName()))
 					{
-						double yaw = Math.toRadians(entityplayer.rotationYawHead);
-						double pitch = Math.toRadians(entityplayer.rotationPitch);
-						double a = Math.sin(pitch)*0.6D*-Math.sin(yaw);
-						double c = Math.sin(pitch)*0.6D*Math.cos(yaw);
-						double b = Math.cos(pitch)/4D;
-						double x = entityplayer.posX+a+entityplayer.worldObj.rand.nextDouble()/2D-0.25D;
-						double z = entityplayer.posZ+c+entityplayer.worldObj.rand.nextDouble()/2D-0.25D;
-						double y = entityplayer.boundingBox.maxY+b-0.15D+entityplayer.worldObj.rand.nextDouble()/10D;
-						Halocraft.proxy.ParticleFX(3, entityplayer.worldObj, x, y, z, entityplayer.motionX/10D, entityplayer.motionY/10D, entityplayer.motionZ/10D);
+						if (!mc.getSession().getUsername().equals(entityplayer.getDisplayName()) || (mc.getSession().getUsername().equals(entityplayer.getDisplayName()) && mc.gameSettings.thirdPersonView != 0))// && entityplayer.posY % 1 != 0)
+						{
+							double yaw = Math.toRadians(entityplayer.rotationYawHead);
+							double pitch = Math.toRadians(entityplayer.rotationPitch);
+							double a = Math.sin(pitch)*0.6D*-Math.sin(yaw);
+							double c = Math.sin(pitch)*0.6D*Math.cos(yaw);
+							double b = Math.cos(pitch)/4D;
+							double x = entityplayer.posX+a+entityplayer.worldObj.rand.nextDouble()/2D-0.25D;
+							double z = entityplayer.posZ+c+entityplayer.worldObj.rand.nextDouble()/2D-0.25D;
+							double y = entityplayer.boundingBox.maxY+b-0.15D+entityplayer.worldObj.rand.nextDouble()/10D;
+							Halocraft.proxy.ParticleFX(3, entityplayer.worldObj, x, y, z, entityplayer.motionX/10D, entityplayer.motionY/10D, entityplayer.motionZ/10D);
+						}
 					}
 				}
 			}
 		}
+
 	}
 
 	private int stopAimingCoolDown = 0;

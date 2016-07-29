@@ -5,6 +5,10 @@ import net.minecraft.util.ResourceLocation;
 
 public class ItemWeaponModel {
 
+	public static final String[] fieldNames = new String[]{"Glows","NoChngOnSprint",
+		"FPScaleX","FPScaleY","FPScaleZ","FPTransX","FPTransY","FPTransZ","FPRotateX","FPRotateY","FPRotateZ","FPSprintTransX","FPSprintTransY","FPSprintTransZ","FPSprintRotateX","FPSprintRotateY","FPSprintRotateZ",
+		"TPScaleX","TPScaleY","TPScaleZ","TPTransX","TPTransY","TPTransZ","TPRotateX","TPRotateY","TPRotateZ","TPSprintTransX","TPSprintTransY","TPSprintTransZ","TPSprintRotateX","TPSprintRotateY","TPSprintRotateZ"};
+
 	public ModelBase Model;
 	public ResourceLocation Texture;
 	public boolean NoChngOnSprint = false;
@@ -73,30 +77,35 @@ public class ItemWeaponModel {
 	public float TPSprintRotateY = 0F;
 	public float TPSprintRotateZ = 0F;
 
-	public void TPScale(float x, float y, float z) {
+	public ItemWeaponModel TPScale(float x, float y, float z) {
 		this.TPScaleX = x;
 		this.TPScaleY = y;
 		this.TPScaleZ = z;
+		return this;
 	}
-	public void TPTrans(float x, float y, float z) {
+	public ItemWeaponModel TPTrans(float x, float y, float z) {
 		this.TPTransX = x;
 		this.TPTransY = y;
 		this.TPTransZ = z;
+		return this;
 	}
-	public void TPRotate(float x, float y, float z) {
+	public ItemWeaponModel TPRotate(float x, float y, float z) {
 		this.TPRotateX = x;
 		this.TPRotateY = y;
 		this.TPRotateZ = z;
+		return this;
 	}
-	public void TPSprintTrans(float x, float y, float z) {
+	public ItemWeaponModel TPSprintTrans(float x, float y, float z) {
 		this.TPSprintTransX = x;
 		this.TPSprintTransY = y;
 		this.TPSprintTransZ = z;
+		return this;
 	}
-	public void TPSprintRotate(float x, float y, float z) {
+	public ItemWeaponModel TPSprintRotate(float x, float y, float z) {
 		this.TPSprintRotateX = x;
 		this.TPSprintRotateY = y;
 		this.TPSprintRotateZ = z;
+		return this;
 	}
 
 	public float FPScaleX = 1F;
@@ -115,30 +124,35 @@ public class ItemWeaponModel {
 	public float FPSprintRotateY = 0F;
 	public float FPSprintRotateZ = 0F;
 
-	public void FPScale(float x, float y, float z) {
+	public ItemWeaponModel FPScale(float x, float y, float z) {
 		this.FPScaleX = x;
 		this.FPScaleY = y;
 		this.FPScaleZ = z;
+		return this;
 	}
-	public void FPTrans(float x, float y, float z) {
+	public ItemWeaponModel FPTrans(float x, float y, float z) {
 		this.FPTransX = x;
 		this.FPTransY = y;
 		this.FPTransZ = z;
+		return this;
 	}
-	public void FPRotate(float x, float y, float z) {
+	public ItemWeaponModel FPRotate(float x, float y, float z) {
 		this.FPRotateX = x;
 		this.FPRotateY = y;
 		this.FPRotateZ = z;
+		return this;
 	}
-	public void FPSprintTrans(float x, float y, float z) {
+	public ItemWeaponModel FPSprintTrans(float x, float y, float z) {
 		this.FPSprintTransX = x;
 		this.FPSprintTransY = y;
 		this.FPSprintTransZ = z;
+		return this;
 	}
-	public void FPSprintRotate(float x, float y, float z) {
+	public ItemWeaponModel FPSprintRotate(float x, float y, float z) {
 		this.FPSprintRotateX = x;
 		this.FPSprintRotateY = y;
 		this.FPSprintRotateZ = z;
+		return this;
 	}
 
 }

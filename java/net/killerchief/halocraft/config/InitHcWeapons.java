@@ -142,6 +142,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties AssaultRifle = new ItemWeaponProperties(Halocraft.MODID+".AssaultRifle");
 		AssaultRifle.Texture = Halocraft.MODID + ":AssaultRifle";
 		AssaultRifle.WeaponModel = new ItemWeaponModel(new ModelAssaultRifle(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinAssaultRifle.png"));
+		AssaultRifle.WeaponModel.TPScale(0.5F, 0.5F, 0.5F).TPTrans(0F, 0F, -1.6F).TPSprintTrans(1F, -0.5F, -1.0F).TPSprintRotate(0F, 0F, -20F);
 		AssaultRifle.IsAutomaticOrHasSecondaryShoot = true;
 		AssaultRifle.IsZoomable = false;
 		//AssaultRifle.ZoomMultiplier = new int[]{2};
@@ -430,6 +431,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties Carbine = new ItemWeaponProperties(Halocraft.MODID+".Carbine");
 		Carbine.Texture = Halocraft.MODID + ":Carbine";
 		Carbine.WeaponModel = new ItemWeaponModel(new ModelCarbine(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinCarbine.png"));
+		Carbine.WeaponModel.TPScale(0.7F, 0.7F, 0.7F).TPTrans(0F, -0.4F, -1.65F).FPTrans(-0.2F, -0.3F, -0.9F);
 		Carbine.IsAutomaticOrHasSecondaryShoot = false;
 		Carbine.IsZoomable = true;
 		Carbine.ZoomMultiplier = new int[]{4};

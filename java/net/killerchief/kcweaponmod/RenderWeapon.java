@@ -165,7 +165,7 @@ public class RenderWeapon implements IItemRenderer {
 							GL11.glRotatef(-100, 0F, 0F, 1F);//roll right
 						}
 
-						GL11.glTranslatef(this.Properties.FPTransX, this.Properties.FPTransY, this.Properties.FPTransZ);
+						GL11.glTranslatef(this.Properties.FPTransX, this.Properties.FPTransY, this.Properties.FPTransZ+(TickHandlerClient.Recoil/8F));
 						GL11.glRotatef(this.Properties.FPRotateX, 1F, 0F, 0F);
 						GL11.glRotatef(this.Properties.FPRotateY, 0F, 1F, 0F);
 						GL11.glRotatef(this.Properties.FPRotateZ, 0F, 0F, 1F);

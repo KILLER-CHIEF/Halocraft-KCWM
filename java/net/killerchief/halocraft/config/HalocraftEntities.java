@@ -1,6 +1,7 @@
 package net.killerchief.halocraft.config;
 
 import net.killerchief.halocraft.Halocraft;
+import net.killerchief.halocraft.entities.EntityClientEntityArrowIndicator;
 import net.killerchief.halocraft.entities.EntityClientTargeter;
 import net.killerchief.halocraft.entities.EntityDeployableGravityLift;
 import net.killerchief.halocraft.entities.mobs.EntityEliteCarbine;
@@ -53,6 +54,7 @@ public class HalocraftEntities {
 		EntityRegistry.registerModEntity(EntityDeployableGravityLift.class, "DeployableGravityLift", 160, Halocraft.instance, 100, 1, true);
 		
 		EntityRegistry.registerModEntity(EntityClientTargeter.class, "ClientTargeter", 161, Halocraft.instance, 100, 1, true);
+		EntityRegistry.registerModEntity(EntityClientEntityArrowIndicator.class, "ClientEntityArrowIndicator", 162, Halocraft.instance, 100, 1, true);
 
 		registerEggEntities();
 	}

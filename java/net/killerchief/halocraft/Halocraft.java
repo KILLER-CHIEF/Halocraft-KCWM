@@ -35,7 +35,7 @@ public class Halocraft {
 
 	public static final String MODID = "halocraft";
 	public static final String NAME = "Halocraft";
-	public static final String VERSION = "0.7.5.05";
+	public static final String VERSION = "0.7.5.08";
 
 	/** The instance of this mod that Forge uses.*/
 	@Instance(Halocraft.MODID)
