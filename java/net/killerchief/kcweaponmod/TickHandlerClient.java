@@ -189,7 +189,6 @@ public class TickHandlerClient {
 				double d1 = d0;
 				Vec3 vec3 = mc.renderViewEntity.getPosition(partialTickTime);
 
-
 				if (objectMouseOver != null)
 				{
 					d1 = objectMouseOver.hitVec.distanceTo(vec3);
@@ -209,7 +208,7 @@ public class TickHandlerClient {
 
 					if (entity.canBeCollidedWith())
 					{
-						float f2 = entity.getCollisionBorderSize();
+						float f2 = 0.5F;//entity.getCollisionBorderSize();
 						AxisAlignedBB axisalignedbb = entity.boundingBox.expand((double)f2, (double)f2, (double)f2);
 						MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32);
 
@@ -491,7 +490,7 @@ public class TickHandlerClient {
 			GL11.glDisable(GL11.GL_DEPTH_TEST);
 			GL11.glDepthMask(false);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-			Entity e = getObjectMouseOver(detectionRange).entityHit;
+			Entity e = detectionRange <= 0D ? null : getObjectMouseOver(detectionRange).entityHit;
 			boolean seeInvisible = false;
 			Scoreboard s2 = Minecraft.getMinecraft().theWorld.getScoreboard();
 			if (e != null && e instanceof EntityPlayer) {
