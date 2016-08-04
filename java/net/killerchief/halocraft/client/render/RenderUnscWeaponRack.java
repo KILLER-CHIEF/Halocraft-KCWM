@@ -6,6 +6,7 @@ import net.killerchief.halocraft.client.models.items.ModelUnscWeaponRackOpen;
 import net.killerchief.halocraft.client.models.items.ModelUnscWeaponRackOpenA;
 import net.killerchief.halocraft.client.models.items.ModelUnscWeaponRackOpenB;
 import net.killerchief.halocraft.tileEntities.TileEntityUnscWeaponRack;
+import net.killerchief.kcweaponmod.InterfaceWeaponProperties;
 import net.killerchief.kcweaponmod.ItemWeapon;
 import net.killerchief.kcweaponmod.Model3DWeaponBase;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -75,16 +76,18 @@ public class RenderUnscWeaponRack extends TileEntitySpecialRenderer {
 			if ( ( ((i == 0 || i == 1) && !front) || ((i == 8 || i == 9) && !back) ) && tileentitycbe.getStackInSlot(i) != null && tileentitycbe.getStackInSlot(i).getItem() != null)
 			{
 				Model3DWeaponBase gunModel = null;
+				InterfaceWeaponProperties gun = null;
 				boolean glows = false;
-
+				
 				Item item = tileentitycbe.getStackInSlot(i).getItem();
-				if (item instanceof ItemWeapon && ((ItemWeapon)item).Properties.WeaponModel != null && ((ItemWeapon)item).Properties.WeaponModel.Model instanceof Model3DWeaponBase)
+				if (item instanceof InterfaceWeaponProperties && ((InterfaceWeaponProperties)item).Properties().WeaponModel != null && ((InterfaceWeaponProperties)item).Properties().WeaponModel.Model instanceof Model3DWeaponBase)
 				{
-					this.bindTexture(((ItemWeapon)item).Properties.WeaponModel.Texture);
-					gunModel = (Model3DWeaponBase) ((ItemWeapon)item).Properties.WeaponModel.Model;
-					glows = ((ItemWeapon)item).Properties.WeaponModel.Glows;
+					gun = (InterfaceWeaponProperties)item;
+					this.bindTexture(gun.Properties().WeaponModel.Texture);
+					gunModel = (Model3DWeaponBase) gun.Properties().WeaponModel.Model;
+					glows = gun.Properties().WeaponModel.Glows;
 				}
-
+				
 				if (gunModel != null)
 				{
 					if (glows)
@@ -92,7 +95,11 @@ public class RenderUnscWeaponRack extends TileEntitySpecialRenderer {
 						GL11.glDisable(GL11.GL_LIGHTING);
 						OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
 					}
+					if (gun.Properties().WeaponModel.TPScaleX < 0.8F)
+						GL11.glScalef(gun.Properties().WeaponModel.TPScaleX, gun.Properties().WeaponModel.TPScaleY, gun.Properties().WeaponModel.TPScaleZ);
 					gunModel.render(tileentitycbe, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+					if (gun.Properties().WeaponModel.TPScaleX < 0.8F)
+						GL11.glScalef(1/gun.Properties().WeaponModel.TPScaleX, 1/gun.Properties().WeaponModel.TPScaleY, 1/gun.Properties().WeaponModel.TPScaleZ);
 					if (glows)
 					{
 						GL11.glEnable(GL11.GL_LIGHTING);
