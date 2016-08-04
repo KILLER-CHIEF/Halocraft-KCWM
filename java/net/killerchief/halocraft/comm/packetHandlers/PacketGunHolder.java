@@ -148,6 +148,30 @@ public class PacketGunHolder implements IMessage {
 						{
 							tileentity.incrementTranslationZGun(-1);
 						}
+						else if (message.btnVal == -11)
+						{
+							tileentity.incrementScaleXGun(1);
+						}
+						else if (message.btnVal == -12)
+						{
+							tileentity.incrementScaleXGun(-1);
+						}
+						else if (message.btnVal == -13)
+						{
+							tileentity.incrementScaleYGun(1);
+						}
+						else if (message.btnVal == -14)
+						{
+							tileentity.incrementScaleYGun(-1);
+						}
+						else if (message.btnVal == -15)
+						{
+							tileentity.incrementScaleZGun(1);
+						}
+						else if (message.btnVal == -16)
+						{
+							tileentity.incrementScaleZGun(-1);
+						}
 					}
 				}
 			}

@@ -33,6 +33,9 @@ public class TileEntityGunHolder extends TileEntity implements IInventory {
 	private int TranslationXGun = 0;
 	private int TranslationYGun = 0;
 	private int TranslationZGun = 0;
+	private int ScaleXGun = 0;
+	private int ScaleYGun = 0;
+	private int ScaleZGun = 0;
 	private int RespawnTime = 0;
 	private long RespawnAtTime = 0L;
 
@@ -54,6 +57,9 @@ public class TileEntityGunHolder extends TileEntity implements IInventory {
 		this.TranslationXGun = par1NBTTagCompound.getInteger("TranslationXGun");
 		this.TranslationYGun = par1NBTTagCompound.getInteger("TranslationYGun");
 		this.TranslationZGun = par1NBTTagCompound.getInteger("TranslationZGun");
+		this.ScaleXGun = par1NBTTagCompound.getInteger("ScaleXGun");
+		this.ScaleYGun = par1NBTTagCompound.getInteger("ScaleYGun");
+		this.ScaleZGun = par1NBTTagCompound.getInteger("ScaleZGun");
 		this.RespawnTime = par1NBTTagCompound.getInteger("RespawnTime");
 
 		NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items", 10);
@@ -99,6 +105,9 @@ public class TileEntityGunHolder extends TileEntity implements IInventory {
 		par1NBTTagCompound.setInteger("TranslationXGun", this.TranslationXGun);
 		par1NBTTagCompound.setInteger("TranslationYGun", this.TranslationYGun);
 		par1NBTTagCompound.setInteger("TranslationZGun", this.TranslationZGun);
+		par1NBTTagCompound.setInteger("ScaleXGun", this.ScaleXGun);
+		par1NBTTagCompound.setInteger("ScaleYGun", this.ScaleYGun);
+		par1NBTTagCompound.setInteger("ScaleZGun", this.ScaleZGun);
 		par1NBTTagCompound.setInteger("RespawnTime", this.RespawnTime);
 
 		NBTTagList nbttaglist = new NBTTagList();
@@ -325,6 +334,34 @@ public class TileEntityGunHolder extends TileEntity implements IInventory {
 	public int getTranslationZGun()
 	{
 		return this.TranslationZGun;
+	}
+	
+	public void incrementScaleXGun(int r)
+	{
+		this.ScaleXGun += r;
+		this.hasSomethingChanged = true;
+	}
+	public int getScaleXGun()
+	{
+		return this.ScaleXGun;
+	}
+	public void incrementScaleYGun(int r)
+	{
+		this.ScaleYGun += r;
+		this.hasSomethingChanged = true;
+	}
+	public int getScaleYGun()
+	{
+		return this.ScaleYGun;
+	}
+	public void incrementScaleZGun(int r)
+	{
+		this.ScaleZGun += r;
+		this.hasSomethingChanged = true;
+	}
+	public int getScaleZGun()
+	{
+		return this.ScaleZGun;
 	}
 
 	public int getRespawnTime()

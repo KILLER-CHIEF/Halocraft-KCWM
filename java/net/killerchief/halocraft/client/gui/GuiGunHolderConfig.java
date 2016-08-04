@@ -19,7 +19,7 @@ public class GuiGunHolderConfig extends GuiContainer
 	private GuiButton btnMountSwap;
 	private GuiButton btnMountRotate;
 	private GuiButton btnGunRotaTrans;
-	private boolean btnTransMode = false;
+	private int btnTransMode = 0;
 	private GuiButton btnGunXP;
 	private GuiButton btnGunXM;
 	private GuiButton btnGunYP;
@@ -86,14 +86,39 @@ public class GuiGunHolderConfig extends GuiContainer
 		}
 		else if (guibutton.id == 3)
 		{
-			if (this.btnTransMode) {
-				this.btnGunRotaTrans.displayString = "Translate Mode";
-			} else {
+			if (this.btnTransMode == 0) {
 				this.btnGunRotaTrans.displayString = "Rotate Mode";
+				this.btnTransMode = 1;
+			} else if (this.btnTransMode == 1) {
+				this.btnGunRotaTrans.displayString = "Scale Mode";
+				this.btnTransMode = 2;
+			} else {
+				this.btnGunRotaTrans.displayString = "Translate Mode";
+				this.btnTransMode = 0;
 			}
-			this.btnTransMode = !this.btnTransMode;
 		}
-		else if (!this.btnTransMode)
+		else if (this.btnTransMode == 0)
+		{
+			if (guibutton.id == 4) {
+				Halocraft.network.sendToServer(new PacketGunHolder(this.tileentity.xCoord, this.tileentity.yCoord, this.tileentity.zCoord, (byte)-1));
+			}
+			else if (guibutton.id == 5) {
+				Halocraft.network.sendToServer(new PacketGunHolder(this.tileentity.xCoord, this.tileentity.yCoord, this.tileentity.zCoord, (byte)-2));
+			}
+			else if (guibutton.id == 6) {
+				Halocraft.network.sendToServer(new PacketGunHolder(this.tileentity.xCoord, this.tileentity.yCoord, this.tileentity.zCoord, (byte)-3));
+			}
+			else if (guibutton.id == 7) {
+				Halocraft.network.sendToServer(new PacketGunHolder(this.tileentity.xCoord, this.tileentity.yCoord, this.tileentity.zCoord, (byte)-4));
+			}
+			else if (guibutton.id == 8) {
+				Halocraft.network.sendToServer(new PacketGunHolder(this.tileentity.xCoord, this.tileentity.yCoord, this.tileentity.zCoord, (byte)-5));
+			}
+			else if (guibutton.id == 9) {
+				Halocraft.network.sendToServer(new PacketGunHolder(this.tileentity.xCoord, this.tileentity.yCoord, this.tileentity.zCoord, (byte)-6));
+			}
+		}
+		else if (this.btnTransMode == 1)
 		{
 			if (guibutton.id == 4) {
 				Halocraft.network.sendToServer(new PacketGunHolder(this.tileentity.xCoord, this.tileentity.yCoord, this.tileentity.zCoord, (byte)1));
@@ -114,25 +139,25 @@ public class GuiGunHolderConfig extends GuiContainer
 				Halocraft.network.sendToServer(new PacketGunHolder(this.tileentity.xCoord, this.tileentity.yCoord, this.tileentity.zCoord, (byte)6));
 			}
 		}
-		else
+		else if (this.btnTransMode == 2)
 		{
 			if (guibutton.id == 4) {
-				Halocraft.network.sendToServer(new PacketGunHolder(this.tileentity.xCoord, this.tileentity.yCoord, this.tileentity.zCoord, (byte)-1));
+				Halocraft.network.sendToServer(new PacketGunHolder(this.tileentity.xCoord, this.tileentity.yCoord, this.tileentity.zCoord, (byte)-11));
 			}
 			else if (guibutton.id == 5) {
-				Halocraft.network.sendToServer(new PacketGunHolder(this.tileentity.xCoord, this.tileentity.yCoord, this.tileentity.zCoord, (byte)-2));
+				Halocraft.network.sendToServer(new PacketGunHolder(this.tileentity.xCoord, this.tileentity.yCoord, this.tileentity.zCoord, (byte)-12));
 			}
 			else if (guibutton.id == 6) {
-				Halocraft.network.sendToServer(new PacketGunHolder(this.tileentity.xCoord, this.tileentity.yCoord, this.tileentity.zCoord, (byte)-3));
+				Halocraft.network.sendToServer(new PacketGunHolder(this.tileentity.xCoord, this.tileentity.yCoord, this.tileentity.zCoord, (byte)-13));
 			}
 			else if (guibutton.id == 7) {
-				Halocraft.network.sendToServer(new PacketGunHolder(this.tileentity.xCoord, this.tileentity.yCoord, this.tileentity.zCoord, (byte)-4));
+				Halocraft.network.sendToServer(new PacketGunHolder(this.tileentity.xCoord, this.tileentity.yCoord, this.tileentity.zCoord, (byte)-14));
 			}
 			else if (guibutton.id == 8) {
-				Halocraft.network.sendToServer(new PacketGunHolder(this.tileentity.xCoord, this.tileentity.yCoord, this.tileentity.zCoord, (byte)-5));
+				Halocraft.network.sendToServer(new PacketGunHolder(this.tileentity.xCoord, this.tileentity.yCoord, this.tileentity.zCoord, (byte)-15));
 			}
 			else if (guibutton.id == 9) {
-				Halocraft.network.sendToServer(new PacketGunHolder(this.tileentity.xCoord, this.tileentity.yCoord, this.tileentity.zCoord, (byte)-6));
+				Halocraft.network.sendToServer(new PacketGunHolder(this.tileentity.xCoord, this.tileentity.yCoord, this.tileentity.zCoord, (byte)-16));
 			}
 		}
 	}
@@ -159,8 +184,8 @@ public class GuiGunHolderConfig extends GuiContainer
 		this.drawCenteredString(this.fontRendererObj, "Gun", width - 50, 72, 0xffffff);
 		this.drawCenteredString(this.fontRendererObj, ""+this.tileentity.getMountSide(), width - 20, 50, 0xffffff);
 		this.drawCenteredString(this.fontRendererObj, ""+this.tileentity.getMountRotate(), width - 20, 36, 0xffffff);
-		this.drawCenteredString(this.fontRendererObj, ""+(this.btnTransMode ? this.tileentity.getTranslationXGun() : this.tileentity.getRotationXGun()), width - 116, 110, 0xffffff);
-		this.drawCenteredString(this.fontRendererObj, ""+(this.btnTransMode ? this.tileentity.getTranslationYGun() : this.tileentity.getRotationYGun()), width - 80, 110, 0xffffff);
-		this.drawCenteredString(this.fontRendererObj, ""+(this.btnTransMode ? this.tileentity.getTranslationZGun() : this.tileentity.getRotationZGun()), width - 44, 110, 0xffffff);
+		this.drawCenteredString(this.fontRendererObj, ""+(this.btnTransMode == 0 ? this.tileentity.getTranslationXGun() : (this.btnTransMode == 1 ? this.tileentity.getRotationXGun() : this.tileentity.getScaleXGun())), width - 116, 110, 0xffffff);
+		this.drawCenteredString(this.fontRendererObj, ""+(this.btnTransMode == 0 ? this.tileentity.getTranslationYGun() : (this.btnTransMode == 1 ? this.tileentity.getRotationYGun() : this.tileentity.getScaleYGun())), width - 80, 110, 0xffffff);
+		this.drawCenteredString(this.fontRendererObj, ""+(this.btnTransMode == 0 ? this.tileentity.getTranslationZGun() : (this.btnTransMode == 1 ? this.tileentity.getRotationZGun() : this.tileentity.getScaleZGun())), width - 44, 110, 0xffffff);
 	}
 }

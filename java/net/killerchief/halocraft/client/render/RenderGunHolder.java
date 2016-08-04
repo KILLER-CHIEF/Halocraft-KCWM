@@ -197,6 +197,8 @@ public class RenderGunHolder extends TileEntitySpecialRenderer {
 			GL11.glTranslatef((float)(l*Math.sin(angle)-0.2F*Math.cos(angle)), 0F, (float)(l*Math.cos(angle)+0.2F*Math.sin(angle)));
 
 			//System.out.println(tileentity.getRotationXGun()+":"+tileentity.getRotationYGun()+":"+tileentity.getRotationZGun());
+			GL11.glScalef(1F+(float)tileentity.getScaleXGun()*0.04F, 1F+(float)tileentity.getScaleYGun()*0.04F, 1F+(float)tileentity.getScaleZGun()*0.04F);
+			
 			GL11.glRotatef((float)(tileentity.getRotationZGun()*5F), 0F, 0F, 1F);
 			GL11.glRotatef((float)(tileentity.getRotationXGun()*5F), 1F, 0F, 0F);
 			GL11.glRotatef((float)(tileentity.getRotationYGun()*5F), 0F, 1F, 0F);
