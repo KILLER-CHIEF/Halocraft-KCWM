@@ -58,7 +58,7 @@ public class KCWeaponMod {
 
 	public static final String MODID = "kcweaponmod";
 	public static final String NAME = "KC's Weapon Mod";
-	public static final String VERSION = "0.1.4.08";
+	public static final String VERSION = "0.1.4.09";
 
 	public static String getVersion() { return VERSION; }
 
@@ -96,6 +96,7 @@ public class KCWeaponMod {
 	}
 
 	public static boolean ExplosionBlockDamage;
+	public static boolean FireBlockDamage;
 	public static boolean RecoilInLocalSP;
 	public static boolean EnableInGameWeaponModelTweeks;
 	public static boolean ConvertCodeToXML;
@@ -104,6 +105,7 @@ public class KCWeaponMod {
 	public static void DoSettingsConfiguration(Configuration config)
 	{
 		ExplosionBlockDamage = config.get("general", "Enable Explosion Block Damage", true).getBoolean(true);
+		FireBlockDamage = config.get("general", "Enable Fire Block Damage/Placement", true).getBoolean(true);
 		RecoilInLocalSP = config.get("general", "Weapon Recoil In Local SP", true).getBoolean(true);
 		EnableInGameWeaponModelTweeks = config.get("advanced", "Adv. Enable In-Game Weapon Model Tweeks", false).getBoolean(true);
 		ConvertCodeToXML = config.get("advanced", "Adv. Convert Code to XML Format", false).getBoolean(true);

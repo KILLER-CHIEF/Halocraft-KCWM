@@ -1,6 +1,8 @@
 package net.killerchief.kcweaponmod;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -10,8 +12,6 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class EventHandler {
 
@@ -34,9 +34,9 @@ public class EventHandler {
 	public void onRenderGui(RenderGameOverlayEvent.Post event)
 	{
 		Minecraft mc = Minecraft.getMinecraft();
-		if (mc.inGameHasFocus && mc.thePlayer.inventory.getCurrentItem() != null && mc.thePlayer.inventory.getCurrentItem().getItem() instanceof ItemWeapon && ((ItemWeapon)mc.thePlayer.inventory.getCurrentItem().getItem()).Properties.WeaponModel != null)
+		if (mc.inGameHasFocus && mc.thePlayer.inventory.getCurrentItem() != null && mc.thePlayer.inventory.getCurrentItem().getItem() instanceof InterfaceWeaponProperties && ((InterfaceWeaponProperties)mc.thePlayer.inventory.getCurrentItem().getItem()).Properties().WeaponModel != null)
 		{
-			ItemWeaponModel weaponModel = ((ItemWeapon)mc.thePlayer.inventory.getCurrentItem().getItem()).Properties.WeaponModel;
+			ItemWeaponModel weaponModel = ((InterfaceWeaponProperties)mc.thePlayer.inventory.getCurrentItem().getItem()).Properties().WeaponModel;
 			if (KCWeaponMod.EnableInGameWeaponModelTweeks) {
 				ScaledResolution scaled = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 				int width = scaled.getScaledWidth();
@@ -149,7 +149,8 @@ public class EventHandler {
 		}
 	}
 
-	private int stopAimingCoolDown = 0;
+	private int stopAimingCoolDown = 0;//FIXMe: player dependent?
+	private static Map<String, Integer> playerStopAimingCoolDown = new HashMap<String, Integer>();
 
 	@SubscribeEvent
 	public void livingEventClient(LivingEvent event)
@@ -160,28 +161,41 @@ public class EventHandler {
 
 			if (KCWeaponMod.proxy.isSideClient())
 			{
-				if (entityplayer.getHeldItem() != null && (entityplayer.getHeldItem().getItem() instanceof ItemWeapon && ((ItemWeapon)entityplayer.getHeldItem().getItem()).Properties.AimItem))
+				if (entityplayer.getHeldItem() != null && (entityplayer.getHeldItem().getItem() instanceof InterfaceWeaponProperties && ((InterfaceWeaponProperties)entityplayer.getHeldItem().getItem()).Properties().AimItem))
 				{
-					if (!entityplayer.isSprinting() && !(entityplayer.getHeldItem().getItem() instanceof ItemWeapon && ((ItemWeapon)entityplayer.getHeldItem().getItem()).doloweredweapon()))
+					if ((!entityplayer.isSprinting() || (entityplayer.getHeldItem().getItem() instanceof InterfaceWeaponProperties && ((InterfaceWeaponProperties)entityplayer.getHeldItem().getItem()).Properties().WeaponModel.NoChngOnSprint)) && !(entityplayer.getHeldItem().getItem() instanceof InterfaceWeaponProperties && ((InterfaceWeaponProperties)entityplayer.getHeldItem().getItem()).doLoweredWeapon()))
 					{
+						//System.out.println("T1");
 						KCUtils.setItemInUseCount(entityplayer, 71005);
 					}
 					else
 					{
+						//System.out.println("T2");
 						KCUtils.setItemInUseCount(entityplayer, 0);
 					}
-					if (stopAimingCoolDown != 4)
-					{
-						stopAimingCoolDown = 4;
-					}
+					playerStopAimingCoolDown.put(entityplayer.getCommandSenderName(), 4);
+					
+//					if (stopAimingCoolDown != 4)
+//					{
+//						stopAimingCoolDown = 4;
+//					}
 				}
 				else
 				{
-					if (stopAimingCoolDown > 0)
-					{
-						KCUtils.setItemInUseCount(entityplayer, 0);
-						--stopAimingCoolDown;
+					if (!playerStopAimingCoolDown.containsKey(entityplayer.getCommandSenderName())) {
+						playerStopAimingCoolDown.put(entityplayer.getCommandSenderName(), 0);
 					}
+					if (playerStopAimingCoolDown.get(entityplayer.getCommandSenderName()) > 0) {
+						KCUtils.setItemInUseCount(entityplayer, 0);
+						//System.out.println("T3");
+						playerStopAimingCoolDown.put(entityplayer.getCommandSenderName(), playerStopAimingCoolDown.get(entityplayer.getCommandSenderName())-1);
+					}
+//					if (stopAimingCoolDown > 0)
+//					{
+//						System.out.println("T3");
+//						KCUtils.setItemInUseCount(entityplayer, 0);
+//						--stopAimingCoolDown;
+//					}
 				}
 			}
 		}

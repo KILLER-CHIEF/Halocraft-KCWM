@@ -2,6 +2,7 @@ package net.killerchief.halocraft.config;
 
 import net.killerchief.halocraft.Halocraft;
 import net.killerchief.kcweaponmod.EntityProjectile;
+import net.killerchief.kcweaponmod.KCWeaponMod;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
@@ -127,7 +128,8 @@ public class NewWeaponTags {
 					{
 						if (Blocks.fire.canPlaceBlockAt(projectile.worldObj, collidedObject.blockX, collidedObject.blockY - 1, collidedObject.blockZ))
 						{
-							projectile.worldObj.setBlock(collidedObject.blockX, collidedObject.blockY - 1, collidedObject.blockZ, Blocks.fire);
+							if (KCWeaponMod.FireBlockDamage)
+								projectile.worldObj.setBlock(collidedObject.blockX, collidedObject.blockY - 1, collidedObject.blockZ, Blocks.fire);
 							notDead = false;
 						} else {
 							projectile.motionY = -0.01;
@@ -143,7 +145,9 @@ public class NewWeaponTags {
 					{
 						if (Blocks.fire.canPlaceBlockAt(projectile.worldObj, collidedObject.blockX, collidedObject.blockY + 1, collidedObject.blockZ))
 						{
-							projectile.worldObj.setBlock(collidedObject.blockX, collidedObject.blockY + 1, collidedObject.blockZ, Blocks.fire);
+							if (KCWeaponMod.FireBlockDamage)
+								//setFire(projectile.worldObj, collidedObject.blockX, collidedObject.blockY + 1, collidedObject.blockZ);
+								projectile.worldObj.setBlock(collidedObject.blockX, collidedObject.blockY + 1, collidedObject.blockZ, Blocks.fire);
 							notDead = false;
 						} else {
 							projectile.motionY = 0.01;
@@ -159,7 +163,8 @@ public class NewWeaponTags {
 					{
 						if (Blocks.fire.canPlaceBlockAt(projectile.worldObj, collidedObject.blockX, collidedObject.blockY, collidedObject.blockZ - 1))
 						{
-							projectile.worldObj.setBlock(collidedObject.blockX, collidedObject.blockY, collidedObject.blockZ - 1, Blocks.fire);
+							if (KCWeaponMod.FireBlockDamage)
+								projectile.worldObj.setBlock(collidedObject.blockX, collidedObject.blockY, collidedObject.blockZ - 1, Blocks.fire);
 							notDead = false;
 						} else {
 							projectile.motionZ = -0.01;
@@ -175,7 +180,8 @@ public class NewWeaponTags {
 					{
 						if (Blocks.fire.canPlaceBlockAt(projectile.worldObj, collidedObject.blockX, collidedObject.blockY, collidedObject.blockZ + 1))
 						{
-							projectile.worldObj.setBlock(collidedObject.blockX, collidedObject.blockY, collidedObject.blockZ + 1, Blocks.fire);
+							if (KCWeaponMod.FireBlockDamage)
+								projectile.worldObj.setBlock(collidedObject.blockX, collidedObject.blockY, collidedObject.blockZ + 1, Blocks.fire);
 							notDead = false;
 						} else {
 							projectile.motionZ = 0.01;
@@ -191,7 +197,8 @@ public class NewWeaponTags {
 					{
 						if (Blocks.fire.canPlaceBlockAt(projectile.worldObj, collidedObject.blockX - 1, collidedObject.blockY, collidedObject.blockZ))
 						{
-							projectile.worldObj.setBlock(collidedObject.blockX - 1, collidedObject.blockY, collidedObject.blockZ, Blocks.fire);
+							if (KCWeaponMod.FireBlockDamage)
+								projectile.worldObj.setBlock(collidedObject.blockX - 1, collidedObject.blockY, collidedObject.blockZ, Blocks.fire);
 							notDead = false;
 						} else {
 							projectile.motionX = -0.01;
@@ -207,7 +214,8 @@ public class NewWeaponTags {
 					{
 						if (Blocks.fire.canPlaceBlockAt(projectile.worldObj, collidedObject.blockX + 1, collidedObject.blockY, collidedObject.blockZ))
 						{
-							projectile.worldObj.setBlock(collidedObject.blockX + 1, collidedObject.blockY, collidedObject.blockZ, Blocks.fire);
+							if (KCWeaponMod.FireBlockDamage)
+								projectile.worldObj.setBlock(collidedObject.blockX + 1, collidedObject.blockY, collidedObject.blockZ, Blocks.fire);
 							notDead = false;
 						} else {
 							projectile.motionX = 0.01;
@@ -232,7 +240,7 @@ public class NewWeaponTags {
 						//System.out.println("inside");
 					}
 				}
-				if (domoarfire)
+				if (domoarfire && KCWeaponMod.FireBlockDamage)
 				{
 					//System.out.println("DoMoarFire");
 					if (canPlaceFireBlockAt(projectile.worldObj, collidedObject.blockX, collidedObject.blockY + 1, collidedObject.blockZ))
@@ -283,6 +291,12 @@ public class NewWeaponTags {
     		return false;
     }
     
+    private static void setFire(World world, int x, int y, int z) {
+    	if (KCWeaponMod.FireBlockDamage)
+    	world.setBlock(x, y, z, Blocks.fire);
+    	//world.scheduleBlockUpdate(x, y, z, Blocks.fire, 1);
+    }
+    
     public static void onImpactFirebomb(EntityProjectile projectile, MovingObjectPosition collidedObject, Object[] args)
 	{
 		if (!projectile.worldObj.isRemote)
@@ -299,23 +313,23 @@ public class NewWeaponTags {
 									for (int y2 = -1; y2 < 2; y2++){
 										if(projectile.worldObj.getBlock((int)projectile.posX + x1, (int)projectile.posY + y1, (int)projectile.posZ + z1) == Blocks.air || projectile.worldObj.getBlock((int)projectile.posX + x1, (int)projectile.posY + y1, (int)projectile.posZ + z1) == Blocks.fire || (projectile.worldObj.rand.nextInt(30) == 1 && projectile.worldObj.getBlock((int)projectile.posX + x1, (int)projectile.posY + y1, (int)projectile.posZ + z1) == Blocks.snow_layer))
 										{
-											projectile.worldObj.setBlock((int)projectile.posX + x1, (int)projectile.posY + y1, (int)projectile.posZ + z1, Blocks.fire);
+											setFire(projectile.worldObj, (int)projectile.posX + x1, (int)projectile.posY + y1, (int)projectile.posZ + z1);
 										}
 										if(projectile.worldObj.getBlock((int)projectile.posX + x2, (int)projectile.posY + y1, (int)projectile.posZ - 2) == Blocks.air || projectile.worldObj.getBlock((int)projectile.posX + x2, (int)projectile.posY + y1, (int)projectile.posZ - 2) == Blocks.fire || (projectile.worldObj.rand.nextInt(30) == 1 && projectile.worldObj.getBlock((int)projectile.posX + x2, (int)projectile.posY + y1, (int)projectile.posZ - 2) == Blocks.snow_layer))
 										{
-											projectile.worldObj.setBlock((int)projectile.posX + x2, (int)projectile.posY + y1, (int)projectile.posZ - 2, Blocks.fire);
+											setFire(projectile.worldObj, (int)projectile.posX + x2, (int)projectile.posY + y1, (int)projectile.posZ - 2);
 										}
 										if(projectile.worldObj.getBlock((int)projectile.posX + x2, (int)projectile.posY + y1, (int)projectile.posZ + 2) == Blocks.air || projectile.worldObj.getBlock((int)projectile.posX + x2, (int)projectile.posY + y1, (int)projectile.posZ + 2) == Blocks.fire || (projectile.worldObj.rand.nextInt(30) == 1 && projectile.worldObj.getBlock((int)projectile.posX + x2, (int)projectile.posY + y1, (int)projectile.posZ + 2) == Blocks.snow_layer))
 										{
-											projectile.worldObj.setBlock((int)projectile.posX + x2, (int)projectile.posY + y1, (int)projectile.posZ + 2, Blocks.fire);
+											setFire(projectile.worldObj, (int)projectile.posX + x2, (int)projectile.posY + y1, (int)projectile.posZ + 2);
 										}
 										if(projectile.worldObj.getBlock((int)projectile.posX - 3, (int)projectile.posY + y1, (int)projectile.posZ + y2) == Blocks.air || projectile.worldObj.getBlock((int)projectile.posX - 3, (int)projectile.posY + y1, (int)projectile.posZ + y2) == Blocks.fire || (projectile.worldObj.rand.nextInt(30) == 1 && projectile.worldObj.getBlock((int)projectile.posX - 3, (int)projectile.posY + y1, (int)projectile.posZ + y2) == Blocks.snow_layer))
 										{
-											projectile.worldObj.setBlock((int)projectile.posX - 3, (int)projectile.posY + y1, (int)projectile.posZ + y2, Blocks.fire);
+											setFire(projectile.worldObj, (int)projectile.posX - 3, (int)projectile.posY + y1, (int)projectile.posZ + y2);
 										}
 										if(projectile.worldObj.getBlock((int)projectile.posX + 1, (int)projectile.posY + y1, (int)projectile.posZ + y2) == Blocks.air || projectile.worldObj.getBlock((int)projectile.posX + 1, (int)projectile.posY + y1, (int)projectile.posZ + y2) == Blocks.fire || (projectile.worldObj.rand.nextInt(30) == 1 && projectile.worldObj.getBlock((int)projectile.posX + 1, (int)projectile.posY + y1, (int)projectile.posZ + y2) == Blocks.snow_layer))
 										{
-											projectile.worldObj.setBlock((int)projectile.posX + 1, (int)projectile.posY + y1, (int)projectile.posZ + y2, Blocks.fire);
+											setFire(projectile.worldObj, (int)projectile.posX + 1, (int)projectile.posY + y1, (int)projectile.posZ + y2);
 										}
 									}
 								}
@@ -336,23 +350,23 @@ public class NewWeaponTags {
 								for (int y2 = -1; y2 < 2; y2++){
 									if(projectile.worldObj.getBlock(xTile + x1, yTile + y1, zTile + z1) == Blocks.air || projectile.worldObj.getBlock(xTile + x1, yTile + y1, zTile + z1) == Blocks.fire || (projectile.worldObj.rand.nextInt(30) == 1 && projectile.worldObj.getBlock(xTile + x1, yTile + y1, zTile + z1) == Blocks.snow_layer))
 									{
-										projectile.worldObj.setBlock(xTile + x1, yTile + y1, zTile + z1, Blocks.fire);
+										setFire(projectile.worldObj, xTile + x1, yTile + y1, zTile + z1);
 									}
 									if(projectile.worldObj.getBlock(xTile + x2, yTile + y1, zTile - 2) == Blocks.air || projectile.worldObj.getBlock(xTile + x2, yTile + y1, zTile - 2) == Blocks.fire || (projectile.worldObj.rand.nextInt(30) == 1 && projectile.worldObj.getBlock(xTile + x2, yTile + y1, zTile - 2) == Blocks.snow_layer))
 									{
-										projectile.worldObj.setBlock(xTile + x2, yTile + y1, zTile - 2, Blocks.fire);
+										setFire(projectile.worldObj, xTile + x2, yTile + y1, zTile - 2);
 									}
 									if(projectile.worldObj.getBlock(xTile + x2, yTile + y1, zTile + 2) == Blocks.air || projectile.worldObj.getBlock(xTile + x2, yTile + y1, zTile + 2) == Blocks.fire || (projectile.worldObj.rand.nextInt(30) == 1 && projectile.worldObj.getBlock(xTile + x2, yTile + y1, zTile + 2) == Blocks.snow_layer))
 									{
-										projectile.worldObj.setBlock(xTile + x2, yTile + y1, zTile + 2, Blocks.fire);
+										setFire(projectile.worldObj, xTile + x2, yTile + y1, zTile + 2);
 									}
 									if(projectile.worldObj.getBlock(xTile - 2, yTile + y1, zTile + y2) == Blocks.air || projectile.worldObj.getBlock(xTile - 2, yTile + y1, zTile + y2) == Blocks.fire || (projectile.worldObj.rand.nextInt(30) == 1 && projectile.worldObj.getBlock(xTile - 2, yTile + y1, zTile + y2) == Blocks.snow_layer))
 									{
-										projectile.worldObj.setBlock(xTile - 2, yTile + y1, zTile + y2, Blocks.fire);
+										setFire(projectile.worldObj, xTile - 2, yTile + y1, zTile + y2);
 									}
 									if(projectile.worldObj.getBlock(xTile + 2, yTile + y1, zTile + y2) == Blocks.air || projectile.worldObj.getBlock(xTile + 2, yTile + y1, zTile + y2) == Blocks.fire || (projectile.worldObj.rand.nextInt(30) == 1 && projectile.worldObj.getBlock(xTile + 2, yTile + y1, zTile + y2) == Blocks.snow_layer))
 									{
-										projectile.worldObj.setBlock(xTile + 2, yTile + y1, zTile + y2, Blocks.fire);
+										setFire(projectile.worldObj, xTile + 2, yTile + y1, zTile + y2);
 									}
 								}
 							}

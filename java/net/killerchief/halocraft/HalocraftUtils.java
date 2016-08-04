@@ -7,7 +7,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.PlayerCapabilities;
-import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 
 public class HalocraftUtils {
@@ -27,8 +26,6 @@ public class HalocraftUtils {
 
 	public static boolean ErrorMoveSpeedMP = false;
 	public static boolean ErrorButtonList = false;
-	public static boolean ErrorItemInUse = false;
-	public static boolean ErrorItemInUseCount = false;
 
 	public static void MoveSpeedMP(EntityPlayer player, float moveSpeed)
 	{
@@ -58,35 +55,6 @@ public class HalocraftUtils {
 		}
 		return null;
 	}
-
-	public static void setItemInUse(EntityPlayer entityplayer, ItemStack value)
-	{
-		if (!ErrorItemInUse)
-		{
-			try {
-				ObfuscationReflectionHelper.setPrivateValue(EntityPlayer.class, entityplayer, value, "f", "itemInUse");
-			} catch (Exception e) {
-				System.err.println("I forgot to update the obfuscated reflection for itemInUseCount D:");
-				e.printStackTrace();
-				ErrorItemInUse = true;
-			}
-		}
-	}
-
-	public static void setItemInUseCount(EntityPlayer entityplayer, int value)
-	{
-		if (!ErrorItemInUseCount)
-		{
-			try {
-				ObfuscationReflectionHelper.setPrivateValue(EntityPlayer.class, entityplayer, Integer.valueOf(value), "g", "itemInUseCount");
-			} catch (Exception e) {
-				System.err.println("I forgot to update the obfuscated reflection for itemInUseCount D:");
-				e.printStackTrace();
-				ErrorItemInUseCount = true;
-			}
-		}
-	}
-
 
 	/**
 	 * This is designed for the client part of the game, i would make it ClientOnly but, i'd prefer not to as of yet.

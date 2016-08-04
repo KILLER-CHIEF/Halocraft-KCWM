@@ -2,7 +2,6 @@ package net.killerchief.kcweaponmod;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -12,7 +11,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemWeapon extends Item implements InterfaceZoomReticle, InterfaceTracking {
+public class ItemWeapon extends Item implements InterfaceWeaponProperties, InterfaceZoomReticle, InterfaceTracking {
 	
 	public ItemWeaponProperties Properties;
 	private boolean loweredweapon = false;
@@ -29,6 +28,11 @@ public class ItemWeapon extends Item implements InterfaceZoomReticle, InterfaceT
 	@Override
 	public String toString() {
 		return this.Properties.Name;
+	}
+	
+	@Override
+	public ItemWeaponProperties Properties() {
+		return this.Properties;
 	}
 
 	/**
@@ -111,7 +115,8 @@ public class ItemWeapon extends Item implements InterfaceZoomReticle, InterfaceT
 		return EnumAction.bow;
 	}
 	
-	public boolean doloweredweapon()
+	@Override
+	public boolean doLoweredWeapon()
 	{
 		return this.loweredweapon;
 	}

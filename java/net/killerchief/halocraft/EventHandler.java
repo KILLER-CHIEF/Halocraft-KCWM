@@ -13,7 +13,6 @@ import net.killerchief.halocraft.entities.vehicles.EntityBanshee;
 import net.killerchief.halocraft.entities.vehicles.EntityGhost;
 import net.killerchief.halocraft.entities.vehicles.EntityTurretSeat;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
-import net.killerchief.halocraft.items.ItemEnergySword;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
@@ -57,7 +56,7 @@ public class EventHandler {
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void playerInteractEvent(PlayerInteractEvent event)
 	{
@@ -69,18 +68,18 @@ public class EventHandler {
 			}
 		}
 	}
-	
+
 	private int headCooldown = 0;
-	
+
 	public static List<EntityClientEntityArrowIndicator> TeamArrowList = new ArrayList<EntityClientEntityArrowIndicator>();
-	
+
 	@SubscribeEvent
 	public void playerEvent(PlayerEvent event)
 	{
 		EntityPlayer entityplayer = event.entityPlayer;
-		
+
 		if (Halocraft.proxy.isSideClient() && entityplayer != null) {
-			
+
 			if (Halocraft.proxy.getClientWorld() != null && entityplayer instanceof EntityOtherPlayerMP && entityplayer.isEntityAlive() && entityplayer.getCommandSenderName() != null) {
 				Scoreboard s2 = Halocraft.proxy.getClientWorld().getScoreboard();
 				ScorePlayerTeam local = s2.getPlayersTeam(Minecraft.getMinecraft().getSession().getUsername());
@@ -90,7 +89,7 @@ public class EventHandler {
 					int i = 0;
 					while (i < TeamArrowList.size()) {
 						EntityClientEntityArrowIndicator entity = TeamArrowList.get(i);
-						
+
 						if (entity == null || entity.isDead) {
 							TeamArrowList.remove(i);
 							continue;
@@ -120,7 +119,7 @@ public class EventHandler {
 					}
 				}
 			}
-			
+
 			if (HalocraftConfig.ShowDevPerks && !entityplayer.isDead && !entityplayer.isInvisible())
 			{
 				Minecraft mc = Minecraft.getMinecraft();
@@ -146,38 +145,6 @@ public class EventHandler {
 			}
 		}
 
-	}
-
-	private int stopAimingCoolDown = 0;
-
-	@SubscribeEvent
-	public void livingEventClient(LivingEvent event)
-	{
-		if (event.entityLiving instanceof EntityPlayer)
-		{
-			EntityPlayer entityplayer = (EntityPlayer) event.entityLiving;
-			
-			if (Halocraft.proxy.isSideClient())
-			{
-				if (entityplayer.getHeldItem() != null && entityplayer.getHeldItem().getItem() instanceof ItemEnergySword)
-				{
-					HalocraftUtils.setItemInUseCount(entityplayer, 71005);
-					
-					if (stopAimingCoolDown != 4)
-					{
-						stopAimingCoolDown = 4;
-					}
-				}
-				else
-				{
-					if (stopAimingCoolDown > 0)
-					{
-						HalocraftUtils.setItemInUseCount(entityplayer, 0);
-						--stopAimingCoolDown;
-					}
-				}
-			}
-		}
 	}
 
 	//These cause an InstantiationException on mod load fyi
@@ -213,10 +180,10 @@ public class EventHandler {
 		//event.renderer.modelBipedMain.bipedLeftArm.rotateAngleZ = 1.5F;
 		//event.renderer.modelBipedMain.isSneak = true;
 	}*/
-	
+
 	public static HashMap<EntityPlayer, Float> PlayerMPMoveSpeed = new HashMap();
 	public static HashMap<EntityPlayer, Float> PlayerMPStepHeight = new HashMap();
-	
+
 	private void HandleArmourAbilities(EntityPlayer entityplayer)
 	{
 		if (HalocraftUtils.isPlayerWearingArmor(entityplayer, 0, false, true, true, true))
@@ -245,7 +212,7 @@ public class EventHandler {
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void livingJumpEvent(LivingJumpEvent event)
 	{
@@ -253,7 +220,7 @@ public class EventHandler {
 			return;
 		}
 		EntityPlayer entityplayer = (EntityPlayer) event.entityLiving;
-		
+
 		if (HalocraftUtils.isPlayerWearingArmor(entityplayer, 0, false, true, true, true))
 		{
 			//TODO: Armour Jump: mc.theWorld.provider.dimensionId
@@ -264,7 +231,7 @@ public class EventHandler {
 			entityplayer.motionY += 0.17D;
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void livingEvent(LivingEvent event)
 	{
@@ -275,7 +242,7 @@ public class EventHandler {
 			return;
 		}
 		EntityPlayerMP entityplayermp = (EntityPlayerMP) event.entityLiving;
-		
+
 		if(entityplayermp.inventory != null && entityplayermp.inventory.mainInventory != null && entityplayermp.inventory.hasItem(HalocraftItemsWeapons.EnergySword))
 		{
 			int i = 0;

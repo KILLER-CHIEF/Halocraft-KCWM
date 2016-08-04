@@ -63,6 +63,7 @@ import net.killerchief.halocraft.entities.vehicles.EntityWarthogGauss;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogGold;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthogRocket;
 import net.killerchief.halocraft.entities.vehicles.MovingVehicleSoundLoop;
+import net.killerchief.halocraft.items.ItemEnergySword;
 import net.killerchief.halocraft.tileEntities.TileEntityCovSupplyCase;
 import net.killerchief.halocraft.tileEntities.TileEntityForeSymbol;
 import net.killerchief.halocraft.tileEntities.TileEntityGunHolder;
@@ -140,7 +141,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityGruntFlee.class, new RenderGruntPlasmaPistol(new ModelGrunt(), 0.0F));
 
 		MinecraftForgeClient.registerItemRenderer(HalocraftItems.SwordHilt, (IItemRenderer)new RenderWeapon(new ItemWeaponModel(new ModelEnergySword(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinEnergySwordOff.png"), true)));
-		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.EnergySword, (IItemRenderer)new RenderWeapon(new ItemWeaponModel(new ModelEnergySword(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinEnergySword.png"), false, true)));
+		MinecraftForgeClient.registerItemRenderer(HalocraftItemsWeapons.EnergySword, (IItemRenderer)new RenderWeapon(new ItemEnergySword(null, null).Properties().WeaponModel));
 
 		//FIXME: Add New Gun Models
 		//MinecraftForgeClient.registerItemRenderer(KCWeaponMod.weapons[HalocraftItemsWeapons.ModMapOffset+19], (IItemRenderer)new RenderGun(new ModelSentinelBeam(), Halocraft.MODID+":textures/guns/SkinSentinelBeamMajor.png", false));

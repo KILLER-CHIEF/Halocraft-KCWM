@@ -44,6 +44,7 @@ public class RenderWeapon implements IItemRenderer {
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data)
 	{
+		//System.out.println(this.Properties.NoChngOnSprint);
 		if (data != null && data[1] != null && data[1] instanceof EntityLivingBase)
 		{
 			EntityLivingBase entity = (EntityLivingBase)data[1];
@@ -60,7 +61,7 @@ public class RenderWeapon implements IItemRenderer {
 					GL11.glScalef(0.55F, 0.55F, -0.55F);
 					GL11.glScalef(this.Properties.TPScaleX, this.Properties.TPScaleY, this.Properties.TPScaleZ);
 					
-					if ((!this.Properties.NoChngOnSprint && entity.isSprinting()) || (entity instanceof EntityPlayer && entity.getHeldItem().getItem() instanceof ItemWeapon && ((ItemWeapon)entity.getHeldItem().getItem()).doloweredweapon()))
+					if ((!this.Properties.NoChngOnSprint && entity.isSprinting()) || (entity instanceof EntityPlayer && entity.getHeldItem().getItem() instanceof InterfaceWeaponProperties && ((InterfaceWeaponProperties)entity.getHeldItem().getItem()).doLoweredWeapon()))
 					{
 						if (entity instanceof EntityPlayer && item.getItem().getItemUseAction(item) == EnumAction.block)
 						{
@@ -122,7 +123,7 @@ public class RenderWeapon implements IItemRenderer {
 					GL11.glScalef(-1.0F, -1.0F, 1.0F);
 					GL11.glScalef(this.Properties.FPScaleX, this.Properties.FPScaleY, this.Properties.FPScaleZ);
 					
-					if ((!this.Properties.NoChngOnSprint && entity.isSprinting())  || (entity instanceof EntityPlayer && entity.getHeldItem().getItem() instanceof ItemWeapon && ((ItemWeapon)entity.getHeldItem().getItem()).doloweredweapon()))
+					if ((!this.Properties.NoChngOnSprint && entity.isSprinting())  || (entity instanceof EntityPlayer && entity.getHeldItem().getItem() instanceof InterfaceWeaponProperties && ((InterfaceWeaponProperties)entity.getHeldItem().getItem()).doLoweredWeapon()))
 					{
 						if (entity instanceof EntityPlayer && item.getItem().getItemUseAction(item) == EnumAction.block)
 						{

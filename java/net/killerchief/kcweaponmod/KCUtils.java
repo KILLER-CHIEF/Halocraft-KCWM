@@ -4,20 +4,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class KCUtils {
 	
@@ -36,6 +33,20 @@ public class KCUtils {
 			}
 		}
 	}
+	
+	/*public static void setItemInUse(EntityPlayer entityplayer, ItemStack value)
+	{
+		if (!ErrorItemInUse)
+		{
+			try {
+				ObfuscationReflectionHelper.setPrivateValue(EntityPlayer.class, entityplayer, value, "f", "itemInUse");
+			} catch (Exception e) {
+				System.err.println("I forgot to update the obfuscated reflection for itemInUseCount D:");
+				e.printStackTrace();
+				ErrorItemInUse = true;
+			}
+		}
+	}*/
 	
 	public static boolean fireProjectile(World world, EntityLivingBase thrower, int propID)
 	{
