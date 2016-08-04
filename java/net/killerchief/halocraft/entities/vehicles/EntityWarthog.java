@@ -165,9 +165,9 @@ public class EntityWarthog extends EntityVehicle
 	public boolean interactFirst(EntityPlayer par1EntityPlayer)
 	{
 		ItemStack heldItem = par1EntityPlayer.getCurrentEquippedItem();
-		if(heldItem!=null)
+		if (heldItem != null && par1EntityPlayer.isSneaking())
 		{
-			if(heldItem.getItem() == HalocraftItems.Wrench) {
+			if (heldItem.getItem() == HalocraftItems.Wrench) {
 				if(getHealth()<99) {
 					setHealth(getHealth() + 2);
 					heldItem.damageItem(1, par1EntityPlayer);
@@ -186,6 +186,9 @@ public class EntityWarthog extends EntityVehicle
 				return false;
 			}*/
 		}
+		
+		if (par1EntityPlayer.isSneaking())
+			return false;
 
 		if (this.riddenByEntity == null && (this.seatShotgun != null && this.entityonecloser(par1EntityPlayer, this, this.seatShotgun)))
 		{

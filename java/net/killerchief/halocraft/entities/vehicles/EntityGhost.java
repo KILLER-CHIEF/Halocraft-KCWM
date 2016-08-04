@@ -145,7 +145,7 @@ public class EntityGhost extends EntityVehicle
 	public boolean interactFirst(EntityPlayer par1EntityPlayer)
 	{
 		ItemStack heldItem = par1EntityPlayer.getCurrentEquippedItem();
-		if(heldItem!=null)
+		if (heldItem != null && par1EntityPlayer.isSneaking())
 		{
 			if(heldItem.getItem() == HalocraftItems.Wrench) {
 				if(getHealth()<99) {
@@ -166,6 +166,9 @@ public class EntityGhost extends EntityVehicle
 				return false;
 			}*/
 		}
+		
+		if (par1EntityPlayer.isSneaking())
+			return false;
 
 		if (this.riddenByEntity == null)
 		{
