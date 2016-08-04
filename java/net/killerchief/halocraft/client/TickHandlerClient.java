@@ -445,7 +445,7 @@ public class TickHandlerClient {
 	{
 		if (this.RocketTracking && minecraft.inGameHasFocus && minecraft.gameSettings.thirdPersonView == 0)
 		{
-			GunReticle(1.0F, RLReticle, 51, 193, 49, 47, 24, 23);
+			GunReticle(RLReticle, 1.0F, 51, 193, 49, 47, 24, 23);
 		}
 	}
 
@@ -850,7 +850,7 @@ public class TickHandlerClient {
 						this.rndrChChngd = true;
 						GuiIngameForge.renderCrosshairs = false;
 					}
-					GunReticle(1.0F, RLReticle, 132, 117, 45, 45, 22, 22);
+					net.killerchief.kcweaponmod.TickHandlerClient.GunReticle(RLReticle, 150D, 1.0F, 132, 117, 45, 45, 22, 22);
 				}
 				else if (turret.parentBody instanceof EntityWarthogGauss)
 				{
@@ -860,7 +860,7 @@ public class TickHandlerClient {
 						this.rndrChChngd = true;
 						GuiIngameForge.renderCrosshairs = false;
 					}
-					GunReticle(1.0F, RLReticle, 175, 47, 31, 49, 15, 24);
+					net.killerchief.kcweaponmod.TickHandlerClient.GunReticle(RLReticle, 150D, 1.0F, 175, 47, 31, 49, 15, 24);
 				}
 				else if (turret.parentBody instanceof EntityWarthogRocket)
 				{
@@ -870,7 +870,7 @@ public class TickHandlerClient {
 						this.rndrChChngd = true;
 						GuiIngameForge.renderCrosshairs = false;
 					}
-					GunReticle(1.0F, RLReticle, 210, 145, 45, 45, 22, 22);
+					net.killerchief.kcweaponmod.TickHandlerClient.GunReticle(RLReticle, 150D, 1.0F, 210, 145, 45, 45, 22, 22);
 				}
 			}
 			else if (minecraft.thePlayer.ridingEntity instanceof EntityGhost)
@@ -881,7 +881,7 @@ public class TickHandlerClient {
 					this.rndrChChngd = true;
 					GuiIngameForge.renderCrosshairs = false;
 				}
-				GunReticle(1.0F, RLReticle, 39, 163, 49, 29, 24, 19);
+				net.killerchief.kcweaponmod.TickHandlerClient.GunReticle(RLReticle, 150D, 1.0F, 39, 163, 49, 29, 24, 19);
 			}
 			else if (minecraft.thePlayer.ridingEntity instanceof EntityBanshee)
 			{
@@ -891,7 +891,7 @@ public class TickHandlerClient {
 					this.rndrChChngd = true;
 					GuiIngameForge.renderCrosshairs = false;
 				}
-				GunReticle(1.0F, RLReticle, 94, 155, 37, 33, 18, 16);
+				net.killerchief.kcweaponmod.TickHandlerClient.GunReticle(RLReticle, 0D, 1.0F, 94, 155, 37, 33, 18, 16);
 			}
 			else if (minecraft.thePlayer.ridingEntity instanceof EntityWarthog)
 			{
@@ -901,7 +901,7 @@ public class TickHandlerClient {
 					this.rndrChChngd = true;
 					GuiIngameForge.renderCrosshairs = false;
 				}
-				GunReticle(1.0F, RLReticle, 125, 91, 23, 10, 11, 2);
+				net.killerchief.kcweaponmod.TickHandlerClient.GunReticle(RLReticle, 150D, 1.0F, 125, 91, 23, 10, 11, 2);
 			}
 			else
 			{
@@ -914,7 +914,7 @@ public class TickHandlerClient {
 					this.rndrChChngd = true;
 					GuiIngameForge.renderCrosshairs = false;
 				}
-				GunReticle(1.0F, RLReticle, 125, 91, 23, 10, 11, 2);
+				net.killerchief.kcweaponmod.TickHandlerClient.GunReticle(RLReticle, 150D, 1.0F, 125, 91, 23, 10, 11, 2);
 			}
 
 			if (!net.killerchief.kcweaponmod.TickHandlerClient.IsZooming() && minecraft.thePlayer.inventory.armorInventory != null && minecraft.thePlayer.inventory.armorInventory[3] != null)
@@ -928,7 +928,7 @@ public class TickHandlerClient {
 		}
 	}
 	
-	public static void GunReticle(float transparency, ResourceLocation overlay, int iBCoordX, int iBCoordY, int iBWidth /* xOffset */, int iBHeight /* yOffset */, int posX, int posY)
+	public static void GunReticle(ResourceLocation overlay, float transparency, int iBCoordX, int iBCoordY, int iBWidth /* xOffset */, int iBHeight /* yOffset */, int posX, int posY)
 	{
 		if (!mc.gameSettings.hideGUI)
 		{
