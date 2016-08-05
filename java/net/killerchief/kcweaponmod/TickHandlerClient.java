@@ -208,7 +208,7 @@ public class TickHandlerClient {
 
 					if (entity.canBeCollidedWith())
 					{
-						float f2 = 0.5F;//entity.getCollisionBorderSize();
+						float f2 = 0.4F;//entity.getCollisionBorderSize();
 						AxisAlignedBB axisalignedbb = entity.boundingBox.expand((double)f2, (double)f2, (double)f2);
 						MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32);
 
