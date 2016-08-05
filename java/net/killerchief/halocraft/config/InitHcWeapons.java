@@ -9,13 +9,13 @@ import net.killerchief.halocraft.client.models.guns.ModelBattleRifle;
 import net.killerchief.halocraft.client.models.guns.ModelBeamRifle;
 import net.killerchief.halocraft.client.models.guns.ModelBruteShot;
 import net.killerchief.halocraft.client.models.guns.ModelCarbine;
+import net.killerchief.halocraft.client.models.guns.ModelCovPlasmaPistol;
+import net.killerchief.halocraft.client.models.guns.ModelCovPlasmaRifle;
 import net.killerchief.halocraft.client.models.guns.ModelDMR;
 import net.killerchief.halocraft.client.models.guns.ModelFlamethrower;
 import net.killerchief.halocraft.client.models.guns.ModelMagnumM6G;
 import net.killerchief.halocraft.client.models.guns.ModelMauler;
 import net.killerchief.halocraft.client.models.guns.ModelNeedler;
-import net.killerchief.halocraft.client.models.guns.ModelPlasmaPistol;
-import net.killerchief.halocraft.client.models.guns.ModelPlasmaRifle;
 import net.killerchief.halocraft.client.models.guns.ModelRocketLauncher;
 import net.killerchief.halocraft.client.models.guns.ModelSMGM7S;
 import net.killerchief.halocraft.client.models.guns.ModelSentinelBeam;
@@ -236,7 +236,8 @@ public class InitHcWeapons {
 		//SniperRifle
 		ItemWeaponProperties SniperRifle = new ItemWeaponProperties(Halocraft.MODID+".SniperRifle");
 		SniperRifle.Texture = Halocraft.MODID + ":SniperRifle";
-		SniperRifle.WeaponModel = new ItemWeaponModel(new ModelSniperRifle(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinSniperRifle.png"));
+		SniperRifle.WeaponModel = new ItemWeaponModel(new ModelSniperRifle(), new ResourceLocation(Halocraft.MODID+":textures/guns/SRS99AM.png"));
+		SniperRifle.WeaponModel.TPScale(0.6F, 0.6F, 0.6F).TPTrans(0.18F, -0.16F, -0.78F).TPRotate(0.5F, -3.5F, 0.0F).TPSprintTrans(0.48F, -0.94F, -0.06F).TPSprintRotate(11.5F, 10.0F, -26.0F).FPTrans(-0.35F, -0.2F, 0.3F).FPRotate(-2.0F, -3.5F, 1.5F).FPSprintTrans(-0.2F, -0.26F, 0.35F).FPSprintRotate(0.0F, 0.0F, -2.0F);
 		SniperRifle.IsAutomaticOrHasSecondaryShoot = false;
 		SniperRifle.IsZoomable = true;
 		SniperRifle.ZoomMultiplier = new int[]{4, 8};
@@ -431,7 +432,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties Carbine = new ItemWeaponProperties(Halocraft.MODID+".Carbine");
 		Carbine.Texture = Halocraft.MODID + ":Carbine";
 		Carbine.WeaponModel = new ItemWeaponModel(new ModelCarbine(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinCarbine.png"));
-		Carbine.WeaponModel.TPScale(0.7F, 0.7F, 0.7F).TPTrans(0F, -0.4F, -1.65F).FPTrans(-0.2F, -0.3F, -0.9F);
+		Carbine.WeaponModel.TPScale(0.7F, 0.7F, 0.7F).TPTrans(0F, -0.4F, -1.65F).TPSprintTrans(0.28F, -0.72F, -1.23F).TPSprintRotate(11.0F, 0.5F, -21.5F).FPTrans(-0.2F, -0.3F, -0.9F).FPRotate(0.5F, -1.0F, 0.0F).FPSprintTrans(-0.28F, -0.18F, -1.0F);
 		Carbine.IsAutomaticOrHasSecondaryShoot = false;
 		Carbine.IsZoomable = true;
 		Carbine.ZoomMultiplier = new int[]{4};
@@ -478,7 +479,8 @@ public class InitHcWeapons {
 		//PlasmaRifle
 		ItemWeaponProperties PlasmaRifle = new ItemWeaponProperties(Halocraft.MODID+".PlasmaRifle");
 		PlasmaRifle.Texture = Halocraft.MODID + ":PlasmaRifle";
-		PlasmaRifle.WeaponModel = new ItemWeaponModel(new ModelPlasmaRifle(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinPlasmaRifle.png"));
+		PlasmaRifle.WeaponModel = new ItemWeaponModel(new ModelCovPlasmaRifle(), new ResourceLocation(Halocraft.MODID+":textures/guns/T25DER.png"));
+		PlasmaRifle.WeaponModel.TPScale(0.6F, 0.6F, 0.6F).TPTrans(0.2F, -0.4F, -0.7F).TPRotate(2.0F, -2.0F, 0.0F).TPSprintTrans(0.51F, -1.23F, -0.12F).TPSprintRotate(-66.5F, -40.5F, -60.0F).FPScale(0.8F, 0.8F, 0.8F).FPTrans(0.1F, -0.57F, -1.14F).FPRotate(1.0F, -1.5F, 0.0F).FPSprintTrans(0.01F, -0.31F, -1.27F).FPSprintRotate(1.0F, 0.0F, -7.5F);
 		PlasmaRifle.IsAutomaticOrHasSecondaryShoot = true;
 		PlasmaRifle.IsZoomable = false;
 		//PlasmaRifle.ZoomMultiplier = new int[]{2};
@@ -525,7 +527,8 @@ public class InitHcWeapons {
 		//PlasmaPistol
 		ItemWeaponProperties PlasmaPistol = new ItemWeaponProperties(Halocraft.MODID+".PlasmaPistol");
 		PlasmaPistol.Texture = Halocraft.MODID + ":PlasmaPistol";
-		PlasmaPistol.WeaponModel = new ItemWeaponModel(new ModelPlasmaPistol(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinPlasmaPistol.png"));
+		PlasmaPistol.WeaponModel = new ItemWeaponModel(new ModelCovPlasmaPistol(), new ResourceLocation(Halocraft.MODID+":textures/guns/T25DEP.png"));
+		PlasmaPistol.WeaponModel.TPScale(0.75F, 0.75F, 0.75F).TPTrans(0.0F, -0.05F, -0.36F).TPRotate(0.0F, -1.5F, 0.0F).TPSprintTrans(0.56F, -0.72F, -0.15F).TPSprintRotate(-73.5F, -35.5F, -61.0F);
 		PlasmaPistol.IsAutomaticOrHasSecondaryShoot = false;
 		PlasmaPistol.IsZoomable = false;
 		//PlasmaPistol.ZoomMultiplier = new int[]{2};
