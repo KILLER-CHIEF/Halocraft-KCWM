@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,7 +35,8 @@ public class EventHandler {
 	public void onRenderGui(RenderGameOverlayEvent.Post event)
 	{
 		Minecraft mc = Minecraft.getMinecraft();
-		if (mc.inGameHasFocus && mc.thePlayer.inventory.getCurrentItem() != null && mc.thePlayer.inventory.getCurrentItem().getItem() instanceof InterfaceWeaponProperties && ((InterfaceWeaponProperties)mc.thePlayer.inventory.getCurrentItem().getItem()).Properties().WeaponModel != null)
+		if ((mc.inGameHasFocus || (mc.currentScreen != null && mc.currentScreen instanceof GuiChat)) && 
+				mc.thePlayer.inventory.getCurrentItem() != null && mc.thePlayer.inventory.getCurrentItem().getItem() instanceof InterfaceWeaponProperties && ((InterfaceWeaponProperties)mc.thePlayer.inventory.getCurrentItem().getItem()).Properties().WeaponModel != null)
 		{
 			ItemWeaponModel weaponModel = ((InterfaceWeaponProperties)mc.thePlayer.inventory.getCurrentItem().getItem()).Properties().WeaponModel;
 			if (KCWeaponMod.EnableInGameWeaponModelTweeks) {
@@ -101,33 +103,33 @@ public class EventHandler {
 				mc.fontRenderer.drawString("FP Scale", 10, 10, 0xff0000);
 				mc.fontRenderer.drawString(weaponModel.FPScaleX+" : "+weaponModel.FPScaleY+" : "+weaponModel.FPScaleZ, 10, 20, 0xff0000);
 
-				mc.fontRenderer.drawString("FP Rotate", 10, 40, 0xff0000);
-				mc.fontRenderer.drawString(weaponModel.FPRotateX+" : "+weaponModel.FPRotateY+" : "+weaponModel.FPRotateZ, 10, 50, 0xff0000);
+				mc.fontRenderer.drawString("FP Translate", 10, 40, 0xff0000);
+				mc.fontRenderer.drawString(weaponModel.FPTransX+" : "+weaponModel.FPTransY+" : "+weaponModel.FPTransZ, 10, 50, 0xff0000);
+				
+				mc.fontRenderer.drawString("FP Rotate", 10, 70, 0xff0000);
+				mc.fontRenderer.drawString(weaponModel.FPRotateX+" : "+weaponModel.FPRotateY+" : "+weaponModel.FPRotateZ, 10, 80, 0xff0000);
+				
+				mc.fontRenderer.drawString("FP Sprint Translate", 10, 100, 0xff0000);
+				mc.fontRenderer.drawString(weaponModel.FPSprintTransX+" : "+weaponModel.FPSprintTransY+" : "+weaponModel.FPSprintTransZ, 10, 110, 0xff0000);
 
-				mc.fontRenderer.drawString("FP Translate", 10, 70, 0xff0000);
-				mc.fontRenderer.drawString(weaponModel.FPTransX+" : "+weaponModel.FPTransY+" : "+weaponModel.FPTransZ, 10, 80, 0xff0000);
-
-				mc.fontRenderer.drawString("FP Sprint Rotate", 10, 100, 0xff0000);
-				mc.fontRenderer.drawString(weaponModel.FPSprintRotateX+" : "+weaponModel.FPSprintRotateY+" : "+weaponModel.FPSprintRotateZ, 10, 110, 0xff0000);
-
-				mc.fontRenderer.drawString("FP Sprint Translate", 10, 130, 0xff0000);
-				mc.fontRenderer.drawString(weaponModel.FPSprintTransX+" : "+weaponModel.FPSprintTransY+" : "+weaponModel.FPSprintTransZ, 10, 140, 0xff0000);
+				mc.fontRenderer.drawString("FP Sprint Rotate", 10, 130, 0xff0000);
+				mc.fontRenderer.drawString(weaponModel.FPSprintRotateX+" : "+weaponModel.FPSprintRotateY+" : "+weaponModel.FPSprintRotateZ, 10, 140, 0xff0000);
 
 
 				mc.fontRenderer.drawString("TP Scale", width-210, 10, 0xff0000);
 				mc.fontRenderer.drawString(weaponModel.TPScaleX+" : "+weaponModel.TPScaleY+" : "+weaponModel.TPScaleZ, width-210, 20, 0xff0000);
+				
+				mc.fontRenderer.drawString("TP Translate", width-210, 40, 0xff0000);
+				mc.fontRenderer.drawString(weaponModel.TPTransX+" : "+weaponModel.TPTransY+" : "+weaponModel.TPTransZ, width-210, 50, 0xff0000);
 
-				mc.fontRenderer.drawString("TP Rotate", width-210, 40, 0xff0000);
-				mc.fontRenderer.drawString(weaponModel.TPRotateX+" : "+weaponModel.TPRotateY+" : "+weaponModel.TPRotateZ, width-210, 50, 0xff0000);
+				mc.fontRenderer.drawString("TP Rotate", width-210, 70, 0xff0000);
+				mc.fontRenderer.drawString(weaponModel.TPRotateX+" : "+weaponModel.TPRotateY+" : "+weaponModel.TPRotateZ, width-210, 80, 0xff0000);
+				
+				mc.fontRenderer.drawString("TP Sprint Translate", width-210, 100, 0xff0000);
+				mc.fontRenderer.drawString(weaponModel.TPSprintTransX+" : "+weaponModel.TPSprintTransY+" : "+weaponModel.TPSprintTransZ, width-210, 110, 0xff0000);
 
-				mc.fontRenderer.drawString("TP Translate", width-210, 70, 0xff0000);
-				mc.fontRenderer.drawString(weaponModel.TPTransX+" : "+weaponModel.TPTransY+" : "+weaponModel.TPTransZ, width-210, 80, 0xff0000);
-
-				mc.fontRenderer.drawString("TP Sprint Rotate", width-210, 100, 0xff0000);
-				mc.fontRenderer.drawString(weaponModel.TPSprintRotateX+" : "+weaponModel.TPSprintRotateY+" : "+weaponModel.TPSprintRotateZ, width-210, 110, 0xff0000);
-
-				mc.fontRenderer.drawString("TP Sprint Translate", width-210, 130, 0xff0000);
-				mc.fontRenderer.drawString(weaponModel.TPSprintTransX+" : "+weaponModel.TPSprintTransY+" : "+weaponModel.TPSprintTransZ, width-210, 140, 0xff0000);
+				mc.fontRenderer.drawString("TP Sprint Rotate", width-210, 130, 0xff0000);
+				mc.fontRenderer.drawString(weaponModel.TPSprintRotateX+" : "+weaponModel.TPSprintRotateY+" : "+weaponModel.TPSprintRotateZ, width-210, 140, 0xff0000);
 			}
 		} else {
 			while (KeyBindings.weapModelFieldPrev.isPressed()) {}
