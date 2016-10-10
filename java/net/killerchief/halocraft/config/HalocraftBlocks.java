@@ -314,5 +314,11 @@ public class HalocraftBlocks {
 		GameRegistry.addRecipe(new ItemStack(CovSupplyCaseBaseClosed, 1), new Object[] {
 			"IPI", "PRP", "IPI", Character.valueOf('R'), RechargeStation, Character.valueOf('I'), HalocraftItems.TitaniumIngot, Character.valueOf('P'), HalocraftItems.CovArmorPlate
 		});
+		GameRegistry.addRecipe(new ItemStack(UnscWeaponRackBase, 1), new Object[] {
+			"RBR", "IFI", "RBR", Character.valueOf('I'), HalocraftItems.TitaniumIngot, Character.valueOf('R'), HalocraftItems.MetalRod, Character.valueOf('F'), HalocraftItems.MetalRack, Character.valueOf('B'), UNSCPlating
+		});
+		GameRegistry.addRecipe(new ItemStack(GunHolder, 1), new Object[] {
+			"III", "RRR", "III", Character.valueOf('I'), HalocraftItems.TitaniumIngot, Character.valueOf('R'), HalocraftItems.MetalRod
+		});
 	}
 }

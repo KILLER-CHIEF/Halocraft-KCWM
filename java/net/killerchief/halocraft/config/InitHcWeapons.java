@@ -379,6 +379,7 @@ public class InitHcWeapons {
 		ItemWeaponProperties RocketLauncher = new ItemWeaponProperties(Halocraft.MODID+".RocketLauncher");
 		RocketLauncher.Texture = Halocraft.MODID + ":RocketLauncher";
 		RocketLauncher.WeaponModel = new ItemWeaponModel(new ModelRocketLauncher(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinRocketLauncher.png"));
+		RocketLauncher.WeaponModel.TPTrans(0.08F, 0.15F, 0.48F).FPTrans(-0.4F, 0.27F, -0.01F).FPRotate(-0.5F, -3.5F, 0.0F);
 		RocketLauncher.IsAutomaticOrHasSecondaryShoot = false;
 		RocketLauncher.IsZoomable = true;
 		RocketLauncher.ZoomMultiplier = new int[]{2};
@@ -1065,7 +1066,7 @@ public class InitHcWeapons {
 		GaussSlug.RegisterItem = false;
 		GaussSlug.ProjectileRenderProperties = Halocraft.MODID+":textures/entities/BulletRender.png";
 		GaussSlug.ProjectileGlows = false;
-		GaussSlug.ProjectileSpeed = 7F;
+		GaussSlug.ProjectileSpeed = 6F;
 		GaussSlug.Accuracy = 1F;
 		GaussSlug.Gravity = 0.004F;
 		GaussSlug.MaxEffectiveTicksAlive = 80;

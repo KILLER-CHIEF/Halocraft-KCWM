@@ -12,7 +12,11 @@ import net.killerchief.halocraft.config.HalocraftItemsArmor;
 import net.killerchief.halocraft.config.HalocraftItemsWeapons;
 import net.killerchief.halocraft.config.InitHcWeapons;
 import net.killerchief.halocraft.worldGen.WorldGenerator;
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Session;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
@@ -20,6 +24,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -35,7 +40,7 @@ public class Halocraft {
 
 	public static final String MODID = "halocraft";
 	public static final String NAME = "Halocraft";
-	public static final String VERSION = "0.7.5.08";
+	public static final String VERSION = "0.7.6";
 
 	/** The instance of this mod that Forge uses.*/
 	@Instance(Halocraft.MODID)
@@ -124,4 +129,5 @@ public class Halocraft {
 		HalocraftItemsWeapons.initWeapons();
 		proxy.registerRenderers();
 	}
+
 }

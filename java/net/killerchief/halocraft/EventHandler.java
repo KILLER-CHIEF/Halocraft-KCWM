@@ -13,11 +13,15 @@ import net.killerchief.halocraft.entities.vehicles.EntityBanshee;
 import net.killerchief.halocraft.entities.vehicles.EntityGhost;
 import net.killerchief.halocraft.entities.vehicles.EntityTurretSeat;
 import net.killerchief.halocraft.entities.vehicles.EntityWarthog;
+import net.killerchief.halocraft.items.ItemCustomArmor;
+import net.killerchief.kcweaponmod.TickHandlerClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.server.S2FPacketSetSlot;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -238,12 +242,57 @@ public class EventHandler {
 		if (event.entityLiving instanceof EntityPlayer) {
 			HandleArmourAbilities((EntityPlayer)event.entityLiving);
 		}
+		
+//		if (Halocraft.proxy.isSideClient() && event.entityLiving instanceof EntityPlayer) {
+//			EntityPlayer entityplayermp = (EntityPlayer) event.entityLiving;
+//			
+//			if (entityplayermp.inventory != null && entityplayermp.inventory.mainInventory != null && entityplayermp.inventory.armorInventory != null)
+//			{
+//				for (int i = 8; i >= 0; i--) {
+//					if (entityplayermp.inventory.mainInventory[i] != null && entityplayermp.inventory.mainInventory[i].getItem() instanceof ItemCustomArmor)
+//					{
+//						ItemCustomArmor armor = (ItemCustomArmor)entityplayermp.inventory.mainInventory[i].getItem();
+//						if (entityplayermp.inventory.armorInventory[3-armor.armorType] == null) {
+//							entityplayermp.inventory.setInventorySlotContents(36+3-armor.armorType, entityplayermp.inventory.mainInventory[i].copy());
+//							entityplayermp.inventory.mainInventory[i] = null;
+//							//entityplayermp.playerNetServerHandler.sendPacket(new S2FPacketSetSlot(-1, 36+3-armor.armorType, entityplayermp.inventory.armorInventory[3-armor.armorType]));
+//							//entityplayermp.playerNetServerHandler.sendPacket(new S2FPacketSetSlot(-1, i, null));
+////							while (--entityplayermp.inventory.mainInventory[i].stackSize > 0)
+////				            {
+////				                entityplayermp.inventory.mainInventory[i] = null;
+////				            }
+//							//entityplayermp.inventory.setInventorySlotContents(i, null);
+//							System.out.println("Replace");
+//							//Minecraft.getMinecraft().thePlayer.inventory.mainInventory[i] = null;
+//							//entityplayermp.inventory.inventoryChanged = true;
+////							TickHandlerClient.KillItWithFireSlot = i;
+////							TickHandlerClient.KillItWithFire = 10;
+//						}
+//					}
+//				}
+//			}
+//		}
+		
 		if (!(event.entityLiving instanceof EntityPlayerMP)) {
 			return;
 		}
 		EntityPlayerMP entityplayermp = (EntityPlayerMP) event.entityLiving;
+		
+//		if (entityplayermp.inventory != null && entityplayermp.inventory.armorInventory != null) {
+//			for (int i = 0; i < entityplayermp.inventory.armorInventory.length; i++) {
+//				if (entityplayermp.inventory.armorInventory[i] != null && entityplayermp.inventory.armorInventory[i].getItem() instanceof ItemArmor) {
+//					ItemArmor armor = (ItemArmor)entityplayermp.inventory.armorInventory[i].getItem();
+//					if (i < 4 && i != 3-armor.armorType) {
+//						if (entityplayermp.inventory.armorInventory[3-armor.armorType] == null) {
+//							
+//						}
+//					}
+//				}
+//			}
+//			
+//		}
 
-		if(entityplayermp.inventory != null && entityplayermp.inventory.mainInventory != null && entityplayermp.inventory.hasItem(HalocraftItemsWeapons.EnergySword))
+		if (entityplayermp.inventory != null && entityplayermp.inventory.mainInventory != null && entityplayermp.inventory.hasItem(HalocraftItemsWeapons.EnergySword))
 		{
 			int i = 0;
 			while (i < entityplayermp.inventory.mainInventory.length)

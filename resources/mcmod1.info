@@ -1,10 +1,10 @@
 [
 {
   "modid": "kcweaponmod",
-  "name": "KC's Weapon Mod v0.1.4",
-  "description": "KC's Weapon Mod v0.1.4 for Minecraft 1.7.10. Weapons v1.2. This mod allows users and other mod makers to easily create any kind of projectile launching weapon they can dream of (and design themselves by using this extremely complex and simplistic mod).",
+  "name": "KC's Weapon Mod v0.1.5",
+  "description": "KC's Weapon Mod v0.1.5 for Minecraft 1.7.10. Weapons v1.3. This mod allows users and other mod makers to easily create any kind of projectile launching weapon they can dream of (and design themselves by using this extremely complex and simplistic mod).",
   "version": "MC 1.7.10",
-  "mcversion": "v0.1.4",
+  "mcversion": "v0.1.5",
   "url": "http://kcwm.killerchief.net/",
   "updateUrl": "",
   "authorList": ["Killer Chief"],

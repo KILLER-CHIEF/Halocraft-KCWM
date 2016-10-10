@@ -16,6 +16,8 @@ public abstract class Model3DWeaponBase extends ModelBase {
 	protected ModelRendererTurbo[] bodyDoorOpenModel;
 	protected ModelRendererTurbo[] leftTrackModel;
 	protected ModelRendererTurbo[] gunModel;
+	protected ModelRendererTurbo[] defaultBarrelModel;
+	protected ModelRendererTurbo[] sideModel;
 	protected ModelRendererTurbo[] ammoModel;
 	protected ModelRendererTurbo[] bladeModel;
 	protected ModelRendererTurbo[] firestarModel;
@@ -28,6 +30,8 @@ public abstract class Model3DWeaponBase extends ModelBase {
 		flip(this.bodyDoorOpenModel);
 		flip(this.leftTrackModel);
 		flip(this.gunModel);
+		flip(this.defaultBarrelModel);
+		flip(this.sideModel);
 		flip(this.ammoModel);
 		flip(this.bladeModel);
 		flip(this.firestarModel);
@@ -61,6 +65,18 @@ public abstract class Model3DWeaponBase extends ModelBase {
 	{
 		this.renderAllParts(par7);
 	}
+	
+	protected void translateParts(ModelRendererTurbo[] array, float x, float y, float z) {
+		for (ModelRendererTurbo part : array)
+		{
+			if (part != null)
+			{
+				part.rotationPointX += x;
+				part.rotationPointY += y;
+				part.rotationPointZ += z;
+			}
+		}
+	}
 
 	protected void renderAllParts(float par7)
 	{
@@ -75,7 +91,7 @@ public abstract class Model3DWeaponBase extends ModelBase {
 					part.render(par7);
 				}
 			}
-			GL11.glRotatef(-180F, 1F, 0F, 0F);
+			//GL11.glRotatef(-180F, 1F, 0F, 0F);
 			GL11.glPopMatrix();
 		}
 		if (this.bodyModel != null)
@@ -131,6 +147,29 @@ public abstract class Model3DWeaponBase extends ModelBase {
 		if (this.gunModel != null)
 		{
 			for (ModelRendererTurbo part : this.gunModel)
+			{
+				if (part != null)
+				{
+					part.render(par7);
+				}
+			}
+		}
+		if (this.defaultBarrelModel != null)
+		{
+			//GL11.glPushMatrix();
+			//GL11.glRotatef(TickHandlerClient.KillItWithFireSlot++*4, 0F, 0F, 1F);
+			for (ModelRendererTurbo part : this.defaultBarrelModel)
+			{
+				if (part != null)
+				{
+					part.render(par7);
+				}
+			}
+			//GL11.glPopMatrix();
+		}
+		if (this.sideModel != null)
+		{
+			for (ModelRendererTurbo part : this.sideModel)
 			{
 				if (part != null)
 				{
