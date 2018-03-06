@@ -58,11 +58,11 @@ public class KCWeaponMod {
 
 	public static final String MODID = "kcweaponmod";
 	public static final String NAME = "KC's Weapon Mod";
-	public static final String VERSION = "0.1.5";
+	public static final String VERSION = "0.1.6";
 
 	public static String getVersion() { return VERSION; }
 
-	public static final String WeaponFileVersion = "1.3";
+	public static final String WeaponFileVersion = "1.4";
 
 	/** The instance of this mod that Forge uses.*/
 	@Instance(KCWeaponMod.MODID)
@@ -337,8 +337,6 @@ public class KCWeaponMod {
 												}
 												String b = getTagElementString(eElement, "isautomaticorhassecondaryshoot");
 												properties.IsAutomaticOrHasSecondaryShoot = !b.equals("") ? Boolean.parseBoolean(b) : properties.IsAutomaticOrHasSecondaryShoot;
-												String c = getTagElementString(eElement, "iszoomable");
-												properties.IsZoomable = !c.equals("") ? Boolean.parseBoolean(c) : properties.IsZoomable;
 												String d = getTagElementString(eElement, "zoommultiplier");
 												int[] d1 = null;
 												if (!d.trim().equalsIgnoreCase("")) {
@@ -347,21 +345,27 @@ public class KCWeaponMod {
 													for (int d2 = 0; d2 < darray.length; d2++)
 														{d1[d2] = Integer.parseInt(darray[d2]);}
 												}
-												properties.ZoomMultiplier = d1 != null ? d1 : properties.ZoomMultiplier;
-												String e = getTagElementString(eElement, "zoomtexture");
-												properties.ZoomTexture = !e.equals("") ? e : properties.ZoomTexture;
+												properties.ZoomMultiplier = d1;
+												String e = getTagElementString(eElement, "scopetexture");
+												properties.ScopeTexture = !e.equals("") ? e : properties.ScopeTexture;
+												String ze = getTagElementString(eElement, "scopebgopacity");
+												properties.ScopeBGOpacity = !ze.equals("") ? Float.parseFloat(ze) : properties.ScopeBGOpacity;
+												String[] zf = getTagElementString(eElement, "scopeproperties").split(",");
+												if (zf.length == 4) {
+													properties.ScopeProperties = new int[]{Integer.parseInt(zf[0]), Integer.parseInt(zf[1]), Integer.parseInt(zf[2]), Integer.parseInt(zf[3])};
+												}
 												String za = getTagElementString(eElement, "hasreticle");
 												properties.HasReticle = !za.equals("") ? Boolean.parseBoolean(za) : properties.HasReticle;
 												String zb = getTagElementString(eElement, "reticletexture");
 												properties.ReticleTexture = !zb.equals("") ? zb : properties.ReticleTexture;
-												String zc = getTagElementString(eElement, "reticletransparency");
-												properties.ReticleTransparency = !zc.equals("") ? Float.parseFloat(zc) : properties.ReticleTransparency;
+												String zc = getTagElementString(eElement, "reticleopacity");
+												properties.ReticleOpacity = !zc.equals("") ? Float.parseFloat(zc) : properties.ReticleOpacity;
 												String[] zd = getTagElementString(eElement, "reticleproperties").split(",");
 												if (zd.length == 6) {
 													properties.ReticleProperties = new int[]{Integer.parseInt(zd[0]), Integer.parseInt(zd[1]), Integer.parseInt(zd[2]), Integer.parseInt(zd[3]), Integer.parseInt(zd[4]), Integer.parseInt(zd[5])};
 												}
 												String f = getTagElementString(eElement, "gunshootdelay");
-												properties.GunShootDelay = !f.equals("") ? Integer.parseInt(f) : properties.GunShootDelay;
+												properties.GunShootDelay = !f.equals("") ? Long.parseLong(f) : properties.GunShootDelay;
 												String g = getTagElementString(eElement, "recoil");
 												properties.Recoil = !g.equals("") ? Float.parseFloat(g) : properties.Recoil;
 												String h = getTagElementString(eElement, "performonly1shootsound");
@@ -370,13 +374,13 @@ public class KCWeaponMod {
 												properties.ShootSound = !i.equals("") ? i : properties.ShootSound;
 
 												String j = getTagElementString(eElement, "reloadtime");
-												properties.ReloadTime = !j.equals("") ? Integer.parseInt(j) : properties.ReloadTime;
+												properties.ReloadTime = !j.equals("") ? Long.parseLong(j) : properties.ReloadTime;
 												String k = getTagElementString(eElement, "reloadsound");
 												properties.ReloadSound = !k.equals("") ? k : properties.ReloadSound;
 												String l = getTagElementString(eElement, "reloadmaxammoflow");
 												properties.ReloadMaxAmmoFlow = !l.equals("") ? Integer.parseInt(l) : properties.ReloadMaxAmmoFlow;
 												String m = getTagElementString(eElement, "reloadtimeloop");
-												properties.ReloadTimeLoop = !m.equals("") ? Integer.parseInt(m) : properties.ReloadTimeLoop;
+												properties.ReloadTimeLoop = !m.equals("") ? Long.parseLong(m) : properties.ReloadTimeLoop;
 												String n = getTagElementString(eElement, "reloadsoundloop");
 												properties.ReloadSoundLoop = !n.equals("") ? n : properties.ReloadSoundLoop;
 												String o = getTagElementString(eElement, "reloadsoundexit");
@@ -514,7 +518,7 @@ public class KCWeaponMod {
 		}
 		
 		//FIXME: Dynamic Projectile Classes
-		EntityRegistry.registerModEntity(EntityProjectile.class, "KCWMProjectile", 1, KCWeaponMod.instance, 100, 10, true);
+		EntityRegistry.registerModEntity(EntityProjectile.class, "KCWMProjectile", 1, KCWeaponMod.instance, 100, 1, true);
 		
 		proxy.registerRenderers();
 

@@ -1,10 +1,9 @@
 package net.killerchief.kcweaponmod;
 
-import java.util.ConcurrentModificationException;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
@@ -37,134 +36,139 @@ public class TickHandler {
 		else if (event.phase == event.phase.END){}
 	}
 
-	public static HashMap<EntityPlayer, Integer> ShootDelayMap = new HashMap();
-	public static HashMap<EntityPlayer, Integer> ReloadDelayMap = new HashMap();
-	public static HashMap<EntityPlayer, Object[]> EntityTargetingMap = new HashMap();
+	public static ConcurrentHashMap<EntityPlayer, Long> ShootDelayMap = new ConcurrentHashMap();
+	public static ConcurrentHashMap<EntityPlayer, Long> ReloadDelayMap = new ConcurrentHashMap();
+	public static ConcurrentHashMap<EntityPlayer, Object[]> EntityTargetingMap = new ConcurrentHashMap();
 
 	static void performShootAndReload()
 	{
-		for (Entry<EntityPlayer, Object[]> entry : TickHandler.EntityTargetingMap.entrySet())
+		Iterator it = EntityTargetingMap.entrySet().iterator();
+		while (it.hasNext())
 		{
+			Entry<EntityPlayer, Object[]> entry = (Entry<EntityPlayer, Object[]>)it.next();
 			if ((Long)entry.getValue()[0] < System.currentTimeMillis())
 			{
-				TickHandler.EntityTargetingMap.remove(entry.getKey());
+				it.remove();
 				//System.out.println("Removed");
 			}
 		}
-		for (Entry<EntityPlayer, Integer> entry : TickHandler.ShootDelayMap.entrySet())
+		
+		it = ShootDelayMap.entrySet().iterator();
+		while (it.hasNext())
 		{
-			if (entry.getValue() > 0)
-			{
-				entry.setValue(entry.getValue() - 1);
+			Entry<EntityPlayer, Long> entry = (Entry<EntityPlayer, Long>)it.next();
+			if (entry.getValue() < System.currentTimeMillis()) {
+				it.remove();
+				//System.out.println("Removed");
 			}
 		}
-		try {
-			for (Entry<EntityPlayer, Integer> entry : TickHandler.ReloadDelayMap.entrySet())
+		
+		it = ReloadDelayMap.entrySet().iterator();
+		while (it.hasNext())
+		{
+			Entry<EntityPlayer, Long> entry = (Entry<EntityPlayer, Long>)it.next();
+			if (entry.getValue() > System.currentTimeMillis())
 			{
-				if (entry.getValue() > 0)
+				if (entry.getKey().inventory.player.inventory.getCurrentItem() == null)//XXX: Local Player's inventory is null after death in sp. (EntityPlayerMP issue?)
 				{
-					entry.setValue(entry.getValue() - 1);
-					if (entry.getKey().inventory.player.inventory.getCurrentItem() == null)//XXX: Local Player's inventory is null after death in sp. (EntityPlayerMP issue?)
+					it.remove();
+					KCWeaponMod.network.sendTo(new PacketReload(0, 0), (EntityPlayerMP)entry.getKey());
+				}
+			}
+			else
+			{
+				if (entry.getKey().inventory.getCurrentItem() != null)
+				{
+					//System.out.println("Reached Last Tick");
+					int Amount = 0;
+					int Used = 0;
+					int Needed = entry.getKey().inventory.getCurrentItem().getItemDamage();
+					Item item = entry.getKey().inventory.getCurrentItem().getItem();
+					if (item instanceof ItemWeapon)
 					{
-						TickHandler.ReloadDelayMap.put(entry.getKey(), new Integer(0));
-						KCWeaponMod.network.sendTo(new PacketReload(0, 0), (EntityPlayerMP)entry.getKey());
-					}
-					if (entry.getValue() <= 1 && entry.getKey().inventory.getCurrentItem() != null)
-					{
-						//System.out.println("Reached Last Tick");
-						int Used = 0;
-						int Needed = entry.getKey().inventory.getCurrentItem().getItemDamage();
-						Item item = entry.getKey().inventory.getCurrentItem().getItem();
-						if (item instanceof ItemWeapon)
+						ItemWeapon weapon = (ItemWeapon)item;
+						if (!entry.getKey().capabilities.isCreativeMode)
 						{
-							ItemWeapon weapon = (ItemWeapon)item;
-							if (!entry.getKey().capabilities.isCreativeMode)
-							{
-								int Amount = 0;
-								if (weapon.Properties.AmmoType != null) {
-									for (int i = 0; i < entry.getKey().inventory.mainInventory.length; ++i) {
-										if (entry.getKey().inventory.mainInventory[i] != null) {
-											if (entry.getKey().inventory.mainInventory[i].getItem() == weapon.Properties.AmmoType.getItem()) {
-												Amount += entry.getKey().inventory.mainInventory[i].stackSize;
-											}
+							
+							if (weapon.Properties.AmmoType != null) {
+								for (int i = 0; i < entry.getKey().inventory.mainInventory.length; ++i) {
+									if (entry.getKey().inventory.mainInventory[i] != null) {
+										if (entry.getKey().inventory.mainInventory[i].getItem() == weapon.Properties.AmmoType.getItem()) {
+											Amount += entry.getKey().inventory.mainInventory[i].stackSize;
 										}
 									}
 								}
-								if (weapon.Properties.ReloadMaxAmmoFlow <= 0)
+							}
+							if (weapon.Properties.ReloadMaxAmmoFlow <= 0)
+							{
+								if (Amount >= Needed)
 								{
-									if (Amount >= Needed)
-									{
-										Used = Needed;
-									} else {
-										Used = Amount;
-									}
-								}
-								else
-								{
-									if (Amount >= weapon.Properties.ReloadMaxAmmoFlow)
-									{
-										Used = weapon.Properties.ReloadMaxAmmoFlow;
-									} else {
-										Used = Amount;
-									}
+									Used = Needed;
+								} else {
+									Used = Amount;
 								}
 							}
 							else
 							{
-								if (weapon.Properties.ReloadMaxAmmoFlow <= 0)
-								{
-									Used = Needed;
-								}
-								else
+								if (Amount >= weapon.Properties.ReloadMaxAmmoFlow)
 								{
 									Used = weapon.Properties.ReloadMaxAmmoFlow;
+								} else {
+									Used = Amount;
 								}
 							}
-
-							entry.getKey().inventory.getCurrentItem().setItemDamage(Needed - Used);
-
+						}
+						else
+						{
+							Amount = Needed;
 							if (weapon.Properties.ReloadMaxAmmoFlow <= 0)
 							{
-								KCWeaponMod.network.sendTo(new PacketReload(1, Used), (EntityPlayerMP)entry.getKey());
-								//System.out.println("Reloaded");
-							} else {
-								if (entry.getKey().inventory.getCurrentItem().isItemDamaged())
-								{
-									TickHandler.ReloadDelayMap.put(entry.getKey(), new Integer(weapon.Properties.ReloadTimeLoop > 0 ? weapon.Properties.ReloadTimeLoop : 1));
-									KCWeaponMod.network.sendTo(new PacketReload(2, Used), (EntityPlayerMP)entry.getKey());
-									if (entry.getKey().inventory.getCurrentItem().getItemDamage() == 1) {
-										entry.getKey().worldObj.playSoundAtEntity(entry.getKey(), weapon.Properties.ReloadSoundExit, 1.0F, 1.0F);
-									} else {
-										entry.getKey().worldObj.playSoundAtEntity(entry.getKey(), weapon.Properties.ReloadSoundLoop, 1.0F, 1.0F);
-									}
-									//System.out.println("Inserting Rounds");
-								} else {
-									KCWeaponMod.network.sendTo(new PacketReload(1, Used), (EntityPlayerMP)entry.getKey());
-									//System.out.println("Reloaded Shotgun");
-								}
+								Used = Needed;
 							}
-
-							if (weapon.Properties.AmmoType != null)
+							else
 							{
-								int t = 0;
-								while (t < Used)
-								{
-									entry.getKey().inventory.consumeInventoryItem(weapon.Properties.AmmoType.getItem());
-									t++;
-								}
+								Used = weapon.Properties.ReloadMaxAmmoFlow;
+							}
+						}
+
+						entry.getKey().inventory.getCurrentItem().setItemDamage(Needed - Used);
+
+						if (weapon.Properties.ReloadMaxAmmoFlow <= 0) {
+							KCWeaponMod.network.sendTo(new PacketReload(1, Used), (EntityPlayerMP)entry.getKey());
+							System.out.println("Reloaded in Full.");
+							it.remove();
+							//System.out.println("Remove");
+						}
+						else {
+							if (Needed <= weapon.Properties.ReloadMaxAmmoFlow || (Needed > 0 && (Used >= Amount || Used <= 0))) {
+								KCWeaponMod.network.sendTo(new PacketReload(1, Used), (EntityPlayerMP)entry.getKey());
+								System.out.println("Inserted & Reloaded Shotgun");
+								it.remove();
+								//System.out.println("Remove");
+								entry.getKey().worldObj.playSoundAtEntity(entry.getKey(), weapon.Properties.ReloadSoundExit, 1.0F, 1.0F);
+							}
+							else {
+								entry.setValue(System.currentTimeMillis() + (weapon.Properties.ReloadTimeLoop > 0L ? weapon.Properties.ReloadTimeLoop : 100L));
+								KCWeaponMod.network.sendTo(new PacketReload(2, Used), (EntityPlayerMP)entry.getKey());
+								entry.getKey().worldObj.playSoundAtEntity(entry.getKey(), weapon.Properties.ReloadSoundLoop, 1.0F, 1.0F);
+								System.out.println("Inserting Round");
+							}
+						}
+
+						if (weapon.Properties.AmmoType != null)
+						{
+							int t = 0;
+							while (t < Used)
+							{
+								entry.getKey().inventory.consumeInventoryItem(weapon.Properties.AmmoType.getItem());
+								t++;
 							}
 						}
 					}
 				}
-				else
-				{
-					TickHandler.ReloadDelayMap.remove(entry.getKey());
-					//System.out.println("Remove");
-				}
+				
 			}
 		}
-		catch (ConcurrentModificationException e) {
-			System.out.println("KCWM: Reload Tick Handler ConcurrentModificationException");
-		}
+		
 	}
 }

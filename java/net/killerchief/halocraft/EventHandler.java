@@ -345,7 +345,7 @@ public class EventHandler {
 			//System.out.println("Adding Player!");
 
 			TickHandler.ShieldHealthMap.put(entityplayermp, new Integer(0));
-			TickHandler.ShieldRechargeDelayMap.put(entityplayermp, new Integer(0));
+			TickHandler.ShieldRechargeDelayMap.put(entityplayermp, System.currentTimeMillis());
 		}
 	}
 
@@ -366,12 +366,12 @@ public class EventHandler {
 			}
 			if (!TickHandler.ShieldRechargeDelayMap.containsKey(entityplayermp))
 			{
-				TickHandler.ShieldRechargeDelayMap.put(entityplayermp, new Integer(0));
+				TickHandler.ShieldRechargeDelayMap.put(entityplayermp, System.currentTimeMillis());
 			}
 			//System.out.println("Processing");
 			if (TickHandler.ShieldHealthMap.get(entityplayermp) <= 0)
 			{
-				TickHandler.ShieldRechargeDelayMap.put(entityplayermp, new Integer(140));
+				TickHandler.ShieldRechargeDelayMap.put(entityplayermp, System.currentTimeMillis() + TickHandler.SHIELD_RECHARGE_DELAY_HURT);
 				//System.out.println("Hurt");
 				Halocraft.network.sendTo(new PacketOvershield(TickHandler.ShieldHealthMap.get(entityplayermp), false), entityplayermp);
 			}
@@ -379,7 +379,7 @@ public class EventHandler {
 			{
 				if (TickHandler.ShieldHealthMap.get(entityplayermp) < event.ammount)
 				{
-					TickHandler.ShieldRechargeDelayMap.put(entityplayermp, new Integer(140));
+					TickHandler.ShieldRechargeDelayMap.put(entityplayermp, System.currentTimeMillis() + TickHandler.SHIELD_RECHARGE_DELAY_HURT);
 					event.ammount -= TickHandler.ShieldHealthMap.get(entityplayermp);
 					TickHandler.ShieldHealthMap.put(entityplayermp, new Integer(0));
 					//System.out.println("Lost Shields");
@@ -388,7 +388,7 @@ public class EventHandler {
 				}
 				else
 				{
-					TickHandler.ShieldRechargeDelayMap.put(entityplayermp, new Integer(140));
+					TickHandler.ShieldRechargeDelayMap.put(entityplayermp, System.currentTimeMillis() + TickHandler.SHIELD_RECHARGE_DELAY_HURT);
 					TickHandler.ShieldHealthMap.put(entityplayermp, new Integer((int)(TickHandler.ShieldHealthMap.get(entityplayermp) - event.ammount)));
 					//if (event.isCancelable())
 					//{

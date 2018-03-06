@@ -37,9 +37,9 @@ public class InitHcWeapons {
 	
 	public static void DefineAndSendWeapons()
 	{
-		CreativeTabs tab = null;
+		CreativeTabs dev_tab = null;
 		if (Halocraft.proxy.isSideClient() && HalocraftUtils.isHcDevTeamMember(Minecraft.getMinecraft().getSession().getUsername())) {
-			tab = KCWeaponMod.InventoryTab;
+			dev_tab = KCWeaponMod.InventoryTab;
 		}
 		
 		ArrayList<ItemWeapon> weapons = new ArrayList<ItemWeapon>();
@@ -49,21 +49,22 @@ public class InitHcWeapons {
 		BattleRifle.Texture = Halocraft.MODID + ":BattleRifle";
 		BattleRifle.WeaponModel = new ItemWeaponModel(new ModelBattleRifle(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinBattleRifle.png"));
 		BattleRifle.IsAutomaticOrHasSecondaryShoot = false;
-		BattleRifle.IsZoomable = true;
 		BattleRifle.ZoomMultiplier = new int[]{3};
-		BattleRifle.ZoomTexture = Halocraft.MODID+":textures/overlays/BattleRifleOverlay.png";
+		BattleRifle.ScopeTexture = Halocraft.MODID+":textures/overlays/ScopeBattleRifle.png";
+		BattleRifle.ScopeBGOpacity = 0.47F;
+		BattleRifle.ScopeProperties = new int[]{151, 151, 75, 75};
 		BattleRifle.HasReticle = true;
 		BattleRifle.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
 		BattleRifle.ReticleProperties = new int[]{25, 1, 23, 23, 11, 11};
-		BattleRifle.GunShootDelay = 20;
+		BattleRifle.GunShootDelay = 600L;
 		BattleRifle.Recoil = 0.7F;
 		BattleRifle.PerformOnly1ShootSound = true;
 		BattleRifle.ShootSound = Halocraft.MODID+":weapons.shoot.BattleRifleShoot";
 		//BattleRifle.
-		BattleRifle.ReloadTime = 40;
+		BattleRifle.ReloadTime = 2200L;
 		BattleRifle.ReloadSound = Halocraft.MODID+":weapons.reload.BattleRifleReload";
 		BattleRifle.ReloadMaxAmmoFlow = 0;
-		BattleRifle.ReloadTimeLoop = 0;
+		BattleRifle.ReloadTimeLoop = 0L;
 		BattleRifle.ReloadSoundLoop = "";
 		BattleRifle.ReloadSoundExit = "";
 		BattleRifle.AmmoFeedsFromInventory = false;
@@ -96,21 +97,22 @@ public class InitHcWeapons {
 		DMR.Texture = Halocraft.MODID + ":DMR";
 		DMR.WeaponModel = new ItemWeaponModel(new ModelDMR(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinDMR.png"));
 		DMR.IsAutomaticOrHasSecondaryShoot = false;
-		DMR.IsZoomable = true;
 		DMR.ZoomMultiplier = new int[]{4};
-		DMR.ZoomTexture = Halocraft.MODID+":textures/overlays/DMROverlay.png";
+		DMR.ScopeTexture = Halocraft.MODID+":textures/overlays/ScopeDMR.png";
+		DMR.ScopeBGOpacity = 0.47F;
+		DMR.ScopeProperties = new int[]{151, 151, 75, 75};
 		DMR.HasReticle = true;
 		DMR.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
 		DMR.ReticleProperties = new int[]{49, 1, 23, 23, 11, 11};
-		DMR.GunShootDelay = 10;
+		DMR.GunShootDelay = 400L;
 		DMR.Recoil = 2F;
 		DMR.PerformOnly1ShootSound = true;
 		DMR.ShootSound = Halocraft.MODID+":weapons.shoot.DMRShoot";
 		//DMR.
-		DMR.ReloadTime = 44;
+		DMR.ReloadTime = 2400L;
 		DMR.ReloadSound = Halocraft.MODID+":weapons.reload.DMRReload";
 		DMR.ReloadMaxAmmoFlow = 0;
-		DMR.ReloadTimeLoop = 0;
+		DMR.ReloadTimeLoop = 0L;
 		DMR.ReloadSoundLoop = "";
 		DMR.ReloadSoundExit = "";
 		DMR.AmmoFeedsFromInventory = false;
@@ -144,21 +146,20 @@ public class InitHcWeapons {
 		AssaultRifle.WeaponModel = new ItemWeaponModel(new ModelAssaultRifle(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinAssaultRifle.png"));
 		AssaultRifle.WeaponModel.TPScale(0.5F, 0.5F, 0.5F).TPTrans(0F, 0F, -1.6F).TPSprintTrans(1F, -0.5F, -1.0F).TPSprintRotate(0F, 0F, -20F);
 		AssaultRifle.IsAutomaticOrHasSecondaryShoot = true;
-		AssaultRifle.IsZoomable = false;
 		//AssaultRifle.ZoomMultiplier = new int[]{2};
 		//AssaultRifle.ZoomTexture = Halocraft.MODID+":textures/overlays/AssaultRifleOverlay.png";
 		AssaultRifle.HasReticle = true;
 		AssaultRifle.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
 		AssaultRifle.ReticleProperties = new int[]{86, 1, 31, 31, 15, 15};
-		AssaultRifle.GunShootDelay = 2;
+		AssaultRifle.GunShootDelay = 80L;
 		AssaultRifle.Recoil = 2F;
 		AssaultRifle.PerformOnly1ShootSound = true;
 		AssaultRifle.ShootSound = Halocraft.MODID+":weapons.shoot.AssaultRifleShoot";
 		//AssaultRifle.
-		AssaultRifle.ReloadTime = 48;
+		AssaultRifle.ReloadTime = 2100L;
 		AssaultRifle.ReloadSound = Halocraft.MODID+":weapons.reload.AssaultRifleReload";
 		AssaultRifle.ReloadMaxAmmoFlow = 0;
-		AssaultRifle.ReloadTimeLoop = 0;
+		AssaultRifle.ReloadTimeLoop = 0L;
 		AssaultRifle.ReloadSoundLoop = "";
 		AssaultRifle.ReloadSoundExit = "";
 		AssaultRifle.AmmoFeedsFromInventory = false;
@@ -191,21 +192,20 @@ public class InitHcWeapons {
 		Shotgun.Texture = Halocraft.MODID + ":Shotgun";
 		Shotgun.WeaponModel = new ItemWeaponModel(new ModelShotgun(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinShotgun.png"));
 		Shotgun.IsAutomaticOrHasSecondaryShoot = false;
-		Shotgun.IsZoomable = false;
 		//Shotgun.ZoomMultiplier = new int[]{4};
 		//Shotgun.ZoomTexture = Halocraft.MODID+":textures/overlays/ShotgunOverlay.png";
 		Shotgun.HasReticle = true;
 		Shotgun.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
 		Shotgun.ReticleProperties = new int[]{162, 1, 45, 45, 22, 22};
-		Shotgun.GunShootDelay = 30;
+		Shotgun.GunShootDelay = 1000L;
 		Shotgun.Recoil = 6F;
 		Shotgun.PerformOnly1ShootSound = true;
 		Shotgun.ShootSound = Halocraft.MODID+":weapons.shoot.ShotgunShoot";
 		//Shotgun.
-		Shotgun.ReloadTime = 25;
+		Shotgun.ReloadTime = 1370L;
 		Shotgun.ReloadSound = Halocraft.MODID+":weapons.reload.ShotgunReloadEnter";
 		Shotgun.ReloadMaxAmmoFlow = 1;
-		Shotgun.ReloadTimeLoop = 16;
+		Shotgun.ReloadTimeLoop = 600L;
 		Shotgun.ReloadSoundLoop = Halocraft.MODID+":weapons.reload.ShotgunReloadLoop";
 		Shotgun.ReloadSoundExit = Halocraft.MODID+":weapons.reload.ShotgunReloadExit";
 		Shotgun.AmmoFeedsFromInventory = false;
@@ -239,21 +239,22 @@ public class InitHcWeapons {
 		SniperRifle.WeaponModel = new ItemWeaponModel(new ModelSniperRifle(), new ResourceLocation(Halocraft.MODID+":textures/guns/SRS99AM.png"));
 		SniperRifle.WeaponModel.TPScale(0.6F, 0.6F, 0.6F).TPTrans(0.18F, -0.16F, -0.78F).TPRotate(0.5F, -3.5F, 0.0F).TPSprintTrans(0.48F, -0.94F, -0.06F).TPSprintRotate(11.5F, 10.0F, -26.0F).FPTrans(-0.35F, -0.2F, 0.3F).FPRotate(-2.0F, -3.5F, 1.5F).FPSprintTrans(-0.2F, -0.26F, 0.35F).FPSprintRotate(0.0F, 0.0F, -2.0F);
 		SniperRifle.IsAutomaticOrHasSecondaryShoot = false;
-		SniperRifle.IsZoomable = true;
 		SniperRifle.ZoomMultiplier = new int[]{4, 8};
-		SniperRifle.ZoomTexture = Halocraft.MODID+":textures/overlays/SniperRifleOverlay.png";
+		SniperRifle.ScopeTexture = Halocraft.MODID+":textures/overlays/ScopeSniperRifle.png";
+		SniperRifle.ScopeBGOpacity = 0.628F;
+		SniperRifle.ScopeProperties = new int[]{203, 133, 101, 66};
 		SniperRifle.HasReticle = true;
 		SniperRifle.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
 		SniperRifle.ReticleProperties = new int[]{2, 26, 9, 9, 4, 4};
-		SniperRifle.GunShootDelay = 40;
+		SniperRifle.GunShootDelay = 1100L;
 		SniperRifle.Recoil = 4F;
 		SniperRifle.PerformOnly1ShootSound = true;
 		SniperRifle.ShootSound = Halocraft.MODID+":weapons.shoot.SniperRifleShoot";
 		//SniperRifle.
-		SniperRifle.ReloadTime = 60;
+		SniperRifle.ReloadTime = 3000L;
 		SniperRifle.ReloadSound = Halocraft.MODID+":weapons.reload.SniperRifleReload";
 		SniperRifle.ReloadMaxAmmoFlow = 0;
-		SniperRifle.ReloadTimeLoop = 0;
+		SniperRifle.ReloadTimeLoop = 0L;
 		SniperRifle.ReloadSoundLoop = "";
 		SniperRifle.ReloadSoundExit = "";
 		SniperRifle.AmmoFeedsFromInventory = false;
@@ -286,21 +287,22 @@ public class InitHcWeapons {
 		Magnum.Texture = Halocraft.MODID + ":Magnum";
 		Magnum.WeaponModel = new ItemWeaponModel(new ModelMagnumM6G(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinMagnumM6G.png"));
 		Magnum.IsAutomaticOrHasSecondaryShoot = false;
-		Magnum.IsZoomable = true;
 		Magnum.ZoomMultiplier = new int[]{2};
-		Magnum.ZoomTexture = Halocraft.MODID+":textures/overlays/MagnumOverlay.png";
+		Magnum.ScopeTexture = Halocraft.MODID+":textures/overlays/ScopeMagnum.png";
+		Magnum.ScopeBGOpacity = 0.47F;
+		Magnum.ScopeProperties = new int[]{151, 151, 75, 75};
 		Magnum.HasReticle = true;
 		Magnum.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
 		Magnum.ReticleProperties = new int[]{1, 1, 23, 23, 11, 11};
-		Magnum.GunShootDelay = 8;
+		Magnum.GunShootDelay = 100L;
 		Magnum.Recoil = 3F;
 		Magnum.PerformOnly1ShootSound = true;
 		Magnum.ShootSound = Halocraft.MODID+":weapons.shoot.MagnumShoot";
 		//Magnum.
-		Magnum.ReloadTime = 38;
+		Magnum.ReloadTime = 1500L;
 		Magnum.ReloadSound = Halocraft.MODID+":weapons.reload.MagnumReload";
 		Magnum.ReloadMaxAmmoFlow = 0;
-		Magnum.ReloadTimeLoop = 0;
+		Magnum.ReloadTimeLoop = 0L;
 		Magnum.ReloadSoundLoop = "";
 		Magnum.ReloadSoundExit = "";
 		Magnum.AmmoFeedsFromInventory = false;
@@ -333,21 +335,20 @@ public class InitHcWeapons {
 		SMG.Texture = Halocraft.MODID + ":SMG";
 		SMG.WeaponModel = new ItemWeaponModel(new ModelSMGM7S(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinSMGM7.png"));
 		SMG.IsAutomaticOrHasSecondaryShoot = true;
-		SMG.IsZoomable = false;
 		//SMG.ZoomMultiplier = new int[]{2};
 		//SMG.ZoomTexture = Halocraft.MODID+":textures/overlays/SMGOverlay.png";
 		SMG.HasReticle = true;
 		SMG.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
 		SMG.ReticleProperties = new int[]{118, 1, 43, 43, 21, 21};
-		SMG.GunShootDelay = 1;
+		SMG.GunShootDelay = 40L;
 		SMG.Recoil = 2F;
 		SMG.PerformOnly1ShootSound = true;
 		SMG.ShootSound = Halocraft.MODID+":weapons.shoot.SMGShoot";
 		//SMG.
-		SMG.ReloadTime = 35;
+		SMG.ReloadTime = 1500L;
 		SMG.ReloadSound = Halocraft.MODID+":weapons.reload.SMGReload";
 		SMG.ReloadMaxAmmoFlow = 0;
-		SMG.ReloadTimeLoop = 0;
+		SMG.ReloadTimeLoop = 0L;
 		SMG.ReloadSoundLoop = "";
 		SMG.ReloadSoundExit = "";
 		SMG.AmmoFeedsFromInventory = false;
@@ -381,21 +382,22 @@ public class InitHcWeapons {
 		RocketLauncher.WeaponModel = new ItemWeaponModel(new ModelRocketLauncher(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinRocketLauncher.png"));
 		RocketLauncher.WeaponModel.TPTrans(0.08F, 0.15F, 0.48F).FPTrans(-0.4F, 0.27F, -0.01F).FPRotate(-0.5F, -3.5F, 0.0F);
 		RocketLauncher.IsAutomaticOrHasSecondaryShoot = false;
-		RocketLauncher.IsZoomable = true;
 		RocketLauncher.ZoomMultiplier = new int[]{2};
-		RocketLauncher.ZoomTexture = Halocraft.MODID+":textures/overlays/RocketLauncherOverlay.png";
+		RocketLauncher.ScopeTexture = Halocraft.MODID+":textures/overlays/ScopeRocketLauncher.png";
+		RocketLauncher.ScopeBGOpacity = 0.47F;
+		RocketLauncher.ScopeProperties = new int[]{151, 151, 75, 75};
 		RocketLauncher.HasReticle = true;
 		RocketLauncher.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
 		RocketLauncher.ReticleProperties = new int[]{208, 1, 47, 47, 23, 23};
-		RocketLauncher.GunShootDelay = 40;
+		RocketLauncher.GunShootDelay = 1400L;
 		RocketLauncher.Recoil = 12F;
 		RocketLauncher.PerformOnly1ShootSound = true;
 		RocketLauncher.ShootSound = Halocraft.MODID+":weapons.shoot.RocketLauncherShoot";
 		//RocketLauncher.
-		RocketLauncher.ReloadTime = 62;
+		RocketLauncher.ReloadTime = 3400L;
 		RocketLauncher.ReloadSound = Halocraft.MODID+":weapons.reload.RocketLauncherReload";
 		RocketLauncher.ReloadMaxAmmoFlow = 0;
-		RocketLauncher.ReloadTimeLoop = 0;
+		RocketLauncher.ReloadTimeLoop = 0L;
 		RocketLauncher.ReloadSoundLoop = "";
 		RocketLauncher.ReloadSoundExit = "";
 		RocketLauncher.AmmoFeedsFromInventory = false;
@@ -435,21 +437,22 @@ public class InitHcWeapons {
 		Carbine.WeaponModel = new ItemWeaponModel(new ModelCarbine(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinCarbine.png"));
 		Carbine.WeaponModel.TPScale(0.7F, 0.7F, 0.7F).TPTrans(0F, -0.4F, -1.65F).TPSprintTrans(0.28F, -0.72F, -1.23F).TPSprintRotate(11.0F, 0.5F, -21.5F).FPTrans(-0.2F, -0.3F, -0.9F).FPRotate(0.5F, -1.0F, 0.0F).FPSprintTrans(-0.28F, -0.18F, -1.0F);
 		Carbine.IsAutomaticOrHasSecondaryShoot = false;
-		Carbine.IsZoomable = true;
 		Carbine.ZoomMultiplier = new int[]{4};
-		Carbine.ZoomTexture = Halocraft.MODID+":textures/overlays/CarbineOverlay.png";
+		Carbine.ScopeTexture = Halocraft.MODID+":textures/overlays/ScopeCarbine.png";
+		Carbine.ScopeBGOpacity = 0.47F;
+		Carbine.ScopeProperties = new int[]{231, 157, 115, 78};
 		Carbine.HasReticle = true;
 		Carbine.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
 		Carbine.ReticleProperties = new int[]{115, 47, 27, 23, 13, 11};
-		Carbine.GunShootDelay = 10;
+		Carbine.GunShootDelay = 300L;
 		Carbine.Recoil = 1.6F;
 		Carbine.PerformOnly1ShootSound = true;
 		Carbine.ShootSound = Halocraft.MODID+":weapons.shoot.CarbineShoot";
 		//Carbine.
-		Carbine.ReloadTime = 46;
+		Carbine.ReloadTime = 1900L;
 		Carbine.ReloadSound = Halocraft.MODID+":weapons.reload.CarbineReload";
 		Carbine.ReloadMaxAmmoFlow = 0;
-		Carbine.ReloadTimeLoop = 0;
+		Carbine.ReloadTimeLoop = 0L;
 		Carbine.ReloadSoundLoop = "";
 		Carbine.ReloadSoundExit = "";
 		Carbine.AmmoFeedsFromInventory = false;
@@ -483,21 +486,20 @@ public class InitHcWeapons {
 		PlasmaRifle.WeaponModel = new ItemWeaponModel(new ModelCovPlasmaRifle(), new ResourceLocation(Halocraft.MODID+":textures/guns/T25DER.png"));
 		PlasmaRifle.WeaponModel.TPScale(0.6F, 0.6F, 0.6F).TPTrans(0.2F, -0.4F, -0.7F).TPRotate(2.0F, -2.0F, 0.0F).TPSprintTrans(0.51F, -1.23F, -0.12F).TPSprintRotate(-66.5F, -40.5F, -60.0F).FPScale(0.8F, 0.8F, 0.8F).FPTrans(0.1F, -0.57F, -1.14F).FPRotate(1.0F, -1.5F, 0.0F).FPSprintTrans(0.01F, -0.31F, -1.27F).FPSprintRotate(1.0F, 0.0F, -7.5F);
 		PlasmaRifle.IsAutomaticOrHasSecondaryShoot = true;
-		PlasmaRifle.IsZoomable = false;
 		//PlasmaRifle.ZoomMultiplier = new int[]{2};
 		//PlasmaRifle.ZoomTexture = Halocraft.MODID+":textures/overlays/PlasmaRifleOverlay.png";
 		PlasmaRifle.HasReticle = true;
 		PlasmaRifle.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
 		PlasmaRifle.ReticleProperties = new int[]{1, 37, 37, 37, 18, 18};
-		PlasmaRifle.GunShootDelay = 3;
+		PlasmaRifle.GunShootDelay = 100L;
 		PlasmaRifle.Recoil = 1.6F;
 		PlasmaRifle.PerformOnly1ShootSound = true;
 		PlasmaRifle.ShootSound = Halocraft.MODID+":weapons.shoot.PlasmaRifleShoot";
 		//PlasmaRifle.
-		PlasmaRifle.ReloadTime = 44;
+		PlasmaRifle.ReloadTime = 2000L;
 		PlasmaRifle.ReloadSound = Halocraft.MODID+":weapons.reload.PlasmaRifleReload";
 		PlasmaRifle.ReloadMaxAmmoFlow = 0;
-		PlasmaRifle.ReloadTimeLoop = 0;
+		PlasmaRifle.ReloadTimeLoop = 0L;
 		PlasmaRifle.ReloadSoundLoop = "";
 		PlasmaRifle.ReloadSoundExit = "";
 		PlasmaRifle.AmmoFeedsFromInventory = false;
@@ -531,21 +533,20 @@ public class InitHcWeapons {
 		PlasmaPistol.WeaponModel = new ItemWeaponModel(new ModelCovPlasmaPistol(), new ResourceLocation(Halocraft.MODID+":textures/guns/T25DEP.png"));
 		PlasmaPistol.WeaponModel.TPScale(0.75F, 0.75F, 0.75F).TPTrans(0.0F, -0.05F, -0.36F).TPRotate(0.0F, -1.5F, 0.0F).TPSprintTrans(0.56F, -0.72F, -0.15F).TPSprintRotate(-73.5F, -35.5F, -61.0F);
 		PlasmaPistol.IsAutomaticOrHasSecondaryShoot = false;
-		PlasmaPistol.IsZoomable = false;
 		//PlasmaPistol.ZoomMultiplier = new int[]{2};
 		//PlasmaPistol.ZoomTexture = Halocraft.MODID+":textures/overlays/PlasmaPistolOverlay.png";
 		PlasmaPistol.HasReticle = true;
 		PlasmaPistol.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
 		PlasmaPistol.ReticleProperties = new int[]{39, 37, 37, 37, 18, 18};
-		PlasmaPistol.GunShootDelay = 4;
+		PlasmaPistol.GunShootDelay = 100L;
 		PlasmaPistol.Recoil = 1.4F;
 		PlasmaPistol.PerformOnly1ShootSound = true;
 		PlasmaPistol.ShootSound = Halocraft.MODID+":weapons.shoot.PlasmaPistolShoot";
 		//PlasmaPistol.
-		PlasmaPistol.ReloadTime = 44;
+		PlasmaPistol.ReloadTime = 2000L;
 		PlasmaPistol.ReloadSound = Halocraft.MODID+":weapons.reload.PlasmaPistolReload";
 		PlasmaPistol.ReloadMaxAmmoFlow = 0;
-		PlasmaPistol.ReloadTimeLoop = 0;
+		PlasmaPistol.ReloadTimeLoop = 0L;
 		PlasmaPistol.ReloadSoundLoop = "";
 		PlasmaPistol.ReloadSoundExit = "";
 		PlasmaPistol.AmmoFeedsFromInventory = false;
@@ -578,21 +579,20 @@ public class InitHcWeapons {
 		Needler.Texture = Halocraft.MODID + ":Needler";
 		Needler.WeaponModel = new ItemWeaponModel(new ModelNeedler(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinNeedler.png"));
 		Needler.IsAutomaticOrHasSecondaryShoot = true;
-		Needler.IsZoomable = false;
 		//Needler.ZoomMultiplier = new int[]{2};
 		//Needler.ZoomTexture = Halocraft.MODID+":textures/overlays/NeedlerOverlay.png";
 		Needler.HasReticle = true;
 		Needler.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
 		Needler.ReticleProperties = new int[]{143, 47, 31, 21, 15, 10};
-		Needler.GunShootDelay = 4;
+		Needler.GunShootDelay = 80L;
 		Needler.Recoil = 1.4F;
 		Needler.PerformOnly1ShootSound = true;
 		Needler.ShootSound = Halocraft.MODID+":weapons.shoot.NeedlerShoot";
 		//Needler.
-		Needler.ReloadTime = 36;
+		Needler.ReloadTime = 2000L;
 		Needler.ReloadSound = Halocraft.MODID+":weapons.reload.NeedlerReload";
 		Needler.ReloadMaxAmmoFlow = 0;
-		Needler.ReloadTimeLoop = 0;
+		Needler.ReloadTimeLoop = 0L;
 		Needler.ReloadSoundLoop = "";
 		Needler.ReloadSoundExit = "";
 		Needler.AmmoFeedsFromInventory = false;
@@ -629,21 +629,22 @@ public class InitHcWeapons {
 		BeamRifle.Texture = Halocraft.MODID + ":BeamRifle";
 		BeamRifle.WeaponModel = new ItemWeaponModel(new ModelBeamRifle(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinBeamRifle.png"));
 		BeamRifle.IsAutomaticOrHasSecondaryShoot = false;
-		BeamRifle.IsZoomable = true;
 		BeamRifle.ZoomMultiplier = new int[]{4, 8};
-		BeamRifle.ZoomTexture = Halocraft.MODID+":textures/overlays/BeamRifleOverlay.png";
+		BeamRifle.ScopeTexture = Halocraft.MODID+":textures/overlays/ScopeBeamRifle.png";
+		BeamRifle.ScopeBGOpacity = 0.705F;
+		BeamRifle.ScopeProperties = new int[]{355, 209, 177, 104};
 		BeamRifle.HasReticle = true;
 		BeamRifle.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
 		BeamRifle.ReticleProperties = new int[]{12, 26, 11, 9, 5, 4};
-		BeamRifle.GunShootDelay = 40;
+		BeamRifle.GunShootDelay = 1100L;
 		BeamRifle.Recoil = 3F;
 		BeamRifle.PerformOnly1ShootSound = true;
 		BeamRifle.ShootSound = Halocraft.MODID+":weapons.shoot.BeamRifleShoot";
 		//BeamRifle.
-		BeamRifle.ReloadTime = 60;
+		BeamRifle.ReloadTime = 3000L;
 		BeamRifle.ReloadSound = Halocraft.MODID+":weapons.reload.BeamRifleReload";
 		BeamRifle.ReloadMaxAmmoFlow = 0;
-		BeamRifle.ReloadTimeLoop = 0;
+		BeamRifle.ReloadTimeLoop = 0L;
 		BeamRifle.ReloadSoundLoop = "";
 		BeamRifle.ReloadSoundExit = "";
 		BeamRifle.AmmoFeedsFromInventory = false;
@@ -676,21 +677,20 @@ public class InitHcWeapons {
 		Flamethrower.Texture = Halocraft.MODID + ":Flamethrower";
 		Flamethrower.WeaponModel = new ItemWeaponModel(new ModelFlamethrower(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinFlamethrower.png"));
 		Flamethrower.IsAutomaticOrHasSecondaryShoot = true;
-		Flamethrower.IsZoomable = false;
 		//Flamethrower.ZoomMultiplier = new int[]{2};
 		//Flamethrower.ZoomTexture = Halocraft.MODID+":textures/overlays/FlamethrowerOverlay.png";
 		Flamethrower.HasReticle = true;
 		Flamethrower.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
 		Flamethrower.ReticleProperties = new int[]{208, 97, 47, 47, 23, 23};
-		Flamethrower.GunShootDelay = 3;
+		Flamethrower.GunShootDelay = 80L;
 		Flamethrower.Recoil = 1F;
 		Flamethrower.PerformOnly1ShootSound = true;
 		Flamethrower.ShootSound = Halocraft.MODID+":weapons.shoot.FlamethrowerShoot";
 		//Flamethrower.
-		Flamethrower.ReloadTime = 60;
+		Flamethrower.ReloadTime = 3000L;
 		Flamethrower.ReloadSound = Halocraft.MODID+":weapons.reload.FlamethrowerReload";
 		Flamethrower.ReloadMaxAmmoFlow = 0;
-		Flamethrower.ReloadTimeLoop = 0;
+		Flamethrower.ReloadTimeLoop = 0L;
 		Flamethrower.ReloadSoundLoop = "";
 		Flamethrower.ReloadSoundExit = "";
 		Flamethrower.AmmoFeedsFromInventory = false;
@@ -723,21 +723,20 @@ public class InitHcWeapons {
 		Spiker.Texture = Halocraft.MODID + ":Spiker";
 		Spiker.WeaponModel = new ItemWeaponModel(new ModelSpiker(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinSpiker.png"));
 		Spiker.IsAutomaticOrHasSecondaryShoot = true;
-		Spiker.IsZoomable = false;
 		//Spiker.ZoomMultiplier = new int[]{2};
 		//Spiker.ZoomTexture = Halocraft.MODID+":textures/overlays/SpikerOverlay.png";
 		Spiker.HasReticle = true;
 		Spiker.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
 		Spiker.ReticleProperties = new int[]{77, 33, 37, 35, 18, 17};
-		Spiker.GunShootDelay = 4;
+		Spiker.GunShootDelay = 90L;
 		Spiker.Recoil = 1.5F;
 		Spiker.PerformOnly1ShootSound = true;
 		Spiker.ShootSound = Halocraft.MODID+":weapons.shoot.SpikeRifleShoot";
 		//Spiker.
-		Spiker.ReloadTime = 44;
+		Spiker.ReloadTime = 1800L;
 		Spiker.ReloadSound = Halocraft.MODID+":weapons.reload.SpikeRifleReload";
 		Spiker.ReloadMaxAmmoFlow = 0;
-		Spiker.ReloadTimeLoop = 0;
+		Spiker.ReloadTimeLoop = 0L;
 		Spiker.ReloadSoundLoop = "";
 		Spiker.ReloadSoundExit = "";
 		Spiker.AmmoFeedsFromInventory = false;
@@ -774,21 +773,20 @@ public class InitHcWeapons {
 		Mauler.Texture = Halocraft.MODID + ":Mauler";
 		Mauler.WeaponModel = new ItemWeaponModel(new ModelMauler(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinMauler.png"));
 		Mauler.IsAutomaticOrHasSecondaryShoot = false;
-		Mauler.IsZoomable = false;
 		//Mauler.ZoomMultiplier = new int[]{2};
 		//Mauler.ZoomTexture = Halocraft.MODID+":textures/overlays/MaulerOverlay.png";
 		Mauler.HasReticle = true;
 		Mauler.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
 		Mauler.ReticleProperties = new int[]{1, 75, 41, 41, 20, 20};
-		Mauler.GunShootDelay = 20;
+		Mauler.GunShootDelay = 500L;
 		Mauler.Recoil = 6F;
 		Mauler.PerformOnly1ShootSound = true;
 		Mauler.ShootSound = Halocraft.MODID+":weapons.shoot.MaulerShoot";
 		//Mauler.
-		Mauler.ReloadTime = 38;
+		Mauler.ReloadTime = 1600L;
 		Mauler.ReloadSound = Halocraft.MODID+":weapons.reload.MaulerReload";
 		Mauler.ReloadMaxAmmoFlow = 0;
-		Mauler.ReloadTimeLoop = 0;
+		Mauler.ReloadTimeLoop = 0L;
 		Mauler.ReloadSoundLoop = "";
 		Mauler.ReloadSoundExit = "";
 		Mauler.AmmoFeedsFromInventory = false;
@@ -821,10 +819,7 @@ public class InitHcWeapons {
 		FragGrenade.Texture = Halocraft.MODID + ":FragGrenade";
 		FragGrenade.AimItem = false;
 		FragGrenade.IsAutomaticOrHasSecondaryShoot = false;
-		FragGrenade.IsZoomable = false;
-		//FragGrenade.ZoomMultiplier = new int[]{};
-		//FragGrenade.ZoomTexture = Halocraft.MODID+":textures/overlays/Overlay.png";
-		FragGrenade.GunShootDelay = 20;
+		FragGrenade.GunShootDelay = 700L;
 		FragGrenade.Recoil = 2F;
 		FragGrenade.PerformOnly1ShootSound = true;
 		FragGrenade.ShootSound = Halocraft.MODID+":weapons.FragThrow";
@@ -832,7 +827,7 @@ public class InitHcWeapons {
 		//FragGrenade.ReloadTime = 0;
 		//FragGrenade.ReloadSound = Halocraft.MODID+":weapons.reload.BattleRifleReload";
 		//FragGrenade.ReloadMaxAmmoFlow = 0;
-		//FragGrenade.ReloadTimeLoop = 0;
+		//FragGrenade.ReloadTimeLoop = 0L;
 		//FragGrenade.ReloadSoundLoop = "";
 		//FragGrenade.ReloadSoundExit = "";
 		//FragGrenade.AmmoFeedsFromInventory = false;
@@ -869,10 +864,7 @@ public class InitHcWeapons {
 		PlasmaGrenade.Texture = Halocraft.MODID + ":PlasmaGrenade";
 		PlasmaGrenade.AimItem = false;
 		PlasmaGrenade.IsAutomaticOrHasSecondaryShoot = false;
-		PlasmaGrenade.IsZoomable = false;
-		//PlasmaGrenade.ZoomMultiplier = new int[]{};
-		//PlasmaGrenade.ZoomTexture = Halocraft.MODID+":textures/overlays/Overlay.png";
-		PlasmaGrenade.GunShootDelay = 20;
+		PlasmaGrenade.GunShootDelay = 700L;
 		PlasmaGrenade.Recoil = 2F;
 		PlasmaGrenade.PerformOnly1ShootSound = true;
 		PlasmaGrenade.ShootSound = Halocraft.MODID+":weapons.PlasmaGrenadeThrow";
@@ -880,7 +872,7 @@ public class InitHcWeapons {
 		//PlasmaGrenade.ReloadTime = 0;
 		//PlasmaGrenade.ReloadSound = Halocraft.MODID+":weapons.reload.BattleRifleReload";
 		//PlasmaGrenade.ReloadMaxAmmoFlow = 0;
-		//PlasmaGrenade.ReloadTimeLoop = 0;
+		//PlasmaGrenade.ReloadTimeLoop = 0L;
 		//PlasmaGrenade.ReloadSoundLoop = "";
 		//PlasmaGrenade.ReloadSoundExit = "";
 		//PlasmaGrenade.AmmoFeedsFromInventory = false;
@@ -916,10 +908,7 @@ public class InitHcWeapons {
 		FirebombGrenade.Texture = Halocraft.MODID + ":FirebombGrenade";
 		FirebombGrenade.AimItem = false;
 		FirebombGrenade.IsAutomaticOrHasSecondaryShoot = false;
-		FirebombGrenade.IsZoomable = false;
-		//FirebombGrenade.ZoomMultiplier = new int[]{};
-		//FirebombGrenade.ZoomTexture = Halocraft.MODID+":textures/overlays/Overlay.png";
-		FirebombGrenade.GunShootDelay = 20;
+		FirebombGrenade.GunShootDelay = 700L;
 		FirebombGrenade.Recoil = 2F;
 		FirebombGrenade.PerformOnly1ShootSound = true;
 		FirebombGrenade.ShootSound = Halocraft.MODID+":weapons.FirebombThrow";
@@ -927,7 +916,7 @@ public class InitHcWeapons {
 		//FirebombGrenade.ReloadTime = 0;
 		//FirebombGrenade.ReloadSound = Halocraft.MODID+":weapons.reload.FirebombGrenadeReload";
 		//FirebombGrenade.ReloadMaxAmmoFlow = 0;
-		//FirebombGrenade.ReloadTimeLoop = 0;
+		//FirebombGrenade.ReloadTimeLoop = 0L;
 		//FirebombGrenade.ReloadSoundLoop = "";
 		//FirebombGrenade.ReloadSoundExit = "";
 		//FirebombGrenade.AmmoFeedsFromInventory = false;
@@ -980,23 +969,21 @@ public class InitHcWeapons {
 		ItemWeaponProperties SentinelBeam = new ItemWeaponProperties(Halocraft.MODID+".SentinelBeam");
 		SentinelBeam.Texture = Halocraft.MODID + ":NullX";
 		SentinelBeam.WeaponModel = new ItemWeaponModel(new ModelSentinelBeam(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinSentinelBeamMajor.png"));
-		SentinelBeam.InventoryTab = tab;
 		SentinelBeam.IsAutomaticOrHasSecondaryShoot = true;
-		SentinelBeam.IsZoomable = false;
 		//SentinelBeam.ZoomMultiplier = new int[]{2};
 		//SentinelBeam.ZoomTexture = Halocraft.MODID+":textures/overlays/SentinelBeamOverlay.png";
 		SentinelBeam.HasReticle = true;
 		SentinelBeam.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
 		SentinelBeam.ReticleProperties = new int[]{125, 75, 23, 13, 11, 6};
-		SentinelBeam.GunShootDelay = 1;
+		SentinelBeam.GunShootDelay = 50L;
 		SentinelBeam.Recoil = 0.8F;
 		SentinelBeam.PerformOnly1ShootSound = true;
 		SentinelBeam.ShootSound = Halocraft.MODID+":weapons.shoot.SMGShoot";//SentinelBeamShoot
 		//SentinelBeam.
-		SentinelBeam.ReloadTime = 35;
+		SentinelBeam.ReloadTime = 3000L;
 		SentinelBeam.ReloadSound = Halocraft.MODID+":weapons.reload.SentinelBeamReload";
 		SentinelBeam.ReloadMaxAmmoFlow = 0;
-		SentinelBeam.ReloadTimeLoop = 0;
+		SentinelBeam.ReloadTimeLoop = 0L;
 		SentinelBeam.ReloadSoundLoop = "";
 		SentinelBeam.ReloadSoundExit = "";
 		SentinelBeam.AmmoFeedsFromInventory = false;
@@ -1135,21 +1122,20 @@ public class InitHcWeapons {
 		BruteShot.Texture = Halocraft.MODID + ":BruteShot";
 		BruteShot.WeaponModel = new ItemWeaponModel(new ModelBruteShot(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinBruteShot.png"));
 		BruteShot.IsAutomaticOrHasSecondaryShoot = false;
-		BruteShot.IsZoomable = false;
 		//BruteShot.ZoomMultiplier = new int[]{2};
 		//BruteShot.ZoomTexture = Halocraft.MODID+":textures/overlays/MagnumOverlay.png";
 		BruteShot.HasReticle = true;
 		BruteShot.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
 		BruteShot.ReticleProperties = new int[]{85, 75, 39, 21, 19, 10};
-		BruteShot.GunShootDelay = 16;
+		BruteShot.GunShootDelay = 600L;
 		BruteShot.Recoil = 8F;
 		BruteShot.PerformOnly1ShootSound = true;
 		BruteShot.ShootSound = Halocraft.MODID+":weapons.shoot.BruteShotShoot";
 		//BruteShot.
-		BruteShot.ReloadTime = 50;
+		BruteShot.ReloadTime = 2600L;
 		BruteShot.ReloadSound = Halocraft.MODID+":weapons.reload.BruteShotReload";
 		BruteShot.ReloadMaxAmmoFlow = 0;
-		BruteShot.ReloadTimeLoop = 0;
+		BruteShot.ReloadTimeLoop = 0L;
 		BruteShot.ReloadSoundLoop = "";
 		BruteShot.ReloadSoundExit = "";
 		BruteShot.AmmoFeedsFromInventory = false;
@@ -1177,7 +1163,57 @@ public class InitHcWeapons {
 		weapons.add(new ItemWeapon(BruteShot));
 		
 		
-		if (KCWeaponMod.registerModItems(Halocraft.MODID, "1.3", weapons.toArray(new ItemWeapon[weapons.size()])))
+
+		//FuelRodCannon
+		ItemWeaponProperties FuelRodCannon = new ItemWeaponProperties(Halocraft.MODID+".FuelRodCannon");
+		FuelRodCannon.Texture = Halocraft.MODID + ":FuelRodCannon";
+		//FuelRodCannon.WeaponModel = new ItemWeaponModel(new ModelFuelRodCannon(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinFuelRodCannon.png"));
+		FuelRodCannon.IsAutomaticOrHasSecondaryShoot = false;
+		FuelRodCannon.ZoomMultiplier = new int[]{2};
+		FuelRodCannon.ScopeTexture = Halocraft.MODID+":textures/overlays/ScopeRocketLauncher.png";
+		FuelRodCannon.ScopeBGOpacity = 0.47F;
+		FuelRodCannon.ScopeProperties = new int[]{151, 151, 75, 75};
+		FuelRodCannon.HasReticle = true;
+		FuelRodCannon.ReticleTexture = Halocraft.MODID+":textures/overlays/Reticle.png";
+		FuelRodCannon.ReticleProperties = new int[]{208, 49, 47, 47, 23, 23};
+		FuelRodCannon.GunShootDelay = 800L;
+		FuelRodCannon.Recoil = 10F;
+		FuelRodCannon.PerformOnly1ShootSound = true;
+		FuelRodCannon.ShootSound = Halocraft.MODID+":weapons.shoot.FuelRodCannonShoot";
+		//FuelRodCannon.
+		FuelRodCannon.ReloadTime = 3000L;
+		FuelRodCannon.ReloadSound = Halocraft.MODID+":weapons.reload.FuelRodCannonReload";
+		FuelRodCannon.ReloadMaxAmmoFlow = 0;
+		FuelRodCannon.ReloadTimeLoop = 0L;
+		FuelRodCannon.ReloadSoundLoop = "";
+		FuelRodCannon.ReloadSoundExit = "";
+		FuelRodCannon.AmmoFeedsFromInventory = false;
+		FuelRodCannon.AmmoType = null;//new ItemStack(HalocraftItemsWeapons.MediumRounds);
+		FuelRodCannon.MagazineSize = 5;
+		FuelRodCannon.ItemStackDecreaseOnUse = false;
+		FuelRodCannon.ItemStackMaxStackSize = 1;
+		FuelRodCannon.RequiredUsesPerShot = 1;
+		FuelRodCannon.ShootBurstCount = 1;
+		//FuelRodCannon.BurstAccuracyDecrease = 0.6F;
+		FuelRodCannon.SingleShotProjectileCount = 1;
+
+		FuelRodCannon.ProjectileRenderProperties = Halocraft.MODID+":textures/entities/FuelRodCannonRender.png";
+		FuelRodCannon.ProjectileGlows = true;
+
+		FuelRodCannon.ProjectileSpeed = 1.2F;
+		FuelRodCannon.Accuracy = 2F;
+		FuelRodCannon.Gravity = 0.004F;
+		FuelRodCannon.MaxEffectiveTicksAlive = 1000;
+		FuelRodCannon.ProjectileLivingProperties = "net.killerchief.halocraft.config.NewWeaponTags.ParticleFX()";
+		FuelRodCannon.ProjectileImpactProperties = "Bounce(0.97, 4.0, PlaySound(1,"+Halocraft.MODID+":weapons.FuelRodCannonBounce"+", ExceededMaxEncounteredEntities(1, Explode(4, Die)) )), ImpactEntity(30, 0, Explode(4, Die))";
+		FuelRodCannon.ProjectileDragInAir = 0.999F;
+		FuelRodCannon.ProjectileDragInWater = 0.5F;
+
+		weapons.add(new ItemWeapon(FuelRodCannon));
+		
+		
+		
+		if (KCWeaponMod.registerModItems(Halocraft.MODID, "1.4", weapons.toArray(new ItemWeapon[weapons.size()])))
 		{
 			System.out.println("KCWeaponMod: Successfully Registered Halocraft Weapons");
 		}

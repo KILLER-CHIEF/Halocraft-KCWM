@@ -217,13 +217,23 @@ public class ItemEnergySword extends HalocraftItem implements InterfaceWeaponPro
 	}
 
 	@Override
-	public ResourceLocation ZoomTexture() {
+	public boolean ZoomLikeHelmet() {
+		return false;
+	}
+
+	@Override
+	public ResourceLocation ScopeTexture() {
 		return null;
 	}
 
 	@Override
-	public boolean ZoomLikeHelmet() {
-		return false;
+	public float ScopeBGOpacity() {
+		return 1.0F;
+	}
+
+	@Override
+	public int[] ScopeProperties() {
+		return null;
 	}
 
 	@Override
@@ -237,7 +247,7 @@ public class ItemEnergySword extends HalocraftItem implements InterfaceWeaponPro
 	}
 
 	@Override
-	public float ReticleTransparency() {
+	public float ReticleOpacity() {
 		return 1.0F;
 	}
 

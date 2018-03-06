@@ -81,10 +81,8 @@ import cpw.mods.fml.common.gameevent.TickEvent;
 
 public class TickHandlerClient {
 
-	static Minecraft mc = Minecraft.getMinecraft();
+	private static Minecraft mc = Minecraft.getMinecraft();
 	//Minecraft minecraft = FMLClientHandler.instance().getClient();
-
-	private static int slowRecharge = 0;
 
 	@SubscribeEvent
 	public void ClientTickEvent(TickEvent.ClientTickEvent event)
@@ -104,17 +102,13 @@ public class TickHandlerClient {
 
 				TickHandler.CommonTickEnd();
 
-				if (this.IsRecharging && this.ShieldHealth < TickHandler.ShieldMaxHealth)
+				if (this.IsRecharging && this.ShieldHealth < TickHandler.SHIELD_MAX_HEALTH)
 				{
-					if (this.slowRecharge++ > 2)
+					if (this.Shield_Pseudo_Recharge_Delay <= System.currentTimeMillis())
 					{
 						this.ShieldHealth++;
-						this.slowRecharge = 0;
+						this.Shield_Pseudo_Recharge_Delay = System.currentTimeMillis() + TickHandler.SHIELD_RECHARGE_DELAY_INC;
 					}
-				}
-				if (this.IsRecharging && this.ShieldHealth >= TickHandler.ShieldMaxHealth)
-				{
-					this.IsRecharging = false;
 				}
 			}
 		}
@@ -672,12 +666,15 @@ public class TickHandlerClient {
 	//HandleShields
 	public static int ShieldHealth = 0;
 	public static boolean IsRecharging = false;
-	private static int shieldBlink = 0;
+	private static Long Shield_Pseudo_Recharge_Delay = 0L;
+	private static Long Shield_Empty_Flash_Delay = 0L;
+	private static boolean Shield_Empty_Flash_Red = true;
+	private static final Long Shield_Empty_Flash_Delay_Length = 180L;
 
 	//HandleButtonInterface
 	public boolean LeftClickPressed = false;
 	public boolean PrevLeftClickPressed = false;
-	public int VehicleShootDelay = 0;
+	public Long VehicleShootDelay = System.currentTimeMillis();
 	public boolean RightClickPressed = false;
 	public boolean PrevRightClickPressed = false;
 	//private int GunShootDelay = 0;
@@ -746,11 +743,7 @@ public class TickHandlerClient {
 		
 		if (minecraft.inGameHasFocus && this.LeftClickPressed)//this.RightClickPressed
 		{
-			if (this.VehicleShootDelay > 0)
-			{
-				--this.VehicleShootDelay;
-			}
-			else
+			if (this.VehicleShootDelay < System.currentTimeMillis())
 			{
 				if (this.mc.thePlayer.ridingEntity != null)
 				{
@@ -761,7 +754,7 @@ public class TickHandlerClient {
 							pitchOffset = -10F;
 						}
 						Halocraft.network.sendToServer(new PacketVehicleShoot(pitchOffset));
-						this.VehicleShootDelay = 2;
+						this.VehicleShootDelay = System.currentTimeMillis() + 60L;
 					}
 					else if (this.mc.thePlayer.ridingEntity instanceof EntityBanshee)
 					{
@@ -770,7 +763,7 @@ public class TickHandlerClient {
 							pitchOffset = -20F;
 						}
 						Halocraft.network.sendToServer(new PacketVehicleShoot(pitchOffset));
-						this.VehicleShootDelay = 2;
+						this.VehicleShootDelay = System.currentTimeMillis() + 40L;
 					}
 					else if (this.mc.thePlayer.ridingEntity instanceof EntityTurretSeat)
 					{
@@ -780,17 +773,17 @@ public class TickHandlerClient {
 							if (turret.parentBody instanceof EntityWarthogChainGun)
 							{
 								Halocraft.network.sendToServer(new PacketVehicleShoot(turret.pitchOffset));
-								this.VehicleShootDelay = 2;
+								this.VehicleShootDelay = System.currentTimeMillis() + 40L;
 							}
 							else if (turret.parentBody instanceof EntityWarthogGauss)
 							{
 								Halocraft.network.sendToServer(new PacketVehicleShoot(turret.pitchOffset));
-								this.VehicleShootDelay = 5;
+								this.VehicleShootDelay = System.currentTimeMillis() + 450L;
 							}
 							else if (turret.parentBody instanceof EntityWarthogRocket)
 							{
 								Halocraft.network.sendToServer(new PacketVehicleShoot(turret.pitchOffset));
-								this.VehicleShootDelay = 5;
+								this.VehicleShootDelay = System.currentTimeMillis() + 600L;
 							}
 						}
 					}
@@ -1073,33 +1066,25 @@ public class TickHandlerClient {
 		{
 			if (this.ShieldHealth <= 0)
 			{
-				if (this.shieldBlink >= 0 && this.shieldBlink <= 10)
-				{
+				if (this.Shield_Empty_Flash_Delay <= System.currentTimeMillis() && !mc.isGamePaused()) {
+					this.Shield_Empty_Flash_Red = !this.Shield_Empty_Flash_Red;
+					this.Shield_Empty_Flash_Delay = System.currentTimeMillis() + Shield_Empty_Flash_Delay_Length;
+					if (this.Shield_Empty_Flash_Red)
+						mc.thePlayer.playSound(Halocraft.MODID+":armour.ShieldLowBeep", 1.0F, 1.0F);
+				}
+				if (this.Shield_Empty_Flash_Red) {
 					//Red
 					HelmetHud512(transparency, scale, RLHudMarkVI, 2, 158, 509, 76, width, height);
-					if (this.shieldBlink == 0 && !mc.isGamePaused())
-						mc.thePlayer.playSound(Halocraft.MODID+":armour.ShieldLowBeep", 1.0F, 1.0F);
-					++this.shieldBlink;
 				}
-				else if (this.shieldBlink > 10 && this.shieldBlink <= 21)
-				{
+				else {
 					//Empty
 					HelmetHud512(transparency, scale, RLHudMarkVI, 2, 2, 509, 76, width, height);
-					if (this.shieldBlink == 11 && !mc.isGamePaused())
-						mc.thePlayer.playSound(Halocraft.MODID+":armour.ShieldLowBeep", 1.0F, 1.0F);
-					++this.shieldBlink;
-				}
-				else
-				{
-					//Red
-					HelmetHud512(transparency, scale, RLHudMarkVI, 2, 158, 509, 76, width, height);
-					this.shieldBlink = 0;
 				}
 			}
 			else
 			{
 				
-				float progress = this.ShieldHealth / (float)(TickHandler.ShieldMaxHealth);
+				float progress = this.ShieldHealth / (float)(TickHandler.SHIELD_MAX_HEALTH);
 				
 				int width2 = scaledresolution.getScaledWidth()/2 - (int)(((float)(286)*scale/2F));
 				
@@ -1149,31 +1134,23 @@ public class TickHandlerClient {
 		}
 		else
 		{
-			float progress = this.ShieldHealth / (float)(TickHandler.ShieldMaxHealth);
+			float progress = this.ShieldHealth / (float)(TickHandler.SHIELD_MAX_HEALTH);
 			
 			if (this.ShieldHealth <= 0)
 			{
-				if (this.shieldBlink >= 0 && this.shieldBlink <= 10)
-				{
+				if (this.Shield_Empty_Flash_Delay <= System.currentTimeMillis() && !mc.isGamePaused()) {
+					this.Shield_Empty_Flash_Red = !this.Shield_Empty_Flash_Red;
+					this.Shield_Empty_Flash_Delay = System.currentTimeMillis() + Shield_Empty_Flash_Delay_Length;
+					if (this.Shield_Empty_Flash_Red)
+						mc.thePlayer.playSound(Halocraft.MODID+":armour.ShieldLowBeep", 1.0F, 1.0F);
+				}
+				if (this.Shield_Empty_Flash_Red) {
 					//Red
 					HelmetHud256(transparency, scale, RLHudClassic, 1, 157, 150, 38, width, height);
-					if (this.shieldBlink == 0 && !mc.isGamePaused())
-						mc.thePlayer.playSound(Halocraft.MODID+":armour.ShieldLowBeep", 1.0F, 1.0F);
-					++this.shieldBlink;
 				}
-				else if (this.shieldBlink > 10 && this.shieldBlink <= 21)
-				{
+				else {
 					//Empty
 					HelmetHud256(transparency, scale, RLHudClassic, 1, 1, 150, 38, width, height);
-					if (this.shieldBlink == 11 && !mc.isGamePaused())
-						mc.thePlayer.playSound(Halocraft.MODID+":armour.ShieldLowBeep", 1.0F, 1.0F);
-					++this.shieldBlink;
-				}
-				else
-				{
-					//Red
-					HelmetHud256(transparency, scale, RLHudClassic, 1, 157, 150, 38, width, height);
-					this.shieldBlink = 0;
 				}
 			}
 //			else if (progress >= 1F)
@@ -1281,24 +1258,19 @@ public class TickHandlerClient {
 			}
 			else
 			{
-				if (this.shieldBlink >= 0 && this.shieldBlink <= 10)
-				{
-					HelmetHud256(transparency, scale, RLHud2, 1, 196, 150, 38, width, height);
-					if (this.shieldBlink == 0 && !mc.isGamePaused())
+				if (this.Shield_Empty_Flash_Delay <= System.currentTimeMillis() && !mc.isGamePaused()) {
+					this.Shield_Empty_Flash_Red = !this.Shield_Empty_Flash_Red;
+					this.Shield_Empty_Flash_Delay = System.currentTimeMillis() + Shield_Empty_Flash_Delay_Length;
+					if (this.Shield_Empty_Flash_Red)
 						mc.thePlayer.playSound(Halocraft.MODID+":armour.ShieldLowBeep", 1.0F, 1.0F);
-					++this.shieldBlink;
 				}
-				else if (this.shieldBlink > 10 && this.shieldBlink <= 21)
-				{
+				if (this.Shield_Empty_Flash_Red) {
+					//Red
+					HelmetHud256(transparency, scale, RLHud2, 1, 196, 150, 38, width, height);
+				}
+				else {
+					//Empty
 					HelmetHud256(transparency, scale, RLHud1, 1, 1, 150, 38, width, height);
-					if (this.shieldBlink == 11 && !mc.isGamePaused())
-						mc.thePlayer.playSound(Halocraft.MODID+":armour.ShieldLowBeep", 1.0F, 1.0F);
-					++this.shieldBlink;
-				}
-				else
-				{
-					HelmetHud256(transparency, scale, RLHud2, 1, 196, 150, 38, width, height);
-					this.shieldBlink = 0;
 				}
 			}
 		}

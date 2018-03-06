@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 
 public class ItemWeaponProperties {
 	
-	protected static String[] Variables = new String[]{"RegisterItem","Texture", "WeaponModel","AimItem","InventoryTab","IsAutomaticOrHasSecondaryShoot","IsZoomable","ZoomMultiplier","ZoomTexture","HasReticle","ReticleTexture","ReticleTransparency","ReticleProperties","GunShootDelay","Recoil","PerformOnly1ShootSound","ShootSound","ReloadTime","ReloadSound","ReloadMaxAmmoFlow","ReloadTimeLoop","ReloadSoundLoop","ReloadSoundExit","AmmoFeedsFromInventory","AmmoType","MagazineSize","ItemStackDecreaseOnUse","ItemStackMaxStackSize","RequiredUsesPerShot","ShootBurstCount","BurstAccuracyDecrease","SingleShotProjectileCount","TrackLastDelay","TrackType","TrackDistance","ProjectileRenderProperties","ProjectileSpeed","Accuracy","Gravity","MaxEffectiveTicksAlive","ProjectileLivingProperties","ProjectileImpactProperties","ProjectilePrematureEndOfLifeProperties","ProjectileDragInAir","ProjectileDragInWater","ProjectileGlows","TrackSensitivity"};
+	protected static String[] Variables = new String[]{"RegisterItem","Texture","WeaponModel","AimItem","InventoryTab","IsAutomaticOrHasSecondaryShoot","ZoomMultiplier","ScopeTexture","ScopeBGOpacity","ScopeProperties","HasReticle","ReticleTexture","ReticleOpacity","ReticleProperties","GunShootDelay","Recoil","PerformOnly1ShootSound","ShootSound","ReloadTime","ReloadSound","ReloadMaxAmmoFlow","ReloadTimeLoop","ReloadSoundLoop","ReloadSoundExit","AmmoFeedsFromInventory","AmmoType","MagazineSize","ItemStackDecreaseOnUse","ItemStackMaxStackSize","RequiredUsesPerShot","ShootBurstCount","BurstAccuracyDecrease","SingleShotProjectileCount","TrackLastDelay","TrackType","TrackDistance","ProjectileRenderProperties","ProjectileSpeed","Accuracy","Gravity","MaxEffectiveTicksAlive","ProjectileLivingProperties","ProjectileImpactProperties","ProjectilePrematureEndOfLifeProperties","ProjectileDragInAir","ProjectileDragInWater","ProjectileGlows","TrackSensitivity"};
 	
 	/** NOT TO BE SET IN CONFIG! This is handled by the mod. */
 	public int ID = -1;
@@ -25,22 +25,24 @@ public class ItemWeaponProperties {
 	public CreativeTabs InventoryTab = KCWeaponMod.InventoryTab;
 	/** If the weapon requires a shorter shooting delay or it has a secondary shoot projectile type. */
 	public boolean IsAutomaticOrHasSecondaryShoot = false;
-	/** If the weapon has a zooming scope. */
-	public boolean IsZoomable = false;
-	/** How much the screen zooms in and the number of zoom positions available. (Only active if IsZoomable is true) */
-	public int[] ZoomMultiplier = {1};
-	/** The zooming texture overlay file location and name. (Only active if IsZoomable is true) */
-	public String ZoomTexture = KCWeaponMod.MODID + ":textures/items/Default/DefaultZoom.png";
+	/** How much the screen zooms in and the number of zoom positions available if set. */
+	public int[] ZoomMultiplier = null;
+	/** The scope texture file location and name (Only active if ZoomMultiplier is not null). */
+	public String ScopeTexture = KCWeaponMod.MODID + ":textures/items/Default/DefaultZoom.png";
+	/** The opacity of the scope's background. */
+	public float ScopeBGOpacity = 1.0F;
+	/** The co-ord offsets from middle of screen to display the scope texture: Width, Height, OffsetTopLeftOnScreenFromCentreX, OffsetTopLeftOnScreenFromCentreY. */
+	public int[] ScopeProperties = {20,20,10,10};
 	/** If the weapon has a reticle. */
 	public boolean HasReticle = false;
 	/** The texture location of the reticle to be rendered. */
 	public String ReticleTexture = KCWeaponMod.MODID + ":textures/items/Default/DefaultReticle.png";
-	/** The transparency of the reticle texture displayed on screen. */
-	public float ReticleTransparency = 1.0F;
+	/** The opacity of the reticle texture displayed on screen. */
+	public float ReticleOpacity = 1.0F;
 	/** The co-ords of the reticle in the texture file: TopLeftX, TopLeftY, Width, Height, OffsetTopLeftOnScreenFromCentreX, OffsetTopLeftOnScreenFromCentreY. */
 	public int[] ReticleProperties = {0,0,20,20,10,10};
-	/** How long the delay is between being able to shoot again. */
-	public int GunShootDelay = 0;
+	/** How long in milliseconds the delay is between being able to shoot again. */
+	public Long GunShootDelay = 0L;
 	/** How much recoil the player experiences per shot. (the final amount of experienced recoil is multiplied by this and ShootBurstCount) */
 	public float Recoil = 0F;
 	/** Whether the weapons shoot sound should only be played once when ShootBurstCount is more than 1. */
@@ -48,18 +50,18 @@ public class ItemWeaponProperties {
 	/** The shoot sound file location and name. */
 	public String ShootSound = KCWeaponMod.MODID + ":Default.DefaultShoot";
 	/** If set to anything greater than 0, this weapon will have a secondary shoot projectile type. (if set, IsAutomaticOrHasSecondaryShoot must be true) */
-	public int SecondaryShootHeldDelay = 0;
-	public int SecondaryGunShootDelay = 0;
+	public Long SecondaryShootHeldDelay = 0L;
+	public Long SecondaryGunShootDelay = 0L;
 	public String HeldShootEntity = "";//TODO Code this, can have tracking here too!
 	
-	/** How many ticks it takes for the weapon to reload. (Must be value more than 0!) */
-	public int ReloadTime = 1;
+	/** How many milliseconds it takes for the weapon to reload. */
+	public Long ReloadTime = 0L;
 	/** The reload sound file location and name. */
 	public String ReloadSound = KCWeaponMod.MODID + ":Default.DefaultReload";
 	/** How much ammo can be loaded into the weapon at any one time when reloading. (Coded to activate a reload loop and slow increase of weapon ammo if set to anything greater than 0) */
 	public int ReloadMaxAmmoFlow = 0;
-	/** How many ticks it should take for the looping loading to occur. (Should be set to a value greater than 0 if ReloadMaxAmmoFlow is set to anything greater than 0) */
-	public int ReloadTimeLoop = 0;
+	/** How many milliseconds it should take for the looping loading to occur. (Should be set to a value greater than 0 if ReloadMaxAmmoFlow is set to anything greater than 0) */
+	public Long ReloadTimeLoop = 0L;
 	/** The looping reload sound file location and name. */
 	public String ReloadSoundLoop = KCWeaponMod.MODID + ":Default.DefaultReloadLoop";
 	/** The exiting reload sound file location and name. */

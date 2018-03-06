@@ -52,16 +52,7 @@ public class TickHandlerClient {
 			} else if (!mc.isGamePaused()) {
 				this.onTickInGame(mc);
 
-				if (this.shootReloadCodeDelay <= 0)
-				{
-					TickHandler.performShootAndReload();
-
-					this.shootReloadCodeDelay = 1;
-				}
-				else
-				{
-					this.shootReloadCodeDelay--;
-				}
+				TickHandler.performShootAndReload();
 			}
 		}
 	}
@@ -266,14 +257,13 @@ public class TickHandlerClient {
 
 	//HandleShootingReloading
 	public static boolean IsReloading = false;
-	private int shootReloadCodeDelay = 0;
 	public static Item ReloadingWeapon = null;
 
 	//HandleButtonInterface
 	public boolean RightClickPressed = false;
 	public boolean PrevRightClickPressed = false;
 	public int RightClickHeld = 0;
-	private int GunShootDelay = 0;
+	private Long GunShootDelay = 0L;
 	private int ChargePlasmaPistol = 0;
 
 	private void HandleButtonInterface(Minecraft minecraft)
@@ -311,11 +301,7 @@ public class TickHandlerClient {
 		{
 			Item currentItem = minecraft.thePlayer.inventory.getCurrentItem().getItem();
 
-			if (GunShootDelay > 0)
-			{
-				GunShootDelay--;
-			}
-			else
+			if (GunShootDelay < System.currentTimeMillis())
 			{
 				if (currentItem instanceof ItemWeapon)
 				{
@@ -443,7 +429,7 @@ public class TickHandlerClient {
 			if (minecraft.thePlayer.inventory.getCurrentItem() != null && minecraft.thePlayer.inventory.getCurrentItem().getItem() instanceof InterfaceZoomReticle)
 			{
 				InterfaceZoomReticle currentItem = (InterfaceZoomReticle)minecraft.thePlayer.inventory.getCurrentItem().getItem();
-				if (!net.killerchief.kcweaponmod.TickHandlerClient.IsZooming() || (!currentItem.IsZoomable() && !net.killerchief.kcweaponmod.TickHandlerClient.IsZooming()))
+				if (!net.killerchief.kcweaponmod.TickHandlerClient.IsZooming() || currentItem.IsZoomable())
 				{
 					int[] rp = currentItem.ReticleProperties();
 					if (currentItem.HasReticle() && rp != null && rp.length == 6)
@@ -463,7 +449,7 @@ public class TickHandlerClient {
 							if (detectionRange > 300D)
 								detectionRange = 300D;
 						}
-						GunReticle(currentItem.ReticleTexture(), detectionRange, currentItem.ReticleTransparency(), rp[0], rp[1], rp[2], rp[3], rp[4], rp[5]);
+						GunReticle(currentItem.ReticleTexture(), detectionRange, currentItem.ReticleOpacity(), rp[0], rp[1], rp[2], rp[3], rp[4], rp[5]);
 					}
 				}
 				if (currentItem.IsZoomable() && this.IsZooming())
@@ -484,7 +470,10 @@ public class TickHandlerClient {
 		{
 			ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 			int i = scaledresolution.getScaledWidth();
-			int k = scaledresolution.getScaledHeight();
+			int j = scaledresolution.getScaledHeight();
+			int multifactor = j / 240;
+			if (multifactor < 1)
+				multifactor = 1;
 			mc.entityRenderer.setupOverlayRendering();
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glDisable(GL11.GL_DEPTH_TEST);
@@ -523,10 +512,10 @@ public class TickHandlerClient {
 			GL11.glDisable(GL11.GL_LIGHTING);
 			Tessellator tessellator = Tessellator.instance;
 			tessellator.startDrawingQuads();
-			tessellator.addVertexWithUV((double)((i / 2 - posX) + 0), (double)((k / 2 - posY) + iBHeight), (double)0.0F, (double)(iBCoordX + 0) * 0.00390625F, (double)(iBCoordY + iBHeight) * 0.00390625F);
-			tessellator.addVertexWithUV((double)((i / 2 - posX) + iBWidth), (double)((k / 2 - posY) + iBHeight), (double)0.0F, (double)(iBCoordX + iBWidth) * 0.00390625F, (double)(iBCoordY + iBHeight) * 0.00390625F);
-			tessellator.addVertexWithUV((double)((i / 2 - posX) + iBWidth), (double)((k / 2 - posY) + 0), (double)0.0F, (double)(iBCoordX + iBWidth) * 0.00390625F, (double)(iBCoordY + 0) * 0.00390625F);
-			tessellator.addVertexWithUV((double)((i / 2 - posX) + 0), (double)((k / 2 - posY) + 0), (double)0.0F, (double)(iBCoordX + 0) * 0.00390625F, (double)(iBCoordY + 0) * 0.00390625F);
+			tessellator.addVertexWithUV((double)((i / 2 - (posX*multifactor)) + 0), (double)((j / 2 - (posY*multifactor)) + (iBHeight*multifactor)), (double)0.0F, (double)(iBCoordX + 0) * 0.00390625F, (double)(iBCoordY + iBHeight) * 0.00390625F);
+			tessellator.addVertexWithUV((double)((i / 2 - (posX*multifactor)) + (iBWidth*multifactor)), (double)((j / 2 - (posY*multifactor)) + (iBHeight*multifactor)), (double)0.0F, (double)(iBCoordX + iBWidth) * 0.00390625F, (double)(iBCoordY + iBHeight) * 0.00390625F);
+			tessellator.addVertexWithUV((double)((i / 2 - (posX*multifactor)) + (iBWidth*multifactor)), (double)((j / 2 - (posY*multifactor)) + 0), (double)0.0F, (double)(iBCoordX + iBWidth) * 0.00390625F, (double)(iBCoordY + 0) * 0.00390625F);
+			tessellator.addVertexWithUV((double)((i / 2 - (posX*multifactor)) + 0), (double)((j / 2 - (posY*multifactor)) + 0), (double)0.0F, (double)(iBCoordX + 0) * 0.00390625F, (double)(iBCoordY + 0) * 0.00390625F);
 			tessellator.draw();
 			GL11.glDepthMask(true);
 			GL11.glEnable(GL11.GL_DEPTH_TEST);
@@ -537,12 +526,12 @@ public class TickHandlerClient {
 	}
 
 	public static boolean ErrorZooming = false;
-	public static void CameraZoom(int zoomLevel)
+	public static void CameraZoom(double zoomLevel)
 	{
 		if (!ErrorZooming)
 		{
 			try {
-				ObfuscationReflectionHelper.setPrivateValue(EntityRenderer.class, Minecraft.getMinecraft().entityRenderer, Double.valueOf(zoomLevel), "af", "cameraZoom");
+				ObfuscationReflectionHelper.setPrivateValue(EntityRenderer.class, Minecraft.getMinecraft().entityRenderer, zoomLevel, "af", "cameraZoom");
 			} catch (Exception e) {
 				System.err.println("I forgot to update the obfuscated reflection for Zooming D:");
 				e.printStackTrace();
@@ -581,7 +570,7 @@ public class TickHandlerClient {
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		}
 	}
-
+	
 	public static void GunScope(float transparency, ResourceLocation overlay)
 	{
 		if (!mc.gameSettings.hideGUI)
@@ -609,6 +598,73 @@ public class TickHandlerClient {
 			GL11.glEnable(GL11.GL_DEPTH_TEST);
 			GL11.glEnable(GL11.GL_ALPHA_TEST);
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, transparency);
+		}
+	}
+
+	private static ResourceLocation Black_Pixel = new ResourceLocation(KCWeaponMod.MODID+":textures/black.png");
+	
+	public static void GunScope(ResourceLocation overlay, float bgOpacity, int Width, int Height, int OffsetTopLeftOnScreenFromCentreX, int OffsetTopLeftOnScreenFromCentreY)
+	{
+		if (!mc.gameSettings.hideGUI)
+		{
+			Minecraft mc = Minecraft.getMinecraft();
+			ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+			int i = scaledresolution.getScaledWidth();
+			int j = scaledresolution.getScaledHeight();
+			int multifactor = j / 240;
+			if (multifactor < 1)
+				multifactor = 1;
+			int i1 = i/2 - (OffsetTopLeftOnScreenFromCentreX*multifactor);
+			int i2 = i1 + (Width*multifactor);
+			int j1 = j/2 - (OffsetTopLeftOnScreenFromCentreY*multifactor);
+			int j2 = j1 + (Height*multifactor);
+			GL11.glEnable(GL11.GL_BLEND);
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
+			GL11.glDepthMask(false);
+			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			GL11.glDisable(GL11.GL_ALPHA_TEST);
+			GL11.glDisable(GL11.GL_LIGHTING);
+			Tessellator tessellator = Tessellator.instance;
+			if (bgOpacity > 0.0F) {
+				GL11.glColor4f(1.0F, 1.0F, 1.0F, bgOpacity);
+				mc.getTextureManager().bindTexture(Black_Pixel);
+				tessellator.startDrawingQuads();
+				tessellator.addVertexWithUV(0.0D, j1, -90D, 0.0D, 1.0D);
+				tessellator.addVertexWithUV(i, j1, -90D, 1.0D, 1.0D);
+				tessellator.addVertexWithUV(i, 0.0D, -90D, 1.0D, 0.0D);
+				tessellator.addVertexWithUV(0.0D, 0.0D, -90D, 0.0D, 0.0D);
+				tessellator.draw();
+				tessellator.startDrawingQuads();
+				tessellator.addVertexWithUV(0.0D, j, -90D, 0.0D, 1.0D);
+				tessellator.addVertexWithUV(i, j, -90D, 1.0D, 1.0D);
+				tessellator.addVertexWithUV(i, j2, -90D, 1.0D, 0.0D);
+				tessellator.addVertexWithUV(0.0D, j2, -90D, 0.0D, 0.0D);
+				tessellator.draw();
+				tessellator.startDrawingQuads();
+				tessellator.addVertexWithUV(0.0D, j2, -90D, 0.0D, 1.0D);
+				tessellator.addVertexWithUV(i1, j2, -90D, 1.0D, 1.0D);
+				tessellator.addVertexWithUV(i1, j1, -90D, 1.0D, 0.0D);
+				tessellator.addVertexWithUV(0.0D, j1, -90D, 0.0D, 0.0D);
+				tessellator.draw();
+				tessellator.startDrawingQuads();
+				tessellator.addVertexWithUV(i2, j2, -90D, 0.0D, 1.0D);
+				tessellator.addVertexWithUV(i, j2, -90D, 1.0D, 1.0D);
+				tessellator.addVertexWithUV(i, j1, -90D, 1.0D, 0.0D);
+				tessellator.addVertexWithUV(i2, j1, -90D, 0.0D, 0.0D);
+				tessellator.draw();
+			}
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+			mc.getTextureManager().bindTexture(overlay);
+			tessellator.startDrawingQuads();
+			tessellator.addVertexWithUV(i1, j2, -90D, 0.0D, 1.0D);
+			tessellator.addVertexWithUV(i2, j2, -90D, 1.0D, 1.0D);
+			tessellator.addVertexWithUV(i2, j1, -90D, 1.0D, 0.0D);
+			tessellator.addVertexWithUV(i1, j1, -90D, 0.0D, 0.0D);
+			tessellator.draw();
+			
+			GL11.glDepthMask(true);
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
+			GL11.glEnable(GL11.GL_ALPHA_TEST);
 		}
 	}
 
@@ -741,14 +797,18 @@ public class TickHandlerClient {
 		}
 		else
 		{
-			int zoom = weapon.ZoomMultiplier()[(this.ZoomLevel < 0 ? 0 : this.ZoomLevel)];
+			double zoom = weapon.ZoomMultiplier()[(this.ZoomLevel < 0 ? 0 : this.ZoomLevel)];
 			//System.out.println(this.ZoomLevel+":"+zoom);
-			minecraft.gameSettings.setOptionFloatValue(GameSettings.Options.SENSITIVITY, OriginalSensitivity/(zoom > 3 ? zoom * 0.40F : (zoom * 0.15F) + 1F));
+			minecraft.gameSettings.setOptionFloatValue(GameSettings.Options.SENSITIVITY, OriginalSensitivity/(float)(zoom > 3 ? zoom * 0.40F : (zoom * 0.15F) + 1F));
 			CameraZoom(zoom);
-			if (!weapon.ZoomLikeHelmet())
-				GunScope(1.0F, weapon.ZoomTexture());
-			else
-				RenderHelmetVisor(1.0F, weapon.ZoomTexture());
+			if (!weapon.ZoomLikeHelmet()) {
+				if (weapon.ScopeTexture() != null && weapon.ScopeProperties() != null && weapon.ScopeProperties().length == 4)
+					GunScope(weapon.ScopeTexture(), weapon.ScopeBGOpacity(), weapon.ScopeProperties()[0], weapon.ScopeProperties()[1], weapon.ScopeProperties()[2], weapon.ScopeProperties()[3]);
+			}
+			else {
+				if (weapon.ScopeTexture() != null)
+					RenderHelmetVisor(1.0F, weapon.ScopeTexture());
+			}
 			//this.IsZooming = true;
 		}
 	}
@@ -760,7 +820,7 @@ public class TickHandlerClient {
 		this.ZoomHeldTimer = 0;
 		this.ZoomLevel = -1;
 		minecraft.gameSettings.setOptionFloatValue(GameSettings.Options.SENSITIVITY, OriginalSensitivity);
-		CameraZoom(1);
+		CameraZoom(1.0D);
 		//System.out.println("Stop");
 	}
 }

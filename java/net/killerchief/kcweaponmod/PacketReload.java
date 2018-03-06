@@ -39,32 +39,25 @@ public class PacketReload implements IMessage {
 		{
 			if(ctx.side.isServer())
 			{
-				if (!TickHandler.ShootDelayMap.containsKey(ctx.getServerHandler().playerEntity))
+				if (message.IsReloadingState == 0)
 				{
-					TickHandler.ShootDelayMap.put(ctx.getServerHandler().playerEntity, new Integer(0));
+					TickHandler.ReloadDelayMap.remove(ctx.getServerHandler().playerEntity);
 				}
-				if (message.IsReloadingState == 0 || !TickHandler.ReloadDelayMap.containsKey(ctx.getServerHandler().playerEntity))
+				if (message.IsReloadingState == 1 && !TickHandler.ReloadDelayMap.containsKey(ctx.getServerHandler().playerEntity) && !TickHandler.ShootDelayMap.containsKey(ctx.getServerHandler().playerEntity))
 				{
-					TickHandler.ReloadDelayMap.put(ctx.getServerHandler().playerEntity, new Integer(0));
-				}
-				if (message.IsReloadingState == 1 && TickHandler.ReloadDelayMap.containsKey(ctx.getServerHandler().playerEntity) && TickHandler.ShootDelayMap.containsKey(ctx.getServerHandler().playerEntity))
-				{
-					if (TickHandler.ReloadDelayMap.get(ctx.getServerHandler().playerEntity) <= 0 && (TickHandler.ShootDelayMap.get(ctx.getServerHandler().playerEntity) == null || TickHandler.ShootDelayMap.get(ctx.getServerHandler().playerEntity) <= 0))
+					if (ctx.getServerHandler().playerEntity.inventory != null && ctx.getServerHandler().playerEntity.inventory.getCurrentItem() != null)
 					{
-						if (ctx.getServerHandler().playerEntity.inventory != null && ctx.getServerHandler().playerEntity.inventory.getCurrentItem() != null)
+						Item item = ctx.getServerHandler().playerEntity.inventory.getCurrentItem().getItem();
+						if (item instanceof ItemWeapon)
 						{
-							Item item = ctx.getServerHandler().playerEntity.inventory.getCurrentItem().getItem();
-							if (item instanceof ItemWeapon)
+							ItemWeapon weapon = (ItemWeapon)item;
+							if (!weapon.Properties.AmmoFeedsFromInventory)
 							{
-								ItemWeapon weapon = (ItemWeapon)item;
-								if (!weapon.Properties.AmmoFeedsFromInventory)
+								if ((weapon.Properties.AmmoType != null && ctx.getServerHandler().playerEntity.inventory.hasItem(weapon.Properties.AmmoType.getItem())) || ctx.getServerHandler().playerEntity.capabilities.isCreativeMode)
 								{
-									if ((weapon.Properties.AmmoType != null && ctx.getServerHandler().playerEntity.inventory.hasItem(weapon.Properties.AmmoType.getItem())) || ctx.getServerHandler().playerEntity.capabilities.isCreativeMode)
-									{
-										TickHandler.ReloadDelayMap.put(ctx.getServerHandler().playerEntity, new Integer(weapon.Properties.ReloadTime));
-										ctx.getServerHandler().playerEntity.worldObj.playSoundAtEntity(ctx.getServerHandler().playerEntity, weapon.Properties.ReloadSound, 1.0F, 1.0F);
-										//System.out.println("Server Processed Packet");
-									}
+									TickHandler.ReloadDelayMap.put(ctx.getServerHandler().playerEntity, System.currentTimeMillis() + weapon.Properties.ReloadTime);
+									ctx.getServerHandler().playerEntity.worldObj.playSoundAtEntity(ctx.getServerHandler().playerEntity, weapon.Properties.ReloadSound, 1.0F, 1.0F);
+									//System.out.println("Server Processed Packet");
 								}
 							}
 						}
@@ -101,6 +94,7 @@ public class PacketReload implements IMessage {
 										t++;
 									}
 								}
+								break;
 							}
 						}
 					}

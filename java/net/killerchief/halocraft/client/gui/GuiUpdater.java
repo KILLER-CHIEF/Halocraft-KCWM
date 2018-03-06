@@ -7,15 +7,21 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.MessageDigest;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import net.killerchief.halocraft.Halocraft;
 import net.killerchief.kcweaponmod.KCWeaponMod;
@@ -27,7 +33,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import com.google.common.io.Files;
 
@@ -307,7 +315,7 @@ public class GuiUpdater extends GuiScreen {
 			Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
 			if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
 				try {
-					desktop.browse(new URL("http://halocraft.killerchief.net/").toURI());
+					desktop.browse(new URL("https://halocraft.glitchyscripts.com/").toURI());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -318,7 +326,7 @@ public class GuiUpdater extends GuiScreen {
 			Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
 			if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
 				try {
-					desktop.browse(new URL("http://halocraft.killerchief.net/versionlog").toURI());
+					desktop.browse(new URL("https://halocraft.glitchyscripts.com/versionlog").toURI());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -375,26 +383,54 @@ public class GuiUpdater extends GuiScreen {
 			System.out.println("Running Halocraft Update Check...");
 
 			Document doc = null;
-
+			
 			try {
-				URL url = new URL("http://halocraft.killerchief.net/updater-v1");
-				URLConnection con = url.openConnection();
-				con.setUseCaches(false);
-				InputStream is = con.getInputStream();
-				doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is);
-				is.close();
-				System.out.println("Successfully found, parsed and opened update XML doc");
-			} catch (MalformedURLException e) {
+				TrustManager[] allcerts = new TrustManager[] {new X509TrustManager() {
+
+					@Override
+					public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+
+					}
+
+					@Override
+					public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+
+					}
+
+					@Override
+					public X509Certificate[] getAcceptedIssuers() {
+						return null;
+					}
+				}};
+				SSLContext context = SSLContext.getInstance("SSL");
+				context.init(null, allcerts, new SecureRandom());
+				HttpsURLConnection.setDefaultSSLSocketFactory(context.getSocketFactory());
+				
+				URL url = new URL("https://halocraft.glitchyscripts.com/updater-v1");
+	            DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+	            builder.setErrorHandler(new ErrorHandler() {
+	                @Override
+	                public void warning(SAXParseException exception) throws SAXException {
+	                    
+	                }
+
+	                @Override
+	                public void error(SAXParseException exception) throws SAXException {
+
+	                }
+
+	                @Override
+	                public void fatalError(SAXParseException exception) throws SAXException {
+
+	                }
+	            });
+	            doc = builder.parse(url.openStream());
+			} catch (IOException e) {//likely connection timed out
 				e.printStackTrace();
-			} catch (SAXException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				System.out.println(e.getMessage());//likely connection timed out
-				e.printStackTrace();
-			} catch (ParserConfigurationException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
+			
 			if (doc != null)
 			{
 				this.mainThread.versionList = new GuiSlotModVersionList(this.mainThread, null, 120);

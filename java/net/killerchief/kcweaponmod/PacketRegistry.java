@@ -10,5 +10,6 @@ public class PacketRegistry {
 		KCWeaponMod.network.registerMessage(PacketReload.Handler.class, PacketReload.class, id++, Side.SERVER);
 		KCWeaponMod.network.registerMessage(PacketReload.Handler.class, PacketReload.class, id++, Side.CLIENT);
 		KCWeaponMod.network.registerMessage(PacketTargetEntity.Handler.class, PacketTargetEntity.class, id++, Side.SERVER);
+		KCWeaponMod.network.registerMessage(PacketEntityMotion.Handler.class, PacketEntityMotion.class, id++, Side.CLIENT);
 	}
 }

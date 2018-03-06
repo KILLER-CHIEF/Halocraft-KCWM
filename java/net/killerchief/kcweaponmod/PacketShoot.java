@@ -64,20 +64,13 @@ public class PacketShoot implements IMessage {
 				EntityPlayerMP player = ctx.getServerHandler().playerEntity;
 				ItemStack playerCurrentItemStack = ctx.getServerHandler().playerEntity.inventory.getCurrentItem();
 
-				if (!TickHandler.ShootDelayMap.containsKey(ctx.getServerHandler().playerEntity))
+				if (!TickHandler.ShootDelayMap.containsKey(player))
 				{
-					TickHandler.ShootDelayMap.put(player, new Integer(0));
-				}
-				if (TickHandler.ShootDelayMap.containsKey(player))
-				{
-					if (TickHandler.ShootDelayMap.get(player) <= 0)
+					if (player.inventory != null && playerCurrentItemStack != null)
 					{
-						if (player.inventory != null && playerCurrentItemStack != null)
+						if (playerCurrentItemStack.getItem() instanceof ItemWeapon)
 						{
-							if (playerCurrentItemStack.getItem() instanceof ItemWeapon)
-							{
-								this.shoot(ctx.side, player, (ItemWeapon)playerCurrentItemStack.getItem(), playerCurrentItemStack, true);
-							}
+							this.shoot(ctx.side, player, (ItemWeapon)playerCurrentItemStack.getItem(), playerCurrentItemStack, true);
 						}
 					}
 				}
@@ -136,10 +129,15 @@ public class PacketShoot implements IMessage {
 
 		public static void shoot(Side side, EntityPlayer player, ItemWeapon weapon, ItemStack playerCurrentItemStack, boolean isFromPacketClass)
 		{
-			if (side.isServer() && (TickHandler.ReloadDelayMap.get(player) != null && TickHandler.ReloadDelayMap.get(player) != 0))
+			if (side.isServer() && TickHandler.ReloadDelayMap.containsKey(player))
 			{
-				TickHandler.ReloadDelayMap.put(player, new Integer(0));
-				KCWeaponMod.network.sendTo(new PacketReload(0, 0), (EntityPlayerMP)player);
+				if (weapon.Properties.ReloadTimeLoop > 0L) {
+					TickHandler.ReloadDelayMap.remove(player);
+					KCWeaponMod.network.sendTo(new PacketReload(0, 0), (EntityPlayerMP)player);
+				}
+				else {
+					return;
+				}
 			}
 			int AmmoAvailable = 0;
 			if (weapon.Properties.AmmoType != null && weapon.Properties.AmmoFeedsFromInventory)
@@ -158,7 +156,7 @@ public class PacketShoot implements IMessage {
 				float recoil = 0F;
 				if (side.isServer())
 				{
-					TickHandler.ShootDelayMap.put(player, new Integer(weapon.Properties.GunShootDelay));
+					TickHandler.ShootDelayMap.put(player, System.currentTimeMillis() + weapon.Properties.GunShootDelay);
 				}
 				if (weapon.Properties.PerformOnly1ShootSound)
 				{

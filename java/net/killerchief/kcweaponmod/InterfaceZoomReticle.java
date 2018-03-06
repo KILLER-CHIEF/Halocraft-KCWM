@@ -8,15 +8,19 @@ public interface InterfaceZoomReticle {
 	
 	public int[] ZoomMultiplier();
 	
-	public ResourceLocation ZoomTexture();
-	
 	public boolean ZoomLikeHelmet();
+	
+	public ResourceLocation ScopeTexture();
+	
+	public float ScopeBGOpacity();
+	
+	public int[] ScopeProperties();
 	
 	public boolean HasReticle();
 	
 	public ResourceLocation ReticleTexture();
 	
-	public float ReticleTransparency();
+	public float ReticleOpacity();
 	
 	public int[] ReticleProperties();
 

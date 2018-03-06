@@ -1,7 +1,8 @@
 package net.killerchief.halocraft;
 
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 import net.killerchief.halocraft.comm.packetHandlers.PacketOvershield;
 import net.minecraft.entity.player.EntityPlayer;
@@ -50,64 +51,45 @@ public class TickHandler {
 		}
 	}
 	
-	public static HashMap<EntityPlayer, Boolean> ForwardMap = new HashMap();
-	public static HashMap<EntityPlayer, Boolean> BackwardMap = new HashMap();
-	public static HashMap<EntityPlayer, Boolean> LeftMap = new HashMap();
-	public static HashMap<EntityPlayer, Boolean> RightMap = new HashMap();
+	public static ConcurrentHashMap<EntityPlayer, Boolean> ForwardMap = new ConcurrentHashMap();
+	public static ConcurrentHashMap<EntityPlayer, Boolean> BackwardMap = new ConcurrentHashMap();
+	public static ConcurrentHashMap<EntityPlayer, Boolean> LeftMap = new ConcurrentHashMap();
+	public static ConcurrentHashMap<EntityPlayer, Boolean> RightMap = new ConcurrentHashMap();
 
-	public static HashMap<EntityPlayer, Integer> ShieldHealthMap = new HashMap();
-	public static HashMap<EntityPlayer, Boolean> ShieldRechargingMap = new HashMap();
-	public static HashMap<EntityPlayer, Integer> ShieldRechargeDelayMap = new HashMap();
-	public static final int ShieldMaxHealth = 20;
-	
-	private static int slowRecharge = 0;
+	public static ConcurrentHashMap<EntityPlayer, Integer> ShieldHealthMap = new ConcurrentHashMap();
+	public static ConcurrentHashMap<EntityPlayer, Boolean> ShieldRechargingMap = new ConcurrentHashMap();
+	public static ConcurrentHashMap<EntityPlayer, Long> ShieldRechargeDelayMap = new ConcurrentHashMap();
+	public static final int SHIELD_MAX_HEALTH = 20;
+	public static final Long SHIELD_RECHARGE_DELAY_HURT = 4000L;
+	public static final Long SHIELD_RECHARGE_DELAY_INC = 150L;
 
 	public static void CommonTickEnd()
 	{
-		for (Entry<EntityPlayer, Integer> entry : TickHandler.ShieldRechargeDelayMap.entrySet())
+		Iterator it = ShieldRechargeDelayMap.entrySet().iterator();
+		while (it.hasNext())
 		{
-			if (HalocraftUtils.isPlayerWearingArmor(entry.getKey(), 0, true, true, true, true))
-			{
-				if (entry.getValue() > 0)
+			Entry<EntityPlayer, Long> entry = (Entry<EntityPlayer, Long>)it.next();
+			if (!TickHandler.ShieldHealthMap.containsKey(entry.getKey())) {
+				it.remove();
+				TickHandler.ShieldRechargingMap.remove(entry.getKey());
+				continue;
+			}
+			int health = TickHandler.ShieldHealthMap.get(entry.getKey());
+			if (entry.getValue() <= System.currentTimeMillis()) {
+				if (health < TickHandler.SHIELD_MAX_HEALTH && HalocraftUtils.isPlayerWearingArmor(entry.getKey(), 0, true, true, true, true))
 				{
-					entry.setValue(entry.getValue() - 1);
+					TickHandler.ShieldHealthMap.put(entry.getKey(), new Integer(++health));
+					entry.setValue(System.currentTimeMillis() + TickHandler.SHIELD_RECHARGE_DELAY_INC - 20L);
+					if (!TickHandler.ShieldRechargingMap.containsKey(entry.getKey()) || TickHandler.ShieldRechargingMap.get(entry.getKey()) == false || health % (TickHandler.SHIELD_MAX_HEALTH*0.2) == 0)
+						Halocraft.network.sendTo(new PacketOvershield(TickHandler.ShieldHealthMap.get(entry.getKey()), health == TickHandler.SHIELD_MAX_HEALTH ? false : true), (EntityPlayerMP)entry.getKey());
+					TickHandler.ShieldRechargingMap.put(entry.getKey(), new Boolean(true));
 				}
-				if (entry.getValue() <= 0 && TickHandler.ShieldHealthMap.containsKey(entry.getKey()))
-				{
-					if (TickHandler.ShieldHealthMap.get(entry.getKey()) < TickHandler.ShieldMaxHealth)
-					{
-						if (slowRecharge++ > 2)
-						{
-							TickHandler.ShieldHealthMap.put(entry.getKey(), new Integer(TickHandler.ShieldHealthMap.get(entry.getKey()) + 1));
-							slowRecharge = 0;
-						}
-						if (!TickHandler.ShieldRechargingMap.containsKey(entry.getKey()))
-						{
-							TickHandler.ShieldRechargingMap.put(entry.getKey(), new Boolean(false));
-						}
-						if (TickHandler.ShieldRechargingMap.get(entry.getKey()) == false)
-						{
-							TickHandler.ShieldRechargingMap.put(entry.getKey(), new Boolean(true));
-							Halocraft.network.sendTo(new PacketOvershield(TickHandler.ShieldHealthMap.get(entry.getKey()), true), (EntityPlayerMP)entry.getKey());
-						}
-						else
-						{
-							int health = TickHandler.ShieldHealthMap.get(entry.getKey());
-							if (health == (TickHandler.ShieldMaxHealth*0.1) || health == (TickHandler.ShieldMaxHealth*0.2) || health == (TickHandler.ShieldMaxHealth*0.3) || health == (TickHandler.ShieldMaxHealth*0.4) || health == (TickHandler.ShieldMaxHealth*0.5) || health == (TickHandler.ShieldMaxHealth*0.6) || health == (TickHandler.ShieldMaxHealth*0.7) || health == (TickHandler.ShieldMaxHealth*0.8) || health == (TickHandler.ShieldMaxHealth*0.9))
-							{
-								Halocraft.network.sendTo(new PacketOvershield(TickHandler.ShieldHealthMap.get(entry.getKey()), true), (EntityPlayerMP)entry.getKey());
-							}
-						}
-						//System.out.println("IncrementingHealthServer");
-					}
-				}
-				if (TickHandler.ShieldRechargingMap.containsKey(entry.getKey()) && TickHandler.ShieldRechargingMap.get(entry.getKey()) == true && TickHandler.ShieldHealthMap.containsKey(entry.getKey()) && TickHandler.ShieldHealthMap.get(entry.getKey()) >= TickHandler.ShieldMaxHealth)
-				{
-					Halocraft.network.sendTo(new PacketOvershield(TickHandler.ShieldHealthMap.get(entry.getKey()), true), (EntityPlayerMP)entry.getKey());
+				else {
 					TickHandler.ShieldRechargingMap.put(entry.getKey(), new Boolean(false));
 				}
 			}
 		}
+		
 	}
 }
 

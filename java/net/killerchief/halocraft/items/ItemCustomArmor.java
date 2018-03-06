@@ -205,13 +205,23 @@ public class ItemCustomArmor extends net.minecraft.item.ItemArmor implements Int
 	}
 
 	@Override
-	public ResourceLocation ZoomTexture() {
+	public boolean ZoomLikeHelmet() {
+		return true;
+	}
+
+	@Override
+	public ResourceLocation ScopeTexture() {
 		return this.ZoomTexture;
 	}
 
 	@Override
-	public boolean ZoomLikeHelmet() {
-		return true;
+	public float ScopeBGOpacity() {
+		return 1.0F;
+	}
+
+	@Override
+	public int[] ScopeProperties() {
+		return null;
 	}
 
 	@Override
@@ -225,7 +235,7 @@ public class ItemCustomArmor extends net.minecraft.item.ItemArmor implements Int
 	}
 
 	@Override
-	public float ReticleTransparency() {
+	public float ReticleOpacity() {
 		return 1.0F;
 	}
 	

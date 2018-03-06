@@ -13,6 +13,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.item.Item;
@@ -257,6 +258,10 @@ public class EntityProjectile extends Entity implements IProjectile
 	@Override
 	protected void entityInit()
 	{
+		if (!this.worldObj.isRemote) {
+			KCWeaponMod.network.sendToAllAround(new PacketEntityMotion(this.getEntityId(), this.motionX, this.motionY, this.motionZ), new TargetPoint(this.dimension, this.posX, this.posY, this.posZ, 100D));
+		}
+		
 		this.dataWatcher.addObject(16, -1);//PropertiesID
 		this.dataWatcher.addObject(18, -1);//PastWeaponArrayLength
 		this.dataWatcher.addObject(19, -1);//trackEntity
@@ -334,6 +339,8 @@ public class EntityProjectile extends Entity implements IProjectile
 		this.prevRotationYaw = this.rotationYaw = (float)(Math.atan2(p_70186_1_, p_70186_5_) * 180.0D / Math.PI);
 		this.prevRotationPitch = this.rotationPitch = (float)(Math.atan2(p_70186_3_, (double)f3) * 180.0D / Math.PI);
 	}
+	
+	public boolean kill_S12PacketEntityVelocity = true;
 
 	/**
 	 * Sets the velocity to the args. Args: x, y, z
@@ -342,6 +349,12 @@ public class EntityProjectile extends Entity implements IProjectile
 	@Override
 	public void setVelocity(double p_70016_1_, double p_70016_3_, double p_70016_5_)
 	{
+		//kill the first packet that arrives cos its heading is borked at high velocities.
+		if (kill_S12PacketEntityVelocity) {
+			kill_S12PacketEntityVelocity = false;
+			return;
+		}
+		
 		this.motionX = p_70016_1_;
 		this.motionY = p_70016_3_;
 		this.motionZ = p_70016_5_;

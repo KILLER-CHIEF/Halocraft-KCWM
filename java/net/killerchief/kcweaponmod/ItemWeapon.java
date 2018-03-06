@@ -15,10 +15,12 @@ public class ItemWeapon extends Item implements InterfaceWeaponProperties, Inter
 	
 	public ItemWeaponProperties Properties;
 	private boolean loweredweapon = false;
+	private ResourceLocation ScopeTexture = null;
 	
 	public ItemWeapon(ItemWeaponProperties properties) {
 		super();
 		this.Properties = properties;
+		this.ScopeTexture = new ResourceLocation(properties.ScopeTexture);
 		this.setUnlocalizedName(properties.Name);
 		this.setCreativeTab(properties.InventoryTab);
 		this.maxStackSize = this.Properties.ItemStackDecreaseOnUse ? this.Properties.ItemStackMaxStackSize : 1;
@@ -68,20 +70,12 @@ public class ItemWeapon extends Item implements InterfaceWeaponProperties, Inter
 				{
 					if (this.Properties.GunShootDelay <= 0)
 					{
-						if (!par2World.isRemote)
+						if (!par2World.isRemote)//Put this v inside?
 						{
 							if (!TickHandler.ShootDelayMap.containsKey(par3EntityPlayer))
 							{
-								TickHandler.ShootDelayMap.put(par3EntityPlayer, new Integer(0));
+								PacketShoot.Handler.shoot(FMLCommonHandler.instance().getEffectiveSide(), par3EntityPlayer, this, par1ItemStack, false);
 							}
-							if (!TickHandler.ReloadDelayMap.containsKey(par3EntityPlayer))
-							{
-								TickHandler.ReloadDelayMap.put(par3EntityPlayer, new Integer(0));
-							}
-						}
-						if (TickHandler.ShootDelayMap.containsKey(par3EntityPlayer) && TickHandler.ShootDelayMap.get(par3EntityPlayer) <= 0)
-						{
-							PacketShoot.Handler.shoot(FMLCommonHandler.instance().getEffectiveSide(), par3EntityPlayer, this, par1ItemStack, false);
 						}
 					}
 					else
@@ -123,22 +117,32 @@ public class ItemWeapon extends Item implements InterfaceWeaponProperties, Inter
 
 	@Override
 	public boolean IsZoomable() {
-		return this.Properties.IsZoomable;
+		return this.Properties.ZoomMultiplier != null;
 	}
 
 	@Override
 	public int[] ZoomMultiplier() {
 		return this.Properties.ZoomMultiplier;
 	}
-
-	@Override
-	public ResourceLocation ZoomTexture() {
-		return new ResourceLocation(this.Properties.ZoomTexture);
-	}
 	
 	@Override
 	public boolean ZoomLikeHelmet() {
 		return false;
+	}
+
+	@Override
+	public ResourceLocation ScopeTexture() {
+		return this.ScopeTexture;
+	}
+
+	@Override
+	public float ScopeBGOpacity() {
+		return this.Properties.ScopeBGOpacity;
+	}
+
+	@Override
+	public int[] ScopeProperties() {
+		return this.Properties.ScopeProperties;
 	}
 	
 	@Override
@@ -152,8 +156,8 @@ public class ItemWeapon extends Item implements InterfaceWeaponProperties, Inter
 	}
 	
 	@Override
-	public float ReticleTransparency() {
-		return this.Properties.ReticleTransparency;
+	public float ReticleOpacity() {
+		return this.Properties.ReticleOpacity;
 	}
 
 	@Override
