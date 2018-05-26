@@ -19,6 +19,7 @@ import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.GuiIngameForge;
@@ -306,6 +307,7 @@ public class TickHandlerClient {
 				if (currentItem instanceof ItemWeapon)
 				{
 					ItemWeapon weapon = (ItemWeapon)currentItem;
+					
 					if (weapon.Properties.IsAutomaticOrHasSecondaryShoot)
 					{
 						if (weapon.Properties.SecondaryShootHeldDelay > 0)
@@ -319,11 +321,21 @@ public class TickHandlerClient {
 						}
 						else
 						{
+							MovingObjectPosition mop = getObjectMouseOver(5);
+							
 							if (this.RightClickPressed && weapon.Properties.GunShootDelay > 0)
 							{
-								//System.out.println("Primary Shoot");
-								KCWeaponMod.network.sendToServer(new PacketShoot(0F, 0, false, false, null, 0));
-								GunShootDelay = weapon.Properties.GunShootDelay;
+								//Tick Wait for GUI/Interacting to catch up depending if a player is close enough
+								int validWaitTime = 0;
+								if(mop != null && !mop.typeOfHit.equals(MovingObjectType.MISS)) {
+									//System.out.println(mop.typeOfHit);
+									validWaitTime = 5; //wait time for interaction
+								}
+								if(validWaitTime < RightClickHeld) {
+									//System.out.println("Primary Shoot Hold time: " + RightClickHeld);
+									KCWeaponMod.network.sendToServer(new PacketShoot(0F, 0, false, false, null, 0));
+									GunShootDelay = weapon.Properties.GunShootDelay;	
+								}								
 							}
 						}
 					}
