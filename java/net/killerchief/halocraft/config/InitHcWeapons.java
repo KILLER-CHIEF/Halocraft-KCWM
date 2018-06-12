@@ -967,8 +967,8 @@ public class InitHcWeapons {
 		//weapons[19] = new ItemWeapon(SpikeGrenade);
 		
 		ItemWeaponProperties SentinelBeam = new ItemWeaponProperties(Halocraft.MODID+".SentinelBeam");
-		SentinelBeam.Texture = Halocraft.MODID + ":NullX";
-		SentinelBeam.WeaponModel = new ItemWeaponModel(new ModelSentinelBeam(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinSentinelBeamMajor.png"));
+		SentinelBeam.Texture = Halocraft.MODID + ":SentinelBeam";
+		SentinelBeam.WeaponModel = new ItemWeaponModel(new ModelSentinelBeam(), new ResourceLocation(Halocraft.MODID+":textures/guns/SkinSentinelBeam.png"));//SkinSentinelBeamMajor
 		SentinelBeam.IsAutomaticOrHasSecondaryShoot = true;
 		//SentinelBeam.ZoomMultiplier = new int[]{2};
 		//SentinelBeam.ZoomTexture = Halocraft.MODID+":textures/overlays/SentinelBeamOverlay.png";
@@ -978,7 +978,7 @@ public class InitHcWeapons {
 		SentinelBeam.GunShootDelay = 50L;
 		SentinelBeam.Recoil = 0.8F;
 		SentinelBeam.PerformOnly1ShootSound = true;
-		SentinelBeam.ShootSound = Halocraft.MODID+":weapons.shoot.SMGShoot";//SentinelBeamShoot
+		SentinelBeam.ShootSound = Halocraft.MODID+":weapons.shoot.SentinelBeamShoot";
 		//SentinelBeam.
 		SentinelBeam.ReloadTime = 3000L;
 		SentinelBeam.ReloadSound = Halocraft.MODID+":weapons.reload.SentinelBeamReload";
@@ -1004,7 +1004,7 @@ public class InitHcWeapons {
 		SentinelBeam.Gravity = 0.0F;
 		SentinelBeam.MaxEffectiveTicksAlive = 100;
 		SentinelBeam.ProjectileLivingProperties = "null";
-		SentinelBeam.ProjectileImpactProperties = "*ImpactBlock(tallgrass+vine, glass+leaves+glass_pane+yellow_flower+red_flower+brown_mushroom+red_mushroom+reeds+deadbush+waterlily+flower_pot+cocoa+double_plant+stained_glass+stained_glass_pane, Die), ImpactEntity(2, 0, Die)";
+		SentinelBeam.ProjectileImpactProperties = "PlaySound(0,"+Halocraft.MODID+":weapons.SentinelBeamImpact"+", null), *ImpactBlock(tallgrass+vine, glass+leaves+glass_pane+yellow_flower+red_flower+brown_mushroom+red_mushroom+reeds+deadbush+waterlily+flower_pot+cocoa+double_plant+stained_glass+stained_glass_pane, Die), ImpactEntity(2, 0, Die)";
 		SentinelBeam.ProjectileDragInAir = 1F;
 		SentinelBeam.ProjectileDragInWater = 1F;
 		
@@ -1152,11 +1152,11 @@ public class InitHcWeapons {
 		BruteShot.ProjectileGlows = false;
 
 		BruteShot.ProjectileSpeed = 0.8F;
-		BruteShot.Accuracy = 5F;
+		BruteShot.Accuracy = 4F;
 		BruteShot.Gravity = 0.01F;
 		BruteShot.MaxEffectiveTicksAlive = 500;
 		BruteShot.ProjectileLivingProperties = "Fuse(Explode(2, Die)), net.killerchief.halocraft.config.NewWeaponTags.ParticleFX()";
-		BruteShot.ProjectileImpactProperties = "Bounce(0.97, 1.2, StartFuse(10, PlaySound(1,"+Halocraft.MODID+":weapons.BruteShotBounce"+", ExceededMaxEncounteredEntities(1, Explode(2, Die)) ))), ImpactEntity(8, 0, Explode(2, Die))";
+		BruteShot.ProjectileImpactProperties = "ImpactEntity(8, 0, Explode(2, Die)), Bounce(0.97, 1.2, StartFuse(6, PlaySound(1,"+Halocraft.MODID+":weapons.BruteShotBounce"+", ExceededMaxEncounteredEntities(1, Explode(2, Die)) )), Explode(2, Die))";
 		BruteShot.ProjectileDragInAir = 0.999F;
 		BruteShot.ProjectileDragInWater = 0.5F;
 
@@ -1197,15 +1197,15 @@ public class InitHcWeapons {
 		//FuelRodCannon.BurstAccuracyDecrease = 0.6F;
 		FuelRodCannon.SingleShotProjectileCount = 1;
 
-		FuelRodCannon.ProjectileRenderProperties = Halocraft.MODID+":textures/entities/FuelRodCannonRender.png";
+		FuelRodCannon.ProjectileRenderProperties = "3#"+Halocraft.MODID+":textures/entities/FuelRodRender.png";
 		FuelRodCannon.ProjectileGlows = true;
 
 		FuelRodCannon.ProjectileSpeed = 1.2F;
 		FuelRodCannon.Accuracy = 2F;
 		FuelRodCannon.Gravity = 0.004F;
 		FuelRodCannon.MaxEffectiveTicksAlive = 1000;
-		FuelRodCannon.ProjectileLivingProperties = "net.killerchief.halocraft.config.NewWeaponTags.ParticleFX()";
-		FuelRodCannon.ProjectileImpactProperties = "Bounce(0.97, 4.0, PlaySound(1,"+Halocraft.MODID+":weapons.FuelRodCannonBounce"+", ExceededMaxEncounteredEntities(1, Explode(4, Die)) )), ImpactEntity(30, 0, Explode(4, Die))";
+		FuelRodCannon.ProjectileLivingProperties = "StartFuse2(300, null), net.killerchief.halocraft.config.NewWeaponTags.ParticleFX()";
+		FuelRodCannon.ProjectileImpactProperties = "ImpactEntity(30, 0, PlaySound(1,"+Halocraft.MODID+":weapons.FuelRodExplode"+", Explode(4, Die))), Fuse2(PlaySound(1,"+Halocraft.MODID+":weapons.FuelRodExplode"+", Explode(4, Die))), Bounce(0.97, 1.0, PlaySound(1,"+Halocraft.MODID+":weapons.FuelRodBounce"+", Continue )), PlaySound(1,"+Halocraft.MODID+":weapons.FuelRodExplode"+", Explode(4, Die))";
 		FuelRodCannon.ProjectileDragInAir = 0.999F;
 		FuelRodCannon.ProjectileDragInWater = 0.5F;
 

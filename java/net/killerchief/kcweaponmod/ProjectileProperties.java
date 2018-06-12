@@ -45,6 +45,12 @@ public class ProjectileProperties {
 		}
 		projectile.tagLoopExitBreakout = true;
 	}
+	
+	public static void Continue(EntityProjectile projectile, MovingObjectPosition collidedObject)
+	{
+		//System.out.println("Continue");
+		projectile.tagLoopExitBreakout = true;
+	}
 
 	public static void Explode(EntityProjectile projectile, MovingObjectPosition collidedObject, Object[] args)
 	{
@@ -276,7 +282,10 @@ public class ProjectileProperties {
 				
 				//System.out.println(bounced);
 
-				KCUtils.CallPropertyParts(projectile, collidedObject, args[2]);
+				if (bounced)
+					KCUtils.CallPropertyParts(projectile, collidedObject, args[2]);
+				else if (args.length >= 4)
+					KCUtils.CallPropertyParts(projectile, collidedObject, args[3]);
 			}
 		}
 		else
@@ -325,6 +334,36 @@ public class ProjectileProperties {
 				KCUtils.CallPropertyParts(projectile, collidedObject, args);
 			}
 			--projectile.Fuse;
+		}
+		//System.out.println("Fuse Continue");
+	}
+	
+	public static void StartFuse2(EntityProjectile projectile, MovingObjectPosition collidedObject, Object[] args)
+	{
+		if (args.length >= 2 && args[0] instanceof String)
+		{
+			if (projectile.Fuse == 0L)
+			{
+				//System.out.println("Setting Fuse2.");
+				projectile.Fuse = System.currentTimeMillis() + Long.parseLong(args[0].toString());
+				KCUtils.CallPropertyParts(projectile, collidedObject, args[1]);
+			}
+		}
+		else
+		{
+			System.err.println("KCWeaponMod - ERROR: Object Passed to StartFuse function is invalid!");
+		}
+	}
+
+	public static void Fuse2(EntityProjectile projectile, MovingObjectPosition collidedObject, Object[] args)
+	{
+		if (projectile.Fuse > 0)
+		{
+			if (projectile.Fuse <= System.currentTimeMillis())
+			{
+				KCUtils.CallPropertyParts(projectile, collidedObject, args);
+				projectile.Fuse = 0L;
+			}
 		}
 		//System.out.println("Fuse Continue");
 	}

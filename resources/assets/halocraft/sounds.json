@@ -468,6 +468,26 @@
         "category": "player",
         "sounds": ["weapons/FragThrow1"]
     },
+	"weapons.FuelRodBounce":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/FuelRodBounce1",
+			"weapons/FuelRodBounce2",
+			"weapons/FuelRodBounce3"
+		]
+    },
+	"weapons.FuelRodExplode":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/FuelRodExplode1",
+			"weapons/FuelRodExplode2",
+			"weapons/FuelRodExplode3"
+		]
+    },
 	"weapons.PlasmaGrenadeStick":
     {
         "category": "player",
@@ -482,6 +502,18 @@
     {
         "category": "player",
         "sounds": ["weapons/PlasmaGrenadeThrow1"]
+    },
+	"weapons.SentinelBeamImpact":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/SentinelBeamImpact1",
+			"weapons/SentinelBeamImpact2",
+			"weapons/SentinelBeamImpact3",
+			"weapons/SentinelBeamImpact4",
+			"weapons/SentinelBeamImpact5"
+		]
     },
 	"weapons.SpikeGrenadeThrow":
     {
@@ -564,6 +596,16 @@
 			"weapons/shoot/FlamethrowerShoot4"
 		]
     },
+	"weapons.shoot.FuelRodCannonShoot":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/shoot/FuelRodCannonShoot1",
+			"weapons/shoot/FuelRodCannonShoot2",
+			"weapons/shoot/FuelRodCannonShoot3"
+		]
+    },
 	"weapons.shoot.MagnumShoot":
     {
         "category": "player",
@@ -627,6 +669,11 @@
 			"weapons/shoot/RocketLauncherShoot3",
 			"weapons/shoot/RocketLauncherShoot4"
 		]
+    },
+	"weapons.shoot.SentinelBeamShoot":
+    {
+        "category": "player",
+        "sounds": ["weapons/shoot/SentinelBeamShoot1"]
     },
 	"weapons.shoot.ShotgunShoot":
     {
@@ -715,6 +762,16 @@
 			"weapons/reload/DMRReload1",
 			"weapons/reload/DMRReload2",
 			"weapons/reload/DMRReload3"
+		]
+    },
+	"weapons.reload.FuelRodCannonReload":
+    {
+        "category": "player",
+        "sounds":
+		[
+			"weapons/reload/FuelRodCannonReload1",
+			"weapons/reload/FuelRodCannonReload2",
+			"weapons/reload/FuelRodCannonReload3"
 		]
     },
 	"weapons.reload.MagnumReload":

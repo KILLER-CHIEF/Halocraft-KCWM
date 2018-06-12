@@ -39,7 +39,7 @@ public class EntityProjectile extends Entity implements IProjectile
 	private double ySeOffset = 0;
 	private double zSeOffset = 0;
 	private double prevTrackingDistance = 0D;
-	public int Fuse = 0;
+	public long Fuse = 0;
 	public int EncounteredEntities = 0;
 	//public Entity trackEntity = null;
 
@@ -389,7 +389,7 @@ public class EntityProjectile extends Entity implements IProjectile
 		par1NBTTagCompound.setDouble("ySeOffset", this.ySeOffset);
 		par1NBTTagCompound.setDouble("zSeOffset", this.zSeOffset);
 		par1NBTTagCompound.setInteger("EncounteredEntities", this.EncounteredEntities);
-		par1NBTTagCompound.setInteger("Fuse", this.Fuse);
+		par1NBTTagCompound.setLong("Fuse", this.Fuse);
 		par1NBTTagCompound.setInteger("trackEntity", this.getTrackEntity() != null ? this.getTrackEntityID() : 0);
 
 		//par1NBTTagCompound.setShort("xTile", (short)this.xTile);
@@ -431,7 +431,7 @@ public class EntityProjectile extends Entity implements IProjectile
 		this.ySeOffset = par1NBTTagCompound.getDouble("ySeOffset");
 		this.zSeOffset = par1NBTTagCompound.getDouble("zSeOffset");
 		this.EncounteredEntities = par1NBTTagCompound.getInteger("EncounteredEntities");
-		this.Fuse = par1NBTTagCompound.getInteger("Fuse");
+		this.Fuse = par1NBTTagCompound.getLong("Fuse");
 		this.setTrackEntityID(par1NBTTagCompound.getInteger("trackEntity"));
 
 		//this.xTile = par1NBTTagCompound.getShort("xTile");
