@@ -165,7 +165,7 @@ public class EventHandler {
 			{
 				if (entityplayer.getHeldItem() != null && (entityplayer.getHeldItem().getItem() instanceof InterfaceWeaponProperties && ((InterfaceWeaponProperties)entityplayer.getHeldItem().getItem()).Properties().AimItem))
 				{
-					if ((!entityplayer.isSprinting() || (entityplayer.getHeldItem().getItem() instanceof InterfaceWeaponProperties && ((InterfaceWeaponProperties)entityplayer.getHeldItem().getItem()).Properties().WeaponModel.NoChngOnSprint)) && !(entityplayer.getHeldItem().getItem() instanceof InterfaceWeaponProperties && ((InterfaceWeaponProperties)entityplayer.getHeldItem().getItem()).doLoweredWeapon()))
+					if ((!entityplayer.isSprinting() || (entityplayer.getHeldItem().getItem() instanceof InterfaceWeaponProperties && ((InterfaceWeaponProperties)entityplayer.getHeldItem().getItem()).Properties().WeaponModel != null && ((InterfaceWeaponProperties)entityplayer.getHeldItem().getItem()).Properties().WeaponModel.NoChngOnSprint)) && !(entityplayer.getHeldItem().getItem() instanceof InterfaceWeaponProperties && ((InterfaceWeaponProperties)entityplayer.getHeldItem().getItem()).doLoweredWeapon()))
 					{
 						//System.out.println("T1");
 						KCUtils.setItemInUseCount(entityplayer, 71005);
