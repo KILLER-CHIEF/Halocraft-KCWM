@@ -207,7 +207,7 @@ public class GuiUpdater extends GuiScreen {
 
 		this.drawCenteredString(this.fontRendererObj, title, this.width / 2, 10, 16777215);
 
-		this.drawCenteredString(this.fontRendererObj, "Halocraft v"+Halocraft.VERSION, (this.width/2) + 85, 115, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "Halocraft v"+Halocraft.getVersion(), (this.width/2) + 85, 115, 16777215);
 		this.drawCenteredString(this.fontRendererObj, "Forge: "+ForgeVersion.getVersion(), (this.width/2) + 85, 127, 16777215);
 		this.drawCenteredString(this.fontRendererObj, "KC's Weapon Mod v"+KCWeaponMod.getVersion(), (this.width/2) + 85, 139, 16777215);
 
@@ -223,7 +223,7 @@ public class GuiUpdater extends GuiScreen {
 	public void updateScreen()
 	{
 		super.updateScreen();
-		if (this.selectedMod != null && (!Halocraft.VERSION.equalsIgnoreCase(this.selectedMod.Version) || !this.btnKCWMVers.displayString.equalsIgnoreCase(strLoc("version.current"))))
+		if (this.selectedMod != null && (!Halocraft.getVersion().equalsIgnoreCase(this.selectedMod.Version) || !this.btnKCWMVers.displayString.equalsIgnoreCase(strLoc("version.current"))))
 			this.btnDownload.enabled = true;
 		else
 			this.btnDownload.enabled = false;
@@ -295,11 +295,11 @@ public class GuiUpdater extends GuiScreen {
 			{
 				if (!this.btnKCWMVers.displayString.equalsIgnoreCase(strLoc("version.current")) && kcwm.Version.equalsIgnoreCase(this.btnKCWMVers.displayString) && !this.btnKCWMVers.displayString.equalsIgnoreCase(KCWeaponMod.getVersion()))
 				{
-					DownloadUpdate(this.selectedMod.Version.equalsIgnoreCase(Halocraft.VERSION) ? null : this.selectedMod, kcwm);
+					DownloadUpdate(this.selectedMod.Version.equalsIgnoreCase(Halocraft.getVersion()) ? null : this.selectedMod, kcwm);
 					return;
 				}
 			}
-			if (!this.selectedMod.Version.equalsIgnoreCase(Halocraft.VERSION))
+			if (!this.selectedMod.Version.equalsIgnoreCase(Halocraft.getVersion()))
 			{
 				DownloadUpdate(this.selectedMod, null);
 				return;
@@ -478,8 +478,8 @@ public class GuiUpdater extends GuiScreen {
 													info.DL = modversion.getAttribute("dl");
 													info.MD5 = modversion.getAttribute("md5");
 
-													//System.out.println(Halocraft.VERSION+info.Version);
-													if (Halocraft.VERSION.equalsIgnoreCase(info.Version))
+													//System.out.println(Halocraft.getVersion()+info.Version);
+													if (Halocraft.getVersion().equalsIgnoreCase(info.Version))
 													{
 														VersionCompat = info.ForgeVersion;
 														System.out.println("Compatible Forge Version: "+VersionCompat);
@@ -708,7 +708,7 @@ public class GuiUpdater extends GuiScreen {
 				}
 				if (HcUpdate != null)
 				{
-					if (!newHc.exists())
+					if (newHc == null || !newHc.exists())
 					{
 						mainThread.btnDownload.enabled = true;
 						mainThread.btnDownload.displayString = strLoc("download.fail.hc");
@@ -722,7 +722,7 @@ public class GuiUpdater extends GuiScreen {
 					}
 				}
 
-				if (KCWMUpdate != null && !new File(TempLoc+KCWMUpdate.DL.substring(KCWMUpdate.DL.lastIndexOf("/")+1)).exists())
+				if (KCWMUpdate != null)// && !new File(TempLoc+KCWMUpdate.DL.substring(KCWMUpdate.DL.lastIndexOf("/")+1)).exists())
 				{
 					String KcName = KCWMUpdate.DL.substring(KCWMUpdate.DL.lastIndexOf("/")+1).replace("%20", " ").replace("%27", "\'");
 					System.out.println(TempLoc+KcName);
@@ -739,7 +739,7 @@ public class GuiUpdater extends GuiScreen {
 				}
 				if (KCWMUpdate != null)
 				{
-					if (!newKc.exists())
+					if (newKc == null || !newKc.exists())
 					{
 						mainThread.btnDownload.enabled = true;
 						mainThread.btnDownload.displayString = strLoc("download.fail.kcwm");

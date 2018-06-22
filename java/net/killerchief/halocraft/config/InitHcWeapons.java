@@ -1213,7 +1213,7 @@ public class InitHcWeapons {
 		
 		
 		
-		if (KCWeaponMod.registerModItems(Halocraft.MODID, "1.4", weapons.toArray(new ItemWeapon[weapons.size()])))
+		if (KCWeaponMod.registerModItems(Halocraft.MODID, KCWeaponMod.WeaponFileVersion, weapons.toArray(new ItemWeapon[weapons.size()])))
 		{
 			System.out.println("KCWeaponMod: Successfully Registered Halocraft Weapons");
 		}
